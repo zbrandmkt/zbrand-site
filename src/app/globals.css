@@ -2,22 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #FFFFFF;
+    --foreground: #1A1A1A;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #FF6100;
+    color: #FFFFFF;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F8F8F8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #FF6100;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF7A2E;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-brutal {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5 font-display font-semibold text-sm
+           border-2 border-preto rounded-brutal
+           shadow-brutal transition-all duration-200
+           hover:translate-y-[-2px] hover:shadow-brutal-lg
+           active:translate-y-[2px] active:shadow-brutal-sm;
+  }
+
+  .btn-primary {
+    @apply btn-brutal bg-laranja text-white border-preto;
+  }
+
+  .btn-secondary {
+    @apply btn-brutal bg-white text-preto border-preto;
+  }
+
+  .btn-dark {
+    @apply btn-brutal bg-preto text-white border-preto;
+  }
+
+  .btn-soft {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5 font-display font-semibold text-sm
+           rounded-full transition-all duration-200
+           bg-laranja text-white hover:bg-laranja-hover;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .btn-soft:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  .card-brutal {
+    @apply border-2 border-preto rounded-brutal-lg shadow-brutal
+           transition-all duration-200
+           hover:translate-y-[-4px] hover:shadow-brutal-lg;
+  }
+
+  .card-soft {
+    @apply rounded-2xl bg-white border border-cinza/50
+           transition-all duration-200;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .card-soft:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  .section-dark {
+    @apply bg-preto text-white;
+  }
+
+  .section-light {
+    @apply bg-branco text-preto;
+  }
+
+  .section-warm {
+    @apply bg-branco-off text-preto;
+  }
+
+  .section-laranja {
+    @apply bg-laranja text-white;
+  }
+
+  .zebra-stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.02) 10px,
+      rgba(0, 0, 0, 0.02) 20px
+    );
+  }
+
+  .text-gradient-laranja {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-laranja to-amarelo;
+  }
 }
 
 @layer utilities {
