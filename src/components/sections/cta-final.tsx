@@ -30,14 +30,16 @@ export function CTAFinal() {
     setLoading(true);
     try {
       const utm = new URLSearchParams(window.location.search);
-      await supabase.from("leads").insert({
-        ...data,
-        source: "home_cta",
-        utm_source: utm.get("utm_source"),
-        utm_medium: utm.get("utm_medium"),
-        utm_campaign: utm.get("utm_campaign"),
-        utm_content: utm.get("utm_content"),
-      });
+      if (supabase) {
+        await supabase.from("leads").insert({
+          ...data,
+          source: "home_cta",
+          utm_source: utm.get("utm_source"),
+          utm_medium: utm.get("utm_medium"),
+          utm_campaign: utm.get("utm_campaign"),
+          utm_content: utm.get("utm_content"),
+        });
+      }
       setSubmitted(true);
       reset();
     } catch {
