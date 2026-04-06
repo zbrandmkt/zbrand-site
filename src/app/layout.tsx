@@ -11,6 +11,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+    apple: "/images/favicon.png",
+  },
   title: {
     default: "ZBRAND — Marketing Digital para Restaurantes",
     template: "%s | ZBRAND",

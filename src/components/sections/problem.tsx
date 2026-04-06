@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 function SpotlightCard({
   children,
@@ -63,17 +64,17 @@ function SpotlightCard({
 
 const problems = [
   {
-    icon: "😩",
+    image: "/images/grava_tudo_sozinho_icon.png",
     title: "Você grava tudo sozinho (ou não grava nada)",
     desc: "A agência manda a pauta, mas quem tem que gravar é você. Com a correria do restaurante, o conteúdo nunca sai — e o perfil fica parado.",
   },
   {
-    icon: "🍔",
+    image: "/images/comida_e_boa_mas_icon.png",
     title: "A comida é boa, mas quem prepara essa comida tão incrível?",
     desc: "Comida bonita no feed é essencial, mas as pessoas se conectam com quem está por trás. Mostrar a cozinha, a equipe e o dia a dia humaniza e vende mais.",
   },
   {
-    icon: "📊",
+    image: "/images/não_sabe_de_onde_o_cliente_vem_icon.png",
     title: "Você não sabe de onde o cliente vem",
     desc: "Relatório bonito no PDF mas zero clareza sobre o que realmente trouxe cliente. Sem saber qual canal converte, você joga dinheiro no escuro.",
   },
@@ -173,7 +174,9 @@ export function Problem() {
                 transition={{ delay: 0.15 + i * 0.1, duration: 0.5 }}
               >
                 <SpotlightCard className="bg-preto-soft p-6 h-full">
-                  <span className="text-3xl mb-3 block">{p.icon}</span>
+                  <div className="mb-4">
+                    <Image src={p.image} alt={p.title} width={48} height={48} />
+                  </div>
                   <h3 className="font-display font-bold text-sm text-white mb-1.5 uppercase">
                     {p.title}
                   </h3>
