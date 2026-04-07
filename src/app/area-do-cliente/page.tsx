@@ -148,7 +148,7 @@ export default function AreaDoClientePage() {
       >
         <div
           className="bg-white border-2 border-[#1A1A1A] rounded-2xl overflow-hidden"
-          style={{ boxShadow: "6px 6px 0px 0px #1A1A1A" }}
+          style={{ boxShadow: "6px 6px 0px 0px #FF6100" }}
         >
 
           <div className="px-8 pt-8 pb-10">
