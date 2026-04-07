@@ -182,3 +182,96 @@ export const monthlySocial = {
     "❤️ Taxa de engajamento acima de 3%",
   ],
 };
+
+// ─── TRÁFEGO PAGO — PÁGINA DEDICADA ────────────────────────────
+
+// Evolução semanal (Março + Abril combinados Meta+Google)
+export const weeklyEvolution = [
+  { label: "S1 MAR", leads: 91,  invest: 425, month: "Março" },
+  { label: "S2 MAR", leads: 97,  invest: 440, month: "Março" },
+  { label: "S3 MAR", leads: 101, invest: 453, month: "Março" },
+  { label: "S4 MAR", leads: 103, invest: 462, month: "Março" },
+  { label: "S1 ABR", leads: 99,  invest: 450, month: "Abril" },
+  { label: "S2 ABR", leads: 106, invest: 473, month: "Abril" },
+  { label: "S3 ABR", leads: 113, invest: 484, month: "Abril" },
+  { label: "S4 ABR", leads: 118, invest: 488, month: "Abril" },
+];
+
+// Funil de conversão
+export const trafficFunnel = {
+  impressions: 284500,
+  clicks: 12300,
+  leads: 436,
+  estimatedSales: 87,
+};
+
+// Budget tracker
+export const budgetData = {
+  meta:   { total: 900,  spent: 856.79, label: "Meta Ads" },
+  google: { total: 1000, spent: 654.84, label: "Google Ads" },
+  daysLeft: 23,
+  daysTotal: 30,
+};
+
+// Top 5 criativos campeões
+export interface Creative {
+  rank: number;
+  name: string;
+  type: "video" | "image" | "carousel";
+  platform: "meta";
+  leads: number;
+  cpl: number;
+  invest: number;
+  status: "active" | "paused";
+  thumbBg: string;
+  thumbAccent: string;
+}
+
+export const topCreatives: Creative[] = [
+  { rank: 1, name: "Reels — Quarto com vista",         type: "video",    platform: "meta", leads: 89, cpl: 1.87, invest: 166.43, status: "active", thumbBg: "#1A1A1A", thumbAccent: "#FF6100" },
+  { rank: 2, name: "Carrossel — Experiência completa",  type: "carousel", platform: "meta", leads: 74, cpl: 2.01, invest: 148.74, status: "active", thumbBg: "#0F2744", thumbAccent: "#00C2FF" },
+  { rank: 3, name: "Imagem — Oferta fim de semana",     type: "image",    platform: "meta", leads: 67, cpl: 2.14, invest: 143.38, status: "paused", thumbBg: "#1E1035", thumbAccent: "#7B2FF7" },
+  { rank: 4, name: "Reels — Depoimento de hóspede",    type: "video",    platform: "meta", leads: 58, cpl: 2.29, invest: 132.82, status: "active", thumbBg: "#0D2B1A", thumbAccent: "#AAFF00" },
+  { rank: 5, name: "Imagem — Café da manhã incluso",   type: "image",    platform: "meta", leads: 42, cpl: 2.43, invest: 102.06, status: "active", thumbBg: "#2B1A08", thumbAccent: "#FBBC05" },
+];
+
+// Histórico mensal
+export interface MonthHistory {
+  month: string;
+  shortMonth: string;
+  year: number;
+  invest: number;
+  leads: number;
+  cpl: number;
+  avgCpcMeta: number;
+  isCurrent?: boolean;
+}
+
+export const monthHistory: MonthHistory[] = [
+  { month: "Janeiro",   shortMonth: "JAN", year: 2026, invest: 1520, leads: 312, cpl: 4.87, avgCpcMeta: 0.81 },
+  { month: "Fevereiro", shortMonth: "FEV", year: 2026, invest: 1680, leads: 358, cpl: 4.69, avgCpcMeta: 0.78 },
+  { month: "Março",     shortMonth: "MAR", year: 2026, invest: 1800, leads: 396, cpl: 4.54, avgCpcMeta: 0.71 },
+  { month: "Abril",     shortMonth: "ABR", year: 2026, invest: 1895, leads: 436, cpl: 4.35, avgCpcMeta: 0.67, isCurrent: true },
+];
+
+// Comparação por plataforma
+export const platformStats = {
+  meta: {
+    bestWeek: "Sem 3 · Abril",
+    worstWeek: "Sem 1 · Março",
+    avgCpl: 2.11,
+    totalLeads: 415,
+    percentLeads: 95.2,
+    totalInvest: 895,
+    percentInvest: 47.2,
+  },
+  google: {
+    bestWeek: "Sem 4 · Abril",
+    worstWeek: "Sem 1 · Março",
+    avgCpl: 51.83,
+    totalLeads: 21,
+    percentLeads: 4.8,
+    totalInvest: 1000,
+    percentInvest: 52.8,
+  },
+};
