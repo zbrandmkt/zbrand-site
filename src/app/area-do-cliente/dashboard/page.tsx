@@ -42,10 +42,10 @@ function KpiCard({ emoji, label, value, shadow, alert, delay = 0 }: {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0 flex-1"
+      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0 flex-1"
       style={{ boxShadow: `5px 5px 0px 0px ${shadow}` }}
     >
-      <span className="text-2xl leading-none">{emoji}</span>
+      <span className="text-xl leading-none">{emoji}</span>
       <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
       <p className="text-2xl font-black text-[#1A1A1A] leading-none">{value}</p>
       {alert && <span className="text-[10px] font-bold text-[#FF6100]">⚠ {alert}</span>}
@@ -249,20 +249,20 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0"
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0"
                 style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
               >
-                <span className="text-2xl leading-none">💳</span>
+                <span className="text-xl leading-none">💳</span>
                 <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Saldo em Conta</p>
-                <div className="flex gap-3 flex-1 items-end">
-                  <div className="flex-1 bg-[#1877F2]/8 border border-[#1877F2]/20 rounded-xl px-3 py-2.5">
+                <div className="flex gap-2 flex-1 items-end">
+                  <div className="flex-1 bg-[#1877F2]/8 border border-[#1877F2]/20 rounded-xl px-3 py-2">
                     <span className="text-[9px] font-black bg-[#1877F2] text-white px-2 py-0.5 rounded-full">META</span>
-                    <p className="text-xl font-black text-[#1A1A1A] leading-none mt-2">{fmtR(monthlyTraffic.saldoMeta)}</p>
+                    <p className="text-lg font-black text-[#1A1A1A] leading-none mt-1.5">{fmtR(monthlyTraffic.saldoMeta)}</p>
                     <p className="text-[10px] text-[#FF6100] font-bold mt-1">⚠ Baixo</p>
                   </div>
-                  <div className="flex-1 bg-[#FBBC05]/8 border border-[#FBBC05]/30 rounded-xl px-3 py-2.5">
+                  <div className="flex-1 bg-[#FBBC05]/8 border border-[#FBBC05]/30 rounded-xl px-3 py-2">
                     <span className="text-[9px] font-black bg-[#FBBC05] text-[#1A1A1A] px-2 py-0.5 rounded-full">GOOGLE</span>
-                    <p className="text-xl font-black text-[#1A1A1A] leading-none mt-2">{fmtR(monthlyTraffic.saldoGoogle)}</p>
+                    <p className="text-lg font-black text-[#1A1A1A] leading-none mt-1.5">{fmtR(monthlyTraffic.saldoGoogle)}</p>
                     <p className="text-[10px] text-[#22c55e] font-bold mt-1">✓ Ok</p>
                   </div>
                 </div>
@@ -377,10 +377,10 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0"
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0"
                 style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
               >
-                <span className="text-2xl leading-none">📱</span>
+                <span className="text-xl leading-none">📱</span>
                 <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Conteúdo Publicado</p>
                 <div className="flex gap-2 flex-wrap flex-1 items-end">
                   {[
