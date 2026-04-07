@@ -85,6 +85,15 @@ export const trafficMonths: MonthData[] = [
   },
 ];
 
+// Simula semanas já fechadas no mês atual (Abril tem 3 de 4 fechadas)
+export const trafficMonthsWithStatus = trafficMonths.map((m, mi) => ({
+  ...m,
+  weeks: m.weeks.map((w, wi) => ({
+    ...w,
+    closed: mi < trafficMonths.length - 1 || wi < 3, // Março todo fechado, Abril só 3 semanas
+  })),
+}));
+
 // Keep backward compat
 export const trafficWeeks = trafficMonths[1].weeks;
 
