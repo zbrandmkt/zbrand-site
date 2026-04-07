@@ -32,23 +32,23 @@ function TrendArrow({ dir }: { dir: Dir }) {
   );
 }
 
-// ─── Compact KPI Card ────────────────────────────────────────
-function KpiCard({ emoji, label, value, shadow, alert, delay = 0, children }: {
-  emoji?: string; label: string; value?: string; shadow: string;
-  alert?: string; delay?: number; children?: React.ReactNode;
+// ─── KPI Card ────────────────────────────────────────────────
+function KpiCard({ emoji, label, value, shadow, alert, delay = 0 }: {
+  emoji?: string; label: string; value: string; shadow: string;
+  alert?: string; delay?: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-4 py-3 flex flex-col gap-1 min-w-0"
-      style={{ boxShadow: `4px 4px 0px 0px ${shadow}` }}
+      transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0 flex-1"
+      style={{ boxShadow: `5px 5px 0px 0px ${shadow}` }}
     >
-      <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 truncate">{emoji} {label}</p>
-      {value && <p className="text-xl font-black text-[#1A1A1A] leading-none">{value}</p>}
-      {alert && <span className="text-[9px] font-bold text-[#FF6100]">⚠ {alert}</span>}
-      {children}
+      <span className="text-2xl leading-none">{emoji}</span>
+      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
+      <p className="text-2xl font-black text-[#1A1A1A] leading-none">{value}</p>
+      {alert && <span className="text-[10px] font-bold text-[#FF6100]">⚠ {alert}</span>}
     </motion.div>
   );
 }
@@ -238,31 +238,32 @@ export default function DashboardPage() {
           <motion.div key="traffic" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
 
             {/* KPIs — single row */}
-            <div className="grid grid-cols-5 gap-3 mb-6">
+            <div className="flex gap-3 mb-6">
               <KpiCard emoji="💸" label="Total Investido" value={fmtR(monthlyTraffic.totalInvest)} shadow="#FF6100" delay={0} />
               <KpiCard emoji="🎯" label="Total de Leads" value={fmt(monthlyTraffic.totalLeads)} shadow="#00C2FF" delay={0.05} />
               <KpiCard emoji="💰" label="CPL Médio" value={fmtR(monthlyTraffic.avgCpl)} shadow="#AAFF00" delay={0.1} />
               <KpiCard emoji="👆" label="CPC Meta" value={fmtR(monthlyTraffic.avgCpcMeta)} shadow="#7B2FF7" delay={0.15} />
 
-              {/* Saldo unificado */}
+              {/* Saldo unificado — ligeiramente mais largo */}
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-4 py-3 flex flex-col gap-1.5 min-w-0"
-                style={{ boxShadow: "4px 4px 0px 0px #1A1A1A" }}
+                transition={{ delay: 0.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0"
+                style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
               >
-                <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">💳 Saldo em Conta</p>
-                <div className="flex gap-2">
-                  <div className="flex-1 bg-[#1877F2]/6 rounded-lg px-2 py-1.5">
-                    <span className="text-[8px] font-black bg-[#1877F2] text-white px-1.5 py-0.5 rounded-full">META</span>
-                    <p className="text-sm font-black text-[#1A1A1A] leading-none mt-1">{fmtR(monthlyTraffic.saldoMeta)}</p>
-                    <p className="text-[9px] text-[#FF6100] font-bold mt-0.5">⚠ Baixo</p>
+                <span className="text-2xl leading-none">💳</span>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Saldo em Conta</p>
+                <div className="flex gap-3 flex-1 items-end">
+                  <div className="flex-1 bg-[#1877F2]/8 border border-[#1877F2]/20 rounded-xl px-3 py-2.5">
+                    <span className="text-[9px] font-black bg-[#1877F2] text-white px-2 py-0.5 rounded-full">META</span>
+                    <p className="text-xl font-black text-[#1A1A1A] leading-none mt-2">{fmtR(monthlyTraffic.saldoMeta)}</p>
+                    <p className="text-[10px] text-[#FF6100] font-bold mt-1">⚠ Baixo</p>
                   </div>
-                  <div className="flex-1 bg-[#FBBC05]/6 rounded-lg px-2 py-1.5">
-                    <span className="text-[8px] font-black bg-[#FBBC05] text-[#1A1A1A] px-1.5 py-0.5 rounded-full">GOOGLE</span>
-                    <p className="text-sm font-black text-[#1A1A1A] leading-none mt-1">{fmtR(monthlyTraffic.saldoGoogle)}</p>
-                    <p className="text-[9px] text-[#22c55e] font-bold mt-0.5">✓ Ok</p>
+                  <div className="flex-1 bg-[#FBBC05]/8 border border-[#FBBC05]/30 rounded-xl px-3 py-2.5">
+                    <span className="text-[9px] font-black bg-[#FBBC05] text-[#1A1A1A] px-2 py-0.5 rounded-full">GOOGLE</span>
+                    <p className="text-xl font-black text-[#1A1A1A] leading-none mt-2">{fmtR(monthlyTraffic.saldoGoogle)}</p>
+                    <p className="text-[10px] text-[#22c55e] font-bold mt-1">✓ Ok</p>
                   </div>
                 </div>
               </motion.div>
@@ -365,28 +366,34 @@ export default function DashboardPage() {
           <motion.div key="social" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
 
             {/* KPIs */}
-            <div className="grid grid-cols-5 gap-3 mb-6">
+            <div className="flex gap-3 mb-6">
               <KpiCard emoji="👁️" label="Visualizações" value={fmt(monthlySocial.views)} shadow="#FF6100" delay={0} />
               <KpiCard emoji="🎯" label="Alcance" value={fmt(monthlySocial.reach)} shadow="#00C2FF" delay={0.05} />
-              <KpiCard emoji="👥" label="Seguidores" value={`+${monthlySocial.newFollowers}`} shadow="#AAFF00" delay={0.1} />
+              <KpiCard emoji="👥" label="Seguidores Novos" value={`+${monthlySocial.newFollowers}`} shadow="#AAFF00" delay={0.1} />
               <KpiCard emoji="❤️" label="Interações" value={fmt(monthlySocial.interactions)} shadow="#7B2FF7" delay={0.15} />
+
+              {/* Conteúdo publicado — ligeiramente mais largo */}
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-4 py-3"
-                style={{ boxShadow: "4px 4px 0px 0px #1A1A1A" }}
+                transition={{ delay: 0.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-5 flex flex-col gap-2 min-w-0"
+                style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
               >
-                <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-2">📱 Conteúdo</p>
-                <div className="flex flex-wrap gap-1">
+                <span className="text-2xl leading-none">📱</span>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Conteúdo Publicado</p>
+                <div className="flex gap-2 flex-wrap flex-1 items-end">
                   {[
-                    { label: `${monthlySocial.reels}R`, color: "#FF6100" },
-                    { label: `${monthlySocial.stories}St`, color: "#7B2FF7" },
-                    { label: `${monthlySocial.posts}P`, color: "#00C2FF" },
-                    { label: `${monthlySocial.carrosseis}C`, color: "#AAFF00" },
+                    { label: "Reels", value: monthlySocial.reels, color: "#FF6100" },
+                    { label: "Stories", value: monthlySocial.stories, color: "#7B2FF7" },
+                    { label: "Posts", value: monthlySocial.posts, color: "#00C2FF" },
+                    { label: "Carrossel", value: monthlySocial.carrosseis, color: "#AAFF00" },
                   ].map((t) => (
-                    <span key={t.label} className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#1A1A1A]/10"
-                      style={{ background: `${t.color}18`, color: t.color }}>{t.label}</span>
+                    <div key={t.label} className="flex flex-col items-center justify-center px-3 py-2 rounded-xl border border-[#1A1A1A]/10 flex-1"
+                      style={{ background: `${t.color}12` }}>
+                      <span className="text-xl font-black leading-none" style={{ color: t.color }}>{t.value}</span>
+                      <span className="text-[9px] font-bold text-[#1A1A1A]/40 uppercase tracking-wide mt-0.5">{t.label}</span>
+                    </div>
                   ))}
                 </div>
               </motion.div>
