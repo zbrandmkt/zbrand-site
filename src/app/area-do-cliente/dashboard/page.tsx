@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   trafficMonthsWithStatus,
-  socialWeeks,
+  socialMonthsWithStatus,
   monthlyTraffic,
   monthlySocial,
   type TrafficWeek,
@@ -185,6 +185,7 @@ function SocialWeekCard({ week, prev, index, weekNumber }: {
 export default function DashboardPage() {
   const [tab, setTab] = useState<"traffic" | "social">("traffic");
   const [monthIdx, setMonthIdx] = useState(trafficMonthsWithStatus.length - 1);
+  const [socialMonthIdx, setSocialMonthIdx] = useState(socialMonthsWithStatus.length - 1);
 
   const currentMonth = trafficMonthsWithStatus[monthIdx];
   const hasPrev = monthIdx > 0;
@@ -372,50 +373,88 @@ export default function DashboardPage() {
               <KpiCard emoji="👥" label="Seguidores Novos" value={`+${monthlySocial.newFollowers}`} shadow="#AAFF00" delay={0.1} />
               <KpiCard emoji="❤️" label="Interações" value={fmt(monthlySocial.interactions)} shadow="#7B2FF7" delay={0.15} />
 
-              {/* Conteúdo publicado — ligeiramente mais largo */}
+              {/* Conteúdo publicado — badges compactos */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0"
-                style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0 flex-1"
+                style={{ boxShadow: "5px 5px 0px 0px #1A1A1A" }}
               >
                 <span className="text-xl leading-none">📱</span>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Conteúdo Publicado</p>
-                <div className="flex gap-2 flex-wrap flex-1 items-end">
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Conteúdo</p>
+                <div className="flex flex-wrap gap-1.5 mt-0.5">
                   {[
-                    { label: "Reels", value: monthlySocial.reels, color: "#FF6100" },
-                    { label: "Stories", value: monthlySocial.stories, color: "#7B2FF7" },
-                    { label: "Posts", value: monthlySocial.posts, color: "#00C2FF" },
-                    { label: "Carrossel", value: monthlySocial.carrosseis, color: "#AAFF00" },
+                    { label: `${monthlySocial.reels} Reels`, color: "#FF6100" },
+                    { label: `${monthlySocial.stories} Stories`, color: "#7B2FF7" },
+                    { label: `${monthlySocial.posts} Post`, color: "#00C2FF" },
+                    { label: `${monthlySocial.carrosseis} Carrossel`, color: "#AAFF00" },
                   ].map((t) => (
-                    <div key={t.label} className="flex flex-col items-center justify-center px-3 py-2 rounded-xl border border-[#1A1A1A]/10 flex-1"
-                      style={{ background: `${t.color}12` }}>
-                      <span className="text-xl font-black leading-none" style={{ color: t.color }}>{t.value}</span>
-                      <span className="text-[9px] font-bold text-[#1A1A1A]/40 uppercase tracking-wide mt-0.5">{t.label}</span>
-                    </div>
+                    <span key={t.label}
+                      className="text-[10px] font-black px-2 py-0.5 rounded-full border border-[#1A1A1A]/10"
+                      style={{ background: `${t.color}18`, color: t.color }}>
+                      {t.label}
+                    </span>
                   ))}
                 </div>
               </motion.div>
             </div>
 
             {/* Comparativo semanal */}
-            <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]/50">Comparativo Semanal</h2>
-              <div className="flex-1 h-px bg-[#1A1A1A]/10" />
-            </div>
+            {(() => {
+              const curSocial = socialMonthsWithStatus[socialMonthIdx];
+              const hasSocialPrev = socialMonthIdx > 0;
+              const hasSocialNext = socialMonthIdx < socialMonthsWithStatus.length - 1;
+              const socialClosedWeeks = curSocial.weeks.filter((w) => w.closed).length;
+              const isSocialMonthClosed = socialClosedWeeks === 4;
+              const socialSlots = Array.from({ length: 4 }, (_, i) => curSocial.weeks[i] ?? null);
+              return (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]/50">Comparativo Semanal</h2>
+                      {isSocialMonthClosed ? (
+                        <span className="text-[9px] font-black bg-[#FF6100] text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Mês fechado</span>
+                      ) : (
+                        <span className="text-[9px] font-bold text-[#1A1A1A]/30 border border-[#1A1A1A]/10 px-2 py-0.5 rounded-full">{socialClosedWeeks}/4 semanas</span>
+                      )}
+                    </div>
+                    <div className="flex-1 h-px bg-[#1A1A1A]/10" />
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => hasSocialPrev && setSocialMonthIdx(socialMonthIdx - 1)} disabled={!hasSocialPrev}
+                        className="w-7 h-7 flex items-center justify-center border-2 border-[#1A1A1A] rounded-lg bg-white disabled:opacity-20 hover:bg-[#FF6100] hover:text-white transition-all"
+                        style={{ boxShadow: hasSocialPrev ? "2px 2px 0px 0px #1A1A1A" : "none" }}>
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A] min-w-[90px] text-center">
+                        {curSocial.month} {curSocial.year}
+                      </span>
+                      <button onClick={() => hasSocialNext && setSocialMonthIdx(socialMonthIdx + 1)} disabled={!hasSocialNext}
+                        className="w-7 h-7 flex items-center justify-center border-2 border-[#1A1A1A] rounded-lg bg-white disabled:opacity-20 hover:bg-[#FF6100] hover:text-white transition-all"
+                        style={{ boxShadow: hasSocialNext ? "2px 2px 0px 0px #1A1A1A" : "none" }}>
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-6">
-              {Array.from({ length: 4 }, (_, i) => (
-                <SocialWeekCard
-                  key={i}
-                  week={socialWeeks[i] ? { ...socialWeeks[i], closed: true } : null}
-                  prev={i > 0 ? socialWeeks[i - 1] : undefined}
-                  index={i}
-                  weekNumber={i + 1}
-                />
-              ))}
-            </div>
+                  <div className="grid grid-cols-4 gap-4 mb-6">
+                    {socialSlots.map((week, i) => (
+                      <SocialWeekCard
+                        key={i}
+                        week={week as (SocialWeek & { closed: boolean }) | null}
+                        prev={i > 0 && socialSlots[i - 1]?.closed ? socialSlots[i - 1] as SocialWeek : undefined}
+                        index={i}
+                        weekNumber={i + 1}
+                      />
+                    ))}
+                  </div>
+                </>
+              );
+            })()}
 
             {/* Metas */}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}

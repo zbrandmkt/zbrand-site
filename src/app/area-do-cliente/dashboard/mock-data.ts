@@ -13,6 +13,13 @@ export interface SocialWeek {
   posts: number;
 }
 
+export interface SocialMonthData {
+  month: string;
+  shortMonth: string;
+  year: number;
+  weeks: SocialWeek[];
+}
+
 export interface MonthData {
   month: string;
   shortMonth: string;
@@ -97,12 +104,42 @@ export const trafficMonthsWithStatus = trafficMonths.map((m, mi) => ({
 // Keep backward compat
 export const trafficWeeks = trafficMonths[1].weeks;
 
-export const socialWeeks: SocialWeek[] = [
-  { label: "SEM 1", dates: "01-07 ABR", views: 980, newFollowers: 1, posts: 3 },
-  { label: "SEM 2", dates: "08-14 ABR", views: 1240, newFollowers: 2, posts: 2 },
-  { label: "SEM 3", dates: "15-21 ABR", views: 1890, newFollowers: 3, posts: 4 },
-  { label: "SEM 4", dates: "22-28 ABR", views: 2100, newFollowers: 1, posts: 3 },
+export const socialMonths: SocialMonthData[] = [
+  {
+    month: "Março",
+    shortMonth: "MAR",
+    year: 2026,
+    weeks: [
+      { label: "SEM 1", dates: "02-08 MAR", views: 750, newFollowers: 1, posts: 2 },
+      { label: "SEM 2", dates: "09-15 MAR", views: 890, newFollowers: 2, posts: 3 },
+      { label: "SEM 3", dates: "16-22 MAR", views: 1100, newFollowers: 1, posts: 3 },
+      { label: "SEM 4", dates: "23-30 MAR", views: 930, newFollowers: 2, posts: 2 },
+    ],
+  },
+  {
+    month: "Abril",
+    shortMonth: "ABR",
+    year: 2026,
+    weeks: [
+      { label: "SEM 1", dates: "01-07 ABR", views: 980, newFollowers: 1, posts: 3 },
+      { label: "SEM 2", dates: "08-14 ABR", views: 1240, newFollowers: 2, posts: 2 },
+      { label: "SEM 3", dates: "15-21 ABR", views: 1890, newFollowers: 3, posts: 4 },
+      { label: "SEM 4", dates: "22-28 ABR", views: 2100, newFollowers: 1, posts: 3 },
+    ],
+  },
 ];
+
+// Simula semanas fechadas (Março todo fechado, Abril 3/4 fechadas)
+export const socialMonthsWithStatus = socialMonths.map((m, mi) => ({
+  ...m,
+  weeks: m.weeks.map((w, wi) => ({
+    ...w,
+    closed: mi < socialMonths.length - 1 || wi < 3,
+  })),
+}));
+
+// Keep backward compat
+export const socialWeeks = socialMonths[1].weeks;
 
 export const monthlyTraffic = {
   totalInvest: 1895,
