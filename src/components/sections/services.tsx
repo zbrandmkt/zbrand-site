@@ -60,37 +60,37 @@ const avulsos = [
   {
     icon: "🎯",
     name: "Tráfego Pago",
-    desc: "Anúncios no Meta e Google que trazem cliente — não só clique. Cada real investido com estratégia, segmentação local e foco em resultado real.",
+    desc: "Gestão estratégica de campanhas para Meta e Google Ads, com foco em geração de demanda, vendas e reconhecimento.",
     color: "#FF6100",
   },
   {
     icon: "🔍",
     name: "Tráfego Orgânico",
-    desc: "SEO local, Google Meu Negócio e conteúdo que aparece quando o cliente pesquisa 'restaurante perto de mim'. Presença gratuita que trabalha por você.",
+    desc: "Estratégia de SEO, GEO, Google Meu Negócio e conteúdo para que o ecossistema da sua marca se fortaleça e as buscas te entregue.",
     color: "#00C2FF",
   },
   {
     icon: "📱",
     name: "Social Media",
-    desc: "Feed, Reels, Stories e gestão de comentários. Conteúdo com identidade, calendário estratégico e uma frequência que não para.",
+    desc: "Conteúdo humanizado, calendário estratégico e frequência. Tudo para fortalecer a presença digital da sua marca e melhorar a comunicação com o seu público alvo.",
     color: "#FF6100",
   },
   {
     icon: "🎬",
     name: "Captação de Conteúdo Mobile",
-    desc: "A gente vai até o seu restaurante e grava. Conteúdo real, roteirizado pra converter, com a identidade visual do seu negócio.",
+    desc: "Vamos até a sua empresa ou evento para gravar. Conteúdo real, roteirizado pra converter, com o tom de voz e identidade visual do seu negócio.",
     color: "#7B2FF7",
   },
   {
     icon: "💻",
     name: "Website & Landing Page",
-    desc: "Site rápido, bonito e que converte. Do domínio ao ar em dias — focado em performance, experiência e geração de leads qualificados.",
+    desc: "Desenvolvimento de sites e landing pages otimizadas para conversão, com foco em performance, experiência do usuário e geração de oportunidades comerciais.",
     color: "#AAFF00",
   },
   {
     icon: "⚡",
     name: "Automação",
-    desc: "Fluxos no WhatsApp que respondem, qualificam e convertem enquanto você foca em cozinhar. Zero lead perdido, atendimento 24h.",
+    desc: "Fluxos no WhatsApp que respondem, qualificam e convertem enquanto você foca no seu negócio. Zero lead perdido, atendimento 24h.",
     color: "#FBBC05",
   },
 ];
@@ -378,6 +378,8 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
 
 // ─── Avulso Card ──────────────────────────────────────────────────
 function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number; inView: boolean }) {
+  const isLight = s.color === "#AAFF00" || s.color === "#FBBC05";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -386,43 +388,54 @@ function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number;
       className="relative flex flex-col"
     >
       <div
-        className="relative bg-[#111111] rounded-2xl border-2 p-5 flex flex-col gap-4 flex-1 transition-all duration-200"
+        className="relative rounded-2xl border-2 border-white/30 p-6 flex flex-col items-center text-center gap-4 flex-1 transition-all duration-200"
         style={{
-          borderColor: `${s.color}50`,
-          boxShadow: `4px 4px 0px 0px ${s.color}55`,
+          background: s.color,
+          boxShadow: "4px 4px 0px 0px rgba(255,255,255,0.25)",
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.boxShadow = `1px 1px 0px 0px ${s.color}55`;
+          (e.currentTarget as HTMLElement).style.boxShadow = "1px 1px 0px 0px rgba(255,255,255,0.25)";
           (e.currentTarget as HTMLElement).style.transform = "translate(3px,3px)";
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.boxShadow = `4px 4px 0px 0px ${s.color}55`;
+          (e.currentTarget as HTMLElement).style.boxShadow = "4px 4px 0px 0px rgba(255,255,255,0.25)";
           (e.currentTarget as HTMLElement).style.transform = "translate(0,0)";
         }}
       >
+        {/* Icon */}
         <div
-          className="w-12 h-12 rounded-full border-2 flex items-center justify-center text-2xl shrink-0"
-          style={{ borderColor: s.color, background: `${s.color}20` }}
+          className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-3xl"
+          style={{ background: "rgba(255,255,255,0.15)" }}
         >
           {s.icon}
         </div>
 
-        <h4 className="font-display font-black text-base uppercase tracking-tight text-white leading-tight">
+        {/* Title */}
+        <h4
+          className="font-display font-black text-base uppercase tracking-tight leading-tight"
+          style={{ color: isLight ? "#1A1A1A" : "#FFFFFF" }}
+        >
           {s.name}
         </h4>
 
-        <p className="text-xs text-white/45 font-medium leading-relaxed flex-1">
+        {/* Desc */}
+        <p
+          className="text-xs font-medium leading-relaxed flex-1"
+          style={{ color: isLight ? "rgba(26,26,26,0.7)" : "rgba(255,255,255,0.8)" }}
+        >
           {s.desc}
         </p>
 
-        <div className="h-px" style={{ background: `${s.color}25` }} />
+        {/* Divider */}
+        <div className="w-full h-px" style={{ background: isLight ? "rgba(26,26,26,0.15)" : "rgba(255,255,255,0.2)" }} />
 
+        {/* CTA */}
         <a
           href={`https://wa.me/5511940502929?text=Quero saber mais sobre ${encodeURIComponent(s.name)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-all duration-200 hover:gap-3"
-          style={{ color: s.color }}
+          style={{ color: isLight ? "#1A1A1A" : "#FFFFFF" }}
         >
           + Saiba mais
           <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5}>
