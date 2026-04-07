@@ -5,10 +5,10 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 const rotatingPhrases = [
-  "Seus resultados te esperam.",
-  "Bem-vindo de volta.",
-  "Tudo sob controle.",
-  "Sua marca em movimento.",
+  "Bem vindo de volta 🦓",
+  "Seus resultados te esperam...",
+  "Borá vender!!",
+  "Vai dar Zbra hoje?",
 ];
 
 function TextRotate({ texts }: { texts: string[] }) {
@@ -26,7 +26,7 @@ function TextRotate({ texts }: { texts: string[] }) {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="absolute inset-0 flex items-center justify-center text-sm text-white/50 font-medium tracking-wide"
+          className="absolute inset-0 flex items-center justify-center text-sm text-[#FF6100] font-semibold tracking-wide"
         >
           {texts[index]}
         </motion.span>
@@ -148,10 +148,8 @@ export default function AreaDoClientePage() {
       >
         <div
           className="bg-white border-2 border-[#1A1A1A] rounded-2xl overflow-hidden"
-          style={{ boxShadow: "6px 6px 0px 0px #FF6100" }}
+          style={{ boxShadow: "6px 6px 0px 0px #1A1A1A" }}
         >
-          {/* Orange top bar */}
-          <div className="h-1.5 bg-[#FF6100] w-full" />
 
           <div className="px-8 pt-8 pb-10">
             {/* Logo */}
@@ -161,19 +159,14 @@ export default function AreaDoClientePage() {
               transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="flex justify-center mb-6"
             >
-              <div
-                className="bg-[#1A1A1A] px-5 py-3 rounded-xl border-2 border-[#1A1A1A]"
-                style={{ boxShadow: "3px 3px 0px 0px #FF6100" }}
-              >
-                <Image
-                  src="/images/logo-zbrand.png"
-                  alt="ZBRAND"
-                  width={120}
-                  height={36}
-                  className="h-7 w-auto"
-                  priority
-                />
-              </div>
+              <Image
+                src="/images/logo-preto-zbrand.png"
+                alt="ZBRAND"
+                width={180}
+                height={54}
+                className="h-12 w-auto"
+                priority
+              />
             </motion.div>
 
             {/* Title */}
@@ -195,12 +188,7 @@ export default function AreaDoClientePage() {
               transition={{ delay: 0.5, duration: 0.4 }}
               className="mb-7"
             >
-              <div
-                className="mx-auto rounded-lg px-4 py-1.5 border border-[#1A1A1A]/10 bg-[#1A1A1A]"
-                style={{ maxWidth: "100%" }}
-              >
-                <TextRotate texts={rotatingPhrases} />
-              </div>
+              <TextRotate texts={rotatingPhrases} />
             </motion.div>
 
             {/* Form */}
