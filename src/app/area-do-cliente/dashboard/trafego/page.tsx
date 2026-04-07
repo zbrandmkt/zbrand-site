@@ -7,7 +7,6 @@ import {
   trafficPageMonths,
   topCreatives,
   monthHistory,
-  monthlyTraffic,
   type Creative,
 } from "../mock-data";
 
@@ -50,19 +49,41 @@ function KpiCard({ emoji, label, value, shadow, delta, deltaInverted = false, de
 }
 
 // ─── Gráfico de Evolução ─────────────────────────────────────────
-function EvolutionChart({ weeks }: { weeks: { label: string; leads: number; invest: number }[] }) {
-  const [hovered, setHovered] = useState<number | null>(null);
+type ChartMetric = "leads" | "invest" | "cpl" | "cpcMeta";
+type ChartPeriod = "week" | "month";
+
+interface ChartPoint { label: string; leads: number; invest: number; cpl: number; cpcMeta: number; }
+
+const metricDefs: Record<ChartMetric, { label: string; color: string; fmt: (n: number) => string; inverted: boolean }> = {
+  leads:   { label: "Leads",       color: "#FF6100", fmt: (n) => `${Math.round(n)} leads`, inverted: false },
+  invest:  { label: "Investimento", color: "#00C2FF", fmt: (n) => `R$ ${n.toFixed(0)}`,    inverted: false },
+  cpl:     { label: "CPL",          color: "#AAFF00", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
+  cpcMeta: { label: "CPC Meta",     color: "#7B2FF7", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
+};
+
+function EvolutionChart({
+  weekPoints, monthPoints,
+}: {
+  weekPoints: ChartPoint[];
+  monthPoints: ChartPoint[];
+}) {
+  const [hovered, setHovered]   = useState<number | null>(null);
+  const [metric, setMetric]     = useState<ChartMetric>("leads");
+  const [period, setPeriod]     = useState<ChartPeriod>("week");
+
+  const data   = period === "week" ? weekPoints : monthPoints;
+  const def    = metricDefs[metric];
+  const values = data.map(d => d[metric]);
+
   const W = 800, H = 190;
   const PL = 10, PR = 10, PT = 28, PB = 28;
   const cW = W - PL - PR, cH = H - PT - PB;
-  const n = weeks.length;
+  const n  = data.length;
 
-  const maxLeads  = Math.max(...weeks.map(d => d.leads))  * 1.2;
-  const maxInvest = Math.max(...weeks.map(d => d.invest)) * 1.2;
-
-  const xPos = (i: number) => PL + (n === 1 ? cW / 2 : (i / (n - 1)) * cW);
-  const yL   = (v: number) => PT + cH - (v / maxLeads)  * cH;
-  const yI   = (v: number) => PT + cH - (v / maxInvest) * cH;
+  const minV  = Math.min(...values) * 0.85;
+  const maxV  = Math.max(...values) * 1.18;
+  const xPos  = (i: number) => PL + (n <= 1 ? cW / 2 : (i / (n - 1)) * cW);
+  const yPos  = (v: number) => PT + cH - ((v - minV) / (maxV - minV)) * cH;
 
   const smooth = (pts: [number, number][]) =>
     pts.map(([x, y], i) => {
@@ -72,54 +93,92 @@ function EvolutionChart({ weeks }: { weeks: { label: string; leads: number; inve
       return `C ${cx} ${py} ${cx} ${y} ${x} ${y}`;
     }).join(" ");
 
-  const leadsPoints:  [number, number][] = weeks.map((d, i) => [xPos(i), yL(d.leads)]);
-  const investPoints: [number, number][] = weeks.map((d, i) => [xPos(i), yI(d.invest)]);
-  const leadsPath  = smooth(leadsPoints);
-  const investPath = smooth(investPoints);
-  const areaPath   = `${leadsPath} L ${xPos(n - 1)} ${PT + cH} L ${xPos(0)} ${PT + cH} Z`;
+  const points: [number, number][] = data.map((d, i) => [xPos(i), yPos(d[metric])]);
+  const linePath  = smooth(points);
+  const areaPath  = `${linePath} L ${xPos(n - 1)} ${PT + cH} L ${xPos(0)} ${PT + cH} Z`;
+  const gradId    = `chartGrad_${metric}`;
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-4 mb-3">
-        <div className="flex items-center gap-1.5">
-          <div className="w-4 h-0.5 bg-[#FF6100] rounded-full" />
-          <span className="text-[10px] font-bold text-[#1A1A1A]/40 uppercase tracking-wide">Leads</span>
+      {/* Controls */}
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+        {/* Metric selector */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {(Object.keys(metricDefs) as ChartMetric[]).map(m => {
+            const d = metricDefs[m];
+            const active = metric === m;
+            return (
+              <button key={m} onClick={() => { setMetric(m); setHovered(null); }}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 transition-all text-[10px] font-black uppercase tracking-wide"
+                style={{
+                  borderColor: active ? d.color : "#1A1A1A20",
+                  background: active ? `${d.color}18` : "transparent",
+                  color: active ? d.color : "#1A1A1A50",
+                }}>
+                <span className="w-2 h-2 rounded-full" style={{ background: active ? d.color : "#1A1A1A25" }} />
+                {d.label}
+              </button>
+            );
+          })}
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-4 border-t-2 border-dashed border-[#00C2FF]" />
-          <span className="text-[10px] font-bold text-[#1A1A1A]/40 uppercase tracking-wide">Investimento</span>
+
+        {/* Period toggle */}
+        <div className="flex items-center border-2 border-[#1A1A1A] rounded-xl overflow-hidden"
+          style={{ boxShadow: "2px 2px 0px 0px #1A1A1A" }}>
+          {(["week", "month"] as ChartPeriod[]).map(p => (
+            <button key={p} onClick={() => { setPeriod(p); setHovered(null); }}
+              className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wide transition-all"
+              style={{
+                background: period === p ? "#1A1A1A" : "white",
+                color: period === p ? "white" : "#1A1A1A60",
+              }}>
+              {p === "week" ? "Semana" : "Mês"}
+            </button>
+          ))}
         </div>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" preserveAspectRatio="none" style={{ height: "170px" }}>
+
+      {/* SVG Chart */}
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" preserveAspectRatio="none" style={{ height: "160px" }}>
         <defs>
-          <linearGradient id="leadsGradTraf" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stopColor="#FF6100" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#FF6100" stopOpacity="0"    />
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor={def.color} stopOpacity="0.22" />
+            <stop offset="100%" stopColor={def.color} stopOpacity="0"    />
           </linearGradient>
         </defs>
+
+        {/* Grid */}
         {[0.25, 0.5, 0.75].map(p => (
           <line key={p} x1={PL} y1={PT + cH * (1 - p)} x2={W - PR} y2={PT + cH * (1 - p)}
             stroke="#1A1A1A" strokeOpacity="0.06" strokeWidth="1" />
         ))}
-        <path d={investPath} fill="none" stroke="#00C2FF" strokeWidth="1.8" strokeDasharray="7 4" strokeOpacity="0.55" />
-        <path d={areaPath}  fill="url(#leadsGradTraf)" />
-        <path d={leadsPath} fill="none" stroke="#FF6100" strokeWidth="2.5" />
-        {leadsPoints.map(([x, y], i) => {
-          const isHov = hovered === i;
+
+        {/* Area + line */}
+        <path d={areaPath}  fill={`url(#${gradId})`} />
+        <path d={linePath}  fill="none" stroke={def.color} strokeWidth="2.5" />
+
+        {/* Dots */}
+        {points.map(([x, y], i) => {
+          const isHov   = hovered === i;
+          const val     = values[i];
+          const tooltip = def.fmt(val);
+          const tW      = tooltip.length * 7 + 16;
+          const tX      = Math.min(Math.max(x - tW / 2, PL), W - PR - tW);
           return (
-            <g key={i}>
-              {isHov && <rect x={x - 30} y={y - 28} width={60} height={20} rx="4" fill="#1A1A1A" />}
+            <g key={i} style={{ cursor: "pointer" }}
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}>
+              {isHov && <rect x={tX} y={y - 28} width={tW} height={20} rx="4" fill="#1A1A1A" />}
               {isHov && (
-                <text x={x} y={y - 13} textAnchor="middle" fill="white" fontSize="11" fontWeight="800">
-                  {weeks[i].leads} leads
+                <text x={tX + tW / 2} y={y - 13} textAnchor="middle" fill="white" fontSize="11" fontWeight="800">
+                  {tooltip}
                 </text>
               )}
-              <circle cx={x} cy={y} r={isHov ? 6 : 4.5} fill="white" stroke="#FF6100" strokeWidth="2.5"
-                style={{ cursor: "pointer" }}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)} />
-              <text x={x} y={H - 4} textAnchor="middle" fill="#1A1A1A" fontSize="9" opacity="0.35" fontWeight="600">
-                {weeks[i].label}
+              <circle cx={x} cy={y} r={isHov ? 6 : 4.5}
+                fill="white" stroke={def.color} strokeWidth="2.5" />
+              <text x={x} y={H - 4} textAnchor="middle"
+                fill="#1A1A1A" fontSize="9" opacity="0.35" fontWeight="600">
+                {data[i].label}
               </text>
             </g>
           );
@@ -446,7 +505,16 @@ export default function TrafegoPagoPage() {
               </div>
             )}
           </div>
-          <EvolutionChart weeks={cur.evolutionWeeks} />
+          <EvolutionChart
+            weekPoints={cur.evolutionWeeks}
+            monthPoints={monthHistory.slice(0, cur.historyIdx + 1).map(m => ({
+              label: m.shortMonth,
+              leads: m.leads,
+              invest: m.invest,
+              cpl: m.cpl,
+              cpcMeta: m.avgCpcMeta,
+            }))}
+          />
         </motion.div>
 
         <motion.div

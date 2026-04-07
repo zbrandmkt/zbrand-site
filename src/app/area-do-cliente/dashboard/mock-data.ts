@@ -266,7 +266,7 @@ export interface TrafficPageMonth {
     meta:   { avgCpl: number; totalLeads: number; percentLeads: number; totalInvest: number; percentInvest: number; bestWeek: string; worstWeek: string };
     google: { avgCpl: number; totalLeads: number; percentLeads: number; totalInvest: number; percentInvest: number; bestWeek: string; worstWeek: string };
   };
-  evolutionWeeks: { label: string; leads: number; invest: number }[];
+  evolutionWeeks: { label: string; leads: number; invest: number; cpl: number; cpcMeta: number }[];
 }
 
 export const trafficPageMonths: TrafficPageMonth[] = [
@@ -279,10 +279,10 @@ export const trafficPageMonths: TrafficPageMonth[] = [
       google: { avgCpl: 58.40, totalLeads: 17, percentLeads: 5.4,  totalInvest: 800, percentInvest: 52.6, bestWeek: "Sem 3 · Jan", worstWeek: "Sem 1 · Jan" },
     },
     evolutionWeeks: [
-      { label: "S1 JAN", leads: 68,  invest: 358 },
-      { label: "S2 JAN", leads: 79,  invest: 372 },
-      { label: "S3 JAN", leads: 84,  invest: 384 },
-      { label: "S4 JAN", leads: 81,  invest: 386 },
+      { label: "S1 JAN", leads: 68,  invest: 358, cpl: 5.26, cpcMeta: 0.84 },
+      { label: "S2 JAN", leads: 79,  invest: 372, cpl: 4.71, cpcMeta: 0.80 },
+      { label: "S3 JAN", leads: 84,  invest: 384, cpl: 4.57, cpcMeta: 0.79 },
+      { label: "S4 JAN", leads: 81,  invest: 386, cpl: 4.77, cpcMeta: 0.81 },
     ],
   },
   {
@@ -294,10 +294,10 @@ export const trafficPageMonths: TrafficPageMonth[] = [
       google: { avgCpl: 61.25, totalLeads: 20, percentLeads: 5.6,  totalInvest: 863, percentInvest: 53.8, bestWeek: "Sem 4 · Fev", worstWeek: "Sem 1 · Fev" },
     },
     evolutionWeeks: [
-      { label: "S1 FEV", leads: 79,  invest: 398 },
-      { label: "S2 FEV", leads: 88,  invest: 415 },
-      { label: "S3 FEV", leads: 98,  invest: 430 },
-      { label: "S4 FEV", leads: 93,  invest: 424 },
+      { label: "S1 FEV", leads: 79,  invest: 398, cpl: 5.04, cpcMeta: 0.79 },
+      { label: "S2 FEV", leads: 88,  invest: 415, cpl: 4.72, cpcMeta: 0.76 },
+      { label: "S3 FEV", leads: 98,  invest: 430, cpl: 4.39, cpcMeta: 0.73 },
+      { label: "S4 FEV", leads: 93,  invest: 424, cpl: 4.56, cpcMeta: 0.75 },
     ],
   },
   {
@@ -309,10 +309,10 @@ export const trafficPageMonths: TrafficPageMonth[] = [
       google: { avgCpl: 64.78, totalLeads: 15, percentLeads: 4.8, totalInvest: 963, percentInvest: 54.1, bestWeek: "Sem 2 · Mar", worstWeek: "Sem 1 · Mar" },
     },
     evolutionWeeks: [
-      { label: "S1 MAR", leads: 91,  invest: 425 },
-      { label: "S2 MAR", leads: 97,  invest: 440 },
-      { label: "S3 MAR", leads: 101, invest: 453 },
-      { label: "S4 MAR", leads: 103, invest: 462 },
+      { label: "S1 MAR", leads: 91,  invest: 425, cpl: 4.67, cpcMeta: 0.74 },
+      { label: "S2 MAR", leads: 97,  invest: 440, cpl: 4.54, cpcMeta: 0.72 },
+      { label: "S3 MAR", leads: 101, invest: 453, cpl: 4.48, cpcMeta: 0.70 },
+      { label: "S4 MAR", leads: 103, invest: 462, cpl: 4.49, cpcMeta: 0.69 },
     ],
   },
   {
@@ -324,10 +324,10 @@ export const trafficPageMonths: TrafficPageMonth[] = [
       google: { avgCpl: 51.83, totalLeads: 21, percentLeads: 4.8,  totalInvest: 1000, percentInvest: 52.8, bestWeek: "Sem 4 · Abr", worstWeek: "Sem 1 · Abr" },
     },
     evolutionWeeks: [
-      { label: "S1 ABR", leads: 99,  invest: 450 },
-      { label: "S2 ABR", leads: 106, invest: 473 },
-      { label: "S3 ABR", leads: 113, invest: 484 },
-      { label: "S4 ABR", leads: 118, invest: 488 },
+      { label: "S1 ABR", leads: 99,  invest: 450, cpl: 4.55, cpcMeta: 0.71 },
+      { label: "S2 ABR", leads: 106, invest: 473, cpl: 4.46, cpcMeta: 0.68 },
+      { label: "S3 ABR", leads: 113, invest: 484, cpl: 4.28, cpcMeta: 0.65 },
+      { label: "S4 ABR", leads: 118, invest: 488, cpl: 4.14, cpcMeta: 0.63 },
     ],
   },
 ];
