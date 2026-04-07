@@ -332,6 +332,223 @@ export const trafficPageMonths: TrafficPageMonth[] = [
   },
 ];
 
+// ─── METAS ──────────────────────────────────────────────────────
+
+export type MetaStatus = "achieved" | "ontrack" | "attention";
+
+export interface GoalItem {
+  id: string;
+  label: string;
+  emoji: string;
+  current: number;
+  target: number;
+  unit: string;
+  lowerIsBetter?: boolean; // para CPL, CPC
+  platform?: "meta" | "google" | "social";
+}
+
+export interface MonthGoals {
+  month: string;
+  shortMonth: string;
+  year: number;
+  traffic: GoalItem[];
+  social: GoalItem[];
+}
+
+export const monthGoals: MonthGoals[] = [
+  {
+    month: "Janeiro", shortMonth: "JAN", year: 2026,
+    traffic: [
+      { id: "leads-meta",   label: "Leads Meta",    emoji: "🎯", current: 295, target: 400, unit: "leads",    platform: "meta"   },
+      { id: "cpl-meta",     label: "CPL Meta",       emoji: "💰", current: 1.98, target: 2.50, unit: "R$",   lowerIsBetter: true, platform: "meta"   },
+      { id: "leads-google", label: "Leads Google",  emoji: "🎯", current: 17,  target: 20,  unit: "leads",    platform: "google" },
+      { id: "cpl-google",   label: "CPL Google",    emoji: "💰", current: 58.40, target: 60.00, unit: "R$", lowerIsBetter: true, platform: "google" },
+      { id: "budget-meta",  label: "Budget Meta",   emoji: "💸", current: 800, target: 800, unit: "R$",       platform: "meta"   },
+    ],
+    social: [
+      { id: "views",       label: "Visualizações",   emoji: "👁️", current: 3200, target: 4000,  unit: "views" },
+      { id: "followers",   label: "Seguidores novos",emoji: "👥", current: 5,    target: 10,    unit: "seguidores" },
+      { id: "reels",       label: "Reels publicados",emoji: "🎬", current: 6,    target: 8,     unit: "reels" },
+      { id: "engagement",  label: "Engajamento",     emoji: "❤️", current: 3.8,  target: 3.0,   unit: "%", lowerIsBetter: false },
+    ],
+  },
+  {
+    month: "Fevereiro", shortMonth: "FEV", year: 2026,
+    traffic: [
+      { id: "leads-meta",   label: "Leads Meta",    emoji: "🎯", current: 338, target: 440, unit: "leads",    platform: "meta"   },
+      { id: "cpl-meta",     label: "CPL Meta",       emoji: "💰", current: 2.06, target: 2.50, unit: "R$",   lowerIsBetter: true, platform: "meta"   },
+      { id: "leads-google", label: "Leads Google",  emoji: "🎯", current: 20,  target: 22,  unit: "leads",    platform: "google" },
+      { id: "cpl-google",   label: "CPL Google",    emoji: "💰", current: 61.25, target: 60.00, unit: "R$", lowerIsBetter: true, platform: "google" },
+      { id: "budget-meta",  label: "Budget Meta",   emoji: "💸", current: 850, target: 850, unit: "R$",       platform: "meta"   },
+    ],
+    social: [
+      { id: "views",       label: "Visualizações",   emoji: "👁️", current: 3670, target: 4500,  unit: "views" },
+      { id: "followers",   label: "Seguidores novos",emoji: "👥", current: 6,    target: 12,    unit: "seguidores" },
+      { id: "reels",       label: "Reels publicados",emoji: "🎬", current: 7,    target: 8,     unit: "reels" },
+      { id: "engagement",  label: "Engajamento",     emoji: "❤️", current: 4.1,  target: 3.0,   unit: "%", lowerIsBetter: false },
+    ],
+  },
+  {
+    month: "Março", shortMonth: "MAR", year: 2026,
+    traffic: [
+      { id: "leads-meta",   label: "Leads Meta",    emoji: "🎯", current: 377, target: 460, unit: "leads",    platform: "meta"   },
+      { id: "cpl-meta",     label: "CPL Meta",       emoji: "💰", current: 2.17, target: 2.50, unit: "R$",   lowerIsBetter: true, platform: "meta"   },
+      { id: "leads-google", label: "Leads Google",  emoji: "🎯", current: 15,  target: 22,  unit: "leads",    platform: "google" },
+      { id: "cpl-google",   label: "CPL Google",    emoji: "💰", current: 64.78, target: 60.00, unit: "R$", lowerIsBetter: true, platform: "google" },
+      { id: "budget-meta",  label: "Budget Meta",   emoji: "💸", current: 900, target: 900, unit: "R$",       platform: "meta"   },
+    ],
+    social: [
+      { id: "views",       label: "Visualizações",   emoji: "👁️", current: 3670, target: 5000,  unit: "views" },
+      { id: "followers",   label: "Seguidores novos",emoji: "👥", current: 6,    target: 15,    unit: "seguidores" },
+      { id: "reels",       label: "Reels publicados",emoji: "🎬", current: 7,    target: 8,     unit: "reels" },
+      { id: "engagement",  label: "Engajamento",     emoji: "❤️", current: 4.3,  target: 3.0,   unit: "%", lowerIsBetter: false },
+    ],
+  },
+  {
+    month: "Abril", shortMonth: "ABR", year: 2026,
+    traffic: [
+      { id: "leads-meta",   label: "Leads Meta",    emoji: "🎯", current: 415,  target: 500,   unit: "leads",    platform: "meta"   },
+      { id: "cpl-meta",     label: "CPL Meta",       emoji: "💰", current: 2.11, target: 2.50,  unit: "R$",      lowerIsBetter: true, platform: "meta"   },
+      { id: "leads-google", label: "Leads Google",  emoji: "🎯", current: 21,   target: 25,    unit: "leads",    platform: "google" },
+      { id: "cpl-google",   label: "CPL Google",    emoji: "💰", current: 51.83,target: 50.00, unit: "R$",      lowerIsBetter: true, platform: "google" },
+      { id: "budget-meta",  label: "Budget Meta",   emoji: "💸", current: 857,  target: 900,   unit: "R$",       platform: "meta"   },
+    ],
+    social: [
+      { id: "views",       label: "Visualizações",   emoji: "👁️", current: 4670, target: 5000,  unit: "views" },
+      { id: "followers",   label: "Seguidores novos",emoji: "👥", current: 7,    target: 15,    unit: "seguidores" },
+      { id: "reels",       label: "Reels publicados",emoji: "🎬", current: 8,    target: 8,     unit: "reels" },
+      { id: "engagement",  label: "Engajamento",     emoji: "❤️", current: 4.83, target: 3.0,   unit: "%", lowerIsBetter: false },
+    ],
+  },
+];
+
+// ─── SOCIAL MEDIA — PÁGINA DEDICADA ─────────────────────────────
+
+export interface SocialTopPost {
+  rank: number;
+  title: string;
+  type: "reel" | "post" | "carousel" | "story";
+  views: number;
+  likes: number;
+  comments: number;
+  shares: number;
+  thumbBg: string;
+  thumbAccent: string;
+}
+
+export interface FormatStat {
+  format: string;
+  emoji: string;
+  count: number;
+  avgViews: number;
+  avgEngagement: number;
+  color: string;
+}
+
+export interface DayPresence {
+  day: number;
+  weekday: number; // 0=dom ... 6=sab
+  posts: number;
+  views: number;
+}
+
+export interface SocialPageMonth {
+  month: string;
+  shortMonth: string;
+  year: number;
+  kpis: { views: number; reach: number; newFollowers: number; interactions: number; reels: number; stories: number; posts: number; carrosseis: number };
+  evolutionWeeks: { label: string; views: number; followers: number; interactions: number; posts: number }[];
+  formatStats: FormatStat[];
+  topPosts: SocialTopPost[];
+  engagementRate: number;
+  dailyPresence: DayPresence[];
+}
+
+export const socialPageMonths: SocialPageMonth[] = [
+  {
+    month: "Março", shortMonth: "MAR", year: 2026,
+    kpis: { views: 3670, reach: 1820, newFollowers: 6, interactions: 84, reels: 6, stories: 89, posts: 1, carrosseis: 1 },
+    evolutionWeeks: [
+      { label: "S1 MAR", views: 750,  followers: 1, interactions: 18, posts: 2 },
+      { label: "S2 MAR", views: 890,  followers: 2, interactions: 22, posts: 3 },
+      { label: "S3 MAR", views: 1100, followers: 1, interactions: 28, posts: 3 },
+      { label: "S4 MAR", views: 930,  followers: 2, interactions: 16, posts: 2 },
+    ],
+    formatStats: [
+      { format: "Reels",    emoji: "🎬", count: 6,   avgViews: 412,  avgEngagement: 5.2, color: "#FF6100" },
+      { format: "Stories",  emoji: "📲", count: 89,  avgViews: 28,   avgEngagement: 1.8, color: "#7B2FF7" },
+      { format: "Posts",    emoji: "🖼️", count: 1,   avgViews: 310,  avgEngagement: 3.9, color: "#00C2FF" },
+      { format: "Carrossel",emoji: "📑", count: 1,   avgViews: 280,  avgEngagement: 4.1, color: "#AAFF00" },
+    ],
+    topPosts: [
+      { rank: 1, title: "Quarto com vista para o mar — transformação", type: "reel",     views: 2900, likes: 87,  comments: 12, shares: 24, thumbBg: "#1A1A1A", thumbAccent: "#FF6100" },
+      { rank: 2, title: "Café da manhã incluído — novidade!",          type: "reel",     views: 1840, likes: 64,  comments: 8,  shares: 11, thumbBg: "#0F2744", thumbAccent: "#00C2FF" },
+      { rank: 3, title: "5 razões para se hospedar na Staytrix",       type: "carousel", views: 980,  likes: 41,  comments: 6,  shares: 9,  thumbBg: "#1E1035", thumbAccent: "#7B2FF7" },
+      { rank: 4, title: "Check-in sem filas — tecnologia no hotel",    type: "post",     views: 760,  likes: 28,  comments: 3,  shares: 5,  thumbBg: "#0D2B1A", thumbAccent: "#AAFF00" },
+      { rank: 5, title: "Tour pelo lobby renovado",                    type: "reel",     views: 640,  likes: 22,  comments: 4,  shares: 7,  thumbBg: "#2B1A08", thumbAccent: "#FBBC05" },
+    ],
+    engagementRate: 4.3,
+    dailyPresence: [
+      { day: 1,  weekday: 0, posts: 0, views: 0   }, { day: 2,  weekday: 1, posts: 1, views: 210 },
+      { day: 3,  weekday: 2, posts: 0, views: 0   }, { day: 4,  weekday: 3, posts: 1, views: 180 },
+      { day: 5,  weekday: 4, posts: 0, views: 0   }, { day: 6,  weekday: 5, posts: 1, views: 360 },
+      { day: 7,  weekday: 6, posts: 0, views: 0   }, { day: 8,  weekday: 0, posts: 1, views: 195 },
+      { day: 9,  weekday: 1, posts: 1, views: 220 }, { day: 10, weekday: 2, posts: 0, views: 0   },
+      { day: 11, weekday: 3, posts: 1, views: 285 }, { day: 12, weekday: 4, posts: 1, views: 310 },
+      { day: 13, weekday: 5, posts: 1, views: 395 }, { day: 14, weekday: 6, posts: 0, views: 0   },
+      { day: 15, weekday: 0, posts: 1, views: 240 }, { day: 16, weekday: 1, posts: 1, views: 265 },
+      { day: 17, weekday: 2, posts: 0, views: 0   }, { day: 18, weekday: 3, posts: 1, views: 310 },
+      { day: 19, weekday: 4, posts: 1, views: 340 }, { day: 20, weekday: 5, posts: 1, views: 420 },
+      { day: 21, weekday: 6, posts: 0, views: 0   }, { day: 22, weekday: 0, posts: 1, views: 195 },
+      { day: 23, weekday: 1, posts: 0, views: 0   }, { day: 24, weekday: 2, posts: 1, views: 215 },
+      { day: 25, weekday: 3, posts: 1, views: 230 }, { day: 26, weekday: 4, posts: 0, views: 0   },
+      { day: 27, weekday: 5, posts: 1, views: 285 }, { day: 28, weekday: 6, posts: 0, views: 0   },
+      { day: 29, weekday: 0, posts: 1, views: 200 }, { day: 30, weekday: 1, posts: 0, views: 0   },
+      { day: 31, weekday: 2, posts: 1, views: 220 },
+    ],
+  },
+  {
+    month: "Abril", shortMonth: "ABR", year: 2026,
+    kpis: { views: 4670, reach: 2213, newFollowers: 7, interactions: 107, reels: 8, stories: 103, posts: 1, carrosseis: 1 },
+    evolutionWeeks: [
+      { label: "S1 ABR", views: 980,  followers: 1, interactions: 22, posts: 3 },
+      { label: "S2 ABR", views: 1240, followers: 2, interactions: 28, posts: 2 },
+      { label: "S3 ABR", views: 1890, followers: 3, interactions: 38, posts: 4 },
+      { label: "S4 ABR", views: 2100, followers: 1, interactions: 19, posts: 3 },
+    ],
+    formatStats: [
+      { format: "Reels",    emoji: "🎬", count: 8,   avgViews: 481,  avgEngagement: 5.8, color: "#FF6100" },
+      { format: "Stories",  emoji: "📲", count: 103, avgViews: 31,   avgEngagement: 2.1, color: "#7B2FF7" },
+      { format: "Posts",    emoji: "🖼️", count: 1,   avgViews: 390,  avgEngagement: 4.2, color: "#00C2FF" },
+      { format: "Carrossel",emoji: "📑", count: 1,   avgViews: 340,  avgEngagement: 4.6, color: "#AAFF00" },
+    ],
+    topPosts: [
+      { rank: 1, title: "Quarto com vista — estilo Twitter corto",     type: "reel",     views: 2900, likes: 112, comments: 18, shares: 34, thumbBg: "#1A1A1A", thumbAccent: "#FF6100" },
+      { rank: 2, title: "Depoimento real de hóspede satisfeito",       type: "reel",     views: 2100, likes: 89,  comments: 14, shares: 21, thumbBg: "#0F2744", thumbAccent: "#00C2FF" },
+      { rank: 3, title: "5 experiências únicas na Staytrix",           type: "carousel", views: 1240, likes: 52,  comments: 9,  shares: 15, thumbBg: "#1E1035", thumbAccent: "#7B2FF7" },
+      { rank: 4, title: "Bastidores: preparando o café da manhã",      type: "reel",     views: 980,  likes: 38,  comments: 6,  shares: 12, thumbBg: "#0D2B1A", thumbAccent: "#AAFF00" },
+      { rank: 5, title: "Vista do pôr do sol pelo terraço",            type: "post",     views: 760,  likes: 31,  comments: 5,  shares: 8,  thumbBg: "#2B1A08", thumbAccent: "#FBBC05" },
+    ],
+    engagementRate: 4.83,
+    dailyPresence: [
+      { day: 1,  weekday: 2, posts: 1, views: 210 }, { day: 2,  weekday: 3, posts: 0, views: 0   },
+      { day: 3,  weekday: 4, posts: 1, views: 185 }, { day: 4,  weekday: 5, posts: 1, views: 310 },
+      { day: 5,  weekday: 6, posts: 0, views: 0   }, { day: 6,  weekday: 0, posts: 1, views: 195 },
+      { day: 7,  weekday: 1, posts: 1, views: 280 }, { day: 8,  weekday: 2, posts: 1, views: 245 },
+      { day: 9,  weekday: 3, posts: 0, views: 0   }, { day: 10, weekday: 4, posts: 1, views: 320 },
+      { day: 11, weekday: 5, posts: 1, views: 415 }, { day: 12, weekday: 6, posts: 0, views: 0   },
+      { day: 13, weekday: 0, posts: 1, views: 260 }, { day: 14, weekday: 1, posts: 1, views: 295 },
+      { day: 15, weekday: 2, posts: 1, views: 380 }, { day: 16, weekday: 3, posts: 1, views: 440 },
+      { day: 17, weekday: 4, posts: 1, views: 510 }, { day: 18, weekday: 5, posts: 1, views: 620 },
+      { day: 19, weekday: 6, posts: 0, views: 0   }, { day: 20, weekday: 0, posts: 1, views: 350 },
+      { day: 21, weekday: 1, posts: 1, views: 390 }, { day: 22, weekday: 2, posts: 1, views: 460 },
+      { day: 23, weekday: 3, posts: 1, views: 520 }, { day: 24, weekday: 4, posts: 1, views: 580 },
+      { day: 25, weekday: 5, posts: 1, views: 695 }, { day: 26, weekday: 6, posts: 0, views: 0   },
+      { day: 27, weekday: 0, posts: 1, views: 420 }, { day: 28, weekday: 1, posts: 1, views: 480 },
+    ],
+  },
+];
+
 // Comparação por plataforma
 export const platformStats = {
   meta: {

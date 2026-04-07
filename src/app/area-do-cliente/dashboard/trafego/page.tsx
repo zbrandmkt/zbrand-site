@@ -7,8 +7,101 @@ import {
   trafficPageMonths,
   topCreatives,
   monthHistory,
+  monthGoals,
   type Creative,
+  type GoalItem,
 } from "../mock-data";
+
+// ─── Metas do Mês ───────────────────────────────────────────────
+function getGoalStatus(g: GoalItem): { status: "achieved" | "ontrack" | "attention"; pct: number } {
+  if (g.lowerIsBetter) {
+    const pct = Math.min((g.target / g.current) * 100, 100);
+    const status = g.current <= g.target ? "achieved" : g.current <= g.target * 1.1 ? "ontrack" : "attention";
+    return { status, pct };
+  }
+  const pct = Math.min((g.current / g.target) * 100, 100);
+  const status = pct >= 100 ? "achieved" : pct >= 70 ? "ontrack" : "attention";
+  return { status, pct };
+}
+
+const statusCfg = {
+  achieved:  { label: "✓ Atingida",    bg: "#22c55e15", border: "#22c55e40", bar: "#22c55e", text: "#22c55e" },
+  ontrack:   { label: "→ No caminho",  bg: "#FBBC0515", border: "#FBBC0540", bar: "#FBBC05", text: "#ca8a04" },
+  attention: { label: "⚠ Atenção",    bg: "#ef444415", border: "#ef444440", bar: "#ef4444", text: "#ef4444" },
+};
+
+const platformCfg = {
+  meta:   { badge: "META",   badgeBg: "#1877F2", badgeColor: "white" },
+  google: { badge: "GOOGLE", badgeBg: "#FBBC05", badgeColor: "#1A1A1A" },
+  social: { badge: "SOCIAL", badgeBg: "#FF6100", badgeColor: "white" },
+};
+
+function GoalsSection({ goals, delay = 0 }: { goals: GoalItem[]; delay?: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.4 }}
+      className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
+      style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
+    >
+      <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">🎯 Metas do Mês</p>
+      <div className="grid grid-cols-5 gap-3">
+        {goals.map((g, i) => {
+          const { status, pct } = getGoalStatus(g);
+          const cfg = statusCfg[status];
+          const plt = g.platform ? platformCfg[g.platform] : null;
+          const displayCurrent = g.unit === "R$" ? `R$ ${g.current.toFixed(2)}` : `${g.current} ${g.unit}`;
+          const displayTarget  = g.unit === "R$" ? `R$ ${g.target.toFixed(2)}`  : `${g.target} ${g.unit}`;
+          return (
+            <motion.div
+              key={g.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: delay + i * 0.05, duration: 0.35 }}
+              className="rounded-2xl border-2 p-4 flex flex-col gap-2"
+              style={{ background: cfg.bg, borderColor: cfg.border }}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base leading-none">{g.emoji}</span>
+                  {plt && (
+                    <span className="text-[8px] font-black px-1.5 py-0.5 rounded-full"
+                      style={{ background: plt.badgeBg, color: plt.badgeColor }}>{plt.badge}</span>
+                  )}
+                </div>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
+                  style={{ background: cfg.bar + "25", color: cfg.text }}>{cfg.label}</span>
+              </div>
+
+              {/* Label + valores */}
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50 leading-none mb-1">{g.label}</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-black text-[#1A1A1A] leading-none">{displayCurrent}</span>
+                  <span className="text-[10px] text-[#1A1A1A]/30 font-medium">/ {displayTarget}</span>
+                </div>
+              </div>
+
+              {/* Barra de progresso */}
+              <div className="h-2 bg-[#1A1A1A]/08 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pct}%` }}
+                  transition={{ delay: delay + i * 0.05 + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-full rounded-full"
+                  style={{ background: cfg.bar }}
+                />
+              </div>
+              <p className="text-[10px] font-black text-right" style={{ color: cfg.text }}>{pct.toFixed(0)}%</p>
+            </motion.div>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
 
 // ─── Helpers ────────────────────────────────────────────────────
 function fmtR(n: number) {
@@ -381,13 +474,14 @@ function StatRow({ label, value }: { label: string; value: string }) {
 export default function TrafegoPagoPage() {
   const [monthIdx, setMonthIdx] = useState(trafficPageMonths.length - 1);
 
-  const cur  = trafficPageMonths[monthIdx];
-  const prev = trafficPageMonths[monthIdx - 1] ?? null;
-  const hist = monthHistory[cur.historyIdx];
+  const cur      = trafficPageMonths[monthIdx];
+  const prev     = trafficPageMonths[monthIdx - 1] ?? null;
+  const hist     = monthHistory[cur.historyIdx];
   const prevHist = prev ? monthHistory[prev.historyIdx] : null;
-  const hasPrev = monthIdx > 0;
-  const hasNext = monthIdx < trafficPageMonths.length - 1;
+  const hasPrev  = monthIdx > 0;
+  const hasNext  = monthIdx < trafficPageMonths.length - 1;
   const isClosed = cur.budget.daysLeft === 0;
+  const curGoals = monthGoals[cur.historyIdx]?.traffic ?? monthGoals[monthGoals.length - 1].traffic;
 
   return (
     <div className="p-8 max-w-[1400px]">
@@ -479,6 +573,9 @@ export default function TrafegoPagoPage() {
           </div>
         </motion.div>
       </div>
+
+      {/* Metas */}
+      <GoalsSection goals={curGoals} delay={0.28} />
 
       {/* Gráfico + Funil */}
       <div className="grid grid-cols-5 gap-4 mb-5">
