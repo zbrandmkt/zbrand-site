@@ -55,10 +55,10 @@ type ChartPeriod = "week" | "month";
 interface ChartPoint { label: string; leads: number; invest: number; cpl: number; cpcMeta: number; }
 
 const metricDefs: Record<ChartMetric, { label: string; color: string; fmt: (n: number) => string; inverted: boolean }> = {
-  leads:   { label: "Leads",       color: "#FF6100", fmt: (n) => `${Math.round(n)} leads`, inverted: false },
-  invest:  { label: "Investimento", color: "#00C2FF", fmt: (n) => `R$ ${n.toFixed(0)}`,    inverted: false },
-  cpl:     { label: "CPL",          color: "#AAFF00", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
-  cpcMeta: { label: "CPC Meta",     color: "#7B2FF7", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
+  leads:   { label: "Leads",        color: "#00C2FF", fmt: (n) => `${Math.round(n)} leads`, inverted: false },
+  invest:  { label: "Investimento",  color: "#FF6100", fmt: (n) => `R$ ${n.toFixed(0)}`,    inverted: false },
+  cpl:     { label: "CPL",           color: "#AAFF00", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
+  cpcMeta: { label: "CPC Meta",      color: "#7B2FF7", fmt: (n) => `R$ ${n.toFixed(2)}`,    inverted: true  },
 };
 
 function EvolutionChart({
