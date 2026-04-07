@@ -104,7 +104,10 @@ function TrafficWeekCol({ week, prev, index }: { week: TrafficWeek; prev?: Traff
     >
       {/* Week header */}
       <div className="bg-[#1A1A1A] px-4 py-3">
-        <p className="text-xs font-black text-white uppercase tracking-widest">{week.label}</p>
+        <p className="text-xs font-black text-white uppercase tracking-widest">
+          <span className="hidden xl:inline">SEMANA {index + 1}</span>
+          <span className="xl:hidden">{week.label}</span>
+        </p>
         <p className="text-[10px] text-white/40 font-medium mt-0.5">{week.dates}</p>
       </div>
 
@@ -178,7 +181,10 @@ function SocialWeekCol({ week, prev, index }: { week: SocialWeek; prev?: SocialW
       style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
     >
       <div className="bg-[#1A1A1A] px-4 py-3">
-        <p className="text-xs font-black text-white uppercase tracking-widest">{week.label}</p>
+        <p className="text-xs font-black text-white uppercase tracking-widest">
+          <span className="hidden xl:inline">SEMANA {index + 1}</span>
+          <span className="xl:hidden">{week.label}</span>
+        </p>
         <p className="text-[10px] text-white/40 font-medium mt-0.5">{week.dates}</p>
       </div>
 
@@ -273,18 +279,25 @@ export default function DashboardPage() {
             transition={{ duration: 0.25 }}
           >
             {/* KPIs */}
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
               <KpiCard emoji="💸" label="Total Investido" value={fmtR(monthlyTraffic.totalInvest)} shadow="#FF6100" delay={0} />
               <KpiCard emoji="🎯" label="Total de Leads" value={fmt(monthlyTraffic.totalLeads)} shadow="#00C2FF" delay={0.05} />
               <KpiCard emoji="💰" label="CPL Médio" value={fmtR(monthlyTraffic.avgCpl)} shadow="#AAFF00" delay={0.1} />
               <KpiCard emoji="👆" label="CPC Médio Meta" value={fmtR(monthlyTraffic.avgCpcMeta)} shadow="#7B2FF7" delay={0.15} />
               <KpiCard
                 emoji="💬"
-                label="Saldo Meta"
+                label="Saldo Meta Ads"
                 value={fmtR(monthlyTraffic.saldoMeta)}
                 shadow="#1A1A1A"
                 alert="Saldo baixo"
                 delay={0.2}
+              />
+              <KpiCard
+                emoji="🔵"
+                label="Saldo Google Ads"
+                value={fmtR(monthlyTraffic.saldoGoogle)}
+                shadow="#FBBC05"
+                delay={0.25}
               />
             </div>
 
@@ -308,8 +321,9 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* Notes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Notes + Metas */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Ação da semana */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -325,19 +339,46 @@ export default function DashboardPage() {
                 </p>
               </motion.div>
 
+              {/* Metas Meta Ads */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45, duration: 0.4 }}
-                className="bg-[#FF6100]/8 border-2 border-[#FF6100] rounded-2xl p-6"
-                style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
+                style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
               >
-                <p className="text-[10px] font-black text-[#FF6100] uppercase tracking-widest mb-3">
-                  💡 Sugestão Próximo Mês
-                </p>
-                <p className="text-sm text-[#1A1A1A]/80 leading-relaxed font-medium">
-                  {monthlyTraffic.sugestaoProximoMes}
-                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-[10px] font-black bg-[#1877F2] text-white px-2 py-0.5 rounded-full uppercase tracking-wider">Meta Ads</span>
+                  <p className="text-[10px] font-black text-[#1A1A1A]/40 uppercase tracking-widest">Metas do Mês</p>
+                </div>
+                <ul className="flex flex-col gap-2">
+                  {monthlyTraffic.metasDoMes.meta.map((m) => (
+                    <li key={m} className="text-sm text-[#1A1A1A]/80 font-medium flex items-start gap-2">
+                      <span>{m}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Metas Google Ads */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
+                style={{ boxShadow: "4px 4px 0px 0px #FBBC05" }}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-[10px] font-black bg-[#FBBC05] text-[#1A1A1A] px-2 py-0.5 rounded-full uppercase tracking-wider">Google Ads</span>
+                  <p className="text-[10px] font-black text-[#1A1A1A]/40 uppercase tracking-widest">Metas do Mês</p>
+                </div>
+                <ul className="flex flex-col gap-2">
+                  {monthlyTraffic.metasDoMes.google.map((m) => (
+                    <li key={m} className="text-sm text-[#1A1A1A]/80 font-medium flex items-start gap-2">
+                      <span>{m}</span>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             </div>
           </motion.div>
@@ -406,20 +447,24 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* Notes */}
+            {/* Metas Social */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
-              className="bg-[#FF6100]/8 border-2 border-[#FF6100] rounded-2xl p-6"
+              className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
               style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
             >
-              <p className="text-[10px] font-black text-[#FF6100] uppercase tracking-widest mb-3">
-                💡 Sugestão Próximo Mês
+              <p className="text-[10px] font-black text-[#FF6100] uppercase tracking-widest mb-4">
+                🎯 Metas do Mês
               </p>
-              <p className="text-sm text-[#1A1A1A]/80 leading-relaxed font-medium">
-                {monthlySocial.sugestaoProximoMes}
-              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {monthlySocial.metasDoMes.map((m) => (
+                  <div key={m} className="flex items-start gap-2 bg-[#F5F5F0] rounded-xl px-3 py-2.5">
+                    <span className="text-sm text-[#1A1A1A]/80 font-medium">{m}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         )}

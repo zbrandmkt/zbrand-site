@@ -56,8 +56,20 @@ export const monthlyTraffic = {
   saldoGoogle: 345.16,
   acaoDaSemana:
     "Avaliar qualidade dos leads, novos criativos e filtrar termos de busca negativos para otimizar o custo por lead.",
-  sugestaoProximoMes:
-    "Aumentar budget Meta Ads para escalar volume de leads. Testar criativo com vídeo curto no estilo Reels. Monitorar saldo para evitar que campanhas parem.",
+  metasDoMes: {
+    meta: [
+      "🎯 500 leads no mês",
+      "💰 CPL abaixo de R$ 2,50",
+      "💸 Budget: R$ 900",
+      "📈 Testar 2 novos criativos",
+    ],
+    google: [
+      "🎯 25 leads no mês",
+      "💰 CPL abaixo de R$ 50,00",
+      "💸 Budget: R$ 1.000",
+      "🔍 Refinar palavras negativas",
+    ],
+  },
 };
 
 export const monthlySocial = {
@@ -69,6 +81,10 @@ export const monthlySocial = {
   stories: 103,
   posts: 1,
   carrosseis: 1,
-  sugestaoProximoMes:
-    "Manter formato Reels estilo Twitter que bateu 2.9k views. Testar novos formatos educativos com insights do nicho. Aumentar frequência de stories para manter engajamento diário.",
+  metasDoMes: [
+    "👁️ 5.000 visualizações no mês",
+    "👥 +15 seguidores novos",
+    "🎬 8 Reels publicados",
+    "❤️ Taxa de engajamento acima de 3%",
+  ],
 };
