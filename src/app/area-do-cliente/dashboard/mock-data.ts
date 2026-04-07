@@ -254,6 +254,84 @@ export const monthHistory: MonthHistory[] = [
   { month: "Abril",     shortMonth: "ABR", year: 2026, invest: 1895, leads: 436, cpl: 4.35, avgCpcMeta: 0.67, isCurrent: true },
 ];
 
+// Dados completos por mês para a página de Tráfego Pago
+export interface TrafficPageMonth {
+  month: string;
+  shortMonth: string;
+  year: number;
+  historyIdx: number; // índice em monthHistory
+  funnel: { impressions: number; clicks: number; leads: number; sales: number };
+  budget: { meta: { total: number; spent: number }; google: { total: number; spent: number }; daysLeft: number; daysTotal: number };
+  platform: {
+    meta:   { avgCpl: number; totalLeads: number; percentLeads: number; totalInvest: number; percentInvest: number; bestWeek: string; worstWeek: string };
+    google: { avgCpl: number; totalLeads: number; percentLeads: number; totalInvest: number; percentInvest: number; bestWeek: string; worstWeek: string };
+  };
+  evolutionWeeks: { label: string; leads: number; invest: number }[];
+}
+
+export const trafficPageMonths: TrafficPageMonth[] = [
+  {
+    month: "Janeiro", shortMonth: "JAN", year: 2026, historyIdx: 0,
+    funnel: { impressions: 198000, clicks: 8400, leads: 312, sales: 62 },
+    budget: { meta: { total: 800, spent: 800 }, google: { total: 900, spent: 900 }, daysLeft: 0, daysTotal: 31 },
+    platform: {
+      meta:   { avgCpl: 1.98, totalLeads: 295, percentLeads: 94.6, totalInvest: 720, percentInvest: 47.4, bestWeek: "Sem 2 · Jan", worstWeek: "Sem 4 · Jan" },
+      google: { avgCpl: 58.40, totalLeads: 17, percentLeads: 5.4,  totalInvest: 800, percentInvest: 52.6, bestWeek: "Sem 3 · Jan", worstWeek: "Sem 1 · Jan" },
+    },
+    evolutionWeeks: [
+      { label: "S1 JAN", leads: 68,  invest: 358 },
+      { label: "S2 JAN", leads: 79,  invest: 372 },
+      { label: "S3 JAN", leads: 84,  invest: 384 },
+      { label: "S4 JAN", leads: 81,  invest: 386 },
+    ],
+  },
+  {
+    month: "Fevereiro", shortMonth: "FEV", year: 2026, historyIdx: 1,
+    funnel: { impressions: 224000, clicks: 9600, leads: 358, sales: 71 },
+    budget: { meta: { total: 850, spent: 850 }, google: { total: 950, spent: 950 }, daysLeft: 0, daysTotal: 28 },
+    platform: {
+      meta:   { avgCpl: 2.06, totalLeads: 338, percentLeads: 94.4, totalInvest: 817, percentInvest: 46.2, bestWeek: "Sem 3 · Fev", worstWeek: "Sem 1 · Fev" },
+      google: { avgCpl: 61.25, totalLeads: 20, percentLeads: 5.6,  totalInvest: 863, percentInvest: 53.8, bestWeek: "Sem 4 · Fev", worstWeek: "Sem 1 · Fev" },
+    },
+    evolutionWeeks: [
+      { label: "S1 FEV", leads: 79,  invest: 398 },
+      { label: "S2 FEV", leads: 88,  invest: 415 },
+      { label: "S3 FEV", leads: 98,  invest: 430 },
+      { label: "S4 FEV", leads: 93,  invest: 424 },
+    ],
+  },
+  {
+    month: "Março", shortMonth: "MAR", year: 2026, historyIdx: 2,
+    funnel: { impressions: 241200, clicks: 10400, leads: 396, sales: 79 },
+    budget: { meta: { total: 900, spent: 900 }, google: { total: 1000, spent: 963 }, daysLeft: 0, daysTotal: 31 },
+    platform: {
+      meta:   { avgCpl: 2.17, totalLeads: 377, percentLeads: 95.2, totalInvest: 817, percentInvest: 45.9, bestWeek: "Sem 4 · Mar", worstWeek: "Sem 1 · Mar" },
+      google: { avgCpl: 64.78, totalLeads: 15, percentLeads: 4.8, totalInvest: 963, percentInvest: 54.1, bestWeek: "Sem 2 · Mar", worstWeek: "Sem 1 · Mar" },
+    },
+    evolutionWeeks: [
+      { label: "S1 MAR", leads: 91,  invest: 425 },
+      { label: "S2 MAR", leads: 97,  invest: 440 },
+      { label: "S3 MAR", leads: 101, invest: 453 },
+      { label: "S4 MAR", leads: 103, invest: 462 },
+    ],
+  },
+  {
+    month: "Abril", shortMonth: "ABR", year: 2026, historyIdx: 3,
+    funnel: { impressions: 284500, clicks: 12300, leads: 436, sales: 87 },
+    budget: { meta: { total: 900, spent: 856.79 }, google: { total: 1000, spent: 654.84 }, daysLeft: 23, daysTotal: 30 },
+    platform: {
+      meta:   { avgCpl: 2.11, totalLeads: 415, percentLeads: 95.2, totalInvest: 895,  percentInvest: 47.2, bestWeek: "Sem 3 · Abr", worstWeek: "Sem 1 · Abr" },
+      google: { avgCpl: 51.83, totalLeads: 21, percentLeads: 4.8,  totalInvest: 1000, percentInvest: 52.8, bestWeek: "Sem 4 · Abr", worstWeek: "Sem 1 · Abr" },
+    },
+    evolutionWeeks: [
+      { label: "S1 ABR", leads: 99,  invest: 450 },
+      { label: "S2 ABR", leads: 106, invest: 473 },
+      { label: "S3 ABR", leads: 113, invest: 484 },
+      { label: "S4 ABR", leads: 118, invest: 488 },
+    ],
+  },
+];
+
 // Comparação por plataforma
 export const platformStats = {
   meta: {
