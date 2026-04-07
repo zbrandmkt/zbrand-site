@@ -126,14 +126,7 @@ export function Header() {
           </Link>
 
           <Link
-            href="/membros"
-            className="font-display text-xs font-medium text-cinza-dark hover:text-preto transition-colors uppercase tracking-wide"
-          >
-            Membros
-          </Link>
-
-          <Link
-            href="/membros"
+            href="/area-do-cliente"
             className="btn-brutal !py-1.5 !px-4 text-xs bg-laranja text-white border-preto"
           >
             ÁREA DO CLIENTE
@@ -191,12 +184,9 @@ export function Header() {
               <Link href="/sobre" onClick={() => setMobileOpen(false)} className="font-display text-sm font-medium text-preto">
                 Sobre
               </Link>
-              <Link href="/membros" onClick={() => setMobileOpen(false)} className="font-display text-sm font-medium text-preto">
-                Área do Cliente
-              </Link>
 
               <Link
-                href="/membros"
+                href="/area-do-cliente"
                 className="btn-brutal bg-laranja text-white border-preto text-sm text-center mt-2"
               >
                 ÁREA DO CLIENTE
