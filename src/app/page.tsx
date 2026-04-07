@@ -5,6 +5,7 @@ import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { Services } from "@/components/sections/services";
 import { HowItWorks } from "@/components/sections/how-it-works";
+import { DashboardPreview } from "@/components/sections/dashboard-preview";
 import { Differentials } from "@/components/sections/differentials";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTAFinal } from "@/components/sections/cta-final";
@@ -18,6 +19,7 @@ export default function Home() {
         <Problem />
         <Services />
         <HowItWorks />
+        <DashboardPreview />
         <Differentials />
         <Testimonials />
         <CTAFinal />
