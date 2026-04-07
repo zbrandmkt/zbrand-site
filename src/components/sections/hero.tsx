@@ -15,7 +15,7 @@ const rotateColors = [
 export function Hero() {
   return (
     <InfiniteGrid
-      className="relative min-h-[90vh] flex items-center justify-center pt-14"
+      className="relative min-h-[90vh] flex items-center justify-center pt-[88px]"
       gridColor="rgba(0,0,0,0.07)"
       glowColor="rgba(255,97,0,0.15)"
     >
