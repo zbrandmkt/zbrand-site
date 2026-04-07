@@ -22,7 +22,6 @@ const packages = [
       "Suporte via WhatsApp",
     ],
     cta: "Quero começar",
-    rotation: "-rotate-1",
   },
   {
     id: "full",
@@ -41,22 +40,20 @@ const packages = [
       "Suporte via WhatsApp",
     ],
     cta: "Quero o Full",
-    rotation: "rotate-1",
   },
 ];
 
 // ─── Serviços para o card Personalizado ──────────────────────────
-const FIXED_SERVICES = [
-  { name: "Social Media",          icon: "📱" },
-  { name: "Tráfego Pago",          icon: "🎯" },
-  { name: "Captação de Conteúdo",  icon: "🎬" },
+const ALL_SERVICES = [
+  { name: "Social Media",           icon: "📱" },
+  { name: "Tráfego Pago",           icon: "🎯" },
+  { name: "Captação de Conteúdo",   icon: "🎬" },
+  { name: "Tráfego Orgânico",       icon: "🔍" },
+  { name: "Website & Landing Page", icon: "💻" },
+  { name: "Automação WhatsApp",     icon: "⚡" },
 ];
 
-const OPTIONAL_SERVICES = [
-  { name: "Tráfego Orgânico",        icon: "🔍" },
-  { name: "Website & Landing Page",  icon: "💻" },
-  { name: "Automação WhatsApp",      icon: "⚡" },
-];
+const DEFAULT_SELECTED = ["Social Media", "Tráfego Pago", "Captação de Conteúdo"];
 
 // ─── Serviços Avulsos ─────────────────────────────────────────────
 const avulsos = [
@@ -122,7 +119,7 @@ function PackageCard({ pkg, index, inView }: { pkg: typeof packages[0]; index: n
       initial={{ opacity: 0, y: 28 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: 0.1 + index * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative group flex flex-col ${pkg.rotation}`}
+      className="relative flex flex-col"
     >
       <div
         className="relative bg-white rounded-2xl border-2 p-6 flex flex-col flex-1 transition-all duration-200 cursor-default"
@@ -212,27 +209,24 @@ function PackageCard({ pkg, index, inView }: { pkg: typeof packages[0]; index: n
 // ─── Personalizado Card (interativo) ─────────────────────────────
 function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }) {
   const COLOR = "#7B2FF7";
-  const [selectedOptionals, setSelectedOptionals] = useState<string[]>([]);
-  const [showOptionals, setShowOptionals] = useState(false);
+  const [selected, setSelected] = useState<string[]>(DEFAULT_SELECTED);
+  const [showPicker, setShowPicker] = useState(false);
 
-  function toggleOptional(name: string) {
-    setSelectedOptionals((prev) =>
+  function toggle(name: string) {
+    setSelected((prev) =>
       prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
     );
   }
 
+  const unselected = ALL_SERVICES.filter((s) => !selected.includes(s.name));
+
   function buildWaLink() {
-    const all = [
-      ...FIXED_SERVICES.map((s) => s.name),
-      ...selectedOptionals,
-    ];
-    const msg = `Olá! Quero montar um pacote personalizado com os seguintes serviços: ${all.join(", ")}.`;
+    const msg =
+      selected.length > 0
+        ? `Olá! Quero montar um pacote personalizado com: ${selected.join(", ")}.`
+        : `Olá! Quero saber mais sobre o pacote Personalizado da ZBRAND.`;
     return `https://wa.me/5511940502929?text=${encodeURIComponent(msg)}`;
   }
-
-  const availableOptionals = OPTIONAL_SERVICES.filter(
-    (s) => !selectedOptionals.includes(s.name)
-  );
 
   return (
     <motion.div
@@ -243,23 +237,15 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
     >
       <div
         className="relative bg-white rounded-2xl border-2 p-6 flex flex-col flex-1"
-        style={{
-          borderColor: COLOR,
-          boxShadow: `5px 5px 0px 0px ${COLOR}`,
-        }}
+        style={{ borderColor: COLOR, boxShadow: `5px 5px 0px 0px ${COLOR}` }}
       >
         {/* Icon + name */}
         <div className="flex items-center gap-3 mb-4">
-          <div
-            className="w-12 h-12 rounded-xl border-2 flex items-center justify-center text-2xl shrink-0"
-            style={{ borderColor: COLOR, background: `${COLOR}18` }}
-          >
+          <div className="w-12 h-12 rounded-xl border-2 flex items-center justify-center text-2xl shrink-0" style={{ borderColor: COLOR, background: `${COLOR}18` }}>
             🎛️
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/35">
-              Pacote
-            </p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/35">Pacote</p>
             <h3 className="font-display font-black text-2xl uppercase tracking-tight leading-none" style={{ color: COLOR }}>
               Personalizado
             </h3>
@@ -275,106 +261,79 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
 
         <div className="h-px mb-4" style={{ background: `${COLOR}35` }} />
 
-        {/* Serviços fixos */}
+        {/* Serviços selecionados */}
         <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-2.5">
-          Incluído em todos os pacotes
+          Serviços selecionados
         </p>
-        <ul className="flex flex-col gap-2 mb-4">
-          {FIXED_SERVICES.map((s) => (
-            <li key={s.name} className="flex items-center gap-2.5">
-              <div
-                className="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0"
-                style={{ borderColor: COLOR, background: `${COLOR}18` }}
+
+        <ul className="flex flex-col gap-2 mb-3 flex-1">
+          <AnimatePresence initial={false}>
+            {selected.length === 0 && (
+              <motion.li
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="text-xs text-[#1A1A1A]/30 italic py-1"
               >
-                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5} style={{ color: COLOR }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
-                </svg>
-              </div>
-              <span className="text-xs font-semibold text-[#1A1A1A]/70">{s.icon} {s.name}</span>
-              <span className="ml-auto text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full" style={{ background: `${COLOR}15`, color: COLOR }}>
-                Fixo
-              </span>
-            </li>
-          ))}
+                Nenhum serviço selecionado ainda
+              </motion.li>
+            )}
+            {selected.map((name) => {
+              const s = ALL_SERVICES.find((o) => o.name === name)!;
+              return (
+                <motion.li
+                  key={name}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -8 }}
+                  transition={{ duration: 0.18 }}
+                  className="flex items-center gap-2.5"
+                >
+                  <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0" style={{ borderColor: COLOR, background: `${COLOR}18` }}>
+                    <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5} style={{ color: COLOR }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-semibold text-[#1A1A1A]/70 flex-1">{s.icon} {name}</span>
+                  <button
+                    onClick={() => toggle(name)}
+                    className="text-[9px] font-black text-red-400 hover:text-red-600 transition-colors uppercase tracking-wide px-1.5 py-0.5 rounded-full hover:bg-red-50"
+                  >
+                    — Remover
+                  </button>
+                </motion.li>
+              );
+            })}
+          </AnimatePresence>
         </ul>
 
-        {/* Serviços opcionais selecionados */}
-        <AnimatePresence>
-          {selectedOptionals.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-2">
-                Adicionados por você
-              </p>
-              <ul className="flex flex-col gap-2 mb-4">
-                {selectedOptionals.map((name) => {
-                  const s = OPTIONAL_SERVICES.find((o) => o.name === name)!;
-                  return (
-                    <motion.li
-                      key={name}
-                      initial={{ opacity: 0, x: -8 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -8 }}
-                      className="flex items-center gap-2.5"
-                    >
-                      <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0" style={{ borderColor: COLOR, background: `${COLOR}18` }}>
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5} style={{ color: COLOR }}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
-                        </svg>
-                      </div>
-                      <span className="text-xs font-semibold text-[#1A1A1A]/70 flex-1">{s.icon} {name}</span>
-                      <button
-                        onClick={() => toggleOptional(name)}
-                        className="text-[9px] font-black text-red-400 hover:text-red-600 transition-colors uppercase tracking-wide px-1.5 py-0.5 rounded-full hover:bg-red-50"
-                      >
-                        — Remover
-                      </button>
-                    </motion.li>
-                  );
-                })}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Adicionar mais serviços */}
-        {availableOptionals.length > 0 && (
+        {/* Adicionar serviços */}
+        {unselected.length > 0 && (
           <div className="mb-4">
             <button
-              onClick={() => setShowOptionals(!showOptionals)}
+              onClick={() => setShowPicker(!showPicker)}
               className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-colors mb-2"
               style={{ color: COLOR }}
             >
-              <span className={`text-base leading-none transition-transform duration-200 ${showOptionals ? "rotate-45" : ""}`}>+</span>
+              <motion.span animate={{ rotate: showPicker ? 45 : 0 }} transition={{ duration: 0.2 }} className="text-base leading-none inline-block">
+                +
+              </motion.span>
               Adicionar serviço
             </button>
 
             <AnimatePresence>
-              {showOptionals && (
+              {showPicker && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {availableOptionals.map((s) => (
+                  <div className="flex flex-wrap gap-2 pt-1 pb-1">
+                    {unselected.map((s) => (
                       <button
                         key={s.name}
-                        onClick={() => {
-                          toggleOptional(s.name);
-                        }}
+                        onClick={() => toggle(s.name)}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 text-[11px] font-bold transition-all duration-150 hover:-translate-y-px"
-                        style={{
-                          borderColor: `${COLOR}50`,
-                          color: COLOR,
-                          background: `${COLOR}08`,
-                          boxShadow: `2px 2px 0px 0px ${COLOR}40`,
-                        }}
+                        style={{ borderColor: `${COLOR}50`, color: COLOR, background: `${COLOR}08`, boxShadow: `2px 2px 0px 0px ${COLOR}40` }}
                       >
                         {s.icon} {s.name}
                       </button>
@@ -386,17 +345,13 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
           </div>
         )}
 
-        <div className="h-px mb-4" style={{ background: `${COLOR}20` }} />
+        <div className="h-px mb-3" style={{ background: `${COLOR}20` }} />
 
-        {/* Resumo */}
-        <div className="rounded-xl p-3 mb-4 text-[11px] font-medium text-[#1A1A1A]/50" style={{ background: `${COLOR}08`, border: `1px dashed ${COLOR}40` }}>
-          {FIXED_SERVICES.length + selectedOptionals.length} serviço{FIXED_SERVICES.length + selectedOptionals.length !== 1 ? "s" : ""} selecionado{FIXED_SERVICES.length + selectedOptionals.length !== 1 ? "s" : ""}
-          {selectedOptionals.length === 0 && (
-            <span className="block text-[10px] mt-0.5 text-[#1A1A1A]/35">
-              Adicione mais serviços ou envie como está
-            </span>
-          )}
-        </div>
+        {/* Contador */}
+        <p className="text-[11px] text-[#1A1A1A]/40 font-medium mb-4">
+          {selected.length} serviço{selected.length !== 1 ? "s" : ""} selecionado{selected.length !== 1 ? "s" : ""}
+          {selected.length === 0 && <span className="text-[#1A1A1A]/25"> — adicione ao menos um</span>}
+        </p>
 
         {/* CTA */}
         <a
@@ -404,10 +359,7 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full text-center font-black text-xs py-3.5 px-4 rounded-xl border-2 border-[#1A1A1A] uppercase tracking-widest text-white transition-all duration-150"
-          style={{
-            background: COLOR,
-            boxShadow: "3px 3px 0px 0px #1A1A1A",
-          }}
+          style={{ background: COLOR, boxShadow: "3px 3px 0px 0px #1A1A1A" }}
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLElement).style.boxShadow = "1px 1px 0px 0px #1A1A1A";
             (e.currentTarget as HTMLElement).style.transform = "translate(2px,2px)";
@@ -514,7 +466,7 @@ export function Services() {
         </motion.div>
 
         {/* ── Pacotes (3 colunas) ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-14 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-14 items-stretch">
           {packages.map((pkg, i) => (
             <PackageCard key={pkg.id} pkg={pkg} index={i} inView={inView} />
           ))}
