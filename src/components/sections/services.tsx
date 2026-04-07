@@ -1,198 +1,369 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { cn } from "@/lib/utils";
 
-const services = [
+// ─── Pacotes ──────────────────────────────────────────────────────
+const packages = [
   {
-    tag: "Z-SOCIAL",
-    title: "Presença que vende",
-    desc: "Para restaurantes que precisam de conteúdo real, sem pauta para gravar sozinho.",
+    id: "starter",
+    name: "Starter",
+    emoji: "🌱",
+    tagline: "Para quem está começando",
+    desc: "Seu restaurante merece aparecer. A gente constrói sua presença digital com consistência desde o primeiro dia.",
+    color: "#FF6100",
     features: [
-      "Captação de Conteúdo (vamos até vc)",
-      "Foto e Vídeo Mobile",
-      "Reels, feed e stories diários",
-      "Gestão completa de comentários",
+      "Gestão completa de redes sociais",
+      "4 posts/semana (feed + stories)",
+      "Captação de conteúdo mobile (1x/mês)",
+      "Relatório mensal de resultados",
+      "Suporte via WhatsApp",
     ],
-    icon: "📱",
-    href: "/servicos/social",
+    cta: "Quero começar",
+    popular: false,
     rotation: "-rotate-1",
-    borderColor: "#FF6100",
-    shadowColor: "#FF6100",
   },
   {
-    tag: "Z-ADS",
-    title: "Tráfego que converte",
-    desc: "Para restaurantes que querem saber exatamente de onde vem cada cliente.",
+    id: "zebra",
+    name: "Zebra",
+    emoji: "🦓",
+    tagline: "Para quem quer mais alcance",
+    desc: "Você já posta, mas quer resultado de verdade. Chegou a hora de aliar conteúdo com anúncio e começar a escalar.",
+    color: "#00C2FF",
     features: [
-      "Anúncios no Meta e Google",
-      "Criativos feitos para restaurantes",
-      "Segmentação local precisa",
-      "Trackeamento avançado",
+      "Tudo do Starter +",
+      "Tráfego Pago (Meta Ads)",
+      "Captação de conteúdo 2x/mês",
+      "Dashboard exclusivo de resultados",
+      "Relatório semanal com insights",
+      "Reunião mensal de estratégia",
     ],
-    icon: "🎯",
-    href: "/servicos/ads",
+    cta: "Quero o Zebra",
+    popular: true,
     rotation: "rotate-1",
-    borderColor: "#00C2FF",
-    shadowColor: "#00C2FF",
   },
   {
-    tag: "Z-AUTOMAÇÃO",
-    title: "Atendimento no automático",
-    desc: "Para restaurantes que perdem venda por não responder rápido no WhatsApp.",
+    id: "full",
+    name: "Full",
+    emoji: "🚀",
+    tagline: "Para quem quer o máximo",
+    desc: "Estratégia completa. Do conteúdo ao anúncio, da automação ao site — tudo integrado pra você focar só em servir.",
+    color: "#AAFF00",
     features: [
-      "Fluxo de boas-vindas automático",
-      "Qualificação e triagem de leads",
-      "Agendamento de reservas 24h",
-      "Integração com CRM simples",
+      "Tudo do Zebra +",
+      "Tráfego Orgânico (SEO local)",
+      "Website ou Landing Page",
+      "Automação WhatsApp 24h",
+      "Captação de conteúdo 4x/mês",
+      "Gestor dedicado exclusivo",
     ],
-    icon: "⚡",
-    href: "/servicos/automacao",
+    cta: "Quero o Full",
+    popular: false,
     rotation: "-rotate-1",
-    borderColor: "#AAFF00",
-    shadowColor: "#AAFF00",
+  },
+  {
+    id: "personalizado",
+    name: "Personalizado",
+    emoji: "🎛️",
+    tagline: "Do jeito que você precisa",
+    desc: "Não tem um pacote que encaixa no seu momento? A gente monta junto. Só o que faz sentido pro seu negócio.",
+    color: "#7B2FF7",
+    features: [
+      "Serviços sob medida",
+      "Sem contrato engessado",
+      "Flexível ao seu orçamento",
+      "Escala conforme você cresce",
+      "Consultoria inicial gratuita",
+    ],
+    cta: "Montar meu pacote",
+    popular: false,
+    rotation: "rotate-1",
+    dashed: true,
   },
 ];
 
+// ─── Serviços Avulsos ─────────────────────────────────────────────
+const avulsos = [
+  {
+    icon: "🎯",
+    name: "Tráfego Pago",
+    desc: "Anúncios no Meta e Google que trazem cliente — não só clique. Cada real investido com estratégia, segmentação local e foco em resultado real.",
+    color: "#FF6100",
+  },
+  {
+    icon: "🔍",
+    name: "Tráfego Orgânico",
+    desc: "SEO local, Google Meu Negócio e conteúdo que aparece quando o cliente pesquisa 'restaurante perto de mim'. Presença gratuita que trabalha por você.",
+    color: "#00C2FF",
+  },
+  {
+    icon: "📱",
+    name: "Social Media",
+    desc: "Feed, Reels, Stories e gestão de comentários. Conteúdo com identidade, calendário estratégico e uma frequência que não para.",
+    color: "#FF6100",
+  },
+  {
+    icon: "🎬",
+    name: "Captação de Conteúdo Mobile",
+    desc: "A gente vai até o seu restaurante e grava. Conteúdo real, roteirizado pra converter, com a identidade visual do seu negócio.",
+    color: "#7B2FF7",
+  },
+  {
+    icon: "💻",
+    name: "Website & Landing Page",
+    desc: "Site rápido, bonito e que converte. Do domínio ao ar em dias — focado em performance, experiência e geração de leads qualificados.",
+    color: "#AAFF00",
+  },
+  {
+    icon: "⚡",
+    name: "Automação",
+    desc: "Fluxos no WhatsApp que respondem, qualificam e convertem enquanto você foca em cozinhar. Zero lead perdido, atendimento 24h.",
+    color: "#FBBC05",
+  },
+];
+
+// ─── Package Card ─────────────────────────────────────────────────
+function PackageCard({ pkg, index, inView }: { pkg: typeof packages[0]; index: number; inView: boolean }) {
+  const waLink = `https://wa.me/5500000000000?text=Olá! Tenho interesse no pacote ${pkg.name} da ZBRAND.`;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.1 + index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className={`relative group flex flex-col ${pkg.rotation}`}
+    >
+      {/* Popular badge */}
+      {pkg.popular && (
+        <div
+          className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-1.5 rounded-full border-2 border-[#1A1A1A] text-[10px] font-black uppercase tracking-widest text-[#1A1A1A] bg-[#00C2FF] whitespace-nowrap"
+          style={{ boxShadow: "2px 2px 0px 0px #1A1A1A" }}
+        >
+          ⭐ Mais escolhido
+        </div>
+      )}
+
+      {/* Shadow */}
+      <div
+        className="absolute inset-0 rounded-2xl"
+        style={{ background: pkg.color, transform: "translate(5px,5px)", opacity: 0.35 }}
+      />
+
+      {/* Card */}
+      <div
+        className={`relative bg-white rounded-2xl flex flex-col flex-1 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1 overflow-hidden ${
+          pkg.dashed ? "border-dashed border-2" : "border-2"
+        }`}
+        style={{ borderColor: pkg.color }}
+      >
+        {/* Top color strip */}
+        <div className="h-1.5 w-full" style={{ background: pkg.color }} />
+
+        <div className="p-6 flex flex-col flex-1">
+          {/* Icon + name */}
+          <div className="flex items-center gap-3 mb-3">
+            <div
+              className="w-12 h-12 rounded-xl border-2 flex items-center justify-center text-2xl shrink-0"
+              style={{ borderColor: pkg.color, background: `${pkg.color}15` }}
+            >
+              {pkg.emoji}
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40">
+                Pacote
+              </p>
+              <h3
+                className="font-display font-black text-2xl uppercase tracking-tight leading-none"
+                style={{ color: pkg.color }}
+              >
+                {pkg.name}
+              </h3>
+            </div>
+          </div>
+
+          {/* Tagline */}
+          <p className="text-[11px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-2">
+            {pkg.tagline}
+          </p>
+
+          {/* Desc */}
+          <p className="text-sm text-[#1A1A1A]/60 font-medium leading-relaxed mb-4">
+            {pkg.desc}
+          </p>
+
+          {/* Divider */}
+          <div className="h-px mb-4" style={{ background: `${pkg.color}30` }} />
+
+          {/* Features */}
+          <ul className="flex flex-col gap-2 flex-1 mb-5">
+            {pkg.features.map((f) => (
+              <li key={f} className="flex items-start gap-2.5">
+                <div
+                  className="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5"
+                  style={{ borderColor: pkg.color, background: `${pkg.color}15` }}
+                >
+                  <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5} style={{ color: pkg.color }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
+                  </svg>
+                </div>
+                <span className="text-xs text-[#1A1A1A]/65 font-medium leading-relaxed">{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA */}
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center font-black text-xs py-3.5 px-4 rounded-xl border-2 uppercase tracking-widest transition-all duration-200 text-white"
+            style={{
+              background: pkg.color,
+              borderColor: pkg.color,
+              boxShadow: `3px 3px 0px 0px ${pkg.color}60`,
+            }}
+          >
+            {pkg.cta} →
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Avulso Card ──────────────────────────────────────────────────
+function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number; inView: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: 0.05 + index * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="relative group flex flex-col"
+    >
+      {/* Shadow */}
+      <div
+        className="absolute inset-0 rounded-2xl"
+        style={{ background: s.color, transform: "translate(4px,4px)", opacity: 0.3 }}
+      />
+
+      {/* Card */}
+      <div
+        className="relative bg-[#111111] rounded-2xl border-2 p-5 flex flex-col gap-4 flex-1 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+        style={{ borderColor: `${s.color}50` }}
+      >
+        {/* Icon circle */}
+        <div
+          className="w-12 h-12 rounded-full border-2 flex items-center justify-center text-2xl shrink-0"
+          style={{ borderColor: s.color, background: `${s.color}20` }}
+        >
+          {s.icon}
+        </div>
+
+        {/* Title */}
+        <h4
+          className="font-display font-black text-base uppercase tracking-tight text-white leading-tight"
+        >
+          {s.name}
+        </h4>
+
+        {/* Desc */}
+        <p className="text-xs text-white/45 font-medium leading-relaxed flex-1">
+          {s.desc}
+        </p>
+
+        {/* Divider */}
+        <div className="h-px" style={{ background: `${s.color}25` }} />
+
+        {/* CTA */}
+        <a
+          href={`https://wa.me/5500000000000?text=Quero saber mais sobre ${s.name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-all duration-200 group-hover:gap-2.5"
+          style={{ color: s.color }}
+        >
+          + Saiba mais
+          <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2 6h8M6 2l4 4-4 4" />
+          </svg>
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Seção Principal ──────────────────────────────────────────────
 export function Services() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  const avulsosRef = useRef(null);
+  const avulsosInView = useInView(avulsosRef, { once: true, margin: "-60px" });
+
   return (
-    <section id="servicos" className="bg-preto pt-16 lg:pt-24">
-      <div ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-0">
+    <section id="servicos" className="bg-[#1A1A1A] pt-16 lg:pt-24">
+      <div ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-0">
+
+        {/* ── Título ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
-          <h2 className="font-display text-section-title text-white uppercase tracking-tight">
+          <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3">
+            Pacotes
+          </p>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
             O que a gente faz{" "}
-            <span className="text-laranja">(e faz bem)</span>
+            <span className="text-[#FF6100]">(e faz bem)</span>
           </h2>
-          <p className="font-display text-sm text-white/40 mt-3">
-            Três produtos, um foco: fazer o seu restaurante crescer de verdade.
+          <p className="mt-4 text-base text-white/40 font-medium max-w-xl mx-auto leading-relaxed">
+            Escolha o pacote que faz sentido pro seu momento — ou monta um personalizado com a gente.
           </p>
         </motion.div>
 
-        {/* Cards — mesmo height via grid items-stretch */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
-          {services.map((s, i) => (
-            <motion.div
-              key={s.tag}
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.1 + i * 0.12, duration: 0.5 }}
-              className={cn("relative group flex flex-col", s.rotation)}
-            >
-              {/* Shadow layer */}
-              <div
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: s.borderColor,
-                  transform: "translate(5px, 5px)",
-                  opacity: 0.4,
-                }}
-              />
-
-              {/* Card */}
-              <div
-                className={cn(
-                  "relative bg-white rounded-2xl p-6 flex flex-col flex-1",
-                  "border-2",
-                  "transition-all duration-300",
-                  "group-hover:-translate-x-1 group-hover:-translate-y-1",
-                )}
-                style={{ borderColor: s.borderColor }}
-              >
-                {/* Icon */}
-                <div
-                  className="w-10 h-10 rounded-full border-2 flex items-center justify-center mb-2"
-                  style={{ borderColor: s.borderColor, background: `${s.borderColor}18` }}
-                >
-                  <span className="text-lg">{s.icon}</span>
-                </div>
-
-                {/* Tag name - large, below icon */}
-                <span
-                  className="font-display font-extrabold text-sm uppercase tracking-widest mb-4"
-                  style={{ color: s.borderColor }}
-                >
-                  {s.tag}
-                </span>
-
-                {/* Title */}
-                <h3 className="font-display font-bold text-lg text-preto mb-2 uppercase tracking-tight">
-                  {s.title}
-                </h3>
-
-                {/* Desc */}
-                <p className="font-display text-xs text-cinza-dark leading-relaxed mb-4">
-                  {s.desc}
-                </p>
-
-                {/* Divider */}
-                <div className="h-px bg-cinza mb-4" />
-
-                {/* Features */}
-                <ul className="flex flex-col gap-2.5 mb-6 flex-1">
-                  {s.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <div
-                        className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ borderColor: s.borderColor, background: `${s.borderColor}15` }}
-                      >
-                        <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2.5} style={{ color: s.borderColor }}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
-                        </svg>
-                      </div>
-                      <span className="font-display text-xs text-cinza-dark leading-relaxed">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <Link
-                  href={s.href}
-                  className="block w-full text-center font-display font-bold text-xs py-3 px-4 rounded-xl border-2 uppercase tracking-wide transition-all duration-200 text-white"
-                  style={{
-                    background: s.borderColor,
-                    borderColor: s.borderColor,
-                    boxShadow: `3px 3px 0px 0px ${s.shadowColor}80`,
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = `5px 5px 0px 0px ${s.shadowColor}80`;
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.boxShadow = `3px 3px 0px 0px ${s.shadowColor}80`;
-                  }}
-                >
-                  Saiba mais →
-                </Link>
-              </div>
-            </motion.div>
+        {/* ── Pacotes ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
+          {packages.map((pkg, i) => (
+            <PackageCard key={pkg.id} pkg={pkg} index={i} inView={inView} />
           ))}
         </div>
 
-        {/* Combos teaser */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="text-center font-display text-sm text-white/30 mt-14 pb-0"
+        {/* ── Divisor Serviços Avulsos ── */}
+        <motion.div
+          ref={avulsosRef}
+          initial={{ opacity: 0, y: 16 }}
+          animate={avulsosInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mt-24 mb-10 text-center"
         >
-          Quer combinar serviços?{" "}
-          <span className="text-laranja/60">Temos combos exclusivos — fale com a gente.</span>
-        </motion.p>
+          <div className="flex items-center gap-4 justify-center mb-6">
+            <div className="h-px flex-1 max-w-[120px]" style={{ background: "linear-gradient(to right, transparent, rgba(255,97,0,0.4))" }} />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF6100]/70 px-2">
+              Serviços Avulsos
+            </span>
+            <div className="h-px flex-1 max-w-[120px]" style={{ background: "linear-gradient(to left, transparent, rgba(255,97,0,0.4))" }} />
+          </div>
+          <h3 className="font-display font-black text-2xl lg:text-3xl text-white uppercase tracking-tight">
+            Contrate só o que você precisa
+          </h3>
+          <p className="mt-3 text-sm text-white/40 font-medium max-w-lg mx-auto">
+            Cada serviço pode ser contratado de forma avulsa ou como parte de um pacote personalizado.
+          </p>
+        </motion.div>
+
+        {/* ── Cards Avulsos ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-0">
+          {avulsos.map((s, i) => (
+            <AvulsoCard key={s.name} s={s} index={i} inView={avulsosInView} />
+          ))}
+        </div>
+
       </div>
 
-      {/* Lamp effect — upside down (light from bottom going up) */}
-      <div className="relative w-full overflow-hidden mt-4" style={{ height: "320px" }}>
-
-        {/* Left beam — triangle from center-bottom spreading left+up */}
+      {/* ── Lamp Effect ── */}
+      <div className="relative w-full overflow-hidden mt-16" style={{ height: "320px" }}>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -204,8 +375,6 @@ export function Services() {
             clipPath: "polygon(100% 100%, 100% 100%, 0% 0%, 0% 0%)",
           }}
         />
-
-        {/* Right beam — triangle from center-bottom spreading right+up */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -217,8 +386,6 @@ export function Services() {
             clipPath: "polygon(0% 100%, 0% 100%, 100% 0%, 100% 0%)",
           }}
         />
-
-        {/* Glow ellipse at the bottom */}
         <motion.div
           initial={{ opacity: 0, scaleX: 0.3 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
@@ -231,8 +398,6 @@ export function Services() {
             background: "radial-gradient(ellipse at 50% 100%, rgba(255,97,0,0.55) 0%, rgba(255,97,0,0.2) 40%, transparent 75%)",
           }}
         />
-
-        {/* Neon line at the bottom */}
         <motion.div
           initial={{ width: "8rem", opacity: 0 }}
           whileInView={{ width: "42rem", opacity: 1 }}
@@ -246,7 +411,7 @@ export function Services() {
         />
       </div>
 
-      {/* Smooth preto → branco transition */}
+      {/* Smooth transition */}
       <div style={{ height: "100px", background: "linear-gradient(to bottom, #1A1A1A, #FFFFFF)" }} />
     </section>
   );
