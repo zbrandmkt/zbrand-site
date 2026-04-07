@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   trafficWeeks,
+  trafficMonths,
   socialWeeks,
   monthlyTraffic,
   monthlySocial,
@@ -93,17 +94,17 @@ function MetricRow({
 }
 
 // ─── Traffic Week Column ────────────────────────────────────
-function TrafficWeekCol({ week, prev, index }: { week: TrafficWeek; prev?: TrafficWeek; index: number }) {
+function TrafficWeekCol({ week, prev, index, muted }: { week: TrafficWeek; prev?: TrafficWeek; index: number; muted?: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 + index * 0.08, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl overflow-hidden"
-      style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
+      className={`border-2 rounded-2xl overflow-hidden ${muted ? "border-[#1A1A1A]/30 opacity-70" : "border-[#1A1A1A] bg-white"}`}
+      style={{ boxShadow: muted ? "none" : "3px 3px 0px 0px #1A1A1A", background: muted ? "#EFEFEB" : "white" }}
     >
       {/* Week header */}
-      <div className="bg-[#1A1A1A] px-4 py-3">
+      <div className={`px-4 py-3 ${muted ? "bg-[#1A1A1A]/60" : "bg-[#1A1A1A]"}`}>
         <p className="text-xs font-black text-white uppercase tracking-widest">
           <span className="hidden xl:inline">SEMANA {index + 1}</span>
           <span className="xl:hidden">{week.label}</span>
@@ -214,6 +215,11 @@ function SocialWeekCol({ week, prev, index }: { week: SocialWeek; prev?: SocialW
 // ─── Main Page ──────────────────────────────────────────────
 export default function DashboardPage() {
   const [tab, setTab] = useState<"traffic" | "social">("traffic");
+  const [monthIdx, setMonthIdx] = useState(trafficMonths.length - 1); // start on latest month
+  const currentMonth = trafficMonths[monthIdx];
+  const prevMonth = monthIdx > 0 ? trafficMonths[monthIdx - 1] : null;
+  const hasPrev = monthIdx > 0;
+  const hasNext = monthIdx < trafficMonths.length - 1;
 
   return (
     <div className="p-8 max-w-[1400px]">
@@ -279,43 +285,116 @@ export default function DashboardPage() {
             transition={{ duration: 0.25 }}
           >
             {/* KPIs */}
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
               <KpiCard emoji="💸" label="Total Investido" value={fmtR(monthlyTraffic.totalInvest)} shadow="#FF6100" delay={0} />
               <KpiCard emoji="🎯" label="Total de Leads" value={fmt(monthlyTraffic.totalLeads)} shadow="#00C2FF" delay={0.05} />
               <KpiCard emoji="💰" label="CPL Médio" value={fmtR(monthlyTraffic.avgCpl)} shadow="#AAFF00" delay={0.1} />
               <KpiCard emoji="👆" label="CPC Médio Meta" value={fmtR(monthlyTraffic.avgCpcMeta)} shadow="#7B2FF7" delay={0.15} />
-              <KpiCard
-                emoji="💬"
-                label="Saldo Meta Ads"
-                value={fmtR(monthlyTraffic.saldoMeta)}
-                shadow="#1A1A1A"
-                alert="Saldo baixo"
-                delay={0.2}
-              />
-              <KpiCard
-                emoji="🔵"
-                label="Saldo Google Ads"
-                value={fmtR(monthlyTraffic.saldoGoogle)}
-                shadow="#FBBC05"
-                delay={0.25}
-              />
+              {/* Saldo unificado Meta + Google */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 flex flex-col gap-3 col-span-2 xl:col-span-2"
+                style={{ boxShadow: "4px 4px 0px 0px #1A1A1A" }}
+              >
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40">💳 Saldo em Conta</p>
+                <div className="flex gap-3">
+                  {/* Meta */}
+                  <div className="flex-1 bg-[#1877F2]/8 border border-[#1877F2]/20 rounded-xl px-3 py-2.5">
+                    <span className="text-[9px] font-black bg-[#1877F2] text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider">Meta</span>
+                    <p className="text-lg font-black text-[#1A1A1A] mt-1 leading-none">{fmtR(monthlyTraffic.saldoMeta)}</p>
+                    <span className="text-[10px] font-bold text-[#FF6100] mt-1 flex items-center gap-1">⚠ Saldo baixo</span>
+                  </div>
+                  {/* Google */}
+                  <div className="flex-1 bg-[#FBBC05]/8 border border-[#FBBC05]/30 rounded-xl px-3 py-2.5">
+                    <span className="text-[9px] font-black bg-[#FBBC05] text-[#1A1A1A] px-1.5 py-0.5 rounded-full uppercase tracking-wider">Google</span>
+                    <p className="text-lg font-black text-[#1A1A1A] mt-1 leading-none">{fmtR(monthlyTraffic.saldoGoogle)}</p>
+                    <span className="text-[10px] font-bold text-[#22c55e] mt-1 flex items-center gap-1">✓ Ok</span>
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Divisor */}
+            {/* Divisor com navegação */}
             <div className="flex items-center gap-3 mb-5">
               <h2 className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]/50 whitespace-nowrap">
                 Comparativo Semanal
               </h2>
               <div className="flex-1 h-px bg-[#1A1A1A]/10" />
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => hasPrev && setMonthIdx(monthIdx - 1)}
+                  disabled={!hasPrev}
+                  className="w-8 h-8 flex items-center justify-center border-2 border-[#1A1A1A] rounded-xl bg-white disabled:opacity-25 hover:bg-[#FF6100] hover:text-white transition-all"
+                  style={{ boxShadow: hasPrev ? "2px 2px 0px 0px #1A1A1A" : "none" }}
+                  title="Mês anterior"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A] px-2">
+                  {currentMonth.month} {currentMonth.year}
+                </span>
+                <button
+                  onClick={() => hasNext && setMonthIdx(monthIdx + 1)}
+                  disabled={!hasNext}
+                  className="w-8 h-8 flex items-center justify-center border-2 border-[#1A1A1A] rounded-xl bg-white disabled:opacity-25 hover:bg-[#FF6100] hover:text-white transition-all"
+                  style={{ boxShadow: hasNext ? "2px 2px 0px 0px #1A1A1A" : "none" }}
+                  title="Próximo mês"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            {/* Mês anterior (última semana) — contexto de comparação */}
+            {prevMonth && (
+              <div className="mb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">
+                    ← {prevMonth.month} (última semana)
+                  </span>
+                  <div className="flex-1 h-px border-t-2 border-dashed border-[#1A1A1A]/10" />
+                </div>
+                <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
+                  <TrafficWeekCol
+                    week={{ ...prevMonth.weeks[3], label: "SEM 4 ANTERIOR" }}
+                    prev={prevMonth.weeks[2]}
+                    index={0}
+                    muted
+                  />
+                  <div className="hidden xl:flex xl:col-span-3 items-center justify-center text-[#1A1A1A]/15">
+                    <div className="text-center">
+                      <p className="text-4xl font-black tracking-widest opacity-20">→</p>
+                      <p className="text-[10px] uppercase tracking-widest font-bold mt-1">compara com {currentMonth.month}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Divider between months */}
+            {prevMonth && (
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex-1 h-px bg-[#FF6100]/30" />
+                <span className="text-[10px] font-black text-[#FF6100] uppercase tracking-widest px-2">
+                  {currentMonth.month} {currentMonth.year}
+                </span>
+                <div className="flex-1 h-px bg-[#FF6100]/30" />
+              </div>
+            )}
 
             {/* Weekly grid */}
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
-              {trafficWeeks.map((week, i) => (
+              {currentMonth.weeks.map((week, i) => (
                 <TrafficWeekCol
                   key={week.label}
                   week={week}
-                  prev={i > 0 ? trafficWeeks[i - 1] : undefined}
+                  prev={i > 0 ? currentMonth.weeks[i - 1] : prevMonth ? prevMonth.weeks[3] : undefined}
                   index={i}
                 />
               ))}
