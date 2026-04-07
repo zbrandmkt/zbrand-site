@@ -205,7 +205,7 @@ export default function DashboardPage() {
         className="flex flex-wrap items-center justify-between gap-4 mb-6"
       >
         <div>
-          <h1 className="text-2xl font-black text-[#1A1A1A] uppercase tracking-tight">Olá, STAYTRIX 👋</h1>
+          <h1 className="text-2xl font-black text-[#1A1A1A] uppercase tracking-tight">Olá, CHURRUTS 👋</h1>
           <p className="text-sm text-[#1A1A1A]/40 font-medium mt-0.5">Aqui estão os seus resultados</p>
         </div>
         <div className="flex items-center gap-3">

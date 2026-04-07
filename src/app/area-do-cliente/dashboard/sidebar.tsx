@@ -75,7 +75,7 @@ export function DashboardSidebar() {
           onClick={() => setClientOpen(!clientOpen)}
           className="w-full flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:border-[#FF6100]/50 transition-colors"
         >
-          <span className="text-xs font-bold text-white tracking-wide">STAYTRIX</span>
+          <span className="text-xs font-bold text-white tracking-wide">CHURRUTS</span>
           <svg
             className={`w-3.5 h-3.5 text-white/40 transition-transform ${clientOpen ? "rotate-180" : ""}`}
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
@@ -91,7 +91,7 @@ export function DashboardSidebar() {
               exit={{ opacity: 0, y: -4 }}
               className="mt-1 bg-[#2A2A2A] border border-white/10 rounded-lg overflow-hidden"
             >
-              {["STAYTRIX", "BRAHAUS", "CAIO FERRARI"].map((c) => (
+              {["CHURRUTS", "BRAHAUS", "CAIO FERRARI"].map((c) => (
                 <button
                   key={c}
                   onClick={() => setClientOpen(false)}
@@ -148,7 +148,7 @@ export function DashboardSidebar() {
             <span className="text-white text-xs font-black">S</span>
           </div>
           <div>
-            <p className="text-xs font-bold text-white leading-none">STAYTRIX</p>
+            <p className="text-xs font-bold text-white leading-none">CHURRUTS</p>
             <p className="text-[10px] text-white/30 mt-0.5">Cliente</p>
           </div>
         </div>
