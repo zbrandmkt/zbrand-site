@@ -73,7 +73,7 @@ const avulsos = [
     icon: "📱",
     name: "Social Media",
     desc: "Conteúdo humanizado, calendário estratégico e frequência. Tudo para fortalecer a presença digital da sua marca e melhorar a comunicação com o seu público alvo.",
-    color: "#FF6100",
+    color: "#E5006D",
   },
   {
     icon: "🎬",
@@ -378,8 +378,6 @@ function PersonalizadoCard({ index, inView }: { index: number; inView: boolean }
 
 // ─── Avulso Card ──────────────────────────────────────────────────
 function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number; inView: boolean }) {
-  const isLight = s.color === "#AAFF00" || s.color === "#FBBC05";
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -388,24 +386,24 @@ function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number;
       className="relative flex flex-col"
     >
       <div
-        className="relative rounded-2xl border-2 border-white/30 p-6 flex flex-col items-center text-center gap-4 flex-1 transition-all duration-200"
+        className="relative bg-white rounded-2xl border-2 p-6 flex flex-col items-center text-center gap-4 flex-1 transition-all duration-200"
         style={{
-          background: s.color,
-          boxShadow: "4px 4px 0px 0px rgba(255,255,255,0.25)",
+          borderColor: s.color,
+          boxShadow: `5px 5px 0px 0px ${s.color}`,
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.boxShadow = "1px 1px 0px 0px rgba(255,255,255,0.25)";
+          (e.currentTarget as HTMLElement).style.boxShadow = `2px 2px 0px 0px ${s.color}`;
           (e.currentTarget as HTMLElement).style.transform = "translate(3px,3px)";
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.boxShadow = "4px 4px 0px 0px rgba(255,255,255,0.25)";
+          (e.currentTarget as HTMLElement).style.boxShadow = `5px 5px 0px 0px ${s.color}`;
           (e.currentTarget as HTMLElement).style.transform = "translate(0,0)";
         }}
       >
         {/* Icon */}
         <div
-          className="w-14 h-14 rounded-full border-2 border-white/40 flex items-center justify-center text-3xl"
-          style={{ background: "rgba(255,255,255,0.15)" }}
+          className="w-14 h-14 rounded-full border-2 flex items-center justify-center text-3xl"
+          style={{ borderColor: s.color, background: `${s.color}15` }}
         >
           {s.icon}
         </div>
@@ -413,21 +411,18 @@ function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number;
         {/* Title */}
         <h4
           className="font-display font-black text-base uppercase tracking-tight leading-tight"
-          style={{ color: isLight ? "#1A1A1A" : "#FFFFFF" }}
+          style={{ color: s.color }}
         >
           {s.name}
         </h4>
 
         {/* Desc */}
-        <p
-          className="text-xs font-medium leading-relaxed flex-1"
-          style={{ color: isLight ? "rgba(26,26,26,0.7)" : "rgba(255,255,255,0.8)" }}
-        >
+        <p className="text-xs text-[#1A1A1A]/55 font-medium leading-relaxed flex-1">
           {s.desc}
         </p>
 
         {/* Divider */}
-        <div className="w-full h-px" style={{ background: isLight ? "rgba(26,26,26,0.15)" : "rgba(255,255,255,0.2)" }} />
+        <div className="w-full h-px" style={{ background: `${s.color}25` }} />
 
         {/* CTA */}
         <a
@@ -435,7 +430,7 @@ function AvulsoCard({ s, index, inView }: { s: typeof avulsos[0]; index: number;
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest transition-all duration-200 hover:gap-3"
-          style={{ color: isLight ? "#1A1A1A" : "#FFFFFF" }}
+          style={{ color: s.color }}
         >
           + Saiba mais
           <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={2.5}>
