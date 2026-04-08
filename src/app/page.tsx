@@ -18,9 +18,9 @@ export default function Home() {
         <Hero />
         <Problem />
         <Services />
+        <Differentials />
         <HowItWorks />
         <DashboardPreview />
-        <Differentials />
         <Testimonials />
         <CTAFinal />
       </main>
