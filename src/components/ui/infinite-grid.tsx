@@ -58,7 +58,7 @@ export function InfiniteGrid({
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/zebra-texture.png')",
+          backgroundImage: "url('/images/zebra-texture-black.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "280px 280px",
           backgroundPosition: bgPosition,
@@ -70,7 +70,7 @@ export function InfiniteGrid({
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('/images/zebra-texture.png')",
+          backgroundImage: "url('/images/zebra-texture-black.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "280px 280px",
           backgroundPosition: bgPosition,
