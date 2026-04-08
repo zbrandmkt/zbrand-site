@@ -51,15 +51,14 @@ export function CTAFinal() {
 
   return (
     <section className="bg-preto py-16 lg:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(-45deg, #fff 0px, #fff 10px, transparent 10px, transparent 20px)",
-          }}
-        />
-      </div>
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.045]"
+        style={{
+          backgroundImage: "url('/images/zebra-texture-white.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "280px 280px",
+        }}
+      />
 
       <div ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">

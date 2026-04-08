@@ -46,61 +46,39 @@ export function InfiniteGrid({
   const patternId = "infinite-grid-pattern";
   const patternIdHighlight = "infinite-grid-highlight";
 
+  const bgPosition = useMotionTemplate`${offsetX}px ${offsetY}px`;
+
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className={`relative overflow-hidden ${className}`}
     >
-      {/* Base grid */}
-      <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
-        <defs>
-          <motion.pattern
-            id={patternId}
-            width={gridSize}
-            height={gridSize}
-            patternUnits="userSpaceOnUse"
-            x={offsetX}
-            y={offsetY}
-          >
-            <path
-              d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}
-              fill="none"
-              stroke={gridColor}
-              strokeWidth="1"
-            />
-          </motion.pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#${patternId})`} />
-      </svg>
-
-      {/* Mouse-following highlight grid */}
-      <motion.svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
+      {/* Base zebra texture — mesma sutileza do grid anterior */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
         style={{
+          backgroundImage: "url('/images/zebra-texture.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "280px 280px",
+          backgroundPosition: bgPosition,
+          opacity: 0.09,
+        }}
+      />
+
+      {/* Mouse-following glow — radial orange reveal */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/zebra-texture.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "280px 280px",
+          backgroundPosition: bgPosition,
+          opacity: 0.22,
           maskImage,
           WebkitMaskImage: maskImage,
         }}
-      >
-        <defs>
-          <motion.pattern
-            id={patternIdHighlight}
-            width={gridSize}
-            height={gridSize}
-            patternUnits="userSpaceOnUse"
-            x={offsetX}
-            y={offsetY}
-          >
-            <path
-              d={`M ${gridSize} 0 L 0 0 0 ${gridSize}`}
-              fill="none"
-              stroke={glowColor}
-              strokeWidth="1.5"
-            />
-          </motion.pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#${patternIdHighlight})`} />
-      </motion.svg>
+      />
 
       {/* Content */}
       <div className="relative z-10">{children}</div>
