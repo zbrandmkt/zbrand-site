@@ -9,62 +9,50 @@ function ContainerScroll({ children, header }: {
   children: React.ReactNode;
   header: React.ReactNode;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
+    target: cardRef,
+    offset: ["start end", "center center"],
   });
 
-  const spring = { stiffness: 300, damping: 60, bounce: 0 };
+  const spring = { stiffness: 200, damping: 50, bounce: 0 };
 
   // Rotação 3D: começa inclinado, termina flat
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.35], [25, 0]),
+    useTransform(scrollYProgress, [0, 1], [28, 0]),
     spring
   );
-  // Escala: começa um pouco menor
+  // Escala: começa um pouco menor, termina em 1
   const scale = useSpring(
-    useTransform(scrollYProgress, [0, 0.35], [0.88, 1]),
-    spring
-  );
-  // O header sobe e some enquanto o card cresce
-  const headerY = useSpring(
-    useTransform(scrollYProgress, [0, 0.25], [0, -60]),
-    spring
-  );
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.35], [60, 0]),
+    useTransform(scrollYProgress, [0, 1], [0.85, 1]),
     spring
   );
 
   return (
-    <div
-      ref={containerRef}
-      className="flex flex-col items-center justify-start relative"
-      style={{ perspective: "1000px" }}
-    >
-      {/* Header animado */}
-      <motion.div
-        style={{ y: headerY, opacity: headerOpacity }}
-        className="w-full text-center mb-10 relative z-10"
-      >
+    <div className="flex flex-col items-center justify-start relative">
+      {/* Header — estático, só entra com whileInView */}
+      <div className="w-full text-center mb-12 relative z-10">
         {header}
-      </motion.div>
+      </div>
 
-      {/* Card com rotação 3D */}
-      <motion.div
-        style={{
-          rotateX,
-          scale,
-          y: translateY,
-          transformStyle: "preserve-3d",
-        }}
+      {/* Card com rotação 3D baseada no scroll */}
+      <div
+        ref={cardRef}
         className="w-full max-w-5xl mx-auto"
+        style={{ perspective: "1200px" }}
       >
-        {children}
-      </motion.div>
+        <motion.div
+          style={{
+            rotateX,
+            scale,
+            transformStyle: "preserve-3d",
+            transformOrigin: "center bottom",
+          }}
+        >
+          {children}
+        </motion.div>
+      </div>
     </div>
   );
 }
@@ -103,9 +91,8 @@ export function DashboardPreview() {
                 transition={{ delay: 0.14 }}
                 className="text-base text-white/40 font-medium max-w-xl leading-relaxed"
               >
-                Após todo o processo, você acompanha cada resultado pelo nosso
-                dashboard exclusivo — leads, investimento, metas e muito mais,
-                tudo num lugar só.
+                Após todo o processo, você acompanha cada resultado pelo nosso dashboard exclusivo.
+                Leads, investimento, metas e muito mais, tudo num lugar só.
               </motion.p>
 
               {/* Pills de features */}
