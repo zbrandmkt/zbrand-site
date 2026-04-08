@@ -155,8 +155,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const headerTop = scrolled ? 12 : topBarVisible ? TOP_BAR_H : 0;
-
   return (
     <>
       <TopBar visible={topBarVisible} />

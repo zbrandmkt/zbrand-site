@@ -19,9 +19,6 @@ interface InfiniteGridProps {
 export function InfiniteGrid({
   className = "",
   children,
-  gridSize = 40,
-  gridColor = "rgba(255,97,0,0.08)",
-  glowColor = "rgba(255,97,0,0.15)",
 }: InfiniteGridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
@@ -42,9 +39,6 @@ export function InfiniteGrid({
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
   }
-
-  const patternId = "infinite-grid-pattern";
-  const patternIdHighlight = "infinite-grid-highlight";
 
   const bgPosition = useMotionTemplate`${offsetX}px ${offsetY}px`;
 
