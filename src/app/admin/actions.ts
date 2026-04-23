@@ -32,6 +32,7 @@ export async function approveClient(formData: FormData) {
   }).eq("id", clientId);
 
   revalidatePath("/admin");
+  revalidatePath("/admin/clientes");
 }
 
 export async function suspendClient(formData: FormData) {
@@ -39,6 +40,7 @@ export async function suspendClient(formData: FormData) {
   const clientId = formData.get("clientId") as string;
   await supabase.from("clients").update({ status: "suspended" }).eq("id", clientId);
   revalidatePath("/admin");
+  revalidatePath("/admin/clientes");
 }
 
 export async function reactivateClient(formData: FormData) {
@@ -46,4 +48,34 @@ export async function reactivateClient(formData: FormData) {
   const clientId = formData.get("clientId") as string;
   await supabase.from("clients").update({ status: "active" }).eq("id", clientId);
   revalidatePath("/admin");
+  revalidatePath("/admin/clientes");
+}
+
+export async function saveReport(formData: FormData) {
+  const { supabase } = await getAdminUser();
+
+  const clientId = formData.get("clientId") as string;
+  const month    = parseInt(formData.get("month") as string);
+  const year     = parseInt(formData.get("year") as string);
+  const dataStr  = formData.get("reportData") as string;
+
+  let reportData: unknown;
+  try {
+    reportData = JSON.parse(dataStr);
+  } catch {
+    throw new Error("Dados inválidos.");
+  }
+
+  const { error } = await supabase.from("client_reports").upsert(
+    { client_id: clientId, month, year, report_data: reportData },
+    { onConflict: "client_id,month,year" }
+  );
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/relatorios");
+  revalidatePath(`/admin/relatorios/${clientId}`);
+  revalidatePath("/area-do-cliente/dashboard");
+  revalidatePath("/area-do-cliente/dashboard/trafego");
+  revalidatePath("/area-do-cliente/dashboard/social");
 }

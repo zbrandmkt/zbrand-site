@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { AdminSidebar } from "./sidebar";
 
 export const metadata = { title: "Admin — ZBRAND", robots: "noindex" };
 
@@ -7,10 +8,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const supabase = createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Só admins entram
   if (!user || user.user_metadata?.role !== "admin") {
     redirect("/");
   }
 
-  return <>{children}</>;
+  return (
+    <div className="flex min-h-screen bg-[#0A0A0A]">
+      <AdminSidebar />
+      <main className="flex-1 ml-56 min-h-screen text-white">
+        {children}
+      </main>
+    </div>
+  );
 }
