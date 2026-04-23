@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createClient } from "@/lib/supabase";
 
 const navItems = [
   {
@@ -48,7 +49,15 @@ const navItems = [
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [clientOpen, setClientOpen] = useState(false);
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/area-do-cliente");
+    router.refresh();
+  }
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-[#1A1A1A] border-r-2 border-[#FF6100] flex flex-col z-40">
@@ -152,15 +161,15 @@ export function DashboardSidebar() {
             <p className="text-[10px] text-white/30 mt-0.5">Cliente</p>
           </div>
         </div>
-        <Link
-          href="/area-do-cliente"
-          className="flex items-center gap-2 text-[11px] text-white/30 hover:text-white/60 transition-colors font-medium uppercase tracking-wider"
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-[11px] text-white/30 hover:text-red-400 transition-colors font-medium uppercase tracking-wider w-full"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
           Sair
-        </Link>
+        </button>
       </div>
     </aside>
   );
