@@ -95,14 +95,20 @@ export default function AreaDoClientePage() {
 
   async function handleOAuth(provider: "google" | "azure" | "apple") {
     setError(null);
-    const supabase = createClient();
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${window.location.origin}/area-do-cliente/dashboard`,
-        scopes: provider === "azure" ? "email profile openid" : undefined,
-      },
-    });
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/area-do-cliente/dashboard`,
+          scopes: provider === "azure" ? "email profile openid" : undefined,
+        },
+      });
+      if (error) setError(`Erro ao conectar com ${provider}: ${error.message}`);
+    } catch (e) {
+      setError("Erro inesperado. Verifique sua conexão.");
+      console.error(e);
+    }
   }
 
   const handleLogin = useCallback(async (e: React.FormEvent) => {
