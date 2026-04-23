@@ -12,6 +12,9 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/area-do-cliente");
 
+  // Admins sempre têm acesso — sem verificação de status
+  const isAdmin = user.user_metadata?.role === "admin";
+
   // Verifica se cliente está ativo
   const { data: client } = await supabase
     .from("clients")
@@ -19,7 +22,7 @@ export default async function DashboardLayout({
     .eq("user_id", user.id)
     .single();
 
-  if (!client || client.status !== "active") {
+  if (!isAdmin && (!client || client.status !== "active")) {
     redirect("/area-do-cliente/aguardando");
   }
 
