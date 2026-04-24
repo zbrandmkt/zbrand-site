@@ -112,16 +112,16 @@ export function CalendarClient({
           <div className="flex items-center gap-2">
             <button
               onClick={prevMonth}
-              className="w-8 h-8 flex items-center justify-center rounded-xl border border-white/15 text-white/50 hover:border-[#FF6100] hover:text-white transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl border border-[#e0e0e0] text-[#1A1A1A]/40 hover:border-[#FF6100] hover:text-[#FF6100] transition-colors"
             >
               ‹
             </button>
-            <h1 className="text-xl font-black text-white min-w-[180px] text-center">
+            <h1 className="text-xl font-black text-[#1A1A1A] min-w-[180px] text-center">
               {MONTH_NAMES_PT[month]} {year}
             </h1>
             <button
               onClick={nextMonth}
-              className="w-8 h-8 flex items-center justify-center rounded-xl border border-white/15 text-white/50 hover:border-[#FF6100] hover:text-white transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl border border-[#e0e0e0] text-[#1A1A1A]/40 hover:border-[#FF6100] hover:text-[#FF6100] transition-colors"
             >
               ›
             </button>
@@ -131,7 +131,7 @@ export function CalendarClient({
           <select
             value={clientId}
             onChange={(e) => handleFilterChange(e.target.value)}
-            className="bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-1.5 text-xs text-white font-bold focus:border-[#FF6100] outline-none"
+            className="bg-white border border-[#e0e0e0] rounded-xl px-3 py-1.5 text-xs text-[#1A1A1A] font-bold focus:border-[#FF6100] outline-none"
           >
             <option value="">Todos os clientes</option>
             {clients.map((c) => (
@@ -146,7 +146,7 @@ export function CalendarClient({
             {STATUS_LEGEND.map((s) => (
               <div key={s.label} className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }} />
-                <span className="text-[10px] text-white/30 font-medium">{s.label}</span>
+                <span className="text-[10px] text-[#1A1A1A]/40 font-medium">{s.label}</span>
               </div>
             ))}
           </div>
@@ -167,8 +167,8 @@ export function CalendarClient({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`px-1 pb-1 min-h-[72px] transition-colors ${
-                    snapshot.isDraggingOver ? "bg-[#FF6100]/10" : ""
+                  className={`px-1 pb-1 min-h-[72px] transition-colors rounded-sm ${
+                    snapshot.isDraggingOver ? "bg-[#FF6100]/08" : ""
                   }`}
                 >
                   {cellPosts.map((post, index) => (

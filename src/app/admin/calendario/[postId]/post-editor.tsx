@@ -192,7 +192,7 @@ export function PostEditor({
       <div className="lg:col-span-2 flex flex-col gap-5">
 
         {/* Status banner */}
-        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl border" style={{ borderColor: statusColor, backgroundColor: `${statusColor}15` }}>
+        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl border" style={{ borderColor: statusColor, backgroundColor: `${statusColor}12` }}>
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: statusColor }} />
           <span className="text-xs font-black uppercase tracking-widest" style={{ color: statusColor }}>
             {STATUS_LABELS[status as keyof typeof STATUS_LABELS] ?? status}
@@ -200,14 +200,14 @@ export function PostEditor({
         </div>
 
         {/* Client + Title */}
-        <div className="bg-white/04 border border-white/08 rounded-2xl p-5 flex flex-col gap-4">
+        <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5 flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Cliente</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Cliente</label>
             <select
               value={clientId}
               onChange={(e) => setClientId(e.target.value)}
               required
-              className="bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-sm text-white font-bold focus:border-[#FF6100] outline-none"
+              className="bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-sm text-[#1A1A1A] font-bold focus:border-[#FF6100] outline-none"
             >
               <option value="">Selecionar cliente...</option>
               {clients.map(c => <option key={c.id} value={c.id}>{c.company}</option>)}
@@ -215,18 +215,18 @@ export function PostEditor({
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Título interno</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Título interno</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ex: Reel — Promoção de segunda"
-              className="bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-[#FF6100] outline-none"
+              className="bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-sm text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none"
             />
           </div>
 
           {/* Platforms */}
           <div className="flex flex-col gap-2">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Plataformas</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Plataformas</label>
             <div className="flex gap-2">
               {PLATFORMS.map(p => (
                 <button
@@ -236,7 +236,7 @@ export function PostEditor({
                   className={`px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border-2 transition-all ${
                     platforms.includes(p)
                       ? "text-white border-transparent"
-                      : "text-white/30 border-white/15 hover:border-white/30"
+                      : "text-[#1A1A1A]/40 border-[#e0e0e0] hover:border-[#1A1A1A]/25"
                   }`}
                   style={platforms.includes(p) ? { backgroundColor: PLATFORM_COLORS[p], borderColor: PLATFORM_COLORS[p] } : {}}
                 >
@@ -248,7 +248,7 @@ export function PostEditor({
 
           {/* Post type */}
           <div className="flex flex-col gap-2">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Tipo de post</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Tipo de post</label>
             <div className="flex gap-2 flex-wrap">
               {POST_TYPES.map(t => (
                 <button
@@ -258,7 +258,7 @@ export function PostEditor({
                   className={`px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider border-2 transition-all ${
                     postType === t.value
                       ? "bg-[#FF6100] border-[#FF6100] text-white"
-                      : "border-white/15 text-white/40 hover:border-white/30"
+                      : "border-[#e0e0e0] text-[#1A1A1A]/40 hover:border-[#1A1A1A]/25"
                   }`}
                 >
                   {t.label}
@@ -269,34 +269,34 @@ export function PostEditor({
         </div>
 
         {/* Caption + Hashtags */}
-        <div className="bg-white/04 border border-white/08 rounded-2xl p-5 flex flex-col gap-4">
+        <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5 flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Caption</label>
-              <span className="text-[10px] text-white/20">{caption.length} chars</span>
+              <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Caption</label>
+              <span className="text-[10px] text-[#1A1A1A]/25">{caption.length} chars</span>
             </div>
             <textarea
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               rows={5}
               placeholder="Escreva o caption do post..."
-              className="bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-sm text-white/80 placeholder:text-white/20 focus:border-[#FF6100] outline-none resize-none"
+              className="bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-sm text-[#1A1A1A]/80 placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none resize-none"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Hashtags</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Hashtags</label>
             <input
               value={hashtags}
               onChange={(e) => setHashtags(e.target.value)}
               placeholder="#marketing #socialmedia #zbrand"
-              className="bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-sm text-white/80 placeholder:text-white/20 focus:border-[#FF6100] outline-none"
+              className="bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-sm text-[#1A1A1A]/80 placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none"
             />
             {/* Pill preview */}
             {hashtags && (
               <div className="flex flex-wrap gap-1 mt-1">
                 {hashtags.split(/\s+/).filter(h => h.startsWith("#")).map(h => (
-                  <span key={h} className="text-[10px] px-2 py-0.5 bg-[#FF6100]/15 text-[#FF6100] rounded-full font-medium">
+                  <span key={h} className="text-[10px] px-2 py-0.5 bg-[#FF6100]/10 text-[#FF6100] rounded-full font-medium">
                     {h}
                   </span>
                 ))}
@@ -306,14 +306,14 @@ export function PostEditor({
         </div>
 
         {/* Media upload */}
-        <div className="bg-white/04 border border-white/08 rounded-2xl p-5">
+        <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30">Mídias ({mediaUrls.length})</label>
+            <label className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Mídias ({mediaUrls.length})</label>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="text-xs font-black uppercase tracking-wider px-3 py-1.5 bg-white/08 border border-white/15 text-white/60 rounded-xl hover:border-[#FF6100] hover:text-white transition-colors disabled:opacity-40"
+              className="text-xs font-black uppercase tracking-wider px-3 py-1.5 bg-[#f6f6f6] border border-[#e0e0e0] text-[#1A1A1A]/60 rounded-xl hover:border-[#FF6100] hover:text-[#FF6100] transition-colors disabled:opacity-40"
             >
               {uploading ? "Enviando..." : "+ Upload"}
             </button>
@@ -330,17 +330,17 @@ export function PostEditor({
           {mediaUrls.length === 0 ? (
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-white/15 rounded-xl p-8 text-center cursor-pointer hover:border-[#FF6100]/50 transition-colors"
+              className="border-2 border-dashed border-[#e0e0e0] rounded-xl p-8 text-center cursor-pointer hover:border-[#FF6100]/40 transition-colors"
             >
               <p className="text-2xl mb-1">🖼️</p>
-              <p className="text-xs text-white/30">Clique para adicionar imagens ou vídeos</p>
-              <p className="text-[10px] text-white/15 mt-1">JPG, PNG, GIF, MP4 — máx 50MB por arquivo</p>
+              <p className="text-xs text-[#1A1A1A]/40">Clique para adicionar imagens ou vídeos</p>
+              <p className="text-[10px] text-[#1A1A1A]/25 mt-1">JPG, PNG, GIF, MP4 — máx 50MB por arquivo</p>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-2">
               {mediaUrls.map((url, i) => (
-                <div key={i} className="relative aspect-square bg-white/08 rounded-xl overflow-hidden group">
-                  <div className="w-full h-full flex items-center justify-center text-white/20 text-xs font-medium">
+                <div key={i} className="relative aspect-square bg-[#f6f6f6] rounded-xl overflow-hidden group">
+                  <div className="w-full h-full flex items-center justify-center text-[#1A1A1A]/30 text-xs font-medium">
                     {url.includes(".mp4") || url.includes(".mov") ? "🎬 Vídeo" : `📷 ${i + 1}`}
                   </div>
                   <button
@@ -360,24 +360,24 @@ export function PostEditor({
       <div className="flex flex-col gap-5">
 
         {/* Scheduling */}
-        <div className="bg-white/04 border border-white/08 rounded-2xl p-5">
-          <p className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-3">Agendamento</p>
+        <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5">
+          <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-3">Agendamento</p>
           <input
             type="datetime-local"
             value={scheduledAt}
             onChange={(e) => setScheduledAt(e.target.value)}
-            className="w-full bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-sm text-white focus:border-[#FF6100] outline-none"
+            className="w-full bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-sm text-[#1A1A1A] focus:border-[#FF6100] outline-none"
           />
         </div>
 
         {/* Actions */}
-        <div className="bg-white/04 border border-white/08 rounded-2xl p-5 flex flex-col gap-2">
-          <p className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-1">Ações</p>
+        <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5 flex flex-col gap-2">
+          <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">Ações</p>
 
           <button
             onClick={handleSave}
             disabled={isPending}
-            className="w-full py-2.5 rounded-xl bg-white/08 border border-white/15 text-xs font-black uppercase tracking-wider text-white hover:border-[#FF6100] transition-colors disabled:opacity-40"
+            className="w-full py-2.5 rounded-xl bg-[#f6f6f6] border border-[#e0e0e0] text-xs font-black uppercase tracking-wider text-[#1A1A1A] hover:border-[#FF6100] hover:text-[#FF6100] transition-colors disabled:opacity-40"
           >
             {isPending ? "Salvando..." : saved ? "✓ Salvo!" : "Salvar rascunho"}
           </button>
@@ -387,7 +387,7 @@ export function PostEditor({
               onClick={handleSendApproval}
               disabled={isPending}
               className="w-full py-2.5 rounded-xl bg-[#FF6100] text-white font-black text-xs uppercase tracking-wider hover:-translate-y-0.5 transition-transform disabled:opacity-40"
-              style={{ boxShadow: "2px 2px 0px 0px rgba(0,0,0,0.4)" }}
+              style={{ boxShadow: "2px 2px 0px 0px rgba(0,0,0,0.15)" }}
             >
               📤 Enviar para aprovação
             </button>
@@ -397,7 +397,7 @@ export function PostEditor({
             <button
               onClick={handlePublished}
               disabled={isPending}
-              className="w-full py-2.5 rounded-xl border-2 border-[#00C2FF] text-[#00C2FF] font-black text-xs uppercase tracking-wider hover:bg-[#00C2FF]/10 transition-colors"
+              className="w-full py-2.5 rounded-xl border-2 border-[#00C2FF] text-[#0284c7] font-black text-xs uppercase tracking-wider hover:bg-[#00C2FF]/10 transition-colors"
             >
               ✓ Marcar como publicado
             </button>
@@ -407,7 +407,7 @@ export function PostEditor({
             <button
               onClick={handleDelete}
               disabled={isPending}
-              className="w-full py-2 rounded-xl text-xs text-white/20 font-medium hover:text-red-400 transition-colors mt-1"
+              className="w-full py-2 rounded-xl text-xs text-[#1A1A1A]/25 font-medium hover:text-red-500 transition-colors mt-1"
             >
               Excluir post
             </button>
@@ -416,27 +416,27 @@ export function PostEditor({
 
         {/* Comment thread */}
         {!isNew && (
-          <div className="bg-white/04 border border-white/08 rounded-2xl p-5 flex flex-col gap-3">
-            <p className="text-[9px] font-black uppercase tracking-widest text-white/30">Comentários</p>
+          <div className="bg-white border border-[#e8e8e8] rounded-2xl p-5 flex flex-col gap-3">
+            <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">Comentários</p>
 
             <div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
               {comments.length === 0 && (
-                <p className="text-xs text-white/20 text-center py-3">Nenhum comentário ainda.</p>
+                <p className="text-xs text-[#1A1A1A]/30 text-center py-3">Nenhum comentário ainda.</p>
               )}
               {comments.map(c => (
                 <div
                   key={c.id}
                   className={`rounded-xl px-3 py-2 text-xs ${
                     c.role === "admin"
-                      ? "bg-[#FF6100]/15 border border-[#FF6100]/20 text-white ml-4"
-                      : "bg-white/08 border border-white/10 text-white/70 mr-4"
+                      ? "bg-[#FF6100]/10 border border-[#FF6100]/20 text-[#1A1A1A] ml-4"
+                      : "bg-[#f6f6f6] border border-[#e8e8e8] text-[#1A1A1A]/70 mr-4"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="font-black text-[9px] uppercase tracking-wider" style={{ color: c.role === "admin" ? "#FF6100" : "#AAFF00" }}>
+                    <span className="font-black text-[9px] uppercase tracking-wider" style={{ color: c.role === "admin" ? "#FF6100" : "#16a34a" }}>
                       {c.role === "admin" ? "ZBRAND" : "Cliente"}
                     </span>
-                    <span className="text-[9px] text-white/20">
+                    <span className="text-[9px] text-[#1A1A1A]/30">
                       {new Date(c.created_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
                     </span>
                   </div>
@@ -451,12 +451,12 @@ export function PostEditor({
                 onChange={(e) => setCommentBody(e.target.value)}
                 rows={2}
                 placeholder="Adicionar comentário..."
-                className="w-full bg-[#1A1A1A] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder:text-white/20 focus:border-[#FF6100] outline-none resize-none"
+                className="w-full bg-white border border-[#e0e0e0] rounded-xl px-3 py-2 text-xs text-[#1A1A1A] placeholder:text-[#1A1A1A]/30 focus:border-[#FF6100] outline-none resize-none"
               />
               <button
                 type="submit"
                 disabled={isPending || !commentBody.trim()}
-                className="py-1.5 rounded-xl bg-[#FF6100]/20 border border-[#FF6100]/30 text-[#FF6100] font-black text-[10px] uppercase tracking-wider hover:bg-[#FF6100]/30 transition-colors disabled:opacity-30"
+                className="py-1.5 rounded-xl bg-[#FF6100]/10 border border-[#FF6100]/25 text-[#FF6100] font-black text-[10px] uppercase tracking-wider hover:bg-[#FF6100]/20 transition-colors disabled:opacity-30"
               >
                 Enviar
               </button>

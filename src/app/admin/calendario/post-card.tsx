@@ -36,24 +36,24 @@ export function PostCard({ post, isDragging }: PostCardProps) {
       className={`block rounded-lg overflow-hidden border transition-all ${
         isDragging
           ? "border-[#FF6100] shadow-lg scale-105"
-          : "border-white/08 hover:border-white/20"
+          : "border-[#e8e8e8] hover:border-[#1A1A1A]/20"
       }`}
       style={{ borderLeftColor: statusColor, borderLeftWidth: 3 }}
     >
-      <div className="bg-[#1A1A1A] px-2 py-1.5">
+      <div className="bg-white px-2 py-1.5">
         {/* Title */}
-        <p className="text-[10px] font-bold text-white truncate leading-tight">
+        <p className="text-[10px] font-bold text-[#1A1A1A] truncate leading-tight">
           {post.title || "Sem título"}
         </p>
 
         {/* Post type + Platforms row */}
         <div className="flex items-center justify-between mt-1">
-          <span className="text-[9px] text-white/30 font-medium">
+          <span className="text-[9px] text-[#1A1A1A]/40 font-medium">
             {POST_TYPE_LABELS[post.post_type] ?? post.post_type}
           </span>
           <div className="flex items-center gap-0.5">
             {post.platforms.map((p) => (
-              <span key={p} style={{ color: PLATFORM_COLORS[p as keyof typeof PLATFORM_COLORS] ?? "#fff" }}>
+              <span key={p} style={{ color: PLATFORM_COLORS[p as keyof typeof PLATFORM_COLORS] ?? "#1A1A1A" }}>
                 {PLATFORM_ICONS[p]}
               </span>
             ))}

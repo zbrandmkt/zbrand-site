@@ -11,11 +11,11 @@ interface CalendarGridProps {
 
 export function CalendarGrid({ grid, postsMap, today, renderCell }: CalendarGridProps) {
   return (
-    <div className="border border-white/08 rounded-2xl overflow-hidden">
+    <div className="border border-[#e8e8e8] rounded-2xl overflow-hidden bg-white">
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 border-b border-white/08">
+      <div className="grid grid-cols-7 border-b border-[#e8e8e8] bg-[#f6f6f6]">
         {WEEKDAY_NAMES_PT.map((d) => (
-          <div key={d} className="px-2 py-2 text-center text-[10px] font-black uppercase tracking-widest text-white/30">
+          <div key={d} className="px-2 py-2 text-center text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">
             {d}
           </div>
         ))}
@@ -23,7 +23,7 @@ export function CalendarGrid({ grid, postsMap, today, renderCell }: CalendarGrid
 
       {/* Rows */}
       {grid.map((row, ri) => (
-        <div key={ri} className="grid grid-cols-7 border-b border-white/08 last:border-b-0">
+        <div key={ri} className="grid grid-cols-7 border-b border-[#e8e8e8] last:border-b-0">
           {row.map((cell) => {
             const key = toDateKey(cell.date);
             const posts = postsMap.get(key) ?? [];
@@ -31,7 +31,7 @@ export function CalendarGrid({ grid, postsMap, today, renderCell }: CalendarGrid
             return (
               <div
                 key={key}
-                className={`border-r border-white/08 last:border-r-0 min-h-[100px] ${
+                className={`border-r border-[#e8e8e8] last:border-r-0 min-h-[100px] ${
                   cell.isCurrentMonth ? "" : "opacity-30"
                 }`}
               >
@@ -41,13 +41,13 @@ export function CalendarGrid({ grid, postsMap, today, renderCell }: CalendarGrid
                     className={`text-[11px] font-black w-5 h-5 flex items-center justify-center rounded-full ${
                       isToday
                         ? "bg-[#FF6100] text-white"
-                        : "text-white/40"
+                        : "text-[#1A1A1A]/40"
                     }`}
                   >
                     {cell.date.getDate()}
                   </span>
                   {posts.length > 2 && (
-                    <span className="text-[9px] text-white/30 font-bold">{posts.length}</span>
+                    <span className="text-[9px] text-[#1A1A1A]/30 font-bold">{posts.length}</span>
                   )}
                 </div>
                 {/* Injected cell content (droppable + draggable cards) */}

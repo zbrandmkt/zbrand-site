@@ -30,8 +30,8 @@ export default async function ClientesPage() {
     <div className="px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-black text-white tracking-tight">Clientes</h1>
-        <p className="text-sm text-white/40 mt-1">
+        <h1 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Clientes</h1>
+        <p className="text-sm text-[#1A1A1A]/40 mt-1">
           {allClients.length} clientes · {pending.length} pendentes · {active.length} ativos
         </p>
       </div>
@@ -232,8 +232,8 @@ function SectionTitle({ children, color }: { children: React.ReactNode; color: s
 
 function Empty({ text }: { text: string }) {
   return (
-    <div className="bg-white/04 border border-white/08 rounded-2xl px-5 py-8 text-center">
-      <p className="text-sm text-white/30 font-medium">{text}</p>
+    <div className="bg-white border border-[#e8e8e8] rounded-2xl px-5 py-8 text-center">
+      <p className="text-sm text-[#1A1A1A]/30 font-medium">{text}</p>
     </div>
   );
 }
