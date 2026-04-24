@@ -58,7 +58,7 @@ function ContainerScroll({ children, header }: {
 }
 
 // ─── Seção Principal ──────────────────────────────────────────────
-export function DashboardPreview() {
+export function DashboardPreview({ showCta = true }: { showCta?: boolean }) {
   return (
     <section className="bg-[#1A1A1A] py-24 lg:py-40 overflow-hidden">
       {/* Altura extra para dar espaço ao scroll */}
@@ -163,13 +163,15 @@ export function DashboardPreview() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-16"
         >
-          <a
-            href="/area-do-cliente"
-            className="inline-flex items-center gap-2 bg-[#FF6100] border-2 border-[#FF6100] text-white font-black uppercase tracking-widest text-sm px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5"
-            style={{ boxShadow: "4px 4px 0px 0px rgba(255,97,0,0.4)" }}
-          >
-            Acessar minha área →
-          </a>
+          {showCta && (
+            <a
+              href="/area-do-cliente"
+              className="inline-flex items-center gap-2 bg-[#FF6100] border-2 border-[#FF6100] text-white font-black uppercase tracking-widest text-sm px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5"
+              style={{ boxShadow: "4px 4px 0px 0px rgba(255,97,0,0.4)" }}
+            >
+              Acessar minha área →
+            </a>
+          )}
           <p className="text-white/30 text-xs font-medium">
             Exclusivo para clientes ZBRAND
           </p>

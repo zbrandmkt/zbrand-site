@@ -1,1 +1,5 @@
-export { DashboardPreview as ZSocialPainel } from "@/components/sections/dashboard-preview";
+import { DashboardPreview } from "@/components/sections/dashboard-preview";
+
+export function ZSocialPainel() {
+  return <DashboardPreview showCta={false} />;
+}
