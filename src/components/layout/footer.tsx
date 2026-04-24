@@ -24,8 +24,10 @@ const footerLinks = {
     { name: "Área do Cliente", href: "/area-do-cliente" },
   ],
   legal: [
-    { name: "Política de Privacidade", href: "/politica-privacidade" },
-    { name: "Termos e Condições", href: "/termos" },
+    { name: "Política de Privacidade", href: "/politica-de-privacidade" },
+    { name: "Política de Cookies", href: "/politica-de-cookies" },
+    { name: "Termos de Uso", href: "/termos-de-uso" },
+    { name: "Política Antispam", href: "/politica-antispam" },
   ],
 };
 
