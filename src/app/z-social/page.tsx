@@ -5,6 +5,7 @@ import { ZSocialHero } from "./sections/hero";
 import { ZSocialProblem } from "./sections/problem";
 import { ZSocialDiferenciais } from "./sections/diferenciais";
 import { ZSocialProcess } from "./sections/process";
+import { ZSocialPainel } from "./sections/painel";
 import { ZSocialCases } from "./sections/cases";
 import { ZSocialPricing } from "./sections/pricing";
 import { ZSocialFaq } from "./sections/faq";
@@ -25,6 +26,7 @@ export default function ZSocialPage() {
         <ZSocialProblem />
         <ZSocialDiferenciais />
         <ZSocialProcess />
+        <ZSocialPainel />
         <ZSocialCases />
         <ZSocialPricing />
         <ZSocialFaq />
