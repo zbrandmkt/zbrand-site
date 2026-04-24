@@ -18,7 +18,7 @@ export default async function DashboardLayout({
   // Verifica se cliente está ativo
   const { data: client } = await supabase
     .from("clients")
-    .select("status, name, company, plan")
+    .select("status, name, company, plan, id")
     .eq("user_id", user.id)
     .single();
 
@@ -26,9 +26,20 @@ export default async function DashboardLayout({
     redirect("/area-do-cliente/aguardando");
   }
 
+  // Badge de aprovações pendentes
+  let pendingCount = 0;
+  if (client?.id) {
+    const { count } = await supabase
+      .from("posts")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", client.id)
+      .eq("status", "pending_approval");
+    pendingCount = count ?? 0;
+  }
+
   return (
     <div className="flex min-h-screen bg-[#F5F5F0]">
-      <DashboardSidebar clientName={client?.name ?? "Admin"} company={client?.company ?? "ZBRAND"} />
+      <DashboardSidebar clientName={client?.name ?? "Admin"} company={client?.company ?? "ZBRAND"} pendingCount={pendingCount} />
       <main className="flex-1 ml-64 min-h-screen">
         {children}
       </main>

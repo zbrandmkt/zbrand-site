@@ -36,6 +36,24 @@ const navItems = [
     ),
   },
   {
+    href: "/area-do-cliente/dashboard/aprovacoes",
+    label: "Aprovações",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/area-do-cliente/dashboard/calendario",
+    label: "Calendário",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+  {
     href: "/area-do-cliente/dashboard/crm",
     label: "CRM",
     badge: "Em breve",
@@ -50,9 +68,11 @@ const navItems = [
 export function DashboardSidebar({
   clientName = "Cliente",
   company = "ZBRAND",
+  pendingCount = 0,
 }: {
   clientName?: string;
   company?: string;
+  pendingCount?: number;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -124,8 +144,12 @@ export function DashboardSidebar({
       <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
         <p className="text-[9px] text-white/30 uppercase tracking-widest px-2 mb-2 font-bold">Menu</p>
         {navItems.map((item) => {
-          const isActive = pathname === item.href;
+          // Dashboard só ativa na rota exata; demais ativam por prefixo
+          const isActive = item.href === "/area-do-cliente/dashboard"
+            ? pathname === item.href
+            : pathname.startsWith(item.href);
           const isDisabled = !!item.badge;
+          const isAprovacoes = item.href === "/area-do-cliente/dashboard/aprovacoes";
           return (
             <Link
               key={item.href}
@@ -143,6 +167,12 @@ export function DashboardSidebar({
                 <span className={isActive ? "text-white" : ""}>{item.icon}</span>
                 <span className="text-xs font-bold tracking-wide uppercase">{item.label}</span>
               </div>
+              {/* Pending approval badge */}
+              {isAprovacoes && pendingCount > 0 && !isActive && (
+                <span className="text-[9px] font-black bg-[#FF6100] text-white px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+                  {pendingCount}
+                </span>
+              )}
               {item.badge && (
                 <span className="text-[9px] font-black uppercase bg-[#FF6100]/20 text-[#FF6100] px-1.5 py-0.5 rounded-full tracking-wider">
                   {item.badge}
