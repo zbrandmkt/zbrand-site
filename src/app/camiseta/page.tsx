@@ -68,44 +68,72 @@ export default function CamisetaPage() {
   const [muted, setMuted]         = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [needsTap, setNeedsTap]   = useState(false);
+  const loopCount = useRef(0); // controla quantas vezes o vídeo tocou
   const videoRef  = useRef<HTMLVideoElement>(null);
   const textTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  function startPlaying(v: HTMLVideoElement) {
+    setIsPlaying(true);
+    setNeedsTap(false);
+    setMuted(v.muted);
+    clearTimeout(textTimer.current);
+    textTimer.current = setTimeout(() => setTextVisible(true), 5000);
+  }
 
   useEffect(() => {
     const tryPlay = async () => {
       const v = videoRef.current;
       if (!v) return;
+      // 1ª tentativa: com som
+      v.muted = false;
+      try {
+        await v.play();
+        startPlaying(v);
+        return;
+      } catch {}
+      // 2ª tentativa: mudo (política do browser)
       v.muted = true;
       try {
         await v.play();
-        setIsPlaying(true);
-        setNeedsTap(false);
-        textTimer.current = setTimeout(() => setTextVisible(true), 5000);
+        startPlaying(v);
       } catch {
+        // Completamente bloqueado → tap overlay
         setNeedsTap(true);
       }
     };
     tryPlay();
     return () => clearTimeout(textTimer.current);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Ao fim de cada reprodução: na 2ª vez fica mudo e continua em loop
+  function handleVideoEnded() {
+    const v = videoRef.current;
+    if (!v) return;
+    loopCount.current += 1;
+    if (loopCount.current >= 1) {   // após a 1ª reprodução completa → mudo
+      v.muted = true;
+      setMuted(true);
+    }
+    v.play().catch(() => {});
+  }
+
+  // Tap overlay: usuário já interagiu → pode ligar som
   async function handleTap() {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = true;
-    try { await v.play(); } catch {}
-    setIsPlaying(true);
-    setNeedsTap(false);
-    textTimer.current = setTimeout(() => setTextVisible(true), 5000);
+    v.muted = false;             // tenta com som (usuário tocou na tela)
+    try {
+      await v.play();
+    } catch {
+      v.muted = true;
+      await v.play().catch(() => {});
+    }
+    startPlaying(v);
   }
 
   function handleVideoPlay() {
-    if (!isPlaying) {
-      setIsPlaying(true);
-      setNeedsTap(false);
-      clearTimeout(textTimer.current);
-      textTimer.current = setTimeout(() => setTextVisible(true), 5000);
-    }
+    if (!isPlaying) startPlaying(videoRef.current!);
   }
 
   function toggleMute() {
@@ -126,18 +154,20 @@ export default function CamisetaPage() {
       {/* ── VÍDEO HERO ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Vídeo único vertical — funciona em todos os tamanhos de tela */}
-        <video
-          ref={videoRef}
-          onPlay={handleVideoPlay}
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/images/video_hero_pag_camseta_mobile.mp4"
-          autoPlay
-          muted
-          playsInline
-          loop
-          preload="auto"
-        />
+        {/* Container centraliza o vídeo — mobile: cover | desktop: proporção natural */}
+        <div className="absolute inset-0 bg-black flex items-center justify-center">
+          <video
+            ref={videoRef}
+            onPlay={handleVideoPlay}
+            onEnded={handleVideoEnded}
+            className="h-full w-full object-cover md:w-auto md:object-contain"
+            src="/images/video_hero_pag_camseta_mobile.mp4"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+          />
+        </div>
 
         {/* Overlay escuro */}
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
