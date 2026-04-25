@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const services = [
@@ -60,8 +60,17 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
+const words = ["FALEI", "QUE", "NÃO", "ERA", "PRA", "ESCANEAR"];
+
 export default function CamisetaPage() {
   const [copied, setCopied] = useState(false);
+  const [textVisible, setTextVisible] = useState(false);
+
+  // Dispara o texto após 1.4s — tempo para o vídeo estabelecer a cena
+  useEffect(() => {
+    const t = setTimeout(() => setTextVisible(true), 1400);
+    return () => clearTimeout(t);
+  }, []);
 
   function copyUrl() {
     navigator.clipboard.writeText("zbrand.com.br");
@@ -71,6 +80,82 @@ export default function CamisetaPage() {
 
   return (
     <div className="bg-[#1A1A1A] min-h-screen font-display overflow-x-hidden">
+
+      {/* ── VÍDEO HERO ── */}
+      <section className="relative h-screen w-full overflow-hidden">
+
+        {/* Vídeo desktop */}
+        <video
+          className="hidden md:block absolute inset-0 w-full h-full object-cover"
+          src="/images/video_hero_pag_camseta_desktop.mp4"
+          autoPlay
+          muted
+          playsInline
+          loop
+        />
+
+        {/* Fallback mobile — zebra texture + gradient enquanto não tem vídeo mobile */}
+        <div className="md:hidden absolute inset-0 bg-[#1A1A1A]">
+          <div
+            className="absolute inset-0 opacity-[0.08]"
+            style={{
+              backgroundImage: "url('/images/zebra-texture-white.png')",
+              backgroundRepeat: "repeat",
+              backgroundSize: "280px",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FF6100]/20 via-transparent to-[#1A1A1A]" />
+        </div>
+
+        {/* Overlay escuro sobre o vídeo para legibilidade do texto */}
+        <div className="absolute inset-0 bg-black/45 md:bg-black/35" />
+
+        {/* Texto central animado */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <AnimatePresence>
+            {textVisible && (
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 max-w-3xl">
+                {words.map((word, i) => (
+                  <motion.span
+                    key={word}
+                    initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      delay: i * 0.12,
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className={`font-black uppercase tracking-tight leading-none
+                      text-5xl sm:text-6xl md:text-7xl lg:text-8xl
+                      ${word === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        >
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">
+            Role pra baixo
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+            className="w-10 h-10 rounded-full border-2 border-white/25 flex items-center justify-center text-white/50 text-lg"
+          >
+            ↓
+          </motion.div>
+        </motion.div>
+      </section>
 
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-5 py-20 overflow-hidden">
