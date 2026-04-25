@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
+import { TextRotate } from "@/components/ui/text-rotate";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const services = [
@@ -60,7 +61,8 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-const lines = ["FALEI QUE NÃO", "ERA PRA", "ESCANEAR"];
+const lines = ["FALEI QUE NÃO", "ERA PRA"];
+const rotateWords = ["ESCANEAR", "CLICAR", "APERTAR"];
 
 export default function CamisetaPage() {
   const [copied, setCopied]       = useState(false);
@@ -217,20 +219,33 @@ export default function CamisetaPage() {
 
           {/* Texto — sobe de baixo em todos os dispositivos */}
           <div className="flex flex-col items-center text-center">
+            {/* Linhas fixas */}
             {lines.map((line, i) => (
               <div key={line} className="overflow-hidden">
                 <motion.div
                   initial={{ opacity: 0, y: 60 }}
                   animate={textVisible ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: i * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className={`font-black uppercase leading-none tracking-tight
-                    text-4xl sm:text-5xl md:text-7xl lg:text-8xl
-                    ${line === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
+                  className="font-black uppercase leading-none tracking-tight text-white text-4xl sm:text-5xl md:text-7xl lg:text-8xl"
                 >
                   {line}
                 </motion.div>
               </div>
             ))}
+            {/* Palavra rotativa — ESCANEAR / CLICAR / APERTAR */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={textVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: lines.length * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none tracking-tight"
+            >
+              <TextRotate
+                texts={rotateWords}
+                interval={2200}
+                colorClasses={["text-[#FF6100]", "text-[#FF6100]", "text-[#FF6100]"]}
+                className="font-black"
+              />
+            </motion.div>
           </div>
 
           {/* Badge "ANÚNCIO OFFLINE ATIVADO" */}
