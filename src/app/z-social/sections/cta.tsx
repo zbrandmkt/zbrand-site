@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { supabase } from "@/lib/supabase";
+import { TextRotate } from "@/components/ui/text-rotate";
 
 interface FormData {
   name: string;
@@ -130,10 +131,14 @@ export function ZSocialCta() {
               Vamos conversar
             </p>
 
-            <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-tight mb-4">
-              Pronto pra{" "}
-              <span className="text-laranja">transformar</span>{" "}
-              seu social media?
+            <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.1] mb-4">
+              Pronto para{" "}
+              <TextRotate
+                texts={["humanizar", "ter frequência nas", "vender mais nas"]}
+                interval={2800}
+                className="block"
+              />{" "}
+              suas redes sociais?
             </h2>
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
