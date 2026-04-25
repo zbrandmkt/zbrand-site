@@ -94,18 +94,15 @@ export default function CamisetaPage() {
           loop
         />
 
-        {/* Fallback mobile — zebra texture + gradient enquanto não tem vídeo mobile */}
-        <div className="md:hidden absolute inset-0 bg-[#1A1A1A]">
-          <div
-            className="absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage: "url('/images/zebra-texture-white.png')",
-              backgroundRepeat: "repeat",
-              backgroundSize: "280px",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FF6100]/20 via-transparent to-[#1A1A1A]" />
-        </div>
+        {/* Vídeo mobile */}
+        <video
+          className="md:hidden absolute inset-0 w-full h-full object-cover"
+          src="/images/video_hero_pag_camseta_mobile.mp4"
+          autoPlay
+          muted
+          playsInline
+          loop
+        />
 
         {/* Overlay escuro sobre o vídeo para legibilidade do texto */}
         <div className="absolute inset-0 bg-black/45 md:bg-black/35" />
