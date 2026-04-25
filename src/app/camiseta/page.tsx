@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const services = [
@@ -60,17 +60,36 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-const words = ["FALEI", "QUE", "NÃO", "ERA", "PRA", "ESCANEAR"];
+const lines = ["FALEI QUE NÃO", "ERA PRA", "ESCANEAR"];
 
 export default function CamisetaPage() {
   const [copied, setCopied] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const videoDesktopRef = useRef<HTMLVideoElement>(null);
+  const videoMobileRef = useRef<HTMLVideoElement>(null);
 
-  // Dispara o texto após 1.4s — tempo para o vídeo estabelecer a cena
+  // Força play programático (resolve autoplay bloqueado no mobile)
   useEffect(() => {
-    const t = setTimeout(() => setTextVisible(true), 1400);
+    const tryPlay = (v: HTMLVideoElement | null) => {
+      if (!v) return;
+      v.muted = true;
+      v.play().catch(() => {});
+    };
+    tryPlay(videoDesktopRef.current);
+    tryPlay(videoMobileRef.current);
+
+    // Texto aparece após 3s
+    const t = setTimeout(() => setTextVisible(true), 3000);
     return () => clearTimeout(t);
   }, []);
+
+  function toggleMute() {
+    const next = !muted;
+    setMuted(next);
+    if (videoDesktopRef.current) videoDesktopRef.current.muted = next;
+    if (videoMobileRef.current) videoMobileRef.current.muted = next;
+  }
 
   function copyUrl() {
     navigator.clipboard.writeText("zbrand.com.br");
@@ -84,61 +103,111 @@ export default function CamisetaPage() {
       {/* ── VÍDEO HERO ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Vídeo desktop */}
+        {/* Vídeo desktop — 16:9 */}
         <video
+          ref={videoDesktopRef}
           className="hidden md:block absolute inset-0 w-full h-full object-cover"
           src="/images/video_hero_pag_camseta_desktop.mp4"
           autoPlay
           muted
           playsInline
           loop
+          preload="auto"
         />
 
-        {/* Vídeo mobile */}
+        {/* Vídeo mobile — 9:16 */}
         <video
+          ref={videoMobileRef}
           className="md:hidden absolute inset-0 w-full h-full object-cover"
           src="/images/video_hero_pag_camseta_mobile.mp4"
           autoPlay
           muted
           playsInline
           loop
+          preload="auto"
         />
 
-        {/* Overlay escuro sobre o vídeo para legibilidade do texto */}
-        <div className="absolute inset-0 bg-black/45 md:bg-black/35" />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
 
-        {/* Texto central animado */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <AnimatePresence>
-            {textVisible && (
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 max-w-3xl">
-                {words.map((word, i) => (
-                  <motion.span
-                    key={word}
-                    initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{
-                      delay: i * 0.12,
-                      duration: 0.5,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className={`font-black uppercase tracking-tight leading-none
-                      text-5xl sm:text-6xl md:text-7xl lg:text-8xl
-                      ${word === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
+        {/* ── Texto DESKTOP: entra da direita → centro ── */}
+        <div className="hidden md:flex absolute inset-0 items-center justify-center px-10">
+          <div className="flex flex-col items-center text-center">
+            {lines.map((line, i) => (
+              <div key={line} className="overflow-hidden">
+                <motion.div
+                  initial={{ opacity: 0, x: 180 }}
+                  animate={textVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{
+                    delay: i * 0.18,
+                    duration: 0.75,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`font-black uppercase leading-none tracking-tight
+                    text-7xl lg:text-8xl xl:text-9xl
+                    ${line === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
+                >
+                  {line}
+                </motion.div>
               </div>
-            )}
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
+
+        {/* ── Texto MOBILE: sobe de baixo para cima ── */}
+        <div className="md:hidden absolute inset-0 flex items-center justify-center px-5">
+          <div className="flex flex-col items-center text-center">
+            {lines.map((line, i) => (
+              <div key={line} className="overflow-hidden">
+                <motion.div
+                  initial={{ opacity: 0, y: 60 }}
+                  animate={textVisible ? { opacity: 1, y: 0 } : {}}
+                  transition={{
+                    delay: i * 0.18,
+                    duration: 0.7,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`font-black uppercase leading-none tracking-tight
+                    text-4xl sm:text-5xl
+                    ${line === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
+                >
+                  {line}
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Botão de som — canto superior direito */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          onClick={toggleMute}
+          className="absolute top-5 right-5 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-white/70 hover:text-white hover:border-white/40 transition-all"
+        >
+          {muted ? (
+            <>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+              <span className="text-[10px] font-black uppercase tracking-widest">Som</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4 text-[#FF6100]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#FF6100]">Mudo</span>
+            </>
+          )}
+        </motion.button>
 
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.5 }}
+          transition={{ delay: 4.5 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         >
           <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">
@@ -147,7 +216,7 @@ export default function CamisetaPage() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-            className="w-10 h-10 rounded-full border-2 border-white/25 flex items-center justify-center text-white/50 text-lg"
+            className="w-10 h-10 rounded-full border-2 border-white/30 flex items-center justify-center text-white/60 text-lg"
           >
             ↓
           </motion.div>
