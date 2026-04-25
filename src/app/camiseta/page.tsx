@@ -66,20 +66,14 @@ export default function CamisetaPage() {
   const [copied, setCopied]       = useState(false);
   const [textVisible, setTextVisible] = useState(false);
   const [muted, setMuted]         = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false); // vídeo realmente tocando
-  const [needsTap, setNeedsTap]   = useState(false); // autoplay bloqueado → mostra overlay
-  const videoDesktopRef = useRef<HTMLVideoElement>(null);
-  const videoMobileRef  = useRef<HTMLVideoElement>(null);
-  const textTimer       = useRef<ReturnType<typeof setTimeout>>();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [needsTap, setNeedsTap]   = useState(false);
+  const videoRef  = useRef<HTMLVideoElement>(null);
+  const textTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  // Tenta autoplay apenas no vídeo visível na tela atual
   useEffect(() => {
-    // Detecta qual vídeo está ativo (evita tentar play em elemento hidden)
-    const isMobile = window.innerWidth < 768;
-    const activeRef = isMobile ? videoMobileRef : videoDesktopRef;
-
     const tryPlay = async () => {
-      const v = activeRef.current;
+      const v = videoRef.current;
       if (!v) return;
       v.muted = true;
       try {
@@ -88,19 +82,15 @@ export default function CamisetaPage() {
         setNeedsTap(false);
         textTimer.current = setTimeout(() => setTextVisible(true), 5000);
       } catch {
-        // Autoplay bloqueado — mostra tap overlay
         setNeedsTap(true);
       }
     };
-
     tryPlay();
     return () => clearTimeout(textTimer.current);
   }, []);
 
-  // Quando o usuário toca na overlay de tap
   async function handleTap() {
-    const isMobile = window.innerWidth < 768;
-    const v = isMobile ? videoMobileRef.current : videoDesktopRef.current;
+    const v = videoRef.current;
     if (!v) return;
     v.muted = true;
     try { await v.play(); } catch {}
@@ -109,7 +99,6 @@ export default function CamisetaPage() {
     textTimer.current = setTimeout(() => setTextVisible(true), 5000);
   }
 
-  // Listener onPlay — garante sincronismo se o vídeo iniciar por outro meio
   function handleVideoPlay() {
     if (!isPlaying) {
       setIsPlaying(true);
@@ -122,8 +111,7 @@ export default function CamisetaPage() {
   function toggleMute() {
     const next = !muted;
     setMuted(next);
-    if (videoDesktopRef.current) videoDesktopRef.current.muted = next;
-    if (videoMobileRef.current)  videoMobileRef.current.muted  = next;
+    if (videoRef.current) videoRef.current.muted = next;
   }
 
   function copyUrl() {
@@ -138,24 +126,11 @@ export default function CamisetaPage() {
       {/* ── VÍDEO HERO ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Vídeo desktop — 16:9 */}
+        {/* Vídeo único vertical — funciona em todos os tamanhos de tela */}
         <video
-          ref={videoDesktopRef}
+          ref={videoRef}
           onPlay={handleVideoPlay}
-          className="hidden md:block absolute inset-0 w-full h-full object-cover"
-          src="/images/video_hero_pag_camseta_desktop.mp4"
-          autoPlay
-          muted
-          playsInline
-          loop
-          preload="auto"
-        />
-
-        {/* Vídeo mobile — 9:16 */}
-        <video
-          ref={videoMobileRef}
-          onPlay={handleVideoPlay}
-          className="md:hidden absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           src="/images/video_hero_pag_camseta_mobile.mp4"
           autoPlay
           muted
@@ -210,32 +185,16 @@ export default function CamisetaPage() {
         {/* ── GRUPO: Texto + Badge + Scroll — posicionado no fundo ── */}
         <div className="absolute inset-x-0 bottom-10 flex flex-col items-center px-5" style={{ gap: 10 }}>
 
-          {/* Texto DESKTOP: entra da direita */}
-          <div className="hidden md:flex flex-col items-center text-center">
-            {lines.map((line, i) => (
-              <div key={line} className="overflow-hidden">
-                <motion.div
-                  initial={{ opacity: 0, x: 180 }}
-                  animate={textVisible ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: i * 0.18, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                  className={`font-black uppercase leading-none tracking-tight text-7xl lg:text-8xl xl:text-9xl
-                    ${line === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
-                >
-                  {line}
-                </motion.div>
-              </div>
-            ))}
-          </div>
-
-          {/* Texto MOBILE: sobe de baixo */}
-          <div className="md:hidden flex flex-col items-center text-center">
+          {/* Texto — sobe de baixo em todos os dispositivos */}
+          <div className="flex flex-col items-center text-center">
             {lines.map((line, i) => (
               <div key={line} className="overflow-hidden">
                 <motion.div
                   initial={{ opacity: 0, y: 60 }}
                   animate={textVisible ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: i * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className={`font-black uppercase leading-none tracking-tight text-4xl sm:text-5xl
+                  className={`font-black uppercase leading-none tracking-tight
+                    text-4xl sm:text-5xl md:text-7xl lg:text-8xl
                     ${line === "ESCANEAR" ? "text-[#FF6100]" : "text-white"}`}
                 >
                   {line}
