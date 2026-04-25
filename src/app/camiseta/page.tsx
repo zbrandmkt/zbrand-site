@@ -63,32 +63,64 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 const lines = ["FALEI QUE NÃO", "ERA PRA", "ESCANEAR"];
 
 export default function CamisetaPage() {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied]       = useState(false);
   const [textVisible, setTextVisible] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted]         = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false); // vídeo realmente tocando
+  const [needsTap, setNeedsTap]   = useState(false); // autoplay bloqueado → mostra overlay
   const videoDesktopRef = useRef<HTMLVideoElement>(null);
-  const videoMobileRef = useRef<HTMLVideoElement>(null);
+  const videoMobileRef  = useRef<HTMLVideoElement>(null);
+  const textTimer       = useRef<ReturnType<typeof setTimeout>>();
 
-  // Força play programático (resolve autoplay bloqueado no mobile)
+  // Tenta autoplay; se bloqueado mostra overlay de toque
   useEffect(() => {
-    const tryPlay = (v: HTMLVideoElement | null) => {
+    const tryPlay = async (v: HTMLVideoElement | null) => {
       if (!v) return;
       v.muted = true;
-      v.play().catch(() => {});
+      try {
+        await v.play();
+        // Sucesso — vídeo está tocando; texto aparece em 3s
+        setIsPlaying(true);
+        setNeedsTap(false);
+        textTimer.current = setTimeout(() => setTextVisible(true), 3000);
+      } catch {
+        // Bloqueado pelo browser — mostra tap overlay
+        setNeedsTap(true);
+      }
     };
     tryPlay(videoDesktopRef.current);
     tryPlay(videoMobileRef.current);
-
-    // Texto aparece após 3s
-    const t = setTimeout(() => setTextVisible(true), 3000);
-    return () => clearTimeout(t);
+    return () => clearTimeout(textTimer.current);
   }, []);
+
+  // Quando o usuário toca na overlay
+  async function handleTap() {
+    const v = videoMobileRef.current ?? videoDesktopRef.current;
+    if (!v) return;
+    v.muted = true;
+    try {
+      await v.play();
+    } catch {}
+    setIsPlaying(true);
+    setNeedsTap(false);
+    textTimer.current = setTimeout(() => setTextVisible(true), 3000);
+  }
+
+  // Listener: caso o vídeo comece a tocar por qualquer outro meio
+  function handleVideoPlay() {
+    if (!isPlaying) {
+      setIsPlaying(true);
+      setNeedsTap(false);
+      clearTimeout(textTimer.current);
+      textTimer.current = setTimeout(() => setTextVisible(true), 3000);
+    }
+  }
 
   function toggleMute() {
     const next = !muted;
     setMuted(next);
     if (videoDesktopRef.current) videoDesktopRef.current.muted = next;
-    if (videoMobileRef.current) videoMobileRef.current.muted = next;
+    if (videoMobileRef.current)  videoMobileRef.current.muted  = next;
   }
 
   function copyUrl() {
@@ -106,6 +138,7 @@ export default function CamisetaPage() {
         {/* Vídeo desktop — 16:9 */}
         <video
           ref={videoDesktopRef}
+          onPlay={handleVideoPlay}
           className="hidden md:block absolute inset-0 w-full h-full object-cover"
           src="/images/video_hero_pag_camseta_desktop.mp4"
           autoPlay
@@ -118,6 +151,7 @@ export default function CamisetaPage() {
         {/* Vídeo mobile — 9:16 */}
         <video
           ref={videoMobileRef}
+          onPlay={handleVideoPlay}
           className="md:hidden absolute inset-0 w-full h-full object-cover"
           src="/images/video_hero_pag_camseta_mobile.mp4"
           autoPlay
@@ -127,8 +161,48 @@ export default function CamisetaPage() {
           preload="auto"
         />
 
-        {/* Overlay */}
+        {/* Overlay escuro */}
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
+
+        {/* ── TAP OVERLAY — aparece quando autoplay é bloqueado ── */}
+        {needsTap && (
+          <button
+            onClick={handleTap}
+            className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-6 cursor-pointer"
+            style={{ background: "rgba(0,0,0,0.72)" }}
+          >
+            {/* Anel pulsante + ícone play */}
+            <div className="relative flex items-center justify-center">
+              {/* Anel externo pulsante */}
+              <motion.div
+                animate={{ scale: [1, 1.35, 1], opacity: [0.4, 0, 0.4] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                className="absolute w-28 h-28 rounded-full border-2 border-[#FF6100]"
+              />
+              {/* Anel médio */}
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0, 0.6] }}
+                transition={{ repeat: Infinity, duration: 2, delay: 0.3, ease: "easeInOut" }}
+                className="absolute w-20 h-20 rounded-full border-2 border-[#FF6100]"
+              />
+              {/* Botão central */}
+              <div className="w-16 h-16 rounded-full bg-[#FF6100] border-2 border-white/20 flex items-center justify-center shadow-lg">
+                <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+            {/* Texto */}
+            <div className="flex flex-col items-center gap-1">
+              <span className="font-black uppercase tracking-[0.2em] text-white text-sm">
+                Toque para assistir
+              </span>
+              <span className="text-white/40 text-xs font-medium">
+                A zebra te espera 🦓
+              </span>
+            </div>
+          </button>
+        )}
 
         {/* ── Texto DESKTOP: entra da direita → centro ── */}
         <div className="hidden md:flex absolute inset-0 items-center justify-center px-10">
