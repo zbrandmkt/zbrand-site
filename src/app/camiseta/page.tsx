@@ -70,7 +70,6 @@ export default function CamisetaPage() {
   const [muted, setMuted]         = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [needsTap, setNeedsTap]   = useState(false);
-  const loopCount = useRef(0); // controla quantas vezes o vídeo tocou
   const videoRef  = useRef<HTMLVideoElement>(null);
   const textTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -83,42 +82,13 @@ export default function CamisetaPage() {
   }
 
   useEffect(() => {
-    const tryPlay = async () => {
-      const v = videoRef.current;
-      if (!v) return;
-      // 1ª tentativa: com som
-      v.muted = false;
-      try {
-        await v.play();
-        startPlaying(v);
-        return;
-      } catch {}
-      // 2ª tentativa: mudo (política do browser)
-      v.muted = true;
-      try {
-        await v.play();
-        startPlaying(v);
-      } catch {
-        // Completamente bloqueado → tap overlay
-        setNeedsTap(true);
-      }
-    };
-    tryPlay();
-    return () => clearTimeout(textTimer.current);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Ao fim de cada reprodução: na 2ª vez fica mudo e continua em loop
-  function handleVideoEnded() {
     const v = videoRef.current;
     if (!v) return;
-    loopCount.current += 1;
-    if (loopCount.current >= 1) {   // após a 1ª reprodução completa → mudo
-      v.muted = true;
-      setMuted(true);
-    }
-    v.play().catch(() => {});
-  }
+    // Autoplay nativo (mudo) já é disparado pelo atributo autoPlay.
+    // Esta chamada extra serve só para detectar bloqueio raro e mostrar o tap overlay.
+    v.play().catch(() => setNeedsTap(true));
+    return () => clearTimeout(textTimer.current);
+  }, []);
 
   // Tap overlay: usuário já interagiu → pode ligar som
   async function handleTap() {
@@ -161,12 +131,12 @@ export default function CamisetaPage() {
           <video
             ref={videoRef}
             onPlay={handleVideoPlay}
-            onEnded={handleVideoEnded}
             className="h-full w-full object-cover md:w-auto md:object-contain"
             src="/images/video_hero_pag_camseta_mobile.mp4"
             autoPlay
             muted
             playsInline
+            loop
             preload="auto"
           />
         </div>
