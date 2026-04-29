@@ -48,7 +48,6 @@ const ALL_SERVICES = [
   { name: "Social Media",           icon: "📱" },
   { name: "Tráfego Pago",           icon: "🎯" },
   { name: "Captação de Conteúdo",   icon: "🎬" },
-  { name: "Tráfego Orgânico",       icon: "🔍" },
   { name: "Website & Landing Page", icon: "💻" },
   { name: "Automação WhatsApp",     icon: "⚡" },
 ];
@@ -62,36 +61,35 @@ const avulsos = [
     name: "Tráfego Pago",
     desc: "Gestão estratégica de campanhas para Meta e Google Ads, com foco em geração de demanda, vendas e reconhecimento.",
     color: "#FF6100",
-  },
-  {
-    icon: "🔍",
-    name: "Tráfego Orgânico",
-    desc: "Estratégia de SEO, GEO, Google Meu Negócio e conteúdo para que o ecossistema da sua marca se fortaleça e as buscas te entregue.",
-    color: "#00C2FF",
+    href: "/servicos/trafego-pago",
   },
   {
     icon: "📱",
     name: "Social Media",
     desc: "Conteúdo humanizado, calendário estratégico e frequência. Tudo para fortalecer a presença digital da sua marca e melhorar a comunicação com o seu público alvo.",
     color: "#E5006D",
+    href: "/servicos/social-media",
   },
   {
     icon: "🎬",
     name: "Captação de Conteúdo Mobile",
     desc: "Vamos até a sua empresa ou evento para gravar. Conteúdo real, roteirizado pra converter, com o tom de voz e identidade visual do seu negócio.",
     color: "#7B2FF7",
+    href: "/servicos/captacao",
   },
   {
     icon: "💻",
     name: "Website & Landing Page",
     desc: "Desenvolvimento de sites e landing pages otimizadas para conversão, com foco em performance, experiência do usuário e geração de oportunidades comerciais.",
     color: "#AAFF00",
+    href: "/servicos/website",
   },
   {
     icon: "⚡",
     name: "Automação",
     desc: "Fluxos no WhatsApp que respondem, qualificam e convertem enquanto você foca no seu negócio. Zero lead perdido, atendimento 24h.",
     color: "#FBBC05",
+    href: "/servicos/automacao",
   },
 ];
 
@@ -504,10 +502,17 @@ export function Services() {
           </p>
         </motion.div>
 
-        {/* ── Cards Avulsos ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-0">
-          {avulsos.map((s, i) => (
+        {/* ── Cards Avulsos — row 1: 3 cards ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {avulsos.slice(0, 3).map((s, i) => (
             <AvulsoCard key={s.name} s={s} index={i} inView={avulsosInView} />
+          ))}
+        </div>
+
+        {/* ── Cards Avulsos — row 2: 2 cards centralizados ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 lg:w-2/3 lg:mx-auto pb-0">
+          {avulsos.slice(3).map((s, i) => (
+            <AvulsoCard key={s.name} s={s} index={i + 3} inView={avulsosInView} />
           ))}
         </div>
 

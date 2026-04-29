@@ -9,7 +9,6 @@ const TOP_BAR_H = 36;
 
 const serviceItems = [
   { icon: "🎯", name: "Tráfego Pago",               href: "/servicos/trafego-pago" },
-  { icon: "🔍", name: "Tráfego Orgânico",            href: "/servicos/trafego-organico" },
   { icon: "📱", name: "Social Media",                 href: "/servicos/social-media" },
   { icon: "🎬", name: "Captação de Conteúdo Mobile", href: "/servicos/captacao" },
   { icon: "💻", name: "Website & Landing Page",      href: "/servicos/website" },
