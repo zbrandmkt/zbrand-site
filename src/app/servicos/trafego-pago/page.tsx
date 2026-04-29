@@ -5,6 +5,7 @@ import { ZAdsHero } from "@/app/z-ads/sections/hero";
 import { ZAdsProblem } from "@/app/z-ads/sections/problem";
 import { ZAdsDiferenciais } from "@/app/z-ads/sections/diferenciais";
 import { ZAdsProcess } from "@/app/z-ads/sections/process";
+import { ZAdsPainel } from "@/app/z-ads/sections/painel";
 import { ZAdsPricing } from "@/app/z-ads/sections/pricing";
 import { ZAdsFaq } from "@/app/z-ads/sections/faq";
 import { ZAdsCta } from "@/app/z-ads/sections/cta";
@@ -24,6 +25,7 @@ export default function TrafegoPage() {
         <ZAdsProblem />
         <ZAdsDiferenciais />
         <ZAdsProcess />
+        <ZAdsPainel />
         <ZAdsPricing />
         <ZAdsFaq />
         <ZAdsCta />
