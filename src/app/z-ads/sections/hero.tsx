@@ -5,7 +5,7 @@ import { InfiniteGrid } from "@/components/ui/infinite-grid";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const stats = [
-  { value: "4 camp.", label: "por mês" },
+  { value: "Meta", label: "+ Google Ads" },
   { value: "Retorno", label: "mensurado" },
   { value: "4 meses", label: "de parceria" },
   { value: "Captação", label: "presencial" },

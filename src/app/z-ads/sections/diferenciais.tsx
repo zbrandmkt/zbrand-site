@@ -26,7 +26,7 @@ const diffs = [
     icon: "🎯",
     color: "#AAFF00",
     title: "Estratégia Real",
-    desc: "Até 4 campanhas estruturadas: atração de novos clientes, reconhecimento de marca, remarketing (impactar quem já viu) e Google Ads. Funil completo.",
+    desc: "Campanhas estruturadas por objetivo: atração de novos clientes, reconhecimento de marca, remarketing (impactar quem já viu) e Google Ads. Funil completo, não anúncio avulso.",
   },
   {
     icon: "🤝",

@@ -6,7 +6,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "Qual o investimento total por mês?",
-    a: "R$ 1.800 de mensalidade + R$ 1.000 de verba de anúncios (paga direto ao Meta ou Google — esse valor não passa pela ZBRAND). No total, são aproximadamente R$ 2.800/mês para ter tráfego pago profissional rodando no seu restaurante.",
+    a: "R$ 1.200 de mensalidade + R$ 1.000 de verba de anúncios (paga direto ao Meta ou Google — esse valor não passa pela ZBRAND). No total, são aproximadamente R$ 2.200/mês para ter tráfego pago profissional rodando no seu restaurante.",
   },
   {
     q: "Por que o contrato é de 4 meses?",

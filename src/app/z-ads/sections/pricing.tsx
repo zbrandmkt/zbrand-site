@@ -6,7 +6,7 @@ import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const features = [
   "Diagnóstico e estratégia de campanhas",
-  "Até 4 campanhas ativas por mês",
+  "Campanhas estruturadas por objetivo de negócio",
   "Captação presencial 1 dia/mês (4–6h)",
   "Edição profissional dos criativos",
   "Relatório semanal (retorno, custo por cliente, conversão, gastos)",
@@ -93,7 +93,7 @@ export function ZAdsPricing() {
                 <div className="flex items-end gap-1">
                   <span className="font-display text-sm font-bold text-cinza-text">R$</span>
                   <span className="font-display font-black text-5xl leading-none text-[#00C2FF]">
-                    1.800
+                    1.200
                   </span>
                   <span className="font-display text-sm font-bold text-cinza-text mb-1">/mês</span>
                 </div>
@@ -185,10 +185,10 @@ export function ZAdsPricing() {
                 Investimento total estimado
               </p>
               <p className="font-display font-black text-2xl text-preto">
-                ~R$ 2.800<span className="text-base font-bold text-cinza-text">/mês</span>
+                ~R$ 2.200<span className="text-base font-bold text-cinza-text">/mês</span>
               </p>
               <p className="text-[11px] text-cinza-text mt-1 leading-relaxed">
-                R$ 1.800 de mensalidade + R$ 1.000 de verba de anúncios (pago direto à plataforma).
+                R$ 1.200 de mensalidade + R$ 1.000 de verba de anúncios (pago direto à plataforma).
               </p>
             </div>
           </motion.div>
