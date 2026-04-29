@@ -6,9 +6,9 @@ import { motion, useInView } from "framer-motion";
 const steps = [
   {
     number: "01",
-    icon: "📁",
-    title: "Você envia o material",
-    desc: "Manda o banco de imagens e vídeos que já tem do seu negócio. Não precisa de nada profissional para começar.",
+    icon: "🤝",
+    title: "Reunião de Briefing e Acessos",
+    desc: "Entendemos o momento da empresa, objetivos, público-alvo, tom de voz e diferenciais. Você nos dá acesso ao Gerenciador de Anúncios para começarmos a trabalhar.",
     color: "#00C2FF",
   },
   {
@@ -20,16 +20,23 @@ const steps = [
   },
   {
     number: "03",
+    icon: "🎬",
+    title: "Edição dos criativos",
+    desc: "Editamos os vídeos e produzimos até 5 artes estáticas para criativos de campanha. Peças prontas para rodar nos anúncios.",
+    color: "#00C2FF",
+  },
+  {
+    number: "04",
     icon: "🔁",
     title: "Otimizamos toda semana",
     desc: "Monitoramos os resultados e ajustamos público, criativo e horário semana a semana. Sem deixar dinheiro na mesa.",
     color: "#00C2FF",
   },
   {
-    number: "04",
+    number: "05",
     icon: "📊",
     title: "Você recebe o relatório",
-    desc: "Todo semana um relatório completo com ROAS, CAC, conversão e gastos. Você sabe exatamente onde está cada centavo.",
+    desc: "Toda semana um relatório completo com ROAS, CAC, conversão e gastos. Você sabe exatamente onde está cada centavo.",
     color: "#FF6100",
   },
 ];
@@ -110,7 +117,7 @@ export function HowItWorks() {
             Como funciona
           </h2>
           <p className="text-white/35 text-sm mt-3 max-w-xs mx-auto">
-            Simples, direto e sem enrolação. Em 4 passos seu restaurante começa a aparecer pra quem importa.
+            Simples, direto e sem enrolação. Em 5 passos seu restaurante começa a aparecer pra quem importa.
           </p>
         </motion.div>
 

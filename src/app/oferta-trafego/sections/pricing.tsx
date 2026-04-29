@@ -141,7 +141,7 @@ export function Pricing() {
 
             {/* Entregáveis */}
             <ul className="flex flex-col gap-3 flex-1 mb-8">
-              {[...entregaveis, "Prioridade no atendimento", "Estratégia de crescimento mensal"].map((item) => (
+              {[...entregaveis, "Ida ao seu estabelecimento para gravar os criativos", "Estratégia de crescimento mensal"].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-white/05 border border-white/15 flex items-center justify-center shrink-0 mt-0.5">
                     <svg className="w-2.5 h-2.5 text-white/30" fill="none" viewBox="0 0 12 10" stroke="currentColor" strokeWidth={2.5}>
@@ -171,8 +171,8 @@ export function Pricing() {
           transition={{ delay: 0.5 }}
           className="text-center text-white/25 text-xs mt-8 max-w-sm mx-auto leading-relaxed"
         >
-          O preço de R$ 800 é porque a ZBRAND acredita que microempreendedor merece
-          chance de escalar com investimento acessível. Simples assim.
+          O preço de R$ 800 é porque a ZBRAND acredita que microempreendedores merecem
+          a chance de escalar com investimento acessível. Simples assim.
         </motion.p>
       </div>
     </section>

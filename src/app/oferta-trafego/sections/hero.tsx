@@ -11,7 +11,7 @@ export function OfertaTrafegoHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center px-5 py-24 overflow-hidden bg-[#1A1A1A]"
+      className="relative min-h-screen flex flex-col items-center justify-center px-5 pt-36 pb-24 overflow-hidden bg-[#1A1A1A]"
     >
       {/* Grid pattern */}
       <div
