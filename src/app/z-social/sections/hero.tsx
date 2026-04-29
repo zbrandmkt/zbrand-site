@@ -8,7 +8,7 @@ const stats = [
   { value: "15+", label: "posts/mês" },
   { value: "Stories", label: "diários" },
   { value: "4 meses", label: "de parceria" },
-  { value: "In loco", label: "captação" },
+  { value: "Captação", label: "mobile" },
 ];
 
 export function ZSocialHero() {
@@ -97,23 +97,28 @@ export function ZSocialHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-px border-2 border-preto rounded-brutal-lg overflow-hidden shadow-brutal"
+            className="border-2 border-preto rounded-brutal-lg overflow-hidden shadow-brutal"
           >
-            {stats.map((s, i) => (
-              <div
-                key={s.label}
-                className={`flex flex-col items-center px-6 py-3 bg-white ${
-                  i < stats.length - 1 ? "border-r-2 border-preto" : ""
-                }`}
-              >
-                <span className="font-display font-black text-lg text-laranja leading-none">
-                  {s.value}
-                </span>
-                <span className="font-display text-[10px] font-semibold text-cinza-text uppercase tracking-wider mt-0.5">
-                  {s.label}
-                </span>
-              </div>
-            ))}
+            <div className="grid grid-cols-2 sm:grid-cols-4">
+              {stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className={`flex flex-col items-center px-6 py-4 bg-white
+                    ${i % 2 === 0 ? "border-r-2 border-preto" : ""}
+                    ${i < 2 ? "border-b-2 sm:border-b-0 border-preto" : ""}
+                    ${i === 1 ? "sm:border-r-2 sm:border-preto" : ""}
+                    ${i === 2 ? "sm:border-r-2 sm:border-preto" : ""}
+                  `}
+                >
+                  <span className="font-display font-black text-lg text-laranja leading-none">
+                    {s.value}
+                  </span>
+                  <span className="font-display text-[10px] font-semibold text-cinza-text uppercase tracking-wider mt-0.5">
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
