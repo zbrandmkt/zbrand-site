@@ -62,7 +62,7 @@ export function ZSocialHero() {
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             A gente <span className="text-preto font-semibold">filma, edita e publica</span> conteúdo que traz clientes reais.{" "}
-            Enquanto você dorme, sua marca está trabalhando.
+            Enquanto você cuida do seu negócio, nós cuidamos da construção da sua marca nas mídias sociais.
           </motion.p>
 
           {/* CTAs */}

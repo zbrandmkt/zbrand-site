@@ -13,7 +13,7 @@ const diffs = [
   {
     icon: "🎥",
     color: "#FF6100",
-    title: "Captação In Loco",
+    title: "Captação Presencial",
     desc: "A gente vai até você, filma seu dia a dia, seus clientes felizes, edita profissionalmente e entrega pronto. Nada de banco de imagem.",
   },
   {
