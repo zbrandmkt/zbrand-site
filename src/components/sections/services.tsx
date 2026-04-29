@@ -514,14 +514,14 @@ export function Services() {
       </div>
 
       {/* ── Lamp Effect ── */}
-      <div className="relative w-full overflow-hidden mt-16" style={{ height: "320px" }}>
+      <div className="relative w-full overflow-hidden mt-4" style={{ height: "220px" }}>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
           className="absolute bottom-0 left-0 w-1/2"
           style={{
-            height: "320px",
+            height: "220px",
             background: "linear-gradient(to top, rgba(255,97,0,0.9) 0%, rgba(255,97,0,0.15) 60%, transparent 100%)",
             clipPath: "polygon(100% 100%, 100% 100%, 0% 0%, 0% 0%)",
           }}
@@ -532,7 +532,7 @@ export function Services() {
           transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
           className="absolute bottom-0 right-0 w-1/2"
           style={{
-            height: "320px",
+            height: "220px",
             background: "linear-gradient(to top, rgba(255,97,0,0.9) 0%, rgba(255,97,0,0.15) 60%, transparent 100%)",
             clipPath: "polygon(0% 100%, 0% 100%, 100% 0%, 100% 0%)",
           }}
