@@ -76,8 +76,8 @@ export function ZSocialCases() {
           </p>
         </motion.div>
 
-        {/* Galeria 2×2 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+        {/* Galeria — 1 coluna mobile, 4 colunas desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 lg:gap-6 items-start">
           {results.map((item, i) => (
             <motion.div
               key={i}
@@ -88,24 +88,23 @@ export function ZSocialCases() {
                 duration: 0.65,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              style={{ transform: `rotate(${item.rotate})` }}
               className="group"
             >
               <div
-                className="relative overflow-hidden rounded-2xl border-[3px] transition-transform duration-300 group-hover:scale-[1.02]"
+                className="relative overflow-hidden rounded-xl border-[3px] transition-transform duration-300 group-hover:-translate-y-1"
                 style={{
                   borderColor: item.borderColor,
-                  boxShadow: `6px 6px 0px 0px ${item.shadowColor}`,
+                  boxShadow: `5px 5px 0px 0px ${item.shadowColor}`,
                 }}
               >
-                {/* Imagem */}
-                <div className="relative w-full aspect-[4/3]">
+                {/* Imagem na proporção real (~1:2 retrato) */}
+                <div className="relative w-full" style={{ aspectRatio: "1170 / 2383" }}>
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, 25vw"
                   />
                 </div>
 
