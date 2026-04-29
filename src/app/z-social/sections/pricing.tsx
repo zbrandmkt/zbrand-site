@@ -16,7 +16,7 @@ const plans = [
       "Gestão de 1 rede social",
       "15 posts/mês",
       "Stories diários",
-      "Captação in loco (1 dia/mês)",
+      "Captação Presencial (1 dia a cada 2 meses)",
       "Edição profissional",
       "Calendário mensal",
       "Análise de métricas",
@@ -36,7 +36,7 @@ const plans = [
       "Gestão de 2 redes sociais",
       "15 posts/mês por rede",
       "Stories diários",
-      "Captação in loco (1 dia/mês)",
+      "Captação Presencial (1 dia a cada 2 meses)",
       "Edição profissional",
       "Calendário mensal",
       "Análise de métricas",
@@ -56,7 +56,7 @@ const plans = [
       "Gestão de 3 redes sociais",
       "30 posts/mês no total",
       "Stories diários",
-      "Captação in loco (1 dia/mês)",
+      "Captação Presencial (1 dia a cada 2 meses)",
       "Edição profissional",
       "Calendário mensal",
       "Análise de métricas",
@@ -90,7 +90,7 @@ export function ZSocialPricing() {
             <span className="text-laranja">certo pra você</span>
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-lg mx-auto leading-relaxed">
-            Todos os planos incluem captação in loco, edição profissional e relatório mensal.
+            Todos os planos incluem captação presencial, edição profissional e relatório mensal.
             Contrato mínimo de 4 meses.
           </p>
         </motion.div>
