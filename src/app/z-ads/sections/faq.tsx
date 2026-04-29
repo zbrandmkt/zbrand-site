@@ -21,8 +21,8 @@ const faqs = [
     a: "R$ 1.000/mês de verba mínima. Com menos que isso, a plataforma não tem volume de dados suficiente para otimizar e os resultados demoram muito mais para aparecer. Quanto mais verba, mais rápido a campanha escala.",
   },
   {
-    q: "Vocês trabalham com apps de delivery como iFood ou Rappi?",
-    a: "Nosso foco é Meta Ads (Instagram e Facebook) e Google Ads — onde você alcança pessoas que ainda não te conhecem. Anúncios dentro dos apps de delivery têm lógica diferente e são cobrados à parte.",
+    q: "Posso usar os anúncios para vender no iFood ou Rappi?",
+    a: "Sim — e essa é uma estratégia poderosa. Em vez de anunciar dentro dos apps de delivery (que só mostram cardápio para quem já está com fome e comparando preço), a gente cria anúncios no Meta ou Google que apresentam seu produto com vídeo ou imagem atrativa. Quem vê se interessa, segue sua página, interage — e quando quiser pedir, já vai direto pro seu iFood ou Rappi. A margem é menor por conta da comissão da plataforma, mas você conquista um cliente que te conhece, confia e volta. É muito mais eficiente do que aparecer só no cardápio.",
   },
   {
     q: "E se eu não ver resultado?",
