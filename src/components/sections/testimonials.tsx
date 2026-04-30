@@ -209,7 +209,7 @@ export function Testimonials() {
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15, duration: 0.5 }}
-          className="flex gap-2 overflow-x-auto pb-3 mb-10 no-scrollbar"
+          className="flex justify-center gap-2 overflow-x-auto pb-3 mb-10 no-scrollbar"
         >
           {categories.map((cat) => {
             const isActive = cat.id === activeId;
