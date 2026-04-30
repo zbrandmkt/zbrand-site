@@ -6,7 +6,6 @@ import { ZAutomaçaoProblem } from "@/app/z-automacao/sections/problem";
 import { ZAutomaçaoBotPreview } from "@/app/z-automacao/sections/bot-preview";
 import { ZAutomaçaoDiferenciais } from "@/app/z-automacao/sections/diferenciais";
 import { ZAutomaçaoProcess } from "@/app/z-automacao/sections/process";
-import { ZAutomaçaoPainel } from "@/app/z-automacao/sections/painel";
 import { ZAutomaçaoPricing } from "@/app/z-automacao/sections/pricing";
 import { ZAutomaçaoFaq } from "@/app/z-automacao/sections/faq";
 import { ZAutomaçaoCta } from "@/app/z-automacao/sections/cta";
@@ -27,7 +26,6 @@ export default function AutomacaoPage() {
         <ZAutomaçaoBotPreview />
         <ZAutomaçaoDiferenciais />
         <ZAutomaçaoProcess />
-        <ZAutomaçaoPainel />
         <ZAutomaçaoPricing />
         <ZAutomaçaoFaq />
         <ZAutomaçaoCta />
