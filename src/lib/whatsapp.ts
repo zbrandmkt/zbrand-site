@@ -8,6 +8,7 @@ const messages: Record<string, string> = {
   combo1: "Oi! Vim pelo site e tenho interesse no Z-COMBO 1 (Social + Ads). Pode me contar mais?",
   combo2: "Oi! Vim pelo site e tenho interesse no Z-COMBO 2 (Social + Ads + Automação). Pode me contar mais?",
   trafego: "Oi! Vi o anúncio da ZBRAND e quero saber mais sobre a gestão de tráfego pago por R$ 800/mês. Pode me ajudar?",
+  personalizado: "Oi! Vim pelo site e quero montar um pacote personalizado com a ZBRAND. Pode me ajudar?",
 };
 
 export function getWhatsAppLink(service: keyof typeof messages = "geral") {
