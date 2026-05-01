@@ -15,7 +15,7 @@ const WHATSAPP_NUMBER =
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type SocialTier = 1 | 2 | 3;
-type CaptacaoTier = "mobile" | "pro";
+type CaptacaoTier = "mobile" | "pro" | "eventos";
 type SiteTier = "landing" | "completo";
 
 interface Config {
@@ -36,12 +36,12 @@ interface Config {
 // ─── Pricing ──────────────────────────────────────────────────────────────────
 
 const SOCIAL_PRICES: Record<SocialTier, number> = { 1: 1500, 2: 2000, 3: 3000 };
-const META_PRICE = 1800;
-const GOOGLE_PRICE = 600;
+const META_PRICE = 1500;
+const GOOGLE_PRICE = 500;
 const BOT_MONTHLY = 600;
 const BOT_SETUP = 2000;
 
-const CAPTACAO_PRICES: Record<CaptacaoTier, number> = { mobile: 800, pro: 1500 };
+const CAPTACAO_PRICES: Record<CaptacaoTier, number> = { mobile: 800, pro: 1500, eventos: 0 };
 const SITE_PRICES: Record<SiteTier, number> = { landing: 1500, completo: 3900 };
 
 function calcTotal(cfg: Config) {
@@ -122,8 +122,12 @@ function buildWhatsAppLink(cfg: Config, totalMonthly: number, totalUnico: number
     lines.push(`✓ Automação WhatsApp (R$ ${BOT_MONTHLY}/mês + R$ ${BOT_SETUP} setup)`);
   }
   if (cfg.captacaoEnabled) {
-    const tier = cfg.captacaoTier === "mobile" ? "Mobile" : "Profissional";
-    lines.push(`✓ Captação ${tier} — 1 sessão (R$ ${CAPTACAO_PRICES[cfg.captacaoTier].toLocaleString("pt-BR")})`);
+    if (cfg.captacaoTier === "eventos") {
+      lines.push("✓ Cobertura de Eventos — proposta personalizada (a partir de R$ 1.500)");
+    } else {
+      const tier = cfg.captacaoTier === "mobile" ? "Mobile" : "Profissional";
+      lines.push(`✓ Captação ${tier} — sessão 4h (R$ ${CAPTACAO_PRICES[cfg.captacaoTier].toLocaleString("pt-BR")})`);
+    }
   }
   if (cfg.siteEnabled) {
     const tier = cfg.siteTier === "landing" ? "Landing Page" : "Site Completo";
@@ -337,10 +341,13 @@ function SummaryPanel({ cfg, totalMonthly, displayedMonthly, totalUnico, discoun
                   className="flex items-center justify-between gap-2">
                   <span className="flex items-center gap-1.5 text-[11px] text-white/70 font-medium">
                     <span style={{ color: AMBER }}>✓</span>
-                    Captação {cfg.captacaoTier === "mobile" ? "Mobile" : "Pro"}
+                    {cfg.captacaoTier === "mobile" ? "Captação Mobile" : cfg.captacaoTier === "pro" ? "Captação Pro" : "Cobertura Eventos"}
                     <span className="text-white/30 text-[9px]">(único)</span>
                   </span>
-                  <span className="text-[11px] font-black text-white">R$ {CAPTACAO_PRICES[cfg.captacaoTier].toLocaleString("pt-BR")}</span>
+                  {cfg.captacaoTier === "eventos"
+                    ? <span className="text-[11px] font-black text-white/60">sob consulta</span>
+                    : <span className="text-[11px] font-black text-white">R$ {CAPTACAO_PRICES[cfg.captacaoTier].toLocaleString("pt-BR")}</span>
+                  }
                 </motion.div>
               )}
               {cfg.siteEnabled && (
@@ -487,9 +494,9 @@ export function ZPersonalizadoConfigurador() {
   }, []);
 
   const socialOptions = [
-    { value: 1 as SocialTier, label: "1 rede", price: 1500, desc: "Instagram ou Facebook" },
-    { value: 2 as SocialTier, label: "2 redes", price: 2000, desc: "Insta + Facebook" },
-    { value: 3 as SocialTier, label: "3 redes", price: 3000, desc: "Insta + FB + TikTok" },
+    { value: 1 as SocialTier, label: "1 rede", price: 1500, desc: "Instagram ou TikTok" },
+    { value: 2 as SocialTier, label: "2 redes", price: 2000, desc: "Instagram e TikTok ou LinkedIn" },
+    { value: 3 as SocialTier, label: "3 redes", price: 3000, desc: "Instagram, TikTok e LinkedIn" },
   ];
 
   return (
@@ -584,7 +591,7 @@ export function ZPersonalizadoConfigurador() {
                         <p className="text-[10px] text-cinza-text">Instagram + Facebook</p>
                       </div>
                       <div className="text-right">
-                        <span className="font-black text-sm" style={{ color: CYAN }}>R$ 1.800</span>
+                        <span className="font-black text-sm" style={{ color: CYAN }}>R$ 1.500</span>
                         <p className="text-[9px] text-cinza-text">incluso</p>
                       </div>
                     </div>
@@ -608,7 +615,7 @@ export function ZPersonalizadoConfigurador() {
                         <p className="text-[10px] text-cinza-text">Google Search + Display</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-black text-sm" style={{ color: cfg.googleEnabled ? CYAN : "#999" }}>+ R$ 600</span>
+                        <span className="font-black text-sm" style={{ color: cfg.googleEnabled ? CYAN : "#999" }}>+ R$ 500</span>
                         <div className="relative w-9 h-5 rounded-full border-2 border-preto transition-colors"
                           style={{ background: cfg.googleEnabled ? CYAN : "#E5E5E5" }}>
                           <motion.div
@@ -676,13 +683,13 @@ export function ZPersonalizadoConfigurador() {
                   onToggle={() => toggle("captacaoEnabled")}
                   color={AMBER} emoji="🎬"
                   title="Captação de Conteúdo"
-                  subtitle="Sessão presencial de 5h — vídeos e fotos editados entregues no Drive"
+                  subtitle="Sessão presencial de 4h — conteúdo editado entregue no Drive"
                   badgeType="once"
                 >
                   <p className="text-[11px] font-black uppercase tracking-widest text-preto/50 mb-3">
                     Tipo de captação
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {/* Mobile */}
                     <button
                       onClick={() => setCfg((p) => ({ ...p, captacaoTier: "mobile" }))}
@@ -693,12 +700,12 @@ export function ZPersonalizadoConfigurador() {
                           : { borderColor: "rgba(26,26,26,0.15)", background: "white" }
                       }
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-1">
                         <span className="font-display font-black text-sm uppercase text-preto">📱 Mobile</span>
-                        <span className="font-black text-base" style={{ color: AMBER }}>R$ 800</span>
+                        <span className="font-black text-sm" style={{ color: AMBER }}>R$ 800</span>
                       </div>
                       <div className="flex flex-col gap-1">
-                        {["Sessão 5h presencial", "10 vídeos editados", "Banco de imagens completo no Drive"].map((f) => (
+                        {["Sessão 4h presencial", "Foco em mídias sociais", "Com roteirização", "Vídeos editados no Drive"].map((f) => (
                           <div key={f} className="flex items-center gap-1.5">
                             <Check color={AMBER} />
                             <span className="text-[10px] text-preto/65 font-medium">{f}</span>
@@ -716,12 +723,36 @@ export function ZPersonalizadoConfigurador() {
                           : { borderColor: "rgba(26,26,26,0.15)", background: "white" }
                       }
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-1">
                         <span className="font-display font-black text-sm uppercase text-preto">🎥 Profissional</span>
-                        <span className="font-black text-base" style={{ color: AMBER }}>R$ 1.500</span>
+                        <span className="font-black text-sm" style={{ color: AMBER }}>R$ 1.500</span>
                       </div>
                       <div className="flex flex-col gap-1">
-                        {["Sessão 5h presencial", "20 fotos institucionais", "10 vídeos editados", "Banco de imagens no Drive"].map((f) => (
+                        {["Sessão 4h presencial", "Conteúdo institucional", "Fotos + vídeos editados", "Banco de imagens no Drive"].map((f) => (
+                          <div key={f} className="flex items-center gap-1.5">
+                            <Check color={AMBER} />
+                            <span className="text-[10px] text-preto/65 font-medium">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </button>
+                    {/* Cobertura de Eventos */}
+                    <button
+                      onClick={() => setCfg((p) => ({ ...p, captacaoTier: "eventos" }))}
+                      className="flex flex-col gap-2 p-4 rounded-brutal border-2 text-left transition-all"
+                      style={
+                        cfg.captacaoTier === "eventos"
+                          ? { borderColor: AMBER, background: `${AMBER}15`, boxShadow: `3px 3px 0px 0px ${AMBER}` }
+                          : { borderColor: "rgba(26,26,26,0.15)", background: "white" }
+                      }
+                    >
+                      <div className="flex flex-col gap-0.5 mb-1">
+                        <span className="font-display font-black text-sm uppercase text-preto">🎪 Eventos</span>
+                        <span className="font-black text-sm" style={{ color: AMBER }}>a partir de R$ 1.500</span>
+                        <span className="text-[9px] font-bold text-preto/35 uppercase tracking-wide">proposta personalizada</span>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        {["Captação real time", "Stories em tempo real", "Até 4 vídeos editados", "Resumo do evento"].map((f) => (
                           <div key={f} className="flex items-center gap-1.5">
                             <Check color={AMBER} />
                             <span className="text-[10px] text-preto/65 font-medium">{f}</span>
@@ -731,7 +762,7 @@ export function ZPersonalizadoConfigurador() {
                     </button>
                   </div>
                   <p className="text-[10px] text-preto/40 font-medium mt-3">
-                    Sessão avulsa — pode ser contratada junto com qualquer serviço mensal ou isolada.
+                    Sessão avulsa — pode ser contratada junto com qualquer serviço mensal ou isolada. Eventos: orçamento sob consulta.
                   </p>
                 </ToggleCard>
 
