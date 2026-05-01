@@ -6,6 +6,7 @@ import { ZStarterProblem } from "@/app/z-starter/sections/problem";
 import { ZStarterSynergy } from "@/app/z-starter/sections/synergy";
 import { ZStarterDiferenciais } from "@/app/z-starter/sections/diferenciais";
 import { ZStarterProcess } from "@/app/z-starter/sections/process";
+import { ZStarterPainel } from "@/app/z-starter/sections/painel";
 import { ZStarterPricing } from "@/app/z-starter/sections/pricing";
 import { ZStarterFaq } from "@/app/z-starter/sections/faq";
 import { ZStarterCta } from "@/app/z-starter/sections/cta";
@@ -26,6 +27,7 @@ export default function StarterPage() {
         <ZStarterSynergy />
         <ZStarterDiferenciais />
         <ZStarterProcess />
+        <ZStarterPainel />
         <ZStarterPricing />
         <ZStarterFaq />
         <ZStarterCta />

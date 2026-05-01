@@ -6,6 +6,7 @@ import { ZFullProblem } from "@/app/z-full/sections/problem";
 import { ZFullSynergy } from "@/app/z-full/sections/synergy";
 import { ZFullDiferenciais } from "@/app/z-full/sections/diferenciais";
 import { ZFullProcess } from "@/app/z-full/sections/process";
+import { ZFullPainel } from "@/app/z-full/sections/painel";
 import { ZFullPricing } from "@/app/z-full/sections/pricing";
 import { ZFullFaq } from "@/app/z-full/sections/faq";
 import { ZFullCta } from "@/app/z-full/sections/cta";
@@ -26,6 +27,7 @@ export default function FullPage() {
         <ZFullSynergy />
         <ZFullDiferenciais />
         <ZFullProcess />
+        <ZFullPainel />
         <ZFullPricing />
         <ZFullFaq />
         <ZFullCta />

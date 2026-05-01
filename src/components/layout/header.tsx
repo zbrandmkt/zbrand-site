@@ -16,9 +16,9 @@ const serviceItems = [
 ];
 
 const packageItems = [
-  { emoji: "🌱", name: "Starter",       desc: "Para quem está começando",  href: "/pacotes/starter",       color: "#FF6100" },
-  { emoji: "🚀", name: "Full",          desc: "Para quem quer o máximo",   href: "/pacotes/full",          color: "#AAFF00" },
-  { emoji: "🎛️", name: "Personalizado", desc: "Do jeito que você precisa", href: "/pacotes/personalizado", color: "#7B2FF7" },
+  { emoji: "🌱", name: "Starter",       desc: "Para quem está começando",  href: "/pacotes/starter",       color: "#FF6100", popular: false },
+  { emoji: "🚀", name: "Full",          desc: "Para quem quer o máximo",   href: "/pacotes/full",          color: "#AAFF00", popular: false },
+  { emoji: "🎛️", name: "Personalizado", desc: "Do jeito que você precisa", href: "/pacotes/personalizado", color: "#7B2FF7", popular: false },
 ];
 
 // ─── Social Icons ─────────────────────────────────────────────────
