@@ -16,7 +16,7 @@ const features = [
 
 const extras = [
   { label: "Landing page customizada", price: "R$ 1.500", freq: "único" },
-  { label: "Segunda plataforma de anúncios", price: "+ R$ 600", freq: "/mês" },
+  { label: "Segunda plataforma de anúncios", price: "+ R$ 500", freq: "/mês" },
   { label: "Campanhas extras (além das 4)", price: "+ R$ 300", freq: "/campanha" },
 ];
 
@@ -93,7 +93,7 @@ export function ZAdsPricing() {
                 <div className="flex items-end gap-1">
                   <span className="font-display text-sm font-bold text-cinza-text">R$</span>
                   <span className="font-display font-black text-5xl leading-none text-[#00C2FF]">
-                    1.200
+                    1.500
                   </span>
                   <span className="font-display text-sm font-bold text-cinza-text mb-1">/mês</span>
                 </div>
@@ -185,10 +185,10 @@ export function ZAdsPricing() {
                 Investimento total estimado
               </p>
               <p className="font-display font-black text-2xl text-preto">
-                ~R$ 2.200<span className="text-base font-bold text-cinza-text">/mês</span>
+                ~R$ 2.500<span className="text-base font-bold text-cinza-text">/mês</span>
               </p>
               <p className="text-[11px] text-cinza-text mt-1 leading-relaxed">
-                R$ 1.200 de mensalidade + R$ 1.000 de verba de anúncios (pago direto à plataforma).
+                R$ 1.500 de mensalidade + R$ 1.000 de verba de anúncios (pago direto à plataforma).
               </p>
             </div>
 
