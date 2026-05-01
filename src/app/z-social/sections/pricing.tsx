@@ -201,6 +201,89 @@ export function ZSocialPricing() {
           Todos os planos com <span className="font-bold text-preto">implementação em 15 dias</span> •{" "}
           Cancelamento com aviso prévio de 30 dias
         </motion.p>
+
+        {/* Upsell: Combos */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.85, duration: 0.5 }}
+          className="mt-10 rounded-brutal-lg border-2 border-preto overflow-hidden"
+          style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
+        >
+          <div className="bg-preto px-6 py-4 flex items-center gap-3">
+            <span className="text-xl">⚡</span>
+            <div>
+              <p className="font-display font-black text-sm text-white uppercase tracking-tight">
+                Potencialize com Tráfego Pago
+              </p>
+              <p className="text-[11px] text-white/50">
+                Social + Ads na mesma equipe — sem custo dobrado de conteúdo, relatório integrado e estratégia coerente.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white grid grid-cols-1 sm:grid-cols-2 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-preto/10">
+            {/* Starter */}
+            <a
+              href="/pacotes/starter"
+              className="flex items-center justify-between gap-4 px-6 py-5 hover:bg-[#FF6100]/05 transition-colors group"
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-2xl mt-0.5">🌱</span>
+                <div>
+                  <p className="font-display font-black text-sm text-preto uppercase">
+                    Pacote Starter
+                  </p>
+                  <p className="text-[11px] text-cinza-text mt-0.5">
+                    Social (1 rede) + Meta Ads integrados
+                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="font-display font-black text-base text-[#FF6100]">R$ 3.000<span className="text-xs font-bold text-cinza-text">/mês</span></span>
+                    <span
+                      className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full border"
+                      style={{ color: "#FF6100", borderColor: "#FF610030", background: "#FF610010" }}
+                    >
+                      economize R$ 300
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <svg className="w-5 h-5 text-[#FF6100] shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+
+            {/* Full */}
+            <a
+              href="/pacotes/full"
+              className="flex items-center justify-between gap-4 px-6 py-5 hover:bg-[#AAFF00]/05 transition-colors group"
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-2xl mt-0.5">🚀</span>
+                <div>
+                  <p className="font-display font-black text-sm text-preto uppercase">
+                    Pacote Full
+                  </p>
+                  <p className="text-[11px] text-cinza-text mt-0.5">
+                    3 redes + Meta + Google Ads + Bot WhatsApp
+                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="font-display font-black text-base text-[#AAFF00] [text-shadow:0_0_20px_#AAFF0060]">R$ 7.000<span className="text-xs font-bold text-cinza-text [text-shadow:none]">/mês</span></span>
+                    <span
+                      className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full border"
+                      style={{ color: "#1A1A1A", borderColor: "#AAFF0060", background: "#AAFF0025" }}
+                    >
+                      sistema completo
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <svg className="w-5 h-5 text-[#AAFF00] shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

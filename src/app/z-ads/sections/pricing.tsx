@@ -191,6 +191,60 @@ export function ZAdsPricing() {
                 R$ 1.200 de mensalidade + R$ 1.000 de verba de anúncios (pago direto à plataforma).
               </p>
             </div>
+
+            {/* Upsell: Combos */}
+            <div
+              className="rounded-brutal-lg border-2 border-preto p-5"
+              style={{ background: "#1A1A1A", boxShadow: "4px 4px 0px 0px #FF6100" }}
+            >
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-1">
+                Quer ainda mais resultado?
+              </p>
+              <p className="font-display font-black text-sm text-white uppercase mb-1">
+                Combine com Social Media
+              </p>
+              <p className="text-[11px] text-white/50 mb-4 leading-snug">
+                Social + Ads em uma equipe só. Mesma estratégia, um relatório, e você economiza.
+              </p>
+
+              <div className="flex flex-col gap-2">
+                <a
+                  href="/pacotes/starter"
+                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-brutal border-2 border-white/10 hover:border-[#FF6100]/60 transition-colors group"
+                  style={{ background: "#FF610012" }}
+                >
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <span className="text-sm">🌱</span>
+                      <span className="font-display font-black text-xs text-white uppercase">Pacote Starter</span>
+                    </div>
+                    <p className="text-[10px] text-white/40">Social (1 rede) + Meta Ads</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="font-black text-sm text-[#FF6100]">R$ 3.000</p>
+                    <p className="text-[9px] text-white/30">/mês • economize R$ 300</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/pacotes/full"
+                  className="flex items-center justify-between gap-3 px-4 py-3 rounded-brutal border-2 border-white/10 hover:border-[#AAFF00]/60 transition-colors group"
+                  style={{ background: "#AAFF0010" }}
+                >
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <span className="text-sm">🚀</span>
+                      <span className="font-display font-black text-xs text-white uppercase">Pacote Full</span>
+                    </div>
+                    <p className="text-[10px] text-white/40">3 redes + Meta + Google + Bot</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="font-black text-sm text-[#AAFF00]">R$ 7.000</p>
+                    <p className="text-[9px] text-white/30">/mês • sistema completo</p>
+                  </div>
+                </a>
+              </div>
+            </div>
           </motion.div>
         </div>
 
