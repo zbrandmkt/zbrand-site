@@ -150,7 +150,7 @@ export function ZSitePricing() {
             className="relative"
           >
             <div
-              className="bg-[#1A1A1A] border-2 border-preto rounded-brutal-lg p-6 flex flex-col h-full"
+              className="bg-[#1A1A1A] border-2 border-preto rounded-brutal-lg p-6 flex flex-col mt-4 h-full"
               style={{ boxShadow: `5px 5px 0px 0px ${PINK}` }}
             >
               {/* Label */}
