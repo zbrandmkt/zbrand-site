@@ -10,6 +10,7 @@ const messages: Record<string, string> = {
   trafego: "Oi! Vi o anúncio da ZBRAND e quero saber mais sobre a gestão de tráfego pago por R$ 800/mês. Pode me ajudar?",
   personalizado: "Oi! Vim pelo site e quero montar um pacote personalizado com a ZBRAND. Pode me ajudar?",
   sobre: "Oi! Li a história de vocês no site e quero conversar sobre como a ZBRAND pode ajudar meu negócio. Pode me ajudar?",
+  captacao: "Oi! Vi o serviço de Captação de Conteúdo da ZBRAND e quero saber mais sobre como funciona uma sessão para o meu negócio. Pode me ajudar?",
 };
 
 export function getWhatsAppLink(service: keyof typeof messages = "geral") {
