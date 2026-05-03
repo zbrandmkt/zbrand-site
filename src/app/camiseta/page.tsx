@@ -13,36 +13,65 @@ const services = [
     title: "Social Media",
     desc: "Conteúdo real, com o rosto do seu negócio. A gente filma, edita e publica. Você só precisa aparecer.",
     color: "#FF6100",
+    href: "/servicos/social-media",
   },
   {
     icon: "🎯",
     title: "Tráfego Pago",
     desc: "Meta Ads e Google Ads que trazem cliente — não só curtida. Seu investimento vira resultado.",
     color: "#00C2FF",
+    href: "/servicos/trafego-pago",
   },
   {
     icon: "🎥",
     title: "Captação de Conteúdo",
     desc: "A gente vai até o seu restaurante gravar. Nada de banco de imagem. Conteúdo de verdade.",
     color: "#AAFF00",
+    href: "/servicos/captacao",
   },
   {
     icon: "🌐",
     title: "Website & Landing Page",
     desc: "Site que vende, posiciona e converte. Feito pra aparecer no Google e encantar quem chega.",
     color: "#7B2FF7",
-  },
-  {
-    icon: "📊",
-    title: "Tráfego Orgânico",
-    desc: "SEO e estratégia de conteúdo que colocam seu restaurante nas primeiras posições.",
-    color: "#FBBC05",
+    href: "/servicos/website",
   },
   {
     icon: "🤖",
     title: "Automação WhatsApp",
     desc: "Atendimento automático, confirmação de reservas e cardápio digital. Sem perder cliente por falta de resposta.",
     color: "#25D366",
+    href: "/servicos/automacao",
+  },
+];
+
+const exploreCards = [
+  {
+    emoji: "🌱",
+    badge: "Pacote Starter",
+    title: "Social + Tráfego Pago",
+    desc: "Uma equipe, uma estratégia, um resultado. O combo mais contratado da ZBRAND.",
+    price: "R$ 3.000/mês",
+    color: "#FF6100",
+    href: "/pacotes/starter",
+  },
+  {
+    emoji: "🚀",
+    badge: "Pacote Full",
+    title: "O sistema completo",
+    desc: "3 redes + Meta & Google Ads + Bot de WhatsApp. Tudo conectado, resultado em escala.",
+    price: "R$ 7.000/mês",
+    color: "#AAFF00",
+    href: "/pacotes/full",
+  },
+  {
+    emoji: "🦓",
+    badge: "Nossa história",
+    title: "Quem é a ZBRAND",
+    desc: "Ex-donos de restaurante que cresceram de 1.500 para 10.000 seguidores. Depois viramos agência.",
+    price: "Conheça a gente",
+    color: "#7B2FF7",
+    href: "/sobre",
   },
 ];
 
@@ -84,17 +113,14 @@ export default function CamisetaPage() {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    // Autoplay nativo (mudo) já é disparado pelo atributo autoPlay.
-    // Esta chamada extra serve só para detectar bloqueio raro e mostrar o tap overlay.
     v.play().catch(() => setNeedsTap(true));
     return () => clearTimeout(textTimer.current);
   }, []);
 
-  // Tap overlay: usuário já interagiu → pode ligar som
   async function handleTap() {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = false;             // tenta com som (usuário tocou na tela)
+    v.muted = false;
     try {
       await v.play();
     } catch {
@@ -126,7 +152,6 @@ export default function CamisetaPage() {
       {/* ── VÍDEO HERO ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Container centraliza o vídeo — mobile: cover | desktop: proporção natural */}
         <div className="absolute inset-0 bg-black flex items-center justify-center">
           <video
             ref={videoRef}
@@ -141,38 +166,31 @@ export default function CamisetaPage() {
           />
         </div>
 
-        {/* Overlay escuro */}
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
 
-        {/* ── TAP OVERLAY — aparece quando autoplay é bloqueado ── */}
         {needsTap && (
           <button
             onClick={handleTap}
             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-6 cursor-pointer"
             style={{ background: "rgba(0,0,0,0.72)" }}
           >
-            {/* Anel pulsante + ícone play */}
             <div className="relative flex items-center justify-center">
-              {/* Anel externo pulsante */}
               <motion.div
                 animate={{ scale: [1, 1.35, 1], opacity: [0.4, 0, 0.4] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                 className="absolute w-28 h-28 rounded-full border-2 border-[#FF6100]"
               />
-              {/* Anel médio */}
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0, 0.6] }}
                 transition={{ repeat: Infinity, duration: 2, delay: 0.3, ease: "easeInOut" }}
                 className="absolute w-20 h-20 rounded-full border-2 border-[#FF6100]"
               />
-              {/* Botão central */}
               <div className="w-16 h-16 rounded-full bg-[#FF6100] border-2 border-white/20 flex items-center justify-center shadow-lg">
                 <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
-            {/* Texto */}
             <div className="flex flex-col items-center gap-1">
               <span className="font-black uppercase tracking-[0.2em] text-white text-sm">
                 Toque para assistir
@@ -184,12 +202,8 @@ export default function CamisetaPage() {
           </button>
         )}
 
-        {/* ── GRUPO: Texto + Badge + Scroll — posicionado no fundo ── */}
         <div className="absolute inset-x-0 bottom-10 flex flex-col items-center px-5" style={{ gap: 10 }}>
-
-          {/* Texto — sobe de baixo em todos os dispositivos */}
           <div className="flex flex-col items-center text-center">
-            {/* Linhas fixas */}
             {lines.map((line, i) => (
               <div key={line} className="overflow-hidden">
                 <motion.div
@@ -202,7 +216,6 @@ export default function CamisetaPage() {
                 </motion.div>
               </div>
             ))}
-            {/* Palavra rotativa — ESCANEAR / CLICAR / APERTAR */}
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               animate={textVisible ? { opacity: 1, y: 0 } : {}}
@@ -218,7 +231,6 @@ export default function CamisetaPage() {
             </motion.div>
           </div>
 
-          {/* Badge "ANÚNCIO PARA CURIOSO ATIVADO" */}
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
             animate={textVisible ? { opacity: 1, scale: 1 } : {}}
@@ -230,7 +242,6 @@ export default function CamisetaPage() {
             </span>
           </motion.div>
 
-          {/* Scroll indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={textVisible ? { opacity: 1 } : {}}
@@ -250,7 +261,6 @@ export default function CamisetaPage() {
           </motion.div>
         </div>
 
-        {/* Botão de som — canto superior direito */}
         {isPlaying && (
           <motion.button
             initial={{ opacity: 0 }}
@@ -280,7 +290,6 @@ export default function CamisetaPage() {
 
       {/* ── REVEAL ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-5 py-24 overflow-hidden">
-        {/* Zebra texture bg */}
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -289,12 +298,9 @@ export default function CamisetaPage() {
             backgroundSize: "280px",
           }}
         />
-        {/* Orange glow — behind headline */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#FF6100]/12 blur-[140px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-sm mx-auto text-center flex flex-col items-center gap-0">
-
-          {/* ── Headline principal ── */}
           <FadeUp delay={0}>
             <h1 className="font-black text-[clamp(2.4rem,10vw,4rem)] text-white uppercase tracking-tight leading-[1.0] mb-6">
               Calma.{" "}
@@ -310,12 +316,10 @@ export default function CamisetaPage() {
             </h1>
           </FadeUp>
 
-          {/* ── Linha divisória ── */}
           <FadeUp delay={0.1}>
             <div className="w-12 h-[3px] bg-[#FF6100] rounded-full mb-8" />
           </FadeUp>
 
-          {/* ── Bem-vindo à + logo ── */}
           <FadeUp delay={0.18}>
             <p className="text-white/35 text-xs font-black uppercase tracking-[0.3em] mb-3">
               Bem-vindo à
@@ -329,7 +333,6 @@ export default function CamisetaPage() {
             />
           </FadeUp>
 
-          {/* ── Descrição ── */}
           <FadeUp delay={0.26}>
             <p className="text-white/50 text-sm leading-relaxed mb-10 max-w-[280px] mx-auto">
               A agência de marketing feita para quem vive de alimentar pessoas.
@@ -337,7 +340,6 @@ export default function CamisetaPage() {
             </p>
           </FadeUp>
 
-          {/* ── CTA ── */}
           <FadeUp delay={0.34}>
             <motion.a
               whileTap={{ scale: 0.97 }}
@@ -354,7 +356,6 @@ export default function CamisetaPage() {
             </motion.a>
           </FadeUp>
 
-          {/* ── Scroll hint ── */}
           <FadeUp delay={0.42}>
             <div className="mt-14 flex flex-col items-center gap-2">
               <span className="text-[10px] text-white/20 uppercase tracking-widest font-bold">Role pra baixo</span>
@@ -391,7 +392,31 @@ export default function CamisetaPage() {
               seja com um QR Code numa camiseta, um post, um reel ou um anúncio no feed.
               Isso é marketing que funciona no mundo real, do jeito que acreditamos.
             </p>
-            <div className="bg-white/15 border border-white/25 rounded-2xl px-5 py-4 text-center">
+
+            {/* 3-step visual */}
+            <div className="flex items-center justify-center gap-2 mb-6">
+              {[
+                { icon: "👕", label: "Camiseta" },
+                { icon: "📱", label: "QR Code" },
+                { icon: "🎯", label: "Você aqui" },
+              ].map((step, i) => (
+                <div key={step.label} className="flex items-center gap-2">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-12 h-12 rounded-2xl bg-white/20 border-2 border-white/30 flex items-center justify-center text-2xl">
+                      {step.icon}
+                    </div>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/70">
+                      {step.label}
+                    </span>
+                  </div>
+                  {i < 2 && (
+                    <span className="text-white/40 font-black text-lg mb-4">→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-white/15 border border-white/25 rounded-2xl px-5 py-4 text-center mb-6">
               <p className="text-white font-black text-sm">
                 🎯 Sim, até a textura da zebra na camiseta foi proposital.
               </p>
@@ -399,6 +424,13 @@ export default function CamisetaPage() {
                 Cada detalhe comunica. Bem-vindo à nossa estratégia.
               </p>
             </div>
+
+            <Link
+              href="/sobre"
+              className="inline-flex items-center gap-1.5 text-white/70 text-xs font-black uppercase tracking-widest hover:text-white transition-colors"
+            >
+              Ver como a gente pensa →
+            </Link>
           </FadeUp>
         </div>
       </section>
@@ -416,7 +448,7 @@ export default function CamisetaPage() {
             <h2 className="font-black text-2xl text-white uppercase leading-tight mb-5">
               Porque zebra não depende da sorte.
             </h2>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-white/50 text-sm leading-relaxed mb-6">
               A vida é cheia de zebras — mas no seu marketing, a gente garante{" "}
               <strong className="text-white">resultado previsível.</strong>{" "}
               A zebra é nosso símbolo contra o improvável.{" "}
@@ -424,12 +456,77 @@ export default function CamisetaPage() {
               Com a ZBRAND, sua marca para de depender da sorte e começa a{" "}
               <strong className="text-[#FF6100]">gerar clientes de verdade.</strong>
             </p>
+            <Link
+              href="/sobre"
+              className="inline-flex items-center gap-1.5 text-[#FF6100] text-xs font-black uppercase tracking-widest hover:opacity-80 transition-opacity"
+            >
+              Conheça nossa história completa →
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ── QUEM ESTÁ POR TRÁS ── */}
+      <section className="bg-[#1A1A1A] py-16 px-5 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "url('/images/zebra-texture-white.png')",
+            backgroundRepeat: "repeat",
+            backgroundSize: "280px",
+          }}
+        />
+        <div className="max-w-sm mx-auto relative z-10">
+          <FadeUp>
+            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3 text-center">
+              Quem está por trás
+            </p>
+            <h2 className="font-black text-2xl text-white uppercase leading-tight mb-6 text-center">
+              A ZBRAND não é agência de fachada.
+            </h2>
+
+            {/* Foto */}
+            <div
+              className="relative w-full rounded-2xl border-2 border-white/10 overflow-hidden mb-6"
+              style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
+            >
+              <Image
+                src="/images/foto-guiebru-loja.png"
+                alt="Gui e Bruna — fundadores da ZBRAND"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1A1A]/90 to-transparent px-4 py-3">
+                <p className="font-black text-sm text-white uppercase tracking-tight">
+                  Gui e Bruna
+                </p>
+                <p className="text-[10px] text-white/50 font-medium">
+                  Fundadores da ZBRAND · Ex-donos da Churruts
+                </p>
+              </div>
+            </div>
+
+            <p className="text-white/55 text-sm leading-relaxed mb-6 text-center">
+              São Bruna e Gui — ex-donos de restaurante que cresceram a própria marca de{" "}
+              <strong className="text-white">1.500 para 10.000 seguidores orgânicos</strong>{" "}
+              antes de virar agência. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
+            </p>
+
+            <div className="flex justify-center">
+              <Link
+                href="/sobre"
+                className="inline-flex items-center gap-2 bg-white/08 border border-white/15 rounded-2xl px-5 py-3 text-white/70 text-xs font-black uppercase tracking-widest hover:bg-white/12 hover:text-white transition-all"
+              >
+                Ver a história completa →
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>
 
       {/* ── SERVIÇOS ── */}
-      <section className="bg-[#1A1A1A] py-16 px-5">
+      <section className="bg-[#111] py-16 px-5">
         <div className="max-w-sm mx-auto">
           <FadeUp>
             <div className="text-center mb-10">
@@ -445,8 +542,9 @@ export default function CamisetaPage() {
           <div className="flex flex-col gap-3">
             {services.map((s, i) => (
               <FadeUp key={s.title} delay={i * 0.07}>
-                <div
-                  className="bg-[#111] border-2 border-white/08 rounded-2xl p-5 flex items-start gap-4"
+                <Link
+                  href={s.href}
+                  className="group block bg-[#1A1A1A] border-2 border-white/08 rounded-2xl p-5 flex items-start gap-4 hover:border-opacity-60 transition-all"
                   style={{ borderLeftColor: s.color, borderLeftWidth: 3 }}
                 >
                   <div
@@ -455,14 +553,22 @@ export default function CamisetaPage() {
                   >
                     {s.icon}
                   </div>
-                  <div>
-                    <h3 className="font-black text-sm text-white uppercase tracking-tight mb-1"
-                      style={{ color: s.color }}>
+                  <div className="flex-1">
+                    <h3
+                      className="font-black text-sm uppercase tracking-tight mb-1"
+                      style={{ color: s.color }}
+                    >
                       {s.title}
                     </h3>
                     <p className="text-white/45 text-xs leading-relaxed">{s.desc}</p>
                   </div>
-                </div>
+                  <span
+                    className="text-xs font-black opacity-0 group-hover:opacity-100 transition-opacity self-center shrink-0"
+                    style={{ color: s.color }}
+                  >
+                    →
+                  </span>
+                </Link>
               </FadeUp>
             ))}
           </div>
@@ -491,8 +597,74 @@ export default function CamisetaPage() {
         </div>
       </section>
 
+      {/* ── EXPLORE A ZBRAND ── */}
+      <section className="bg-[#1A1A1A] py-16 px-5">
+        <div className="max-w-sm mx-auto">
+          <FadeUp>
+            <div className="text-center mb-8">
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3">
+                Quer entender tudo?
+              </p>
+              <h2 className="font-black text-2xl text-white uppercase leading-tight">
+                Explore por aqui.
+              </h2>
+            </div>
+          </FadeUp>
+
+          <div className="flex flex-col gap-4">
+            {exploreCards.map((card, i) => (
+              <FadeUp key={card.badge} delay={i * 0.1}>
+                <Link
+                  href={card.href}
+                  className="group block rounded-2xl border-2 p-5 transition-all hover:-translate-y-0.5"
+                  style={{
+                    borderColor: `${card.color}40`,
+                    background: `${card.color}08`,
+                    boxShadow: `4px 4px 0px 0px ${card.color}30`,
+                  }}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div>
+                      <div
+                        className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-2"
+                        style={{ color: card.color, borderColor: `${card.color}40`, background: `${card.color}15` }}
+                      >
+                        {card.badge}
+                      </div>
+                      <h3 className="font-black text-base text-white uppercase tracking-tight leading-tight">
+                        {card.title}
+                      </h3>
+                    </div>
+                    <span className="text-3xl shrink-0">{card.emoji}</span>
+                  </div>
+
+                  <p className="text-white/45 text-xs leading-relaxed mb-4">
+                    {card.desc}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="font-black text-sm"
+                      style={{ color: card.color }}
+                    >
+                      {card.price}
+                    </span>
+                    <span
+                      className="text-xs font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity"
+                      style={{ color: card.color }}
+                    >
+                      Ver mais →
+                    </span>
+                  </div>
+                </Link>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA FINAL ── */}
-      <section className="bg-[#1A1A1A] py-20 px-5 relative overflow-hidden">
+      <section className="bg-[#111] py-20 px-5 relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -518,7 +690,7 @@ export default function CamisetaPage() {
               href={getWhatsAppLink("geral")}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2.5 w-full bg-[#FF6100] border-2 border-[#1A1A1A] text-white font-black uppercase tracking-widest text-sm py-4 rounded-2xl mb-4"
+              className="flex items-center justify-center gap-2.5 w-full bg-[#FF6100] border-2 border-[#111] text-white font-black uppercase tracking-widest text-sm py-4 rounded-2xl mb-3"
               style={{ boxShadow: "4px 4px 0px 0px rgba(255,97,0,0.4)" }}
             >
               <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -529,7 +701,8 @@ export default function CamisetaPage() {
 
             <Link
               href="/"
-              className="flex items-center justify-center w-full bg-transparent border-2 border-white/10 text-white/40 font-black uppercase tracking-widest text-xs py-3.5 rounded-2xl hover:border-white/20 hover:text-white/60 transition-all"
+              className="flex items-center justify-center w-full bg-transparent border-2 border-white/15 text-white/60 font-black uppercase tracking-widest text-xs py-3.5 rounded-2xl hover:border-[#FF6100]/40 hover:text-white/80 transition-all"
+              style={{ boxShadow: "3px 3px 0px 0px rgba(255,97,0,0.15)" }}
             >
               Conhecer o site completo →
             </Link>
@@ -540,7 +713,7 @@ export default function CamisetaPage() {
                 href="https://instagram.com/zbrand.mkt"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-white/25 hover:text-white/60 transition-colors text-xs font-medium"
+                className="flex items-center gap-1.5 text-white/35 hover:text-white/70 transition-colors text-xs font-medium"
               >
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
@@ -548,9 +721,21 @@ export default function CamisetaPage() {
                 @zbrand.mkt
               </a>
               <span className="text-white/10">·</span>
+              <a
+                href="https://tiktok.com/@zbrand.mkt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-white/35 hover:text-white/70 transition-colors text-xs font-medium"
+              >
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48v-7.1a8.16 8.16 0 005.58 2.2V11.3a4.85 4.85 0 01-3.77-1.85V6.69h3.77z" />
+                </svg>
+                TikTok
+              </a>
+              <span className="text-white/10">·</span>
               <button
                 onClick={copyUrl}
-                className="flex items-center gap-1.5 text-white/25 hover:text-white/60 transition-colors text-xs font-medium"
+                className="flex items-center gap-1.5 text-white/35 hover:text-white/70 transition-colors text-xs font-medium"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
