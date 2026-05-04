@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { approveClient, suspendClient, reactivateClient } from "../actions";
 
@@ -170,6 +171,13 @@ export default async function ClientesPage() {
                     <span className="text-[10px] text-[#1A1A1A]/30 font-medium">
                       Ativo desde {client.approved_at ? new Date(client.approved_at).toLocaleDateString("pt-BR") : "—"}
                     </span>
+
+                    <Link
+                      href={`/admin/clientes/${client.id}`}
+                      className="text-[10px] font-black uppercase tracking-wider px-3 py-1.5 border-2 border-[#1A1A1A] text-[#1A1A1A] rounded-xl hover:bg-[#FF6100] hover:border-[#FF6100] hover:text-white transition-colors"
+                    >
+                      Gerenciar →
+                    </Link>
 
                     <form action={suspendClient}>
                       <input type="hidden" name="clientId" value={client.id} />

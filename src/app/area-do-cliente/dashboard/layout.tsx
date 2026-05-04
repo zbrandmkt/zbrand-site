@@ -18,7 +18,7 @@ export default async function DashboardLayout({
   // Verifica se cliente está ativo
   const { data: client } = await supabase
     .from("clients")
-    .select("status, name, company, plan, id")
+    .select("status, name, company, plan, id, permissions")
     .eq("user_id", user.id)
     .single();
 
@@ -39,7 +39,12 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-[#F5F5F0]">
-      <DashboardSidebar clientName={client?.name ?? "Admin"} company={client?.company ?? "ZBRAND"} pendingCount={pendingCount} />
+      <DashboardSidebar
+        clientName={client?.name ?? "Admin"}
+        company={client?.company ?? "ZBRAND"}
+        pendingCount={pendingCount}
+        permissions={client?.permissions ?? ["trafego", "social", "calendario", "aprovacoes"]}
+      />
       <main className="flex-1 ml-64 min-h-screen">
         {children}
       </main>

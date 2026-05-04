@@ -7,10 +7,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase";
 
-const navItems = [
+const ALL_NAV_ITEMS = [
   {
     href: "/area-do-cliente/dashboard",
     label: "Dashboard",
+    permission: null, // sempre visível
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -20,6 +21,7 @@ const navItems = [
   {
     href: "/area-do-cliente/dashboard/trafego",
     label: "Tráfego Pago",
+    permission: "trafego",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -29,6 +31,7 @@ const navItems = [
   {
     href: "/area-do-cliente/dashboard/social",
     label: "Social Media",
+    permission: "social",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -38,6 +41,7 @@ const navItems = [
   {
     href: "/area-do-cliente/dashboard/aprovacoes",
     label: "Aprovações",
+    permission: "aprovacoes",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -47,6 +51,7 @@ const navItems = [
   {
     href: "/area-do-cliente/dashboard/calendario",
     label: "Calendário",
+    permission: "calendario",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -56,6 +61,7 @@ const navItems = [
   {
     href: "/area-do-cliente/dashboard/crm",
     label: "CRM",
+    permission: null, // sempre visível (badge "Em breve")
     badge: "Em breve",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -69,10 +75,12 @@ export function DashboardSidebar({
   clientName = "Cliente",
   company = "ZBRAND",
   pendingCount = 0,
+  permissions = ["trafego", "social", "calendario", "aprovacoes"],
 }: {
   clientName?: string;
   company?: string;
   pendingCount?: number;
+  permissions?: string[];
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -143,7 +151,9 @@ export function DashboardSidebar({
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
         <p className="text-[9px] text-white/30 uppercase tracking-widest px-2 mb-2 font-bold">Menu</p>
-        {navItems.map((item) => {
+        {ALL_NAV_ITEMS.filter((item) =>
+          item.permission === null || permissions.includes(item.permission)
+        ).map((item) => {
           // Dashboard só ativa na rota exata; demais ativam por prefixo
           const isActive = item.href === "/area-do-cliente/dashboard"
             ? pathname === item.href

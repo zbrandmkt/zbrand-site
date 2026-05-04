@@ -10,9 +10,16 @@ export default async function AprovacoesPage() {
 
   const { data: client } = await supabase
     .from("clients")
-    .select("id")
+    .select("id, permissions")
     .eq("user_id", user.id)
     .single();
+
+  // Guard: verifica permissão de aprovações
+  const isAdmin = user.user_metadata?.role === "admin";
+  const permissions: string[] = client?.permissions ?? ["aprovacoes"];
+  if (!isAdmin && !permissions.includes("aprovacoes")) {
+    redirect("/area-do-cliente/dashboard");
+  }
 
   if (!client) redirect("/area-do-cliente/aguardando");
 
