@@ -168,49 +168,6 @@ export default function CamisetaPage() {
 
         <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
 
-        {/* ── SIDEBAR ESQUERDA — desktop only ── */}
-        <div className="hidden md:flex absolute left-0 top-0 bottom-0 w-[22%] flex-col items-center justify-center gap-6 px-6 pointer-events-none">
-          <div className="w-px h-20 bg-white/10" />
-          <div className="flex flex-col items-center gap-4">
-            <p className="text-white/15 text-[9px] font-black uppercase tracking-[0.35em] text-center">
-              Agência de Marketing
-            </p>
-            <p className="text-white/50 font-black text-xl lg:text-2xl uppercase tracking-tight text-center leading-tight">
-              Para quem<br />alimenta<br />pessoas.
-            </p>
-            <div className="flex gap-1.5 items-center">
-              <div className="w-2 h-2 rounded-full bg-[#FF6100]" />
-              <div className="w-2 h-2 rounded-full bg-[#00C2FF]" />
-              <div className="w-2 h-2 rounded-full bg-[#AAFF00]" />
-            </div>
-          </div>
-          <div className="w-px h-20 bg-white/10" />
-        </div>
-
-        {/* ── SIDEBAR DIREITA — desktop only ── */}
-        <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-[22%] flex-col items-center justify-center gap-5 px-6 pointer-events-none">
-          <div className="w-px h-20 bg-white/10" />
-          <div className="flex flex-col items-center gap-3">
-            <Image
-              src="/images/logo-zbrand.png"
-              alt="ZBRAND"
-              width={80}
-              height={24}
-              className="h-5 w-auto opacity-25"
-            />
-            <div className="w-px h-10 bg-white/10" />
-            <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] text-center">
-              zbrand.com.br
-            </p>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-white/15 text-[8px] font-black uppercase tracking-widest">@zbrand.mkt</p>
-              <p className="text-white/15 text-[8px] font-black uppercase tracking-widest">instagram · tiktok</p>
-            </div>
-          </div>
-          <div className="w-px h-20 bg-white/10" />
-        </div>
-
         {needsTap && (
           <button
             onClick={handleTap}
@@ -253,7 +210,7 @@ export default function CamisetaPage() {
                   initial={{ opacity: 0, y: 60 }}
                   animate={textVisible ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: i * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className="font-black uppercase leading-none tracking-tight text-white text-4xl sm:text-5xl md:text-7xl lg:text-8xl"
+                  className="font-black uppercase leading-none tracking-tight text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
                 >
                   {line}
                 </motion.div>
@@ -263,7 +220,7 @@ export default function CamisetaPage() {
               initial={{ opacity: 0, y: 60 }}
               animate={textVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: lines.length * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tight"
             >
               <TextRotate
                 texts={rotateWords}
