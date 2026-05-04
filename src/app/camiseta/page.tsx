@@ -370,7 +370,7 @@ export default function CamisetaPage() {
       </section>
 
       {/* ── O QUE ACABOU DE ACONTECER ── */}
-      <section className="bg-[#FF6100] py-16 px-5 relative overflow-hidden">
+      <section className="bg-[#FF6100] py-16 lg:py-20 px-5 relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.06]"
           style={{
@@ -379,176 +379,232 @@ export default function CamisetaPage() {
             backgroundSize: "280px",
           }}
         />
-        <div className="max-w-sm mx-auto text-center relative z-10">
-          <FadeUp>
-            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/60 mb-3">
-              Entenda o que rolou
-            </p>
-            <h2 className="font-black text-3xl text-white uppercase leading-tight mb-4">
-              Você acabou de ser impactado por um anúncio offline.
-            </h2>
-            <p className="text-white/80 text-sm leading-relaxed mb-6">
-              A ZBRAND faz as pessoas pararem, sorrirem e lembrarem da sua marca —
-              seja com um QR Code numa camiseta, um post, um reel ou um anúncio no feed.
-              Isso é marketing que funciona no mundo real, do jeito que acreditamos.
-            </p>
+        <div className="max-w-5xl mx-auto relative z-10">
+          {/* Desktop: 2 colunas | Mobile: coluna única */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-            {/* 3-step visual */}
-            <div className="flex items-center justify-center gap-2 mb-6">
-              {[
-                { icon: "👕", label: "Camiseta" },
-                { icon: "📱", label: "QR Code" },
-                { icon: "🎯", label: "Você aqui" },
-              ].map((step, i) => (
-                <div key={step.label} className="flex items-center gap-2">
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="w-12 h-12 rounded-2xl bg-white/20 border-2 border-white/30 flex items-center justify-center text-2xl">
-                      {step.icon}
+            {/* Col esquerda: texto */}
+            <FadeUp>
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/60 mb-3">
+                Entenda o que rolou
+              </p>
+              <h2 className="font-black text-3xl lg:text-4xl text-white uppercase leading-tight mb-5">
+                Você acabou de ser impactado por um anúncio offline.
+              </h2>
+              <p className="text-white/80 text-sm lg:text-base leading-relaxed mb-6">
+                A ZBRAND faz as pessoas pararem, sorrirem e lembrarem da sua marca —
+                seja com um QR Code numa camiseta, um post, um reel ou um anúncio no feed.
+                Isso é marketing que funciona no mundo real, do jeito que acreditamos.
+              </p>
+
+              <div className="bg-white/15 border border-white/25 rounded-2xl px-5 py-4 mb-6">
+                <p className="text-white font-black text-sm">
+                  🎯 Sim, até a textura da zebra na camiseta foi proposital.
+                </p>
+                <p className="text-white/70 text-xs mt-1">
+                  Cada detalhe comunica. Bem-vindo à nossa estratégia.
+                </p>
+              </div>
+
+              <Link
+                href="/sobre"
+                className="inline-flex items-center gap-1.5 text-white/70 text-xs font-black uppercase tracking-widest hover:text-white transition-colors"
+              >
+                Ver como a gente pensa →
+              </Link>
+            </FadeUp>
+
+            {/* Col direita: 3-step visual */}
+            <FadeUp delay={0.15}>
+              <div className="bg-white/10 border-2 border-white/20 rounded-3xl p-8 lg:p-10">
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/60 mb-6 text-center">
+                  Como chegou aqui
+                </p>
+                <div className="flex flex-col gap-4">
+                  {[
+                    { icon: "👕", label: "Camiseta ZBRAND", desc: "QR Code estampado, zebra proposital" },
+                    { icon: "📱", label: "Você escaneia", desc: "A curiosidade fala mais alto" },
+                    { icon: "🎯", label: "Você está aqui", desc: "Anúncio offline bem-sucedido" },
+                  ].map((step, i) => (
+                    <div key={step.label} className="flex items-center gap-4">
+                      <div className="flex flex-col items-center gap-1 shrink-0">
+                        <div className="w-14 h-14 rounded-2xl bg-white/20 border-2 border-white/30 flex items-center justify-center text-2xl">
+                          {step.icon}
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-black text-white text-sm uppercase tracking-tight">{step.label}</p>
+                        <p className="text-white/60 text-xs mt-0.5">{step.desc}</p>
+                      </div>
+                      {i < 2 && (
+                        <div className="absolute left-[calc(1.75rem)] mt-14 w-0.5 h-4 bg-white/20 hidden" />
+                      )}
                     </div>
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/70">
-                      {step.label}
-                    </span>
-                  </div>
-                  {i < 2 && (
-                    <span className="text-white/40 font-black text-lg mb-4">→</span>
-                  )}
+                  ))}
+                  {/* Connecting lines between steps */}
                 </div>
-              ))}
-            </div>
-
-            <div className="bg-white/15 border border-white/25 rounded-2xl px-5 py-4 text-center mb-6">
-              <p className="text-white font-black text-sm">
-                🎯 Sim, até a textura da zebra na camiseta foi proposital.
-              </p>
-              <p className="text-white/70 text-xs mt-1">
-                Cada detalhe comunica. Bem-vindo à nossa estratégia.
-              </p>
-            </div>
-
-            <Link
-              href="/sobre"
-              className="inline-flex items-center gap-1.5 text-white/70 text-xs font-black uppercase tracking-widest hover:text-white transition-colors"
-            >
-              Ver como a gente pensa →
-            </Link>
-          </FadeUp>
+                <div className="mt-6 pt-6 border-t border-white/20 text-center">
+                  <p className="text-white font-black text-lg">100% intencional.</p>
+                  <p className="text-white/60 text-xs mt-1">Marketing real acontece fora do feed também.</p>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
       {/* ── POR QUE A ZEBRA ── */}
-      <section className="bg-[#111] py-16 px-5">
-        <div className="max-w-sm mx-auto text-center">
-          <FadeUp>
-            <div className="w-20 h-20 rounded-2xl border-2 border-white/10 flex items-center justify-center text-4xl mx-auto mb-6 bg-white/03">
-              🦓
-            </div>
-            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3">
-              Por que a zebra?
-            </p>
-            <h2 className="font-black text-2xl text-white uppercase leading-tight mb-5">
-              Porque zebra não depende da sorte.
-            </h2>
-            <p className="text-white/50 text-sm leading-relaxed mb-6">
-              A vida é cheia de zebras — mas no seu marketing, a gente garante{" "}
-              <strong className="text-white">resultado previsível.</strong>{" "}
-              A zebra é nosso símbolo contra o improvável.{" "}
-              <strong className="text-white">Contra o &ldquo;azar&rdquo;.</strong>{" "}
-              Com a ZBRAND, sua marca para de depender da sorte e começa a{" "}
-              <strong className="text-[#FF6100]">gerar clientes de verdade.</strong>
-            </p>
-            <Link
-              href="/sobre"
-              className="inline-flex items-center gap-1.5 text-[#FF6100] text-xs font-black uppercase tracking-widest hover:opacity-80 transition-opacity"
-            >
-              Conheça nossa história completa →
-            </Link>
-          </FadeUp>
+      <section className="bg-[#111] py-16 lg:py-20 px-5">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 lg:gap-16 items-center">
+
+            {/* Ícone isolado no desktop */}
+            <FadeUp>
+              <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-3xl border-2 border-white/10 flex items-center justify-center text-5xl lg:text-6xl mx-auto lg:mx-0 bg-white/[0.03]">
+                🦓
+              </div>
+            </FadeUp>
+
+            {/* Texto */}
+            <FadeUp delay={0.1}>
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3 text-center lg:text-left">
+                Por que a zebra?
+              </p>
+              <h2 className="font-black text-2xl lg:text-3xl text-white uppercase leading-tight mb-4 text-center lg:text-left">
+                Porque zebra não depende da sorte.
+              </h2>
+              <p className="text-white/50 text-sm lg:text-base leading-relaxed mb-5 text-center lg:text-left">
+                A vida é cheia de zebras — mas no seu marketing, a gente garante{" "}
+                <strong className="text-white">resultado previsível.</strong>{" "}
+                A zebra é nosso símbolo contra o improvável.{" "}
+                <strong className="text-white">Contra o &ldquo;azar&rdquo;.</strong>{" "}
+                Com a ZBRAND, sua marca para de depender da sorte e começa a{" "}
+                <strong className="text-[#FF6100]">gerar clientes de verdade.</strong>
+              </p>
+              <div className="flex justify-center lg:justify-start">
+                <Link
+                  href="/sobre"
+                  className="inline-flex items-center gap-1.5 text-[#FF6100] text-xs font-black uppercase tracking-widest hover:opacity-80 transition-opacity"
+                >
+                  Conheça nossa história completa →
+                </Link>
+              </div>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
-      {/* ── QUEM ESTÁ POR TRÁS ── */}
-      <section className="bg-[#1A1A1A] py-16 px-5 relative overflow-hidden">
+      {/* ── QUEM ESTÁ POR TRÁS — FUNDO CLARO ── */}
+      <section className="bg-[#F5F5F0] py-16 lg:py-24 px-5 relative overflow-hidden">
+        {/* Zebra texture suave no fundo claro */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: "url('/images/zebra-texture-white.png')",
             backgroundRepeat: "repeat",
             backgroundSize: "280px",
+            filter: "invert(1)",
           }}
         />
-        <div className="max-w-sm mx-auto relative z-10">
-          <FadeUp>
-            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3 text-center">
-              Quem está por trás
-            </p>
-            <h2 className="font-black text-2xl text-white uppercase leading-tight mb-6 text-center">
-              A ZBRAND não é agência de fachada.
-            </h2>
 
-            {/* Foto */}
-            <div
-              className="relative w-full rounded-2xl border-2 border-white/10 overflow-hidden mb-6"
-              style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
-            >
-              <Image
-                src="/images/foto-guiebru-loja.png"
-                alt="Gui e Bruna — fundadores da ZBRAND"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1A1A]/90 to-transparent px-4 py-3">
-                <p className="font-black text-sm text-white uppercase tracking-tight">
-                  Gui e Bruna
-                </p>
-                <p className="text-[10px] text-white/50 font-medium">
-                  Fundadores da ZBRAND · Ex-donos da Churruts
-                </p>
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+            {/* Col esquerda: Foto */}
+            <FadeUp>
+              <div
+                className="relative w-full rounded-2xl border-2 border-[#1A1A1A]/10 overflow-hidden"
+                style={{ boxShadow: "6px 6px 0px 0px #FF6100" }}
+              >
+                <Image
+                  src="/images/foto-guiebru-loja.png"
+                  alt="Gui e Bruna — fundadores da ZBRAND"
+                  width={700}
+                  height={500}
+                  className="w-full h-auto object-cover"
+                />
+                {/* Caption sobre a foto */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1A1A]/85 to-transparent px-5 py-4">
+                  <p className="font-black text-sm text-white uppercase tracking-tight">
+                    Gui e Bruna
+                  </p>
+                  <p className="text-[10px] text-white/60 font-medium">
+                    Fundadores da ZBRAND · Ex-donos da Churruts
+                  </p>
+                </div>
               </div>
-            </div>
+            </FadeUp>
 
-            <p className="text-white/55 text-sm leading-relaxed mb-6 text-center">
-              São Bruna e Gui — ex-donos de restaurante que cresceram a própria marca de{" "}
-              <strong className="text-white">1.500 para 10.000 seguidores orgânicos</strong>{" "}
-              antes de virar agência. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
-            </p>
+            {/* Col direita: Texto */}
+            <FadeUp delay={0.15}>
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-4">
+                Quem está por trás
+              </p>
+              <h2 className="font-black text-3xl lg:text-4xl text-[#1A1A1A] uppercase leading-tight mb-5">
+                A ZBRAND não é agência de fachada.
+              </h2>
 
-            <div className="flex justify-center">
+              <p className="text-[#1A1A1A]/65 text-sm lg:text-base leading-relaxed mb-5">
+                São Bruna e Gui — ex-donos de restaurante que cresceram a própria marca de{" "}
+                <strong className="text-[#1A1A1A]">1.500 para 10.000 seguidores orgânicos</strong>{" "}
+                antes de virarem agência. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
+              </p>
+
+              {/* Linha de stats */}
+              <div className="grid grid-cols-2 gap-3 mb-7">
+                {[
+                  { n: "10 anos", label: "no ramo de gastronomia" },
+                  { n: "0 → 10k", label: "seguidores orgânicos" },
+                  { n: "R$ 7k", label: "primeiro produto digital" },
+                  { n: "1 bebê", label: "o Zeca que mudou tudo" },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="bg-white border-2 border-[#1A1A1A]/08 rounded-xl p-3"
+                    style={{ boxShadow: "2px 2px 0px 0px rgba(26,26,26,0.08)" }}
+                  >
+                    <p className="font-black text-lg text-[#FF6100] leading-none">{s.n}</p>
+                    <p className="text-[10px] text-[#1A1A1A]/50 font-medium mt-1 leading-tight">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+
               <Link
                 href="/sobre"
-                className="inline-flex items-center gap-2 bg-white/08 border border-white/15 rounded-2xl px-5 py-3 text-white/70 text-xs font-black uppercase tracking-widest hover:bg-white/12 hover:text-white transition-all"
+                className="inline-flex items-center gap-2 bg-[#1A1A1A] border-2 border-[#1A1A1A] rounded-2xl px-6 py-3.5 text-white text-xs font-black uppercase tracking-widest hover:bg-[#FF6100] hover:border-[#FF6100] transition-all"
+                style={{ boxShadow: "3px 3px 0px 0px rgba(26,26,26,0.2)" }}
               >
                 Ver a história completa →
               </Link>
-            </div>
-          </FadeUp>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
       {/* ── SERVIÇOS ── */}
-      <section className="bg-[#111] py-16 px-5">
-        <div className="max-w-sm mx-auto">
+      <section className="bg-[#111] py-16 lg:py-20 px-5">
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
             <div className="text-center mb-10">
               <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3">
                 O que a gente faz (e faz bem)
               </p>
-              <h2 className="font-black text-2xl text-white uppercase leading-tight">
+              <h2 className="font-black text-2xl lg:text-3xl text-white uppercase leading-tight">
                 Tudo que seu restaurante precisa pra crescer online
               </h2>
             </div>
           </FadeUp>
 
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {services.map((s, i) => (
-              <FadeUp key={s.title} delay={i * 0.07}>
+              <FadeUp key={s.title} delay={i * 0.06}>
                 <Link
                   href={s.href}
-                  className="group block bg-[#1A1A1A] border-2 border-white/08 rounded-2xl p-5 flex items-start gap-4 hover:border-opacity-60 transition-all"
+                  className="group flex bg-[#1A1A1A] border-2 border-white/08 rounded-2xl p-5 items-start gap-4 hover:border-white/15 transition-all h-full"
                   style={{ borderLeftColor: s.color, borderLeftWidth: 3 }}
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
                     style={{ background: `${s.color}15` }}
                   >
                     {s.icon}
@@ -563,7 +619,7 @@ export default function CamisetaPage() {
                     <p className="text-white/45 text-xs leading-relaxed">{s.desc}</p>
                   </div>
                   <span
-                    className="text-xs font-black opacity-0 group-hover:opacity-100 transition-opacity self-center shrink-0"
+                    className="text-xs font-black opacity-0 group-hover:opacity-100 transition-opacity self-center shrink-0 ml-1"
                     style={{ color: s.color }}
                   >
                     →
@@ -576,20 +632,20 @@ export default function CamisetaPage() {
       </section>
 
       {/* ── PROVA SOCIAL ── */}
-      <section className="bg-[#FF6100] py-14 px-5">
-        <div className="max-w-sm mx-auto text-center">
+      <section className="bg-[#FF6100] py-14 lg:py-16 px-5">
+        <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
-            <p className="font-black text-4xl text-white mb-2">+50</p>
-            <p className="text-white/70 text-sm font-medium mb-8">restaurantes já cresceram com a ZBRAND</p>
-            <div className="grid grid-cols-3 gap-4">
+            <p className="font-black text-5xl lg:text-6xl text-white mb-2">+50</p>
+            <p className="text-white/70 text-sm lg:text-base font-medium mb-8">restaurantes já cresceram com a ZBRAND</p>
+            <div className="grid grid-cols-3 gap-4 lg:gap-6">
               {[
                 { n: "+320%", label: "mais seguidores" },
                 { n: "3×", label: "mais leads" },
                 { n: "4 meses", label: "pra ver resultado" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white/15 rounded-2xl p-3 text-center">
-                  <p className="font-black text-xl text-white">{stat.n}</p>
-                  <p className="text-white/60 text-[10px] font-medium leading-tight mt-1">{stat.label}</p>
+                <div key={stat.label} className="bg-white/15 rounded-2xl p-4 lg:p-5 text-center">
+                  <p className="font-black text-2xl lg:text-3xl text-white">{stat.n}</p>
+                  <p className="text-white/60 text-[10px] lg:text-xs font-medium leading-tight mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -598,32 +654,32 @@ export default function CamisetaPage() {
       </section>
 
       {/* ── EXPLORE A ZBRAND ── */}
-      <section className="bg-[#1A1A1A] py-16 px-5">
-        <div className="max-w-sm mx-auto">
+      <section className="bg-[#1A1A1A] py-16 lg:py-20 px-5">
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div className="text-center mb-8">
+            <div className="text-center mb-10">
               <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-3">
                 Quer entender tudo?
               </p>
-              <h2 className="font-black text-2xl text-white uppercase leading-tight">
+              <h2 className="font-black text-2xl lg:text-3xl text-white uppercase leading-tight">
                 Explore por aqui.
               </h2>
             </div>
           </FadeUp>
 
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {exploreCards.map((card, i) => (
               <FadeUp key={card.badge} delay={i * 0.1}>
                 <Link
                   href={card.href}
-                  className="group block rounded-2xl border-2 p-5 transition-all hover:-translate-y-0.5"
+                  className="group flex flex-col rounded-2xl border-2 p-5 lg:p-6 transition-all hover:-translate-y-1 h-full"
                   style={{
                     borderColor: `${card.color}40`,
                     background: `${card.color}08`,
                     boxShadow: `4px 4px 0px 0px ${card.color}30`,
                   }}
                 >
-                  <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-start justify-between gap-3 mb-4">
                     <div>
                       <div
                         className="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-2"
@@ -638,7 +694,7 @@ export default function CamisetaPage() {
                     <span className="text-3xl shrink-0">{card.emoji}</span>
                   </div>
 
-                  <p className="text-white/45 text-xs leading-relaxed mb-4">
+                  <p className="text-white/45 text-xs leading-relaxed mb-5 flex-1">
                     {card.desc}
                   </p>
 
@@ -673,12 +729,12 @@ export default function CamisetaPage() {
             backgroundSize: "280px",
           }}
         />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-[#FF6100]/15 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-[#FF6100]/15 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="max-w-sm mx-auto text-center relative z-10">
+        <div className="max-w-xl mx-auto text-center relative z-10">
           <FadeUp>
             <span className="text-5xl block mb-6">🦓</span>
-            <h2 className="font-black text-3xl text-white uppercase leading-tight mb-3">
+            <h2 className="font-black text-3xl lg:text-4xl text-white uppercase leading-tight mb-3">
               Bora tirar a zebra do seu marketing?
             </h2>
             <p className="text-white/40 text-sm leading-relaxed mb-8">
@@ -708,7 +764,7 @@ export default function CamisetaPage() {
             </Link>
 
             {/* Social links */}
-            <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t border-white/06">
+            <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t border-white/[0.06]">
               <a
                 href="https://instagram.com/zbrand.mkt"
                 target="_blank"
