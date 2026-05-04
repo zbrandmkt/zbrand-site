@@ -28,6 +28,25 @@ export async function updateClientPermissions(formData: FormData) {
   revalidatePath("/admin/clientes");
 }
 
+export async function updateClientContract(formData: FormData) {
+  const supabase = await requireAdmin();
+  const clientId = formData.get("clientId") as string;
+  const contractStart = (formData.get("contract_start") as string) || null;
+  const contractEnd = (formData.get("contract_end") as string) || null;
+  const contractUrl = (formData.get("contract_url") as string).trim() || null;
+
+  await supabase
+    .from("clients")
+    .update({
+      contract_start: contractStart,
+      contract_end: contractEnd,
+      contract_url: contractUrl,
+    })
+    .eq("id", clientId);
+
+  revalidatePath(`/admin/clientes/${clientId}`);
+}
+
 export async function updateClientNotes(formData: FormData) {
   const supabase = await requireAdmin();
   const clientId = formData.get("clientId") as string;

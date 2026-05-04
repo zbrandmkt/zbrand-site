@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase-server";
 import {
   updateClientPermissions,
   updateClientNotes,
+  updateClientContract,
   suspendClientAction,
   reactivateClientAction,
 } from "./actions";
@@ -147,6 +148,31 @@ export default async function ClientDetailPage({ params }: Props) {
             label="Cadastro"
             value={new Date(client.created_at).toLocaleDateString("pt-BR")}
           />
+          {client.contract_start && (
+            <InfoItem
+              label="Início do contrato"
+              value={new Date(client.contract_start).toLocaleDateString("pt-BR")}
+            />
+          )}
+          {client.contract_end && (
+            <InfoItem
+              label="Término do contrato"
+              value={new Date(client.contract_end).toLocaleDateString("pt-BR")}
+            />
+          )}
+          {client.contract_url && (
+            <div className="col-span-2">
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30 mb-0.5">Contrato</p>
+              <a
+                href={client.contract_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-bold text-[#00C2FF] hover:underline truncate block"
+              >
+                Ver contrato ↗
+              </a>
+            </div>
+          )}
         </div>
       </div>
 
@@ -239,6 +265,64 @@ export default async function ClientDetailPage({ params }: Props) {
           >
             Salvar nota
           </button>
+        </form>
+      </div>
+
+      {/* Contract */}
+      <div
+        className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6 mb-6"
+        style={{ boxShadow: "5px 5px 0px 0px #00C2FF" }}
+      >
+        <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-4">Contrato</h2>
+        <form action={updateClientContract} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <input type="hidden" name="clientId" value={client.id} />
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+              Início do contrato
+            </label>
+            <input
+              name="contract_start"
+              type="date"
+              defaultValue={client.contract_start ?? ""}
+              className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] focus:border-[#00C2FF] outline-none transition-colors"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+              Término do contrato
+            </label>
+            <input
+              name="contract_end"
+              type="date"
+              defaultValue={client.contract_end ?? ""}
+              className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] focus:border-[#00C2FF] outline-none transition-colors"
+            />
+          </div>
+
+          <div className="sm:col-span-2 flex flex-col gap-1.5">
+            <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+              Link do contrato
+            </label>
+            <input
+              name="contract_url"
+              type="url"
+              defaultValue={client.contract_url ?? ""}
+              placeholder="https://drive.google.com/..."
+              className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#00C2FF] outline-none transition-colors"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <button
+              type="submit"
+              className="bg-[#00C2FF] border-2 border-[#1A1A1A] text-[#1A1A1A] font-black text-sm uppercase tracking-widest px-6 py-2.5 rounded-xl hover:-translate-y-0.5 transition-transform"
+              style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
+            >
+              Salvar contrato
+            </button>
+          </div>
         </form>
       </div>
 

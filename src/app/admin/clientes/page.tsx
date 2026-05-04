@@ -30,11 +30,23 @@ export default async function ClientesPage() {
   return (
     <div className="px-8 py-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Clientes</h1>
-        <p className="text-sm text-[#1A1A1A]/40 mt-1">
-          {allClients.length} clientes · {pending.length} pendentes · {active.length} ativos
-        </p>
+      <div className="mb-8 flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Clientes</h1>
+          <p className="text-sm text-[#1A1A1A]/40 mt-1">
+            {allClients.length} clientes · {pending.length} pendentes · {active.length} ativos
+          </p>
+        </div>
+        <Link
+          href="/admin/clientes/novo"
+          className="flex items-center gap-2 bg-[#FF6100] border-2 border-[#1A1A1A] text-white font-black text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl hover:-translate-y-0.5 transition-transform shrink-0"
+          style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
+        >
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          Novo cliente
+        </Link>
       </div>
 
       <div className="flex flex-col gap-10">
