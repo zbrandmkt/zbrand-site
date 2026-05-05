@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import {
   updateClientPermissions,
   updateClientNotes,
@@ -58,26 +59,28 @@ const MODULES = [
 
 interface Props {
   params: { clientId: string };
-  searchParams: { info?: string };
 }
 
-export default async function ClientDetailPage({ params, searchParams }: Props) {
+export default async function ClientDetailPage({ params }: Props) {
   const supabase = createServerSupabaseClient();
+  const supabaseAdmin = createAdminSupabaseClient();
 
   const { data: client } = await supabase
     .from("clients")
-    .select("*, auth_users:user_id(email)")
+    .select("*")
     .eq("id", params.clientId)
     .single();
 
   if (!client) notFound();
 
-  // Fetch email via admin API
-  let email = "—";
-  try {
-    const { data: adminUser } = await supabase.auth.admin.getUserById(client.user_id);
-    email = adminUser?.user?.email ?? "—";
-  } catch {}
+  // Fetch users linked to this company
+  const { data: clientUsers } = await supabaseAdmin
+    .from("client_users")
+    .select("id, name, email, role, status, invited_at, accepted_at")
+    .eq("client_id", params.clientId)
+    .order("invited_at", { ascending: true });
+
+  const users = clientUsers ?? [];
 
   const permissions: string[] = client.permissions ?? ["trafego", "social", "calendario", "aprovacoes"];
   const isActive = client.status === "active";
@@ -85,19 +88,6 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
 
   return (
     <div className="px-8 py-8 max-w-3xl">
-      {/* Info banner */}
-      {searchParams.info === "already_exists" && (
-        <div className="mb-6 bg-[#FBBC05]/10 border-2 border-[#FBBC05] rounded-2xl px-5 py-4 flex items-start gap-3">
-          <span className="text-[#FBBC05] text-lg shrink-0">ℹ</span>
-          <div>
-            <p className="font-black text-[#1A1A1A] text-sm">Email já cadastrado</p>
-            <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
-              Este email já tinha um cliente na plataforma. Um novo convite foi enviado para que o cliente acesse a conta existente.
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 mb-6">
         <Link
@@ -127,7 +117,11 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
             </div>
             <div>
               <h1 className="text-xl font-black text-[#1A1A1A] tracking-tight">{client.company}</h1>
-              <p className="text-sm text-[#1A1A1A]/50 font-medium">{client.name}</p>
+              <p className="text-sm text-[#1A1A1A]/50 font-medium">
+                {users.length > 0
+                  ? `${users.length} usuário${users.length > 1 ? "s" : ""} cadastrado${users.length > 1 ? "s" : ""}`
+                  : "Nenhum usuário ainda"}
+              </p>
             </div>
           </div>
 
@@ -151,9 +145,8 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
           </div>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-[#1A1A1A]/10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="mt-4 pt-4 border-t border-[#1A1A1A]/10 grid grid-cols-2 sm:grid-cols-3 gap-4">
           <InfoItem label="WhatsApp" value={client.whatsapp ?? "—"} />
-          <InfoItem label="E-mail" value={email} />
           <InfoItem
             label="Cliente desde"
             value={client.approved_at ? new Date(client.approved_at).toLocaleDateString("pt-BR") : "—"}
@@ -190,6 +183,75 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
         </div>
       </div>
 
+      {/* Users Card */}
+      <div
+        className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6 mb-6"
+        style={{ boxShadow: "5px 5px 0px 0px #7B2FF7" }}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Usuários com acesso</h2>
+            <p className="text-xs text-[#1A1A1A]/40 font-medium mt-0.5">
+              Pessoas que podem acessar o dashboard desta empresa.
+            </p>
+          </div>
+          <Link
+            href={`/admin/clientes/${params.clientId}/usuarios`}
+            className="bg-[#7B2FF7] border-2 border-[#1A1A1A] text-white font-black text-[11px] uppercase tracking-widest px-4 py-2 rounded-xl hover:-translate-y-0.5 transition-transform shrink-0"
+            style={{ boxShadow: "2px 2px 0px 0px #1A1A1A" }}
+          >
+            Gerenciar →
+          </Link>
+        </div>
+
+        {users.length === 0 ? (
+          <div className="text-center py-6 border-2 border-dashed border-[#1A1A1A]/15 rounded-xl">
+            <p className="text-2xl mb-2">👤</p>
+            <p className="text-sm font-black text-[#1A1A1A]/40">Nenhum usuário cadastrado</p>
+            <p className="text-xs text-[#1A1A1A]/25 mt-1">
+              <Link href={`/admin/clientes/${params.clientId}/usuarios`} className="underline hover:text-[#7B2FF7]">
+                Clique em gerenciar para convidar um usuário
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2">
+            {users.map((u) => (
+              <div
+                key={u.id}
+                className="flex items-center justify-between gap-3 px-4 py-3 border border-[#1A1A1A]/10 rounded-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[#7B2FF7]/15 flex items-center justify-center font-black text-[#7B2FF7] text-sm shrink-0">
+                    {u.name ? u.name.charAt(0).toUpperCase() : u.email.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-[#1A1A1A]">{u.name || u.email}</p>
+                    {u.name && <p className="text-[11px] text-[#1A1A1A]/40">{u.email}</p>}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 border border-[#1A1A1A]/15 rounded-full text-[#1A1A1A]/40">
+                    {u.role}
+                  </span>
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                      u.status === "active"
+                        ? "bg-[#AAFF00]/20 text-[#5a8a00]"
+                        : u.status === "suspended"
+                        ? "bg-red-50 text-red-500"
+                        : "bg-yellow-50 text-yellow-600"
+                    }`}
+                  >
+                    {u.status === "active" ? "Ativo" : u.status === "suspended" ? "Suspenso" : "Convidado"}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Permissions */}
       <div
         className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6 mb-6"
@@ -198,7 +260,7 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
         <div className="mb-5">
           <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Permissões de acesso</h2>
           <p className="text-xs text-[#1A1A1A]/40 font-medium mt-1">
-            Defina quais módulos este cliente pode visualizar no dashboard.
+            Defina quais módulos esta empresa pode visualizar no dashboard.
           </p>
         </div>
 
@@ -234,7 +296,7 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
                     className="sr-only peer"
                   />
                   <div
-                    className="w-11 h-6 rounded-full border-2 border-[#1A1A1A]/20 bg-[#1A1A1A]/08 peer-checked:border-[#1A1A1A] transition-all peer-checked:bg-[#1A1A1A]"
+                    className="w-11 h-6 rounded-full border-2 border-[#1A1A1A]/20 peer-checked:border-[#1A1A1A] transition-all"
                     style={{ background: enabled ? "#1A1A1A" : undefined }}
                   />
                   <div
@@ -347,7 +409,7 @@ export default async function ClientDetailPage({ params, searchParams }: Props) 
           <form action={suspendClientAction} className="flex items-center justify-between gap-4">
             <input type="hidden" name="clientId" value={client.id} />
             <p className="text-sm text-[#1A1A1A]/50 font-medium">
-              Suspender remove o acesso imediatamente ao dashboard do cliente.
+              Suspender remove o acesso de todos os usuários desta empresa imediatamente.
             </p>
             <button
               type="submit"

@@ -67,14 +67,14 @@ export default function NovoClientePage({
         </Link>
         <span className="text-[#1A1A1A]/20">/</span>
         <span className="text-[11px] font-black uppercase tracking-widest text-[#1A1A1A]">
-          Novo cliente
+          Nova empresa
         </span>
       </div>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Cadastrar novo cliente</h1>
+        <h1 className="text-2xl font-black text-[#1A1A1A] tracking-tight">Cadastrar nova empresa</h1>
         <p className="text-sm text-[#1A1A1A]/40 mt-1">
-          Um email de boas-vindas será enviado automaticamente para o cliente criar a senha.
+          O painel ficará disponível imediatamente. Adicione usuários depois na aba de usuários.
         </p>
       </div>
 
@@ -85,7 +85,7 @@ export default function NovoClientePage({
         >
           <span className="text-red-500 text-lg shrink-0">⚠</span>
           <div>
-            <p className="font-black text-red-600 text-sm">Erro ao cadastrar cliente</p>
+            <p className="font-black text-red-600 text-sm">Erro ao cadastrar empresa</p>
             <p className="text-xs text-red-500 mt-0.5">{errorMsg}</p>
           </div>
         </div>
@@ -93,26 +93,14 @@ export default function NovoClientePage({
 
       <form action={createClientAction} className="flex flex-col gap-6">
 
-        {/* Dados do cliente */}
+        {/* Dados da empresa */}
         <div
           className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
           style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
         >
-          <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-5">Dados do cliente</h2>
+          <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-5">Dados da empresa</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
-                Nome completo *
-              </label>
-              <input
-                name="name"
-                required
-                placeholder="Ex: Bruna Costa"
-                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
+            <div className="sm:col-span-2 flex flex-col gap-1.5">
               <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
                 Nome da empresa *
               </label>
@@ -122,22 +110,6 @@ export default function NovoClientePage({
                 placeholder="Ex: Churruts Hamburguer"
                 className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors"
               />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
-                E-mail *
-              </label>
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="cliente@empresa.com.br"
-                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors"
-              />
-              <p className="text-[10px] text-[#1A1A1A]/35">
-                Um link de convite será enviado para este email.
-              </p>
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -153,6 +125,18 @@ export default function NovoClientePage({
                 <option value="Full">Full</option>
                 <option value="Personalizado">Personalizado</option>
               </select>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+                WhatsApp
+              </label>
+              <input
+                name="whatsapp"
+                type="tel"
+                placeholder="(11) 99999-9999"
+                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors"
+              />
             </div>
           </div>
         </div>
@@ -211,7 +195,7 @@ export default function NovoClientePage({
           <div className="mb-5">
             <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Permissões de acesso</h2>
             <p className="text-xs text-[#1A1A1A]/40 font-medium mt-1">
-              Selecione quais módulos este cliente poderá acessar.
+              Selecione quais módulos esta empresa poderá acessar.
             </p>
           </div>
 
@@ -252,7 +236,7 @@ export default function NovoClientePage({
             className="flex-1 bg-[#FF6100] border-2 border-[#1A1A1A] text-white font-black text-sm uppercase tracking-widest py-3.5 rounded-xl hover:-translate-y-0.5 transition-transform"
             style={{ boxShadow: "4px 4px 0px 0px #1A1A1A" }}
           >
-            ✉ Cadastrar e enviar convite
+            + Cadastrar empresa
           </button>
           <Link
             href="/admin/clientes"

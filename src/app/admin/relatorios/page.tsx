@@ -5,7 +5,7 @@ export default async function RelatoriosPage() {
   const supabase = createServerSupabaseClient();
 
   const [{ data: clients }, { data: reports }] = await Promise.all([
-    supabase.from("clients").select("id, name, company, plan, status").eq("status", "active").order("company"),
+    supabase.from("clients").select("id, company, plan, status").neq("status", "suspended").order("company"),
     supabase.from("client_reports").select("id, client_id, month, year, updated_at").order("updated_at", { ascending: false }),
   ]);
 
@@ -43,7 +43,6 @@ export default async function RelatoriosPage() {
                   </div>
                   <div>
                     <p className="font-black text-[#1A1A1A]">{client.company}</p>
-                    <p className="text-xs text-[#1A1A1A]/40">{client.name}</p>
                     {client.plan && (
                       <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 bg-[#FF6100]/10 text-[#FF6100] rounded-full">
                         {client.plan}
