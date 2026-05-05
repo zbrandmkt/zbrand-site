@@ -1,8 +1,8 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import Link from "next/link";
 
 export default async function RelatoriosPage() {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
 
   const [{ data: clients }, { data: reports }] = await Promise.all([
     supabase.from("clients").select("id, company, plan, status").neq("status", "suspended").order("company"),

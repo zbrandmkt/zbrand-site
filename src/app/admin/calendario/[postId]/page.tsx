@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { notFound } from "next/navigation";
 import { PostEditor } from "./post-editor";
 import type { PostRow } from "@/types/posts";
@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export default async function PostEditorPage({ params }: PageProps) {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
   const isNew = params.postId === "new";
 
   const [{ data: clients }, postResult, commentsResult] = await Promise.all([

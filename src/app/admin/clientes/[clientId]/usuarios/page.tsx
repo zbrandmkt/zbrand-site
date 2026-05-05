@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { inviteUserAction, removeUserAction, resendInviteAction } from "./actions";
 
@@ -10,10 +9,9 @@ interface Props {
 }
 
 export default async function UsuariosPage({ params, searchParams }: Props) {
-  const supabase = createServerSupabaseClient();
   const supabaseAdmin = createAdminSupabaseClient();
 
-  const { data: client } = await supabase
+  const { data: client } = await supabaseAdmin
     .from("clients")
     .select("id, company, status")
     .eq("id", params.clientId)

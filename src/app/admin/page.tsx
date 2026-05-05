@@ -1,8 +1,8 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import Link from "next/link";
 
 export default async function AdminOverviewPage() {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
 
   const [{ data: clients }, { data: leads }, { data: reports }] = await Promise.all([
     supabase.from("clients").select("id, company, plan, status, created_at, approved_at").order("created_at", { ascending: false }),

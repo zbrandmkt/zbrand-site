@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { ReportEditor } from "@/app/admin/relatorios/[clientId]/editor";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default async function ClientRelatoriosPage({ params }: Props) {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
 
   const [{ data: client }, { data: reports }] = await Promise.all([
     supabase.from("clients").select("id, company, plan").eq("id", params.clientId).single(),

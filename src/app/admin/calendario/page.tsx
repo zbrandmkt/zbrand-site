@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { CalendarClient } from "./calendar-client";
 import type { PostRow } from "@/types/posts";
 
@@ -7,7 +7,7 @@ interface PageProps {
 }
 
 export default async function CalendarioPage({ searchParams }: PageProps) {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
   const now = new Date();
 
   const year  = parseInt(searchParams.year  ?? String(now.getFullYear()));

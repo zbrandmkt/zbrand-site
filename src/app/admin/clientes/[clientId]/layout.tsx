@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { ClientPanelSidebar } from "./client-panel-sidebar";
 
 export default async function ClientPanelLayout({
@@ -9,7 +9,7 @@ export default async function ClientPanelLayout({
   children: React.ReactNode;
   params: { clientId: string };
 }) {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
 
   const { data: client } = await supabase
     .from("clients")

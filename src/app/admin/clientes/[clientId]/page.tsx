@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import {
   updateClientPermissions,
@@ -62,24 +61,23 @@ interface Props {
 }
 
 export default async function ClientDetailPage({ params }: Props) {
-  const supabase = createServerSupabaseClient();
   const supabaseAdmin = createAdminSupabaseClient();
 
   const [{ data: client }, { data: clientUsers }, { data: reports }, { count: pendingCount }] =
     await Promise.all([
-      supabase.from("clients").select("*").eq("id", params.clientId).single(),
+      supabaseAdmin.from("clients").select("*").eq("id", params.clientId).single(),
       supabaseAdmin
         .from("client_users")
         .select("id, name, email, role, status")
         .eq("client_id", params.clientId),
-      supabase
+      supabaseAdmin
         .from("client_reports")
         .select("id, month, year, updated_at")
         .eq("client_id", params.clientId)
         .order("year", { ascending: false })
         .order("month", { ascending: false })
         .limit(3),
-      supabase
+      supabaseAdmin
         .from("posts")
         .select("id", { count: "exact", head: true })
         .eq("client_id", params.clientId)

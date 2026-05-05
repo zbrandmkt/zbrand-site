@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { approveClient, suspendClient, reactivateClient } from "../actions";
 
 interface Client {
@@ -14,7 +14,7 @@ interface Client {
 }
 
 export default async function ClientesPage() {
-  const supabase = createServerSupabaseClient();
+  const supabase = createAdminSupabaseClient();
   const { data: clients } = await supabase
     .from("clients")
     .select("*")

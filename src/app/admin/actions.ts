@@ -1,6 +1,7 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
 
 async function getAdminUser() {
@@ -9,11 +10,12 @@ async function getAdminUser() {
   if (!user || user.user_metadata?.role !== "admin") {
     throw new Error("Acesso negado.");
   }
-  return { supabase, user };
+  return user;
 }
 
 export async function approveClient(formData: FormData) {
-  const { supabase, user } = await getAdminUser();
+  const user = await getAdminUser();
+  const supabase = createAdminSupabaseClient();
 
   const clientId = formData.get("clientId") as string;
   const company  = formData.get("company")  as string;
@@ -36,7 +38,8 @@ export async function approveClient(formData: FormData) {
 }
 
 export async function suspendClient(formData: FormData) {
-  const { supabase } = await getAdminUser();
+  await getAdminUser();
+  const supabase = createAdminSupabaseClient();
   const clientId = formData.get("clientId") as string;
   await supabase.from("clients").update({ status: "suspended" }).eq("id", clientId);
   revalidatePath("/admin");
@@ -44,7 +47,8 @@ export async function suspendClient(formData: FormData) {
 }
 
 export async function reactivateClient(formData: FormData) {
-  const { supabase } = await getAdminUser();
+  await getAdminUser();
+  const supabase = createAdminSupabaseClient();
   const clientId = formData.get("clientId") as string;
   await supabase.from("clients").update({ status: "active" }).eq("id", clientId);
   revalidatePath("/admin");
@@ -52,7 +56,8 @@ export async function reactivateClient(formData: FormData) {
 }
 
 export async function saveReport(formData: FormData) {
-  const { supabase } = await getAdminUser();
+  await getAdminUser();
+  const supabase = createAdminSupabaseClient();
 
   const clientId = formData.get("clientId") as string;
   const month    = parseInt(formData.get("month") as string);
