@@ -10,7 +10,7 @@ export default async function ReportClientPage({ params }: PageProps) {
   const supabase = createServerSupabaseClient();
 
   const [{ data: client }, { data: reports }] = await Promise.all([
-    supabase.from("clients").select("id, name, company, plan").eq("id", params.clientId).single(),
+    supabase.from("clients").select("id, company, plan").eq("id", params.clientId).single(),
     supabase.from("client_reports").select("*").eq("client_id", params.clientId).order("year").order("month"),
   ]);
 
@@ -26,7 +26,7 @@ export default async function ReportClientPage({ params }: PageProps) {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white tracking-tight">{client.company}</h1>
-            <p className="text-sm text-white/40">{client.name} · {client.plan ?? "Sem plano"}</p>
+            <p className="text-sm text-white/40">{client.plan ?? "Sem plano"}</p>
           </div>
         </div>
         <a

@@ -5,7 +5,7 @@ export default async function AdminOverviewPage() {
   const supabase = createServerSupabaseClient();
 
   const [{ data: clients }, { data: leads }, { data: reports }] = await Promise.all([
-    supabase.from("clients").select("id, name, company, plan, status, created_at, approved_at").order("created_at", { ascending: false }),
+    supabase.from("clients").select("id, company, plan, status, created_at, approved_at").order("created_at", { ascending: false }),
     supabase.from("leads").select("id, name, created_at").order("created_at", { ascending: false }).limit(5),
     supabase.from("client_reports").select("id, client_id, month, year, updated_at").order("updated_at", { ascending: false }).limit(5),
   ]);
@@ -67,7 +67,7 @@ export default async function AdminOverviewPage() {
               {pending.slice(0, 5).map((c) => (
                 <div key={c.id} className="flex items-center justify-between bg-[#f6f6f6] rounded-xl px-3 py-2.5">
                   <div>
-                    <p className="text-xs font-bold text-[#1A1A1A]">{c.name}</p>
+                    <p className="text-xs font-bold text-[#1A1A1A]">{c.company}</p>
                     <p className="text-[10px] text-[#1A1A1A]/30">{new Date(c.created_at).toLocaleDateString("pt-BR")}</p>
                   </div>
                   <Link href="/admin/clientes" className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 bg-[#FF6100] text-white rounded-lg hover:bg-[#e55500] transition-colors">

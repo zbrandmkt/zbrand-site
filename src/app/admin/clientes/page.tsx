@@ -4,8 +4,6 @@ import { approveClient, suspendClient, reactivateClient } from "../actions";
 
 interface Client {
   id: string;
-  user_id: string;
-  name: string;
   company: string;
   plan: string | null;
   proposal_slug: string | null;
@@ -64,7 +62,7 @@ export default async function ClientesPage() {
                 >
                   <div className="px-5 py-4 border-b border-[#1A1A1A]/10 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <p className="font-black text-[#1A1A1A]">{client.name}</p>
+                      <p className="font-black text-[#1A1A1A]">{client.company}</p>
                       <p className="text-xs text-[#1A1A1A]/50 font-medium">
                         Cadastrado em {new Date(client.created_at).toLocaleDateString("pt-BR")}
                       </p>
@@ -158,7 +156,7 @@ export default async function ClientesPage() {
                     </div>
                     <div>
                       <p className="font-black text-[#1A1A1A]">{client.company}</p>
-                      <p className="text-xs text-[#1A1A1A]/50">{client.name}</p>
+                      {client.plan && <p className="text-xs text-[#1A1A1A]/50">{client.plan}</p>}
                     </div>
                   </div>
 
@@ -220,7 +218,7 @@ export default async function ClientesPage() {
                 >
                   <div>
                     <p className="font-black text-[#1A1A1A]">{client.company}</p>
-                    <p className="text-xs text-[#1A1A1A]/50">{client.name}</p>
+                    {client.plan && <p className="text-xs text-[#1A1A1A]/50">{client.plan}</p>}
                   </div>
                   <form action={reactivateClient}>
                     <input type="hidden" name="clientId" value={client.id} />
