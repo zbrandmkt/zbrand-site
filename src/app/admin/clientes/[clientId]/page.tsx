@@ -58,9 +58,10 @@ const MODULES = [
 
 interface Props {
   params: { clientId: string };
+  searchParams: { info?: string };
 }
 
-export default async function ClientDetailPage({ params }: Props) {
+export default async function ClientDetailPage({ params, searchParams }: Props) {
   const supabase = createServerSupabaseClient();
 
   const { data: client } = await supabase
@@ -84,6 +85,19 @@ export default async function ClientDetailPage({ params }: Props) {
 
   return (
     <div className="px-8 py-8 max-w-3xl">
+      {/* Info banner */}
+      {searchParams.info === "already_exists" && (
+        <div className="mb-6 bg-[#FBBC05]/10 border-2 border-[#FBBC05] rounded-2xl px-5 py-4 flex items-start gap-3">
+          <span className="text-[#FBBC05] text-lg shrink-0">ℹ</span>
+          <div>
+            <p className="font-black text-[#1A1A1A] text-sm">Email já cadastrado</p>
+            <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
+              Este email já tinha um cliente na plataforma. Um novo convite foi enviado para que o cliente acesse a conta existente.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 mb-6">
         <Link

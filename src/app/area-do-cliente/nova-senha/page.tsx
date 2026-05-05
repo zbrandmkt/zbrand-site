@@ -19,32 +19,48 @@ export default function NovaSenhaPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Supabase detecta automaticamente o hash #access_token=...&type=recovery
-    // e dispara onAuthStateChange com event = PASSWORD_RECOVERY
     const supabase = createClient();
 
+    // Ouve eventos de auth (hash-based flow para recovery / SIGNED_IN)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        setStep("form");
-      } else if (event === "SIGNED_IN") {
-        // Pode chegar SIGNED_IN antes do PASSWORD_RECOVERY em alguns fluxos
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
         setStep("form");
       }
     });
 
-    // Fallback: se já tem sessão ativa (recovery token já processado)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setStep("form");
-    });
+    // PKCE flow: convite de admin e recuperação moderna chegam com ?code=... na URL
+    // Precisamos trocar o code por sessão antes do onAuthStateChange disparar
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
 
-    // Timeout caso nenhum evento chegue (link inválido ou expirado)
-    const timeout = setTimeout(() => {
-      setStep((prev) => (prev === "loading" ? "error" : prev));
-    }, 5000);
+    if (code) {
+      supabase.auth
+        .exchangeCodeForSession(code)
+        .then(({ error }) => {
+          if (error) {
+            setStep("error");
+          }
+          // Sucesso: onAuthStateChange vai disparar SIGNED_IN automaticamente
+        });
+    } else {
+      // Hash-based fallback: verifica se já tem sessão ativa
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) setStep("form");
+      });
+
+      // Timeout somente quando não tem code (sem code = sem PKCE = esperamos evento)
+      const timeout = setTimeout(() => {
+        setStep((prev) => (prev === "loading" ? "error" : prev));
+      }, 5000);
+
+      return () => {
+        subscription.unsubscribe();
+        clearTimeout(timeout);
+      };
+    }
 
     return () => {
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
   }, []);
 

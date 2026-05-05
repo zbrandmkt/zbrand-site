@@ -41,12 +41,28 @@ export async function createClientAction(formData: FormData) {
     });
 
   if (inviteError) {
-    throw new Error(`Erro ao enviar convite: ${inviteError.message}`);
+    redirect(
+      `/admin/clientes/novo?error=${encodeURIComponent(
+        `Erro ao enviar convite: ${inviteError.message}`
+      )}`
+    );
   }
 
   const userId = inviteData.user.id;
 
-  // 2. Insert client record linked to the new user
+  // 2. Check if this user already has a client record
+  const { data: existing } = await supabaseAdmin
+    .from("clients")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (existing) {
+    // User already has a client — navigate to existing record
+    redirect(`/admin/clientes/${existing.id}?info=already_exists`);
+  }
+
+  // 3. Insert client record linked to the new user
   const { data: client, error: clientError } = await supabaseAdmin
     .from("clients")
     .insert({
@@ -65,7 +81,11 @@ export async function createClientAction(formData: FormData) {
     .single();
 
   if (clientError) {
-    throw new Error(`Erro ao criar cliente: ${clientError.message}`);
+    redirect(
+      `/admin/clientes/novo?error=${encodeURIComponent(
+        `Erro ao salvar cliente: ${clientError.message}`
+      )}`
+    );
   }
 
   redirect(`/admin/clientes/${client.id}`);

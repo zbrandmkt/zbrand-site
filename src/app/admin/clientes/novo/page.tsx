@@ -48,7 +48,13 @@ const MODULES = [
   },
 ];
 
-export default function NovoClientePage() {
+export default function NovoClientePage({
+  searchParams,
+}: {
+  searchParams: { error?: string };
+}) {
+  const errorMsg = searchParams.error ?? null;
+
   return (
     <div className="px-8 py-8 max-w-2xl">
       {/* Breadcrumb */}
@@ -71,6 +77,19 @@ export default function NovoClientePage() {
           Um email de boas-vindas será enviado automaticamente para o cliente criar a senha.
         </p>
       </div>
+
+      {errorMsg && (
+        <div
+          className="mb-6 bg-red-50 border-2 border-red-300 rounded-2xl px-5 py-4 flex items-start gap-3"
+          style={{ boxShadow: "3px 3px 0px 0px #ef4444" }}
+        >
+          <span className="text-red-500 text-lg shrink-0">⚠</span>
+          <div>
+            <p className="font-black text-red-600 text-sm">Erro ao cadastrar cliente</p>
+            <p className="text-xs text-red-500 mt-0.5">{errorMsg}</p>
+          </div>
+        </div>
+      )}
 
       <form action={createClientAction} className="flex flex-col gap-6">
 
