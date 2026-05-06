@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
+import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { DashboardSidebar } from "./sidebar";
 
 export default async function DashboardLayout({
@@ -15,13 +16,24 @@ export default async function DashboardLayout({
   // Admins sempre têm acesso — sem verificação de status
   const isAdmin = user.user_metadata?.role === "admin";
 
-  // Verifica se cliente está ativo via junction table client_users
-  const { data: link } = await supabase
+  // Busca vínculo do usuário (qualquer status exceto suspenso)
+  const supabaseAdmin = createAdminSupabaseClient();
+  const { data: link } = await supabaseAdmin
     .from("client_users")
-    .select("name, status, client_id, clients(status, company, plan, permissions)")
+    .select("id, name, status, client_id, clients(status, company, plan, permissions)")
     .eq("user_id", user.id)
-    .eq("status", "active")
+    .neq("status", "suspended")
     .single();
+
+  // Se o vínculo ainda está como "invited" e o usuário já está logado,
+  // significa que ele aceitou o convite — ativar automaticamente
+  if (link && link.status === "invited") {
+    await supabaseAdmin
+      .from("client_users")
+      .update({ status: "active", accepted_at: new Date().toISOString() })
+      .eq("id", link.id);
+    link.status = "active";
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const linkedCompany = (link?.clients as any) ?? null;
