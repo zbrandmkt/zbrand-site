@@ -119,7 +119,28 @@ export async function removeUserAction(formData: FormData) {
 
   const supabaseAdmin = createAdminSupabaseClient();
 
+  // Buscar o user_id antes de deletar o vínculo
+  const { data: link } = await supabaseAdmin
+    .from("client_users")
+    .select("user_id")
+    .eq("id", linkId)
+    .single();
+
+  // Remover da junction table
   await supabaseAdmin.from("client_users").delete().eq("id", linkId);
+
+  // Se o usuário não está vinculado a nenhuma outra empresa, deletar do Auth também
+  // Assim o convite pode ser reenviado sem conflito ou rate limit
+  if (link?.user_id) {
+    const { count } = await supabaseAdmin
+      .from("client_users")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", link.user_id);
+
+    if (!count || count === 0) {
+      await supabaseAdmin.auth.admin.deleteUser(link.user_id);
+    }
+  }
 
   revalidatePath(`/admin/clientes/${clientId}/usuarios`);
   revalidatePath(`/admin/clientes/${clientId}`);
