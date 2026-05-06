@@ -49,19 +49,24 @@ export async function inviteUserAction(formData: FormData) {
       );
     }
 
-    // Resend invite so they get a new link
-    const { error: resendError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-      redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
-      data: { role: "client", name },
-    });
+    // Only resend invite if user is NOT yet confirmed (pending invite)
+    // Confirmed users (email_confirmed_at set) must NOT receive inviteUserByEmail — Supabase rejects it
+    const isConfirmed = !!existingAuthUser.email_confirmed_at;
+    if (!isConfirmed) {
+      const { error: resendError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+        redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
+        data: { role: "client", name },
+      });
 
-    if (resendError && !resendError.message.includes("already registered")) {
-      redirect(
-        `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-          `Erro ao enviar convite: ${resendError.message}`
-        )}`
-      );
+      if (resendError && !resendError.message.includes("already registered")) {
+        redirect(
+          `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
+            `Erro ao enviar convite: ${resendError.message}`
+          )}`
+        );
+      }
     }
+    // If already confirmed: skip invite — just link to company below
   } else {
     // New user — send invite
     const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
@@ -81,13 +86,16 @@ export async function inviteUserAction(formData: FormData) {
   }
 
   // Insert into client_users
+  // If user already existed and is confirmed, mark as active immediately
+  const alreadyConfirmed = existingAuthUser?.email_confirmed_at != null;
   const { error: linkError } = await supabaseAdmin.from("client_users").insert({
     client_id: clientId,
     user_id: userId,
     name,
     email,
     role,
-    status: "invited",
+    status: alreadyConfirmed ? "active" : "invited",
+    ...(alreadyConfirmed ? { accepted_at: new Date().toISOString() } : {}),
   });
 
   if (linkError) {
