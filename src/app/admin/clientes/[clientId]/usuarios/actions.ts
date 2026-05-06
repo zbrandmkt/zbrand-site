@@ -13,71 +13,88 @@ async function requireAdmin() {
   }
 }
 
-export async function createUserAction(formData: FormData) {
+export async function inviteUserAction(formData: FormData) {
   await requireAdmin();
 
-  const clientId   = formData.get("clientId") as string;
-  const name       = (formData.get("name") as string).trim();
-  const email      = (formData.get("email") as string).trim().toLowerCase();
-  const password   = (formData.get("password") as string).trim();
-  const role       = (formData.get("role") as string) || "owner";
+  const clientId = formData.get("clientId") as string;
+  const name     = (formData.get("name") as string).trim();
+  const email    = (formData.get("email") as string).trim().toLowerCase();
+  const role     = (formData.get("role") as string) || "owner";
 
   const supabaseAdmin = createAdminSupabaseClient();
 
-  // Verificar se já existe vínculo com essa empresa
+  // Verificar se já existe no Auth
   const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
   const existingAuthUser = existingUsers?.users?.find((u) => u.email === email);
 
+  let userId: string;
+
   if (existingAuthUser) {
+    userId = existingAuthUser.id;
+
+    // Verificar se já está vinculado a esta empresa
     const { data: existingLink } = await supabaseAdmin
       .from("client_users")
       .select("id")
       .eq("client_id", clientId)
-      .eq("user_id", existingAuthUser.id)
+      .eq("user_id", userId)
       .single();
 
     if (existingLink) {
       redirect(
         `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-          "Este email já está vinculado a esta empresa."
+          "Este usuário já está vinculado a esta empresa."
         )}`
       );
     }
+
+    // Só reenviar invite se ainda não confirmou o email
+    // Usuários confirmados não podem receber inviteUserByEmail (Supabase rejeita)
+    const isConfirmed = !!existingAuthUser.email_confirmed_at;
+    if (!isConfirmed) {
+      const { error: resendError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+        redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
+        data: { role: "client", name },
+      });
+      if (resendError && !resendError.message.includes("already registered")) {
+        redirect(
+          `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
+            `Erro ao enviar convite: ${resendError.message}`
+          )}`
+        );
+      }
+    }
+  } else {
+    // Novo usuário — enviar convite
+    const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+      redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
+      data: { role: "client", name },
+    });
+
+    if (inviteError) {
+      redirect(
+        `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
+          `Erro ao enviar convite: ${inviteError.message}`
+        )}`
+      );
+    }
+
+    userId = inviteData.user.id;
   }
-
-  // Criar usuário direto com senha (sem invite por email)
-  // email_confirm: true → já confirma automaticamente, sem precisar de link
-  const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
-    user_metadata: { role: "client", name },
-  });
-
-  if (createError) {
-    redirect(
-      `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-        `Erro ao criar usuário: ${createError.message}`
-      )}`
-    );
-  }
-
-  const userId = newUser.user.id;
 
   // Vincular à empresa
+  const alreadyConfirmed = existingAuthUser?.email_confirmed_at != null;
   const { error: linkError } = await supabaseAdmin.from("client_users").insert({
     client_id: clientId,
     user_id: userId,
     name,
     email,
     role,
-    status: "active",
-    accepted_at: new Date().toISOString(),
+    status: alreadyConfirmed ? "active" : "invited",
+    ...(alreadyConfirmed ? { accepted_at: new Date().toISOString() } : {}),
   });
 
   if (linkError) {
-    // Reverter: deletar o usuário criado
-    await supabaseAdmin.auth.admin.deleteUser(userId);
     redirect(
       `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
         `Erro ao vincular usuário: ${linkError.message}`
@@ -85,74 +102,35 @@ export async function createUserAction(formData: FormData) {
     );
   }
 
-  // Disparar webhook para o Make enviar o email de boas-vindas
-  const makeWebhookUrl = process.env.MAKE_WEBHOOK_USER_CREATED;
-  if (makeWebhookUrl) {
-    try {
-      await fetch(makeWebhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          loginUrl: "https://www.zbrand.com.br/area-do-cliente",
-          role,
-        }),
-      });
-    } catch {
-      // Falha no webhook não impede o cadastro
-    }
-  }
-
   revalidatePath(`/admin/clientes/${clientId}/usuarios`);
   revalidatePath(`/admin/clientes/${clientId}`);
-  redirect(`/admin/clientes/${clientId}/usuarios?success=created`);
+  redirect(`/admin/clientes/${clientId}/usuarios?success=invited`);
 }
 
-export async function resetPasswordAction(formData: FormData) {
+export async function resendInviteAction(formData: FormData) {
   await requireAdmin();
 
-  const clientId  = formData.get("clientId") as string;
-  const userId    = formData.get("userId") as string;
-  const name      = formData.get("name") as string;
-  const email     = formData.get("email") as string;
-  const password  = (formData.get("password") as string).trim();
+  const clientId = formData.get("clientId") as string;
+  const email    = formData.get("email") as string;
+  const name     = formData.get("name") as string;
 
   const supabaseAdmin = createAdminSupabaseClient();
 
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, { password });
+  const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+    redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
+    data: { role: "client", name },
+  });
 
-  if (error) {
+  if (error && !error.message.includes("already registered")) {
     redirect(
       `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-        `Erro ao redefinir senha: ${error.message}`
+        `Erro ao reenviar convite: ${error.message}`
       )}`
     );
   }
 
-  // Disparar webhook para o Make enviar email com nova senha
-  const makeWebhookUrl = process.env.MAKE_WEBHOOK_USER_CREATED;
-  if (makeWebhookUrl) {
-    try {
-      await fetch(makeWebhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          loginUrl: "https://www.zbrand.com.br/area-do-cliente",
-          role: "reset",
-        }),
-      });
-    } catch {
-      // Falha no webhook não impede o reset
-    }
-  }
-
   revalidatePath(`/admin/clientes/${clientId}/usuarios`);
-  redirect(`/admin/clientes/${clientId}/usuarios?success=reset`);
+  redirect(`/admin/clientes/${clientId}/usuarios?success=resent`);
 }
 
 export async function removeUserAction(formData: FormData) {
@@ -172,7 +150,8 @@ export async function removeUserAction(formData: FormData) {
 
   await supabaseAdmin.from("client_users").delete().eq("id", linkId);
 
-  // Se não tem mais vínculos, deletar do Auth
+  // Se não tem mais vínculos, deletar do Auth também
+  // (permite reenviar convite para o mesmo email sem rate limit de usuário existente)
   if (link?.user_id) {
     const { count } = await supabaseAdmin
       .from("client_users")

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
-import { createUserAction, removeUserAction, resetPasswordAction } from "./actions";
+import { inviteUserAction, removeUserAction, resendInviteAction } from "./actions";
 
 interface Props {
   params: { clientId: string };
@@ -73,31 +73,31 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {searchParams.success === "reset" && (
+      {searchParams.success === "invited" && (
         <div
-          className="mb-6 bg-[#00C2FF]/10 border-2 border-[#00C2FF] rounded-2xl px-5 py-4 flex items-start gap-3"
-          style={{ boxShadow: "3px 3px 0px 0px #00C2FF" }}
+          className="mb-6 bg-[#AAFF00]/10 border-2 border-[#AAFF00] rounded-2xl px-5 py-4 flex items-start gap-3"
+          style={{ boxShadow: "3px 3px 0px 0px #AAFF00" }}
         >
-          <span className="text-[#00C2FF] text-lg shrink-0">🔑</span>
+          <span className="text-[#5a8a00] text-lg shrink-0">✉</span>
           <div>
-            <p className="font-black text-[#1A1A1A] text-sm">Senha redefinida!</p>
-            <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
-              Nova senha salva. O Make enviará o email com as novas credenciais.
+            <p className="font-black text-[#5a8a00] text-sm">Convite enviado!</p>
+            <p className="text-xs text-[#5a8a00]/80 mt-0.5">
+              O usuário receberá um email com o link de acesso.
             </p>
           </div>
         </div>
       )}
 
-      {searchParams.success === "created" && (
+      {searchParams.success === "resent" && (
         <div
-          className="mb-6 bg-[#AAFF00]/10 border-2 border-[#AAFF00] rounded-2xl px-5 py-4 flex items-start gap-3"
-          style={{ boxShadow: "3px 3px 0px 0px #AAFF00" }}
+          className="mb-6 bg-[#00C2FF]/10 border-2 border-[#00C2FF] rounded-2xl px-5 py-4 flex items-start gap-3"
+          style={{ boxShadow: "3px 3px 0px 0px #00C2FF" }}
         >
-          <span className="text-[#5a8a00] text-lg shrink-0">✓</span>
+          <span className="text-[#00C2FF] text-lg shrink-0">🔄</span>
           <div>
-            <p className="font-black text-[#5a8a00] text-sm">Usuário criado com sucesso!</p>
-            <p className="text-xs text-[#5a8a00]/80 mt-0.5">
-              Acesso liberado imediatamente. O Make enviará o email com as credenciais.
+            <p className="font-black text-[#1A1A1A] text-sm">Convite reenviado!</p>
+            <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
+              Um novo email de convite foi enviado para o usuário.
             </p>
           </div>
         </div>
@@ -157,27 +157,20 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
-                  {/* Reset de senha inline */}
-                  <form action={resetPasswordAction} className="flex items-center gap-1.5">
-                    <input type="hidden" name="clientId" value={params.clientId} />
-                    <input type="hidden" name="userId" value={u.user_id ?? ""} />
-                    <input type="hidden" name="name" value={u.name} />
-                    <input type="hidden" name="email" value={u.email} />
-                    <input
-                      name="password"
-                      type="text"
-                      required
-                      minLength={8}
-                      placeholder="Nova senha"
-                      className="text-[11px] border-2 border-[#1A1A1A]/15 rounded-xl px-2.5 py-1.5 w-28 font-mono text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#00C2FF] outline-none transition-colors"
-                    />
-                    <button
-                      type="submit"
-                      className="text-[11px] font-black uppercase tracking-wider px-3 py-1.5 border-2 border-[#00C2FF]/40 text-[#00C2FF] rounded-xl hover:bg-[#00C2FF]/10 transition-colors whitespace-nowrap"
-                    >
-                      🔑 Redefinir
-                    </button>
-                  </form>
+                  {/* Reenviar convite (só para quem ainda não confirmou) */}
+                  {u.status === "invited" && (
+                    <form action={resendInviteAction}>
+                      <input type="hidden" name="clientId" value={params.clientId} />
+                      <input type="hidden" name="email" value={u.email} />
+                      <input type="hidden" name="name" value={u.name} />
+                      <button
+                        type="submit"
+                        className="text-[11px] font-black uppercase tracking-wider px-3 py-1.5 border-2 border-[#00C2FF]/40 text-[#00C2FF] rounded-xl hover:bg-[#00C2FF]/10 transition-colors whitespace-nowrap"
+                      >
+                        🔄 Reenviar
+                      </button>
+                    </form>
+                  )}
 
                   <form action={removeUserAction}>
                     <input type="hidden" name="clientId" value={params.clientId} />
@@ -196,17 +189,17 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
         )}
       </div>
 
-      {/* Create user form */}
+      {/* Invite user form */}
       <div
         className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
         style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
       >
-        <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-1">Adicionar usuário</h2>
+        <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-1">Convidar usuário</h2>
         <p className="text-xs text-[#1A1A1A]/40 font-medium mb-5">
-          O acesso é liberado imediatamente. Envie as credenciais pelo Make ou WhatsApp.
+          O usuário receberá um email com o link para criar a senha e acessar o dashboard.
         </p>
 
-        <form action={createUserAction} className="flex flex-col gap-4">
+        <form action={inviteUserAction} className="flex flex-col gap-4">
           <input type="hidden" name="clientId" value={params.clientId} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -237,21 +230,6 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
 
             <div className="flex flex-col gap-1.5">
               <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
-                Senha temporária *
-              </label>
-              <input
-                name="password"
-                type="text"
-                required
-                minLength={8}
-                placeholder="Ex: Zbrand@2026"
-                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors font-mono"
-              />
-              <p className="text-[10px] text-[#1A1A1A]/30">Mínimo 8 caracteres. Envie ao cliente pelo Make ou WhatsApp.</p>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
                 Papel
               </label>
               <select
@@ -269,7 +247,7 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
             className="self-start bg-[#FF6100] border-2 border-[#1A1A1A] text-white font-black text-sm uppercase tracking-widest px-8 py-3 rounded-xl hover:-translate-y-0.5 transition-transform"
             style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
           >
-            ✓ Criar acesso
+            ✉ Enviar convite
           </button>
         </form>
       </div>
