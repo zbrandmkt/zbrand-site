@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
-import { createUserAction, removeUserAction } from "./actions";
+import { createUserAction, removeUserAction, resetPasswordAction } from "./actions";
 
 interface Props {
   params: { clientId: string };
@@ -21,7 +21,7 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
 
   const { data: users } = await supabaseAdmin
     .from("client_users")
-    .select("id, name, email, role, status, invited_at, accepted_at")
+    .select("id, user_id, name, email, role, status, invited_at, accepted_at")
     .eq("client_id", params.clientId)
     .order("invited_at", { ascending: true });
 
@@ -69,6 +69,21 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
           <div>
             <p className="font-black text-red-600 text-sm">Erro</p>
             <p className="text-xs text-red-500 mt-0.5">{searchParams.error}</p>
+          </div>
+        </div>
+      )}
+
+      {searchParams.success === "reset" && (
+        <div
+          className="mb-6 bg-[#00C2FF]/10 border-2 border-[#00C2FF] rounded-2xl px-5 py-4 flex items-start gap-3"
+          style={{ boxShadow: "3px 3px 0px 0px #00C2FF" }}
+        >
+          <span className="text-[#00C2FF] text-lg shrink-0">🔑</span>
+          <div>
+            <p className="font-black text-[#1A1A1A] text-sm">Senha redefinida!</p>
+            <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
+              Nova senha salva. O Make enviará o email com as novas credenciais.
+            </p>
           </div>
         </div>
       )}
@@ -141,7 +156,29 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
+                  {/* Reset de senha inline */}
+                  <form action={resetPasswordAction} className="flex items-center gap-1.5">
+                    <input type="hidden" name="clientId" value={params.clientId} />
+                    <input type="hidden" name="userId" value={u.user_id ?? ""} />
+                    <input type="hidden" name="name" value={u.name} />
+                    <input type="hidden" name="email" value={u.email} />
+                    <input
+                      name="password"
+                      type="text"
+                      required
+                      minLength={8}
+                      placeholder="Nova senha"
+                      className="text-[11px] border-2 border-[#1A1A1A]/15 rounded-xl px-2.5 py-1.5 w-28 font-mono text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#00C2FF] outline-none transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      className="text-[11px] font-black uppercase tracking-wider px-3 py-1.5 border-2 border-[#00C2FF]/40 text-[#00C2FF] rounded-xl hover:bg-[#00C2FF]/10 transition-colors whitespace-nowrap"
+                    >
+                      🔑 Redefinir
+                    </button>
+                  </form>
+
                   <form action={removeUserAction}>
                     <input type="hidden" name="clientId" value={params.clientId} />
                     <input type="hidden" name="linkId" value={u.id} />

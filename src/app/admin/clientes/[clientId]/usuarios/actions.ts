@@ -110,6 +110,51 @@ export async function createUserAction(formData: FormData) {
   redirect(`/admin/clientes/${clientId}/usuarios?success=created`);
 }
 
+export async function resetPasswordAction(formData: FormData) {
+  await requireAdmin();
+
+  const clientId  = formData.get("clientId") as string;
+  const userId    = formData.get("userId") as string;
+  const name      = formData.get("name") as string;
+  const email     = formData.get("email") as string;
+  const password  = (formData.get("password") as string).trim();
+
+  const supabaseAdmin = createAdminSupabaseClient();
+
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, { password });
+
+  if (error) {
+    redirect(
+      `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
+        `Erro ao redefinir senha: ${error.message}`
+      )}`
+    );
+  }
+
+  // Disparar webhook para o Make enviar email com nova senha
+  const makeWebhookUrl = process.env.MAKE_WEBHOOK_USER_CREATED;
+  if (makeWebhookUrl) {
+    try {
+      await fetch(makeWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          loginUrl: "https://www.zbrand.com.br/area-do-cliente",
+          role: "reset",
+        }),
+      });
+    } catch {
+      // Falha no webhook não impede o reset
+    }
+  }
+
+  revalidatePath(`/admin/clientes/${clientId}/usuarios`);
+  redirect(`/admin/clientes/${clientId}/usuarios?success=reset`);
+}
+
 export async function removeUserAction(formData: FormData) {
   await requireAdmin();
 
