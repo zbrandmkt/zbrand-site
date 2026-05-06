@@ -3,8 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase";
 
 const ALL_NAV_ITEMS = [
@@ -84,7 +82,6 @@ export function DashboardSidebar({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [clientOpen, setClientOpen] = useState(false);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -111,41 +108,13 @@ export function DashboardSidebar({
         </p>
       </div>
 
-      {/* Client selector */}
+      {/* Client display */}
       <div className="px-4 py-3 border-b border-white/10">
         <p className="text-[9px] text-white/30 uppercase tracking-widest mb-1.5 font-bold">Cliente</p>
-        <button
-          onClick={() => setClientOpen(!clientOpen)}
-          className="w-full flex items-center justify-between bg-white/5 border border-white/10 rounded-lg px-3 py-2 hover:border-[#FF6100]/50 transition-colors"
-        >
-          <span className="text-xs font-bold text-white tracking-wide">{company.toUpperCase()}</span>
-          <svg
-            className={`w-3.5 h-3.5 text-white/40 transition-transform ${clientOpen ? "rotate-180" : ""}`}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <AnimatePresence>
-          {clientOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              className="mt-1 bg-[#2A2A2A] border border-white/10 rounded-lg overflow-hidden"
-            >
-              {["CHURRUTS", "BRAHAUS", "CAIO FERRARI"].map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setClientOpen(false)}
-                  className="w-full text-left px-3 py-2 text-xs text-white/60 hover:text-white hover:bg-white/5 transition-colors font-medium tracking-wide"
-                >
-                  {c}
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="w-full flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
+          <div className="w-2 h-2 rounded-full bg-[#FF6100] shrink-0" />
+          <span className="text-xs font-bold text-white tracking-wide truncate">{company.toUpperCase()}</span>
+        </div>
       </div>
 
       {/* Nav */}
@@ -200,7 +169,7 @@ export function DashboardSidebar({
       <div className="px-4 py-4 border-t border-white/10">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-8 h-8 rounded-lg bg-[#FF6100] border border-[#FF6100]/50 flex items-center justify-center">
-            <span className="text-white text-xs font-black">S</span>
+            <span className="text-white text-xs font-black">{clientName.charAt(0).toUpperCase()}</span>
           </div>
           <div>
             <p className="text-xs font-bold text-white leading-none">{clientName}</p>
