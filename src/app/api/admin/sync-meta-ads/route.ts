@@ -69,24 +69,28 @@ export async function POST(req: NextRequest) {
           if (!raw_thumbnail_url) return adClean;
 
           try {
+            console.log(`[sync-meta-ads] baixando thumbnail ad ${ad.ad_id}: ${raw_thumbnail_url}`);
+
             // Baixar imagem do Meta (seguindo redirects automaticamente)
             const imgRes = await fetch(raw_thumbnail_url, {
               redirect: "follow",
               headers: { "User-Agent": "Mozilla/5.0" },
             });
             if (!imgRes.ok) {
-              console.warn(`[sync-meta-ads] download thumbnail falhou (${imgRes.status}): ${raw_thumbnail_url}`);
+              console.warn(`[sync-meta-ads] download falhou (${imgRes.status}) ad ${ad.ad_id}: ${raw_thumbnail_url}`);
               return adClean;
             }
 
-            // Verificar que é realmente uma imagem
-            const contentType = imgRes.headers.get("content-type") ?? "";
-            if (!contentType.startsWith("image/")) {
-              console.warn(`[sync-meta-ads] content-type inválido (${contentType}) para ad ${ad.ad_id}`);
+            const contentType = imgRes.headers.get("content-type") ?? "image/jpeg";
+            const rawBytes = await imgRes.arrayBuffer();
+
+            // Verificar que baixamos algo (pelo menos 1KB — descarta HTML de auth pages)
+            if (rawBytes.byteLength < 1024) {
+              console.warn(`[sync-meta-ads] resposta muito pequena (${rawBytes.byteLength}b) ad ${ad.ad_id} — provavelmente não é imagem`);
               return adClean;
             }
 
-            const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+            const imgBuffer = Buffer.from(rawBytes);
             const ext = contentType.includes("png") ? "png" : contentType.includes("webp") ? "webp" : "jpg";
             const storagePath = `${client_id}/${year}-${String(month).padStart(2, "0")}/${ad.ad_id}.${ext}`;
 

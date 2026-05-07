@@ -334,42 +334,43 @@ export async function fetchTopAds(
 
         if (isVideo) {
           // Para vídeos:
-          // 1. /{video_id}?fields=picture → frame real do vídeo
-          // 2. spec.video_data.image_url  → thumbnail customizado
+          // 1. /{video_id}/thumbnails → retorna URIs de scontent.fbcdn.net (públicas, sem auth)
+          // 2. spec.video_data.image_url → thumbnail customizado pelo anunciante
           // 3. spec.video_data.thumbnail_url
-          // (NÃO usar creative.thumbnail_url → retorna foto de perfil da conta)
+          // ⚠️ NÃO usar /{video_id}?fields=picture → retorna lookaside.fbsbx.com (exige auth)
+          // ⚠️ NÃO usar creative.thumbnail_url → retorna foto de perfil da conta
           const videoId = creative.video_id ?? spec?.video_data?.video_id;
           if (videoId) {
             try {
-              const videoUrl = new URL(`${GRAPH_BASE}/${videoId}`);
-              videoUrl.searchParams.set("access_token", accessToken);
-              videoUrl.searchParams.set("fields", "picture");
-              const videoRes = await fetch(videoUrl.toString());
-              if (videoRes.ok) {
-                const videoJson = await videoRes.json();
-                if (typeof videoJson.picture === "string" && videoJson.picture.startsWith("http")) {
-                  rawUrl = videoJson.picture;
+              const thumbsUrl = new URL(`${GRAPH_BASE}/${videoId}/thumbnails`);
+              thumbsUrl.searchParams.set("access_token", accessToken);
+              const thumbsRes = await fetch(thumbsUrl.toString());
+              if (thumbsRes.ok) {
+                const thumbsJson = await thumbsRes.json();
+                const thumbs: { uri: string; is_preferred?: boolean }[] = thumbsJson.data ?? [];
+                // Preferir o thumbnail marcado como preferido, senão pegar o primeiro
+                const preferred = thumbs.find((t) => t.is_preferred) ?? thumbs[0];
+                if (preferred?.uri?.startsWith("http")) {
+                  rawUrl = preferred.uri;
                 }
               }
             } catch {
-              // ignora
+              // ignora, cai no fallback
             }
           }
           if (!rawUrl) {
-            rawUrl =
-              spec?.video_data?.image_url ??
-              spec?.video_data?.thumbnail_url ??
-              undefined;
+            rawUrl = spec?.video_data?.image_url ?? spec?.video_data?.thumbnail_url;
           }
         } else {
           // Para imagens e link ads:
-          // 1. spec.link_data.picture → URL da imagem do anúncio (mais comum)
-          // 2. spec.photo_data.url
+          // 1. spec.link_data.picture → imagem do anúncio (scontent, público)
+          // 2. creative.thumbnail_url → para image ads retorna a imagem correta
           // 3. creative.image_url
           rawUrl =
             spec?.link_data?.picture ??
             spec?.link_data?.image_url ??
             spec?.photo_data?.url ??
+            creative.thumbnail_url ??
             creative.image_url ??
             undefined;
         }
