@@ -242,6 +242,129 @@ export async function fetchMetaInsights(
   };
 }
 
+// ─── Tipos de conversão por canal ────────────────────────────
+const WHATSAPP_ACTION_TYPES = [
+  "onsite_conversion.messaging_conversation_started_7d",
+  "onsite_conversion.messaging_first_reply",
+];
+
+const FORM_ACTION_TYPES = [
+  "lead",
+  "offsite_conversion.fb_pixel_lead",
+];
+
+/** Soma apenas os tipos de conversão de WhatsApp/Messenger */
+function sumWhatsAppResults(
+  actions: { action_type: string; value: string }[] | undefined
+): number {
+  if (!actions) return 0;
+  return WHATSAPP_ACTION_TYPES.reduce((sum, type) => {
+    return sum + parseNum(actions.find((a) => a.action_type === type)?.value);
+  }, 0);
+}
+
+/** Soma apenas os tipos de conversão de formulário/pixel */
+function sumFormResults(
+  actions: { action_type: string; value: string }[] | undefined
+): number {
+  if (!actions) return 0;
+  return FORM_ACTION_TYPES.reduce((sum, type) => {
+    return sum + parseNum(actions.find((a) => a.action_type === type)?.value);
+  }, 0);
+}
+
+export interface MetaWeeklyInsight {
+  weekNumber: number;
+  dateStart: string;  // "YYYY-MM-DD"
+  dateEnd: string;    // "YYYY-MM-DD"
+  spend: number;
+  impressions: number;
+  reach: number;
+  clicks: number;
+  cpc: number;
+  leadsWhatsapp: number;
+  leadsForm: number;
+  leadsTotal: number;
+  cplWhatsapp: number;
+  cplForm: number;
+  cplTotal: number;
+}
+
+interface RawWeeklyInsight {
+  spend?: string;
+  impressions?: string;
+  reach?: string;
+  clicks?: string;
+  cpc?: string;
+  actions?: { action_type: string; value: string }[];
+  date_start?: string;
+  date_end?: string;
+}
+
+/**
+ * Busca métricas semanais do Meta Ads para um mês/ano específico.
+ * Usa time_increment=7 para obter breakdown por semana.
+ */
+export async function fetchMetaWeeklyInsights(
+  adAccountId: string,
+  accessToken: string,
+  month: number,
+  year: number
+): Promise<MetaWeeklyInsight[]> {
+  const since = `${year}-${String(month).padStart(2, "0")}-01`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const until = `${year}-${String(month).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
+
+  const fields = [
+    "spend",
+    "impressions",
+    "reach",
+    "clicks",
+    "cpc",
+    "actions",
+  ].join(",");
+
+  const url = new URL(`${GRAPH_BASE}/act_${adAccountId}/insights`);
+  url.searchParams.set("access_token", accessToken);
+  url.searchParams.set("time_range", JSON.stringify({ since, until }));
+  url.searchParams.set("fields", fields);
+  url.searchParams.set("level", "account");
+  url.searchParams.set("time_increment", "7");
+
+  const res = await fetch(url.toString());
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Meta API error (weekly insights): ${err}`);
+  }
+
+  const json = await res.json();
+  const rows: RawWeeklyInsight[] = json.data ?? [];
+
+  return rows.map((row, idx): MetaWeeklyInsight => {
+    const spend = parseNum(row.spend);
+    const leadsWhatsapp = sumWhatsAppResults(row.actions);
+    const leadsForm = sumFormResults(row.actions);
+    const leadsTotal = leadsWhatsapp + leadsForm;
+
+    return {
+      weekNumber: idx + 1,
+      dateStart: row.date_start ?? "",
+      dateEnd: row.date_end ?? "",
+      spend,
+      impressions: parseNum(row.impressions),
+      reach: parseNum(row.reach),
+      clicks: parseNum(row.clicks),
+      cpc: parseNum(row.cpc),
+      leadsWhatsapp,
+      leadsForm,
+      leadsTotal,
+      cplWhatsapp: leadsWhatsapp > 0 ? spend / leadsWhatsapp : 0,
+      cplForm: leadsForm > 0 ? spend / leadsForm : 0,
+      cplTotal: leadsTotal > 0 ? spend / leadsTotal : 0,
+    };
+  });
+}
+
 /**
  * Extrai a thumbnail URL de um criativo a partir de múltiplas fontes.
  * Prioriza URLs de scontent.fbcdn.net que são públicas e não requerem auth.

@@ -45,6 +45,16 @@ export function ClientPanelSidebar({ clientId, company, plan, status }: Props) {
       ),
     },
     {
+      label: "Tráfego",
+      href: `/admin/clientes/${clientId}/trafego`,
+      exact: false,
+      icon: (
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ),
+    },
+    {
       label: "Calendário",
       href: `/admin/clientes/${clientId}/calendario`,
       exact: false,

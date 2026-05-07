@@ -11,7 +11,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
-import { fetchMetaInsights, fetchTopAds, MetaTopAd } from "@/lib/meta-ads";
+import { fetchMetaInsights, fetchTopAds, fetchMetaWeeklyInsights, MetaTopAd } from "@/lib/meta-ads";
 
 /** Tenta copiar thumbnail para Supabase Storage. Se falhar, retorna a URL original. */
 async function persistThumbnail(
@@ -102,12 +102,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Integração Meta Ads está inativa" }, { status: 400 });
     }
 
-    // 2. Buscar métricas e top ads em paralelo
-    const [insights, rawTopAds] = await Promise.all([
+    // 2. Buscar métricas, top ads e dados semanais em paralelo
+    const [insights, rawTopAds, weeklyData] = await Promise.all([
       fetchMetaInsights(integration.ad_account_id, integration.access_token, month, year),
       fetchTopAds(integration.ad_account_id, integration.access_token, month, year).catch((err) => {
         console.warn("[sync-meta-ads] fetchTopAds falhou (não crítico):", err);
         return [] as MetaTopAd[];
+      }),
+      fetchMetaWeeklyInsights(integration.ad_account_id, integration.access_token, month, year).catch((err) => {
+        console.warn("[sync-meta-ads] fetchMetaWeeklyInsights falhou (não crítico):", err);
+        return [];
       }),
     ]);
 
@@ -156,14 +160,59 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Erro ao salvar métricas no banco" }, { status: 500 });
     }
 
-    // 5. Atualizar last_sync em client_integrations
+    // 5. Salvar dados semanais (upsert por semana, preservar action_text existente)
+    if (weeklyData.length > 0) {
+      console.log(`[sync-meta-ads] sincronizando ${weeklyData.length} semana(s) para ${client_id} ${year}/${month}`);
+
+      for (const week of weeklyData) {
+        // Verificar se já existe action_text para esta semana (não sobrescrever)
+        const { data: existing } = await supabaseAdmin
+          .from("trafego_weekly")
+          .select("action_text")
+          .eq("client_id", client_id)
+          .eq("platform", "meta")
+          .eq("year", year)
+          .eq("month", month)
+          .eq("week_number", week.weekNumber)
+          .single();
+
+        await supabaseAdmin
+          .from("trafego_weekly")
+          .upsert({
+            client_id,
+            platform: "meta",
+            year,
+            month,
+            week_number: week.weekNumber,
+            date_start: week.dateStart,
+            date_end: week.dateEnd,
+            spend: week.spend,
+            impressions: week.impressions,
+            reach: week.reach,
+            clicks: week.clicks,
+            cpc: week.cpc,
+            leads_whatsapp: week.leadsWhatsapp,
+            leads_form: week.leadsForm,
+            leads_total: week.leadsTotal,
+            cpl_whatsapp: week.cplWhatsapp,
+            cpl_form: week.cplForm,
+            cpl_total: week.cplTotal,
+            action_text: existing?.action_text ?? null, // preserva texto existente
+            synced_at: new Date().toISOString(),
+          }, {
+            onConflict: "client_id,platform,year,month,week_number",
+          });
+      }
+    }
+
+    // 6. Atualizar last_sync em client_integrations
     await supabaseAdmin
       .from("client_integrations")
       .update({ last_sync: new Date().toISOString(), last_error: null })
       .eq("client_id", client_id)
       .eq("platform", "meta_ads");
 
-    return NextResponse.json({ success: true, data: saved, insights, top_ads_count: topAdsForDb.length });
+    return NextResponse.json({ success: true, data: saved, insights, top_ads_count: topAdsForDb.length, weekly_weeks: weeklyData.length });
 
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Erro desconhecido";
