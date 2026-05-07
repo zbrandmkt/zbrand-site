@@ -8,13 +8,17 @@ const GRAPH_BASE = "https://graph.facebook.com/v20.0";
 // ─── Tipos de conversão monitorados ──────────────────────────
 // O Meta Ads usa action_types diferentes por objetivo de campanha.
 // Somamos todos para obter o "Resultado Total" da conta.
+//
+// ⚠️ NÃO incluir "onsite_conversion.lead_grouped" aqui:
+//    esse tipo é um agrupamento dos outros (lead, messaging, pixel).
+//    Somá-lo junto com "lead" causaria double counting.
 const RESULT_ACTION_TYPES = [
   "lead",                                                 // Leads (formulário)
   "onsite_conversion.messaging_conversation_started_7d",  // Conversas iniciadas (7 dias)
   "onsite_conversion.messaging_first_reply",              // Primeiro resposta WhatsApp/Messenger
   "offsite_conversion.fb_pixel_lead",                     // Leads via pixel no site
   "contact_total",                                        // Contatos totais
-  "onsite_conversion.lead_grouped",                       // Leads agrupados (Meta)
+  // "onsite_conversion.lead_grouped" — REMOVIDO: é agregação dos tipos acima, causa double count
 ];
 
 // Labels amigáveis por action_type
@@ -24,7 +28,6 @@ export const ACTION_TYPE_LABELS: Record<string, string> = {
   "onsite_conversion.messaging_first_reply": "1ª Resposta",
   "offsite_conversion.fb_pixel_lead": "Pixel",
   "contact_total": "Contato",
-  "onsite_conversion.lead_grouped": "Lead",
 };
 
 export interface MetaInsights {
