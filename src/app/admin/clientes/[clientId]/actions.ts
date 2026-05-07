@@ -82,3 +82,33 @@ export async function reactivateClientAction(formData: FormData) {
   revalidatePath(`/admin/clientes/${clientId}`);
   revalidatePath("/admin/clientes");
 }
+
+export async function upsertTrafegoGoals(formData: FormData) {
+  await requireAdmin();
+  const supabase = createAdminSupabaseClient();
+  const clientId = formData.get("clientId") as string;
+  const year  = Number(formData.get("year"));
+  const month = Number(formData.get("month"));
+
+  const toNum = (key: string) => {
+    const v = (formData.get(key) as string)?.trim();
+    return v ? parseFloat(v) : null;
+  };
+
+  await supabase.from("trafego_goals").upsert(
+    {
+      client_id:    clientId,
+      year,
+      month,
+      leads_meta:   toNum("leads_meta"),
+      cpl_meta:     toNum("cpl_meta"),
+      budget_meta:  toNum("budget_meta"),
+      leads_google: toNum("leads_google"),
+      cpl_google:   toNum("cpl_google"),
+      budget_google: toNum("budget_google"),
+    },
+    { onConflict: "client_id,year,month" }
+  );
+
+  revalidatePath(`/admin/clientes/${clientId}`);
+}

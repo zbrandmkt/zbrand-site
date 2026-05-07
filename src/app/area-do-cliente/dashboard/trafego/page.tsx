@@ -33,25 +33,37 @@ export default async function TrafegoPage() {
   const hasGoogleAds = isAdmin || perms.includes("trafego_google");
 
   const metricsMap: Record<string, object | null> = {};
+  const goalsMap: Record<string, object | null> = {};
 
   if (clientData?.clientId) {
     const supabaseAdmin = createAdminSupabaseClient();
 
-    // Fetch all trafego_metrics for this year
-    const { data: allMetrics } = await supabaseAdmin
-      .from("trafego_metrics")
-      .select("*")
-      .eq("client_id", clientData.clientId)
-      .eq("year", currentYear);
+    // Fetch all trafego_metrics + goals for this year
+    const [{ data: allMetrics }, { data: allGoals }] = await Promise.all([
+      supabaseAdmin
+        .from("trafego_metrics")
+        .select("*")
+        .eq("client_id", clientData.clientId)
+        .eq("year", currentYear),
+      supabaseAdmin
+        .from("trafego_goals")
+        .select("month, leads_meta, cpl_meta, budget_meta, leads_google, cpl_google, budget_google")
+        .eq("client_id", clientData.clientId)
+        .eq("year", currentYear),
+    ]);
 
     for (const row of allMetrics ?? []) {
       metricsMap[row.month] = row;
+    }
+    for (const row of allGoals ?? []) {
+      goalsMap[row.month] = row;
     }
   }
 
   return (
     <TrafegoPagoPage
       metricsMap={metricsMap}
+      goalsMap={goalsMap}
       currentMonth={currentMonth}
       currentYear={currentYear}
       maxUnlockedMonth={maxUnlockedMonth}

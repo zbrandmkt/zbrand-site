@@ -9,6 +9,7 @@ import {
 } from "./actions";
 import { SyncMetaButton } from "./sync-meta-button";
 import { PermissionsForm } from "./permissions-form";
+import { GoalsTrafegoForm } from "./goals-trafego-form";
 
 // Top-level module IDs (excludes sub-permissions like trafego_meta, trafego_google)
 const TOP_LEVEL_MODULES = ["trafego", "social", "calendario", "aprovacoes"];
@@ -20,7 +21,11 @@ interface Props {
 export default async function ClientDetailPage({ params }: Props) {
   const supabaseAdmin = createAdminSupabaseClient();
 
-  const [{ data: client }, { data: clientUsers }, { data: reports }, { count: pendingCount }, { data: integration }] =
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentYear  = now.getFullYear();
+
+  const [{ data: client }, { data: clientUsers }, { data: reports }, { count: pendingCount }, { data: integration }, { data: goalsRows }] =
     await Promise.all([
       supabaseAdmin.from("clients").select("*").eq("id", params.clientId).single(),
       supabaseAdmin
@@ -45,6 +50,11 @@ export default async function ClientDetailPage({ params }: Props) {
         .eq("client_id", params.clientId)
         .eq("platform", "meta_ads")
         .maybeSingle(),
+      supabaseAdmin
+        .from("trafego_goals")
+        .select("month, year, leads_meta, cpl_meta, budget_meta, leads_google, cpl_google, budget_google")
+        .eq("client_id", params.clientId)
+        .eq("year", currentYear),
     ]);
 
   if (!client) notFound();
@@ -52,6 +62,17 @@ export default async function ClientDetailPage({ params }: Props) {
   const users = clientUsers ?? [];
   const recentReports = reports ?? [];
   const permissions: string[] = client.permissions ?? ["trafego", "social", "calendario", "aprovacoes"];
+
+  // Build goals map keyed by month number
+  const goalsMap: Record<string, object | null> = {};
+  for (const row of goalsRows ?? []) {
+    goalsMap[row.month] = row;
+  }
+
+  // Platform permissions (same logic as trafego/page.tsx)
+  const hasAnyPlatformPerm = permissions.some((p: string) => p.startsWith("trafego_"));
+  const hasMetaAds  = hasAnyPlatformPerm ? permissions.includes("trafego_meta")   : true;
+  const hasGoogleAds = permissions.includes("trafego_google");
   // Count only top-level modules (ignore sub-permissions like trafego_meta)
   const topLevelCount = permissions.filter((p) => TOP_LEVEL_MODULES.includes(p)).length;
   const isActive = client.status === "active";
@@ -221,6 +242,29 @@ export default async function ClientDetailPage({ params }: Props) {
         </div>
         <PermissionsForm clientId={client.id} initialPermissions={permissions} />
       </div>
+
+      {/* Goals — Tráfego Pago */}
+      {permissions.includes("trafego") && (
+        <div
+          className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6 mb-6"
+          style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
+        >
+          <div className="mb-5">
+            <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">🎯 Metas — Tráfego Pago</h2>
+            <p className="text-xs text-[#1A1A1A]/40 font-medium mt-1">
+              Defina leads, CPL e budget por mês. Os valores aparecem no dashboard do cliente como referência.
+            </p>
+          </div>
+          <GoalsTrafegoForm
+            clientId={client.id}
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            goalsMap={goalsMap}
+            hasMetaAds={hasMetaAds}
+            hasGoogleAds={hasGoogleAds}
+          />
+        </div>
+      )}
 
       {/* Notes */}
       <div

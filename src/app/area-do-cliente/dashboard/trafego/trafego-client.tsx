@@ -34,6 +34,15 @@ interface TrafegoMetrics {
   synced_at?: string;
 }
 
+interface TrafegoGoals {
+  leads_meta?:   number | null;
+  cpl_meta?:     number | null;
+  budget_meta?:  number | null;
+  leads_google?: number | null;
+  cpl_google?:   number | null;
+  budget_google?: number | null;
+}
+
 function fmt(value: number | undefined, decimals = 0): string {
   if (!value || value === 0) return "—";
   return value.toLocaleString("pt-BR", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
@@ -242,9 +251,78 @@ function MonthSelector({
   );
 }
 
+// ─── Meta Goal Card ──────────────────────────────────────────
+function GoalCard({
+  label,
+  target,
+  actual,
+  format,
+  lowerIsBetter = false,
+}: {
+  label: string;
+  target: number | null | undefined;
+  actual: number | null | undefined;
+  format: (v: number) => string;
+  lowerIsBetter?: boolean;
+}) {
+  const hasTarget = target != null && target > 0;
+  const hasActual = actual != null && actual > 0;
+
+  let pct = 0;
+  let status: "good" | "warn" | "bad" | "empty" = "empty";
+
+  if (hasTarget && hasActual) {
+    if (lowerIsBetter) {
+      // CPL: menor é melhor — 100% = atingiu o target (actual <= target)
+      pct = Math.min((target / actual) * 100, 100);
+    } else {
+      pct = Math.min((actual / target) * 100, 100);
+    }
+    status = pct >= 100 ? "good" : pct >= 60 ? "warn" : "bad";
+  } else if (!hasTarget) {
+    status = "empty";
+  }
+
+  const barColor = status === "good" ? "#AAFF00" : status === "warn" ? "#FBBC05" : status === "bad" ? "#FF3D9A" : "#1A1A1A";
+
+  return (
+    <div className="rounded-2xl border-2 border-[#1A1A1A]/08 bg-white p-4 flex flex-col gap-2.5">
+      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{label}</p>
+
+      {/* Actual value */}
+      <p className={`text-2xl font-black leading-none ${hasActual ? "text-[#1A1A1A]" : "text-[#1A1A1A]/20"}`}>
+        {hasActual ? format(actual!) : "—"}
+      </p>
+
+      {/* Progress bar */}
+      <div className="h-2 bg-[#1A1A1A]/06 rounded-full overflow-hidden">
+        {hasTarget && hasActual && (
+          <div
+            className="h-full rounded-full transition-all duration-700"
+            style={{ width: `${pct}%`, background: barColor }}
+          />
+        )}
+      </div>
+
+      {/* Target reference */}
+      <div className="flex items-center justify-between">
+        <p className="text-[9px] font-bold text-[#1A1A1A]/30">
+          {hasTarget ? `Meta: ${format(target!)}` : "Meta não definida"}
+        </p>
+        {hasTarget && hasActual && (
+          <p className="text-[9px] font-black" style={{ color: barColor }}>
+            {pct.toFixed(0)}%
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Component ──────────────────────────────────────────
 export default function TrafegoPagoPage({
   metricsMap,
+  goalsMap,
   currentMonth,
   currentYear,
   maxUnlockedMonth,
@@ -252,6 +330,7 @@ export default function TrafegoPagoPage({
   hasGoogleAds,
 }: {
   metricsMap: Record<string, object | null>;
+  goalsMap: Record<string, object | null>;
   currentMonth: number;
   currentYear: number;
   maxUnlockedMonth: number;
@@ -261,6 +340,7 @@ export default function TrafegoPagoPage({
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
   const metrics = metricsMap[selectedMonth] as TrafegoMetrics | null;
+  const goals   = goalsMap[selectedMonth] as TrafegoGoals | null;
   const hasData = !!metrics;
   const selectedMonthName = MONTH_NAMES[selectedMonth - 1];
 
@@ -398,18 +478,92 @@ export default function TrafegoPagoPage({
           </div>
 
           {/* Metas */}
-          <EmptySection title="🎯 Metas do Mês" shadow="#FF6100">
-            <div className="grid grid-cols-5 gap-3">
-              {["Leads Meta", "CPL Meta", "Leads Google", "CPL Google", "Budget Meta"].map((label) => (
-                <div key={label}
-                  className="rounded-2xl border-2 border-[#1A1A1A]/08 bg-[#F5F5F0]/60 p-4 flex flex-col gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{label}</p>
-                  <p className="text-xl font-black text-[#1A1A1A]/20">—</p>
-                  <div className="h-2 bg-[#1A1A1A]/06 rounded-full" />
-                </div>
-              ))}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
+            style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">🎯 Metas do Mês</p>
+              {goals ? (
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#AAFF00]/20 text-[#3a6000] border border-[#AAFF00]/40">
+                  Definidas
+                </span>
+              ) : (
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1A1A1A]/06 text-[#1A1A1A]/30">
+                  Sem metas definidas
+                </span>
+              )}
             </div>
-          </EmptySection>
+
+            {/* Meta Ads goals */}
+            {hasMetaAds && (
+              <>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
+                </div>
+                <div className={`grid gap-3 mb-4 ${hasGoogleAds ? "grid-cols-3" : "grid-cols-3"}`}>
+                  <GoalCard
+                    label="Leads Meta"
+                    target={goals?.leads_meta}
+                    actual={metrics?.leads}
+                    format={(v) => String(Math.round(v))}
+                  />
+                  <GoalCard
+                    label="CPL Meta (máx)"
+                    target={goals?.cpl_meta}
+                    actual={metrics?.cpl}
+                    format={(v) => `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    lowerIsBetter
+                  />
+                  <GoalCard
+                    label="Budget Meta"
+                    target={goals?.budget_meta}
+                    actual={metrics?.spend}
+                    format={(v) => `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                  />
+                </div>
+              </>
+            )}
+
+            {/* Google Ads goals */}
+            {hasGoogleAds && (
+              <>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05] text-[#1A1A1A]">GOOGLE</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <GoalCard
+                    label="Leads Google"
+                    target={goals?.leads_google}
+                    actual={undefined}
+                    format={(v) => String(Math.round(v))}
+                  />
+                  <GoalCard
+                    label="CPL Google (máx)"
+                    target={goals?.cpl_google}
+                    actual={undefined}
+                    format={(v) => `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    lowerIsBetter
+                  />
+                  <GoalCard
+                    label="Budget Google"
+                    target={goals?.budget_google}
+                    actual={undefined}
+                    format={(v) => `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                  />
+                </div>
+              </>
+            )}
+
+            {!hasMetaAds && !hasGoogleAds && (
+              <div className="h-16 flex items-center justify-center border-2 border-dashed border-[#1A1A1A]/10 rounded-xl">
+                <p className="text-xs text-[#1A1A1A]/25 font-medium">Nenhuma plataforma de anúncios ativa</p>
+              </div>
+            )}
+          </motion.div>
 
           {/* Métricas Gerais + Funil */}
           <div className="grid grid-cols-5 gap-4 mb-5">
