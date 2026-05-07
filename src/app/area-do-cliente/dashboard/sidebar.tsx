@@ -90,8 +90,22 @@ export function DashboardSidebar({
   const pathname = usePathname();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [switching, setSwitching] = useState(false);
 
   const hasMultipleClients = allClients.length > 1;
+
+  async function handleSwitch(clientId: string) {
+    if (clientId === selectedClientId || switching) return;
+    setSwitching(true);
+    setDropdownOpen(false);
+    await fetch("/api/switch-client", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clientId }),
+    });
+    router.refresh();
+    setSwitching(false);
+  }
 
   async function handleLogout() {
     const supabase = createClient();
@@ -129,7 +143,14 @@ export function DashboardSidebar({
               className="w-full flex items-center justify-between gap-2 bg-white/5 border border-white/10 hover:border-white/20 rounded-lg px-3 py-2 transition-colors"
             >
               <div className="flex items-center gap-2 min-w-0">
-                <div className="w-2 h-2 rounded-full bg-[#FF6100] shrink-0" />
+                {switching ? (
+                  <svg className="w-2 h-2 animate-spin text-[#FF6100] shrink-0" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                ) : (
+                  <div className="w-2 h-2 rounded-full bg-[#FF6100] shrink-0" />
+                )}
                 <span className="text-xs font-bold text-white tracking-wide truncate">
                   {company.toUpperCase()}
                 </span>
@@ -147,27 +168,25 @@ export function DashboardSidebar({
                 {allClients.map((c) => {
                   const isSelected = c.id === selectedClientId;
                   return (
-                    <form key={c.id} action={switchClient}>
-                      <input type="hidden" name="clientId" value={c.id} />
-                      <input type="hidden" name="pathname" value="/area-do-cliente/dashboard" />
-                      <button
-                        type="submit"
-                        onClick={() => setDropdownOpen(false)}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-colors text-xs font-bold tracking-wide ${
-                          isSelected
-                            ? "bg-[#FF6100]/20 text-[#FF6100]"
-                            : "text-white/60 hover:bg-white/5 hover:text-white"
-                        }`}
-                      >
-                        <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? "bg-[#FF6100]" : "bg-white/20"}`} />
-                        {c.company.toUpperCase()}
-                        {isSelected && (
-                          <svg className="w-3 h-3 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        )}
-                      </button>
-                    </form>
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => handleSwitch(c.id)}
+                      disabled={switching}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-colors text-xs font-bold tracking-wide disabled:opacity-50 ${
+                        isSelected
+                          ? "bg-[#FF6100]/20 text-[#FF6100]"
+                          : "text-white/60 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? "bg-[#FF6100]" : "bg-white/20"}`} />
+                      {c.company.toUpperCase()}
+                      {isSelected && (
+                        <svg className="w-3 h-3 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </button>
                   );
                 })}
               </div>
