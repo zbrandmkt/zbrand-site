@@ -64,9 +64,8 @@ export interface MetaTopAd {
   result_type: string;
   spend: number;
   cpl: number;
-  thumbnail_url?: string;  // URL permanente (Supabase Storage) — preenchida pelo sync route
+  thumbnail_url?: string;  // URL da thumbnail — Meta CDN (scontent) ou Supabase Storage
   creative_type?: "video" | "image";
-  raw_thumbnail_url?: string; // URL original do Meta (pode expirar) — usado apenas no download
 }
 
 interface RawAdInsight {
@@ -244,9 +243,74 @@ export async function fetchMetaInsights(
 }
 
 /**
+ * Extrai a thumbnail URL de um criativo a partir de múltiplas fontes.
+ * Prioriza URLs de scontent.fbcdn.net que são públicas e não requerem auth.
+ */
+async function extractThumbnailUrl(
+  adId: string,
+  accessToken: string
+): Promise<{ url: string | undefined; isVideo: boolean }> {
+  try {
+    // Busca criativo via endpoint do ad account com todas as fontes de imagem
+    const url = new URL(`${GRAPH_BASE}/${adId}`);
+    url.searchParams.set("access_token", accessToken);
+    url.searchParams.set(
+      "fields",
+      "creative{id,object_type,video_id,thumbnail_url,image_url,object_story_spec{link_data{picture,image_url},video_data{thumbnail_url,image_url,video_id},photo_data{url}}}"
+    );
+
+    const res = await fetch(url.toString());
+    if (!res.ok) return { url: undefined, isVideo: false };
+
+    const json = await res.json();
+    const creative = json.creative;
+    if (!creative) return { url: undefined, isVideo: false };
+
+    const isVideo = creative.object_type === "VIDEO";
+    const spec = creative.object_story_spec;
+
+    if (isVideo) {
+      // Para vídeos: usar /thumbnails endpoint que retorna scontent URLs (públicas)
+      const videoId = creative.video_id ?? spec?.video_data?.video_id;
+      if (videoId) {
+        try {
+          const thumbsUrl = new URL(`${GRAPH_BASE}/${videoId}/thumbnails`);
+          thumbsUrl.searchParams.set("access_token", accessToken);
+          const thumbsRes = await fetch(thumbsUrl.toString());
+          if (thumbsRes.ok) {
+            const thumbsJson = await thumbsRes.json();
+            const thumbs: { uri: string; is_preferred?: boolean }[] = thumbsJson.data ?? [];
+            const preferred = thumbs.find((t) => t.is_preferred) ?? thumbs[0];
+            if (preferred?.uri?.startsWith("http")) {
+              return { url: preferred.uri, isVideo: true };
+            }
+          }
+        } catch { /* fallthrough */ }
+      }
+      // Fallback: imagem customizada do vídeo
+      const fallback = spec?.video_data?.image_url ?? spec?.video_data?.thumbnail_url;
+      return { url: fallback ?? undefined, isVideo: true };
+    } else {
+      // Para imagens e link ads: link_data.picture é a imagem do anúncio (scontent, pública)
+      const imgUrl =
+        spec?.link_data?.picture ??
+        spec?.link_data?.image_url ??
+        spec?.photo_data?.url ??
+        creative.image_url ??
+        creative.thumbnail_url ??
+        undefined;
+      return { url: imgUrl, isVideo: false };
+    }
+  } catch {
+    return { url: undefined, isVideo: false };
+  }
+}
+
+/**
  * Busca os top N anúncios por resultados no período, incluindo thumbnail do criativo.
- * As raw_thumbnail_url do Meta expiram (vídeo ~1h). O sync route deve baixar e
- * salvar no Supabase Storage, preenchendo thumbnail_url com URL permanente.
+ *
+ * Thumbnails são URLs de scontent.fbcdn.net (CDN público do Meta) ou Supabase Storage.
+ * O sync route tenta fazer download para o Storage; se falhar, usa a URL do Meta diretamente.
  */
 export async function fetchTopAds(
   adAccountId: string,
@@ -294,95 +358,15 @@ export async function fetchTopAds(
 
   if (scored.length === 0) return [];
 
-  // 2. Para cada ad, buscar thumbnail do criativo
+  // 2. Para cada ad, buscar thumbnail
   const withThumbnails = await Promise.all(
     scored.map(async (ad): Promise<MetaTopAd> => {
-      try {
-        // Buscamos campos de todos os tipos de criativo comuns:
-        // link ads, image ads, video ads, carousel
-        const creativeUrl = new URL(`${GRAPH_BASE}/${ad.ad_id}`);
-        creativeUrl.searchParams.set("access_token", accessToken);
-        creativeUrl.searchParams.set(
-          "fields",
-          [
-            "creative{",
-            "  object_type,",
-            "  video_id,",
-            "  image_url,",
-            "  thumbnail_url,",
-            "  object_story_spec{",
-            "    link_data{picture,image_url},",
-            "    video_data{thumbnail_url,image_url,video_id},",
-            "    photo_data{url}",
-            "  }",
-            "}",
-          ]
-            .join("")
-            .replace(/\s/g, "")
-        );
-
-        const crRes = await fetch(creativeUrl.toString());
-        if (!crRes.ok) return ad;
-
-        const crJson = await crRes.json();
-        const creative = crJson.creative;
-        if (!creative) return ad;
-
-        const isVideo = creative.object_type === "VIDEO";
-        const spec = creative.object_story_spec;
-        let rawUrl: string | undefined;
-
-        if (isVideo) {
-          // Para vídeos:
-          // 1. /{video_id}/thumbnails → retorna URIs de scontent.fbcdn.net (públicas, sem auth)
-          // 2. spec.video_data.image_url → thumbnail customizado pelo anunciante
-          // 3. spec.video_data.thumbnail_url
-          // ⚠️ NÃO usar /{video_id}?fields=picture → retorna lookaside.fbsbx.com (exige auth)
-          // ⚠️ NÃO usar creative.thumbnail_url → retorna foto de perfil da conta
-          const videoId = creative.video_id ?? spec?.video_data?.video_id;
-          if (videoId) {
-            try {
-              const thumbsUrl = new URL(`${GRAPH_BASE}/${videoId}/thumbnails`);
-              thumbsUrl.searchParams.set("access_token", accessToken);
-              const thumbsRes = await fetch(thumbsUrl.toString());
-              if (thumbsRes.ok) {
-                const thumbsJson = await thumbsRes.json();
-                const thumbs: { uri: string; is_preferred?: boolean }[] = thumbsJson.data ?? [];
-                // Preferir o thumbnail marcado como preferido, senão pegar o primeiro
-                const preferred = thumbs.find((t) => t.is_preferred) ?? thumbs[0];
-                if (preferred?.uri?.startsWith("http")) {
-                  rawUrl = preferred.uri;
-                }
-              }
-            } catch {
-              // ignora, cai no fallback
-            }
-          }
-          if (!rawUrl) {
-            rawUrl = spec?.video_data?.image_url ?? spec?.video_data?.thumbnail_url;
-          }
-        } else {
-          // Para imagens e link ads:
-          // 1. spec.link_data.picture → imagem do anúncio (scontent, público)
-          // 2. creative.thumbnail_url → para image ads retorna a imagem correta
-          // 3. creative.image_url
-          rawUrl =
-            spec?.link_data?.picture ??
-            spec?.link_data?.image_url ??
-            spec?.photo_data?.url ??
-            creative.thumbnail_url ??
-            creative.image_url ??
-            undefined;
-        }
-
-        return {
-          ...ad,
-          raw_thumbnail_url: rawUrl,
-          creative_type: isVideo ? "video" : "image",
-        };
-      } catch {
-        return ad;
-      }
+      const { url, isVideo } = await extractThumbnailUrl(ad.ad_id, accessToken);
+      return {
+        ...ad,
+        thumbnail_url: url,   // URL do Meta CDN — será substituída por Supabase Storage no sync route
+        creative_type: isVideo ? "video" : "image",
+      };
     })
   );
 
