@@ -9,6 +9,18 @@ const MONTH_NAMES = [
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
 ];
 
+interface TopAd {
+  ad_id: string;
+  ad_name: string;
+  campaign_name: string;
+  leads: number;
+  result_type: string;
+  spend: number;
+  cpl: number;
+  thumbnail_url?: string;
+  creative_type?: "video" | "image";
+}
+
 interface TrafegoMetrics {
   spend: number;
   impressions: number;
@@ -31,6 +43,7 @@ interface TrafegoMetrics {
     cpc: number;
     cpl: number;
   }[];
+  top_ads?: TopAd[];
   synced_at?: string;
 }
 
@@ -691,18 +704,113 @@ export default function TrafegoPagoPage({
           </div>
           )}
 
-          {/* Criativos */}
-          <EmptySection title="🏆 Criativos Campeões" shadow="#7B2FF7">
-            <div className="flex gap-4">
-              {[1, 2, 3, 4, 5].map((n) => (
-                <div key={n}
-                  className="flex-1 border-2 border-dashed border-[#1A1A1A]/10 rounded-2xl aspect-[3/4] flex flex-col items-center justify-center gap-2">
-                  <span className="text-xl opacity-20">🖼️</span>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/20">{n}º lugar</p>
-                </div>
-              ))}
+          {/* Criativos Campeões */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
+            style={{ boxShadow: "4px 4px 0px 0px #7B2FF7" }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">🏆 Criativos Campeões</p>
+              {metrics?.top_ads && metrics.top_ads.length > 0 && (
+                <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#7B2FF7]/10 text-[#7B2FF7] border border-[#7B2FF7]/20">
+                  Top {metrics.top_ads.length} anúncios
+                </span>
+              )}
             </div>
-          </EmptySection>
+
+            {metrics?.top_ads && metrics.top_ads.length > 0 ? (
+              <div className="flex gap-3">
+                {metrics.top_ads.map((ad, idx) => (
+                  <div
+                    key={ad.ad_id}
+                    className="flex-1 min-w-0 rounded-2xl border-2 border-[#1A1A1A]/08 bg-[#F5F5F0]/60 overflow-hidden flex flex-col"
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative aspect-[4/5] bg-[#1A1A1A]/06 overflow-hidden">
+                      {ad.thumbnail_url ? (
+                        <img
+                          src={ad.thumbnail_url}
+                          alt={ad.ad_name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-2xl opacity-20">🖼️</span>
+                        </div>
+                      )}
+                      {/* Ranking badge */}
+                      <div
+                        className="absolute top-2 left-2 w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black border-2 border-white"
+                        style={{
+                          background: idx === 0 ? "#FBBC05" : idx === 1 ? "#C0C0C0" : idx === 2 ? "#CD7F32" : "#7B2FF7",
+                          color: idx <= 2 ? "#1A1A1A" : "white",
+                        }}
+                      >
+                        {idx + 1}
+                      </div>
+                      {/* Type badge */}
+                      {ad.creative_type && (
+                        <div className="absolute top-2 right-2 text-[8px] font-black px-1.5 py-0.5 rounded-full bg-black/50 text-white">
+                          {ad.creative_type === "video" ? "▶ VID" : "IMG"}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Info */}
+                    <div className="p-3 flex flex-col gap-1.5 flex-1">
+                      <p className="text-[10px] font-black text-[#1A1A1A] leading-tight line-clamp-2">{ad.ad_name}</p>
+                      <p className="text-[9px] text-[#1A1A1A]/40 truncate">{ad.campaign_name}</p>
+                      <div className="flex items-center gap-1 mt-auto pt-1.5 border-t border-[#1A1A1A]/06">
+                        <div className="flex-1">
+                          <p className="text-[8px] text-[#1A1A1A]/30 uppercase font-bold tracking-wider">Resultados</p>
+                          <p className="text-sm font-black text-[#00C2FF]">{ad.leads > 0 ? ad.leads : "—"}</p>
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-[8px] text-[#1A1A1A]/30 uppercase font-bold tracking-wider">Custo</p>
+                          <p className="text-sm font-black text-[#7B2FF7]">
+                            {ad.cpl > 0
+                              ? `R$ ${ad.cpl.toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
+                              : "—"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {/* Placeholders caso tenha menos de 5 */}
+                {Array.from({ length: Math.max(0, 5 - metrics.top_ads.length) }).map((_, i) => (
+                  <div
+                    key={`ph-${i}`}
+                    className="flex-1 border-2 border-dashed border-[#1A1A1A]/08 rounded-2xl aspect-[4/5] flex items-center justify-center"
+                  >
+                    <span className="text-lg opacity-10">🖼️</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex gap-3">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <div key={n}
+                    className="flex-1 border-2 border-dashed border-[#1A1A1A]/10 rounded-2xl aspect-[4/5] flex flex-col items-center justify-center gap-2">
+                    <span className="text-xl opacity-20">🖼️</span>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/20">{n}º lugar</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <p className="text-[9px] text-[#1A1A1A]/25 font-medium mt-3">
+              {metrics?.top_ads && metrics.top_ads.length > 0
+                ? "Ordenados por número de resultados. Atualizado a cada sincronização."
+                : hasData
+                  ? "Sincronize novamente para carregar os criativos campeões com thumbnails."
+                  : "Criativos aparecerão aqui após a primeira sincronização com Meta Ads."}
+            </p>
+          </motion.div>
 
           {/* Histórico Mensal */}
           <EmptySection title="📅 Histórico Mensal" shadow="#FBBC05">

@@ -10,7 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
-import { fetchMetaInsights } from "@/lib/meta-ads";
+import { fetchMetaInsights, fetchTopAds, MetaTopAd } from "@/lib/meta-ads";
 
 export async function POST(req: NextRequest) {
   try {
@@ -51,7 +51,59 @@ export async function POST(req: NextRequest) {
       year
     );
 
-    // 3. Salvar no banco
+    // 3. Buscar top criativos e fazer download dos thumbnails para o Supabase Storage
+    let topAdsForDb: Omit<MetaTopAd, "raw_thumbnail_url">[] = [];
+    try {
+      const topAds = await fetchTopAds(
+        integration.ad_account_id,
+        integration.access_token,
+        month,
+        year
+      );
+
+      // Para cada ad, baixar thumbnail e salvar no Storage
+      topAdsForDb = await Promise.all(
+        topAds.map(async (ad) => {
+          const { raw_thumbnail_url, ...adClean } = ad;
+
+          if (!raw_thumbnail_url) return adClean;
+
+          try {
+            // Baixar imagem do Meta
+            const imgRes = await fetch(raw_thumbnail_url);
+            if (!imgRes.ok) return adClean;
+
+            const imgBuffer = await imgRes.arrayBuffer();
+            const contentType = imgRes.headers.get("content-type") ?? "image/jpeg";
+            const ext = contentType.includes("png") ? "png" : "jpg";
+            const storagePath = `${client_id}/${year}-${String(month).padStart(2, "0")}/${ad.ad_id}.${ext}`;
+
+            // Upload para Supabase Storage (bucket público)
+            const { error: uploadErr } = await supabaseAdmin.storage
+              .from("trafego-creatives")
+              .upload(storagePath, imgBuffer, {
+                contentType,
+                upsert: true,
+              });
+
+            if (uploadErr) return adClean;
+
+            // URL pública permanente
+            const { data: urlData } = supabaseAdmin.storage
+              .from("trafego-creatives")
+              .getPublicUrl(storagePath);
+
+            return { ...adClean, thumbnail_url: urlData.publicUrl };
+          } catch {
+            return adClean;
+          }
+        })
+      );
+    } catch (topAdsErr) {
+      console.warn("[sync-meta-ads] fetchTopAds falhou (não crítico):", topAdsErr);
+    }
+
+    // 4. Salvar no banco
     const { data: saved, error: saveErr } = await supabaseAdmin
       .from("trafego_metrics")
       .upsert({
@@ -70,6 +122,7 @@ export async function POST(req: NextRequest) {
         ctr: insights.ctr,
         frequency: insights.frequency,
         campaigns: insights.campaigns,
+        top_ads: topAdsForDb,
         synced_at: new Date().toISOString(),
       }, {
         onConflict: "client_id,platform,month,year",
@@ -82,7 +135,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Erro ao salvar métricas no banco" }, { status: 500 });
     }
 
-    // 4. Atualizar last_sync em client_integrations
+    // 5. Atualizar last_sync em client_integrations
     await supabaseAdmin
       .from("client_integrations")
       .update({ last_sync: new Date().toISOString(), last_error: null })

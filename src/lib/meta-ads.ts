@@ -56,6 +56,28 @@ export interface MetaCampaignInsight {
   cpl: number;
 }
 
+export interface MetaTopAd {
+  ad_id: string;
+  ad_name: string;
+  campaign_name: string;
+  leads: number;
+  result_type: string;
+  spend: number;
+  cpl: number;
+  thumbnail_url?: string;  // URL permanente (Supabase Storage) — preenchida pelo sync route
+  creative_type?: "video" | "image";
+  raw_thumbnail_url?: string; // URL original do Meta (pode expirar) — usado apenas no download
+}
+
+interface RawAdInsight {
+  ad_id?: string;
+  ad_name?: string;
+  campaign_name?: string;
+  spend?: string;
+  actions?: { action_type: string; value: string }[];
+  cost_per_action_type?: { action_type: string; value: string }[];
+}
+
 interface RawInsight {
   spend?: string;
   impressions?: string;
@@ -219,4 +241,91 @@ export async function fetchMetaInsights(
     frequency: parseNum(raw.frequency),
     campaigns,
   };
+}
+
+/**
+ * Busca os top N anúncios por resultados no período, incluindo thumbnail do criativo.
+ * As raw_thumbnail_url do Meta expiram (vídeo ~1h). O sync route deve baixar e
+ * salvar no Supabase Storage, preenchendo thumbnail_url com URL permanente.
+ */
+export async function fetchTopAds(
+  adAccountId: string,
+  accessToken: string,
+  month: number,
+  year: number,
+  limit = 5
+): Promise<MetaTopAd[]> {
+  const since = `${year}-${String(month).padStart(2, "0")}-01`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const until = `${year}-${String(month).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
+
+  // 1. Insights por anúncio (top 50, depois ordenamos por resultados)
+  const insightsUrl = new URL(`${GRAPH_BASE}/act_${adAccountId}/insights`);
+  insightsUrl.searchParams.set("access_token", accessToken);
+  insightsUrl.searchParams.set("time_range", JSON.stringify({ since, until }));
+  insightsUrl.searchParams.set("fields", "ad_id,ad_name,campaign_name,spend,actions,cost_per_action_type");
+  insightsUrl.searchParams.set("level", "ad");
+  insightsUrl.searchParams.set("limit", "50");
+
+  const insightsRes = await fetch(insightsUrl.toString());
+  if (!insightsRes.ok) return [];
+
+  const insightsJson = await insightsRes.json();
+  const rawAds: RawAdInsight[] = insightsJson.data ?? [];
+
+  // Calcular resultados de cada ad e ordenar
+  const scored = rawAds
+    .map((ad) => {
+      const primary = primaryResultType(ad.actions);
+      const spend = parseNum(ad.spend);
+      const cpl = primaryCpl(ad.cost_per_action_type, primary.type, spend, primary.count);
+      return {
+        ad_id: ad.ad_id ?? "",
+        ad_name: ad.ad_name ?? "",
+        campaign_name: ad.campaign_name ?? "",
+        leads: primary.count,
+        result_type: primary.label,
+        spend,
+        cpl,
+      };
+    })
+    .sort((a, b) => b.leads - a.leads)
+    .slice(0, limit);
+
+  if (scored.length === 0) return [];
+
+  // 2. Para cada ad, buscar thumbnail do criativo
+  const withThumbnails = await Promise.all(
+    scored.map(async (ad): Promise<MetaTopAd> => {
+      try {
+        const creativeUrl = new URL(`${GRAPH_BASE}/${ad.ad_id}`);
+        creativeUrl.searchParams.set("access_token", accessToken);
+        creativeUrl.searchParams.set("fields", "creative{thumbnail_url,image_url,object_type}");
+
+        const crRes = await fetch(creativeUrl.toString());
+        if (!crRes.ok) return ad;
+
+        const crJson = await crRes.json();
+        const creative = crJson.creative;
+        if (!creative) return ad;
+
+        const isVideo = creative.object_type === "VIDEO";
+        // Vídeo: thumbnail_url expira ~1h → baixar no sync route
+        // Imagem: image_url é estável → pode usar diretamente, mas também baixamos para consistência
+        const rawUrl: string | undefined = isVideo
+          ? (creative.thumbnail_url ?? undefined)
+          : (creative.image_url ?? creative.thumbnail_url ?? undefined);
+
+        return {
+          ...ad,
+          raw_thumbnail_url: rawUrl,
+          creative_type: isVideo ? "video" : "image",
+        };
+      } catch {
+        return ad;
+      }
+    })
+  );
+
+  return withThumbnails;
 }
