@@ -5,7 +5,11 @@ import { getSelectedClient } from "@/lib/get-selected-client";
 import { DashboardUI } from "./_dashboard-ui";
 import type { MetricsRow, WeeklyRow, GoalsRow } from "./_dashboard-ui";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: { month?: string; year?: string };
+}) {
   const supabase = createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/area-do-cliente");
@@ -19,8 +23,16 @@ export default async function DashboardPage() {
     : (clientData?.permissions ?? []);
 
   const now = new Date();
-  const currentMonth = now.getMonth() + 1;
-  const currentYear = now.getFullYear();
+  const todayMonth = now.getMonth() + 1;
+  const todayYear = now.getFullYear();
+
+  // Use search params if provided, otherwise default to current month
+  const selectedMonth = searchParams?.month ? parseInt(searchParams.month) : todayMonth;
+  const selectedYear = searchParams?.year ? parseInt(searchParams.year) : todayYear;
+
+  // Clamp to valid month range
+  const viewMonth = Math.max(1, Math.min(12, isNaN(selectedMonth) ? todayMonth : selectedMonth));
+  const viewYear = isNaN(selectedYear) ? todayYear : selectedYear;
 
   let metaMetrics: MetricsRow | null = null;
   let googleMetrics: MetricsRow | null = null;
@@ -39,22 +51,22 @@ export default async function DashboardPage() {
         .from("trafego_metrics")
         .select("*")
         .eq("client_id", clientData.clientId)
-        .eq("year", currentYear)
-        .eq("month", currentMonth),
+        .eq("year", viewYear)
+        .eq("month", viewMonth),
       supabaseAdmin
         .from("trafego_weekly")
         .select("*")
         .eq("client_id", clientData.clientId)
-        .eq("year", currentYear)
-        .eq("month", currentMonth)
+        .eq("year", viewYear)
+        .eq("month", viewMonth)
         .order("platform")
         .order("week_number"),
       supabaseAdmin
         .from("trafego_goals")
         .select("*")
         .eq("client_id", clientData.clientId)
-        .eq("year", currentYear)
-        .eq("month", currentMonth)
+        .eq("year", viewYear)
+        .eq("month", viewMonth)
         .maybeSingle(),
     ]);
 
@@ -70,8 +82,10 @@ export default async function DashboardPage() {
     <DashboardUI
       company={company}
       permissions={permissions}
-      currentMonth={currentMonth}
-      currentYear={currentYear}
+      currentMonth={viewMonth}
+      currentYear={viewYear}
+      todayMonth={todayMonth}
+      todayYear={todayYear}
       metaMetrics={metaMetrics}
       googleMetrics={googleMetrics}
       weeklyData={weeklyData}

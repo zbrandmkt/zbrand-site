@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Types ───────────────────────────────────────────────────
@@ -391,6 +392,8 @@ export function DashboardUI({
   permissions = [],
   currentMonth,
   currentYear,
+  todayMonth,
+  todayYear,
   metaMetrics,
   googleMetrics,
   weeklyData = [],
@@ -400,13 +403,29 @@ export function DashboardUI({
   permissions?: string[];
   currentMonth?: number;
   currentYear?: number;
+  todayMonth?: number;
+  todayYear?: number;
   metaMetrics?: MetricsRow | null;
   googleMetrics?: MetricsRow | null;
   weeklyData?: WeeklyRow[];
   goals?: GoalsRow | null;
 }) {
+  const router = useRouter();
   const month = currentMonth ?? (new Date().getMonth() + 1);
   const year = currentYear ?? new Date().getFullYear();
+  const tMonth = todayMonth ?? (new Date().getMonth() + 1);
+  const tYear = todayYear ?? new Date().getFullYear();
+  const isCurrentMonth = month === tMonth && year === tYear;
+
+  function navigateMonth(dir: -1 | 1) {
+    let m = month + dir;
+    let y = year;
+    if (m < 1) { m = 12; y -= 1; }
+    if (m > 12) { m = 1; y += 1; }
+    // Don't navigate past current month
+    if (y > tYear || (y === tYear && m > tMonth)) return;
+    router.push(`/area-do-cliente/dashboard?month=${m}&year=${y}`);
+  }
 
   const hasTrafico = permissions.length === 0 || permissions.some(
     (p) => p === "trafego" || p.startsWith("trafego_")
@@ -477,13 +496,37 @@ export function DashboardUI({
             Olá, {company.toUpperCase()} 👋
           </h1>
           <p className="text-sm text-[#1A1A1A]/40 font-medium mt-0.5">
-            {monthName(month)} {year} · Visão macro do mês
+            Visão macro do mês
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {/* Month navigation */}
+          <div className="flex items-center gap-1.5 bg-white border-2 border-[#1A1A1A] rounded-xl px-1 py-1" style={{ boxShadow: "2px 2px 0px 0px #1A1A1A" }}>
+            <button
+              onClick={() => navigateMonth(-1)}
+              className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-[#1A1A1A]/08 transition-colors text-[#1A1A1A]"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <span className="text-xs font-black text-[#1A1A1A] uppercase tracking-wide min-w-[100px] text-center select-none">
+              {monthName(month)} {year}
+            </span>
+            <button
+              onClick={() => navigateMonth(1)}
+              disabled={isCurrentMonth}
+              className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-[#1A1A1A]/08 disabled:opacity-25 disabled:cursor-not-allowed transition-colors text-[#1A1A1A]"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
           {hasAnyData && (
             <span className="text-[9px] font-black uppercase tracking-widest bg-[#AAFF00] text-[#1A1A1A] px-3 py-1.5 rounded-full border-2 border-[#1A1A1A]">
-              ✓ Dados sincronizados
+              ✓ Sincronizado
             </span>
           )}
         </div>
