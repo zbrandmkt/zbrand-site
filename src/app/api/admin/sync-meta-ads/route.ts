@@ -69,13 +69,25 @@ export async function POST(req: NextRequest) {
           if (!raw_thumbnail_url) return adClean;
 
           try {
-            // Baixar imagem do Meta
-            const imgRes = await fetch(raw_thumbnail_url);
-            if (!imgRes.ok) return adClean;
+            // Baixar imagem do Meta (seguindo redirects automaticamente)
+            const imgRes = await fetch(raw_thumbnail_url, {
+              redirect: "follow",
+              headers: { "User-Agent": "Mozilla/5.0" },
+            });
+            if (!imgRes.ok) {
+              console.warn(`[sync-meta-ads] download thumbnail falhou (${imgRes.status}): ${raw_thumbnail_url}`);
+              return adClean;
+            }
 
-            const imgBuffer = await imgRes.arrayBuffer();
-            const contentType = imgRes.headers.get("content-type") ?? "image/jpeg";
-            const ext = contentType.includes("png") ? "png" : "jpg";
+            // Verificar que é realmente uma imagem
+            const contentType = imgRes.headers.get("content-type") ?? "";
+            if (!contentType.startsWith("image/")) {
+              console.warn(`[sync-meta-ads] content-type inválido (${contentType}) para ad ${ad.ad_id}`);
+              return adClean;
+            }
+
+            const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+            const ext = contentType.includes("png") ? "png" : contentType.includes("webp") ? "webp" : "jpg";
             const storagePath = `${client_id}/${year}-${String(month).padStart(2, "0")}/${ad.ad_id}.${ext}`;
 
             // Upload para Supabase Storage (bucket público)
@@ -86,15 +98,20 @@ export async function POST(req: NextRequest) {
                 upsert: true,
               });
 
-            if (uploadErr) return adClean;
+            if (uploadErr) {
+              console.warn(`[sync-meta-ads] upload Storage falhou para ad ${ad.ad_id}:`, uploadErr.message);
+              return adClean;
+            }
 
             // URL pública permanente
             const { data: urlData } = supabaseAdmin.storage
               .from("trafego-creatives")
               .getPublicUrl(storagePath);
 
+            console.log(`[sync-meta-ads] thumbnail salvo: ${urlData.publicUrl}`);
             return { ...adClean, thumbnail_url: urlData.publicUrl };
-          } catch {
+          } catch (thumbErr) {
+            console.warn(`[sync-meta-ads] erro ao processar thumbnail ad ${ad.ad_id}:`, thumbErr);
             return adClean;
           }
         })
