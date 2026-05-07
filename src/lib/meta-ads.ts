@@ -298,9 +298,13 @@ export async function fetchTopAds(
   const withThumbnails = await Promise.all(
     scored.map(async (ad): Promise<MetaTopAd> => {
       try {
+        // Buscamos video_id + image_url + object_story_spec para cobrir todos os formatos
         const creativeUrl = new URL(`${GRAPH_BASE}/${ad.ad_id}`);
         creativeUrl.searchParams.set("access_token", accessToken);
-        creativeUrl.searchParams.set("fields", "creative{thumbnail_url,image_url,object_type}");
+        creativeUrl.searchParams.set(
+          "fields",
+          "creative{object_type,video_id,image_url,thumbnail_url,object_story_spec{video_data{thumbnail_url,image_url}}}"
+        );
 
         const crRes = await fetch(creativeUrl.toString());
         if (!crRes.ok) return ad;
@@ -310,11 +314,38 @@ export async function fetchTopAds(
         if (!creative) return ad;
 
         const isVideo = creative.object_type === "VIDEO";
-        // Vídeo: thumbnail_url expira ~1h → baixar no sync route
-        // Imagem: image_url é estável → pode usar diretamente, mas também baixamos para consistência
-        const rawUrl: string | undefined = isVideo
-          ? (creative.thumbnail_url ?? undefined)
-          : (creative.image_url ?? creative.thumbnail_url ?? undefined);
+        let rawUrl: string | undefined;
+
+        if (isVideo) {
+          // Estratégia para vídeos:
+          // 1. Tentar /{video_id}?fields=picture → retorna frame real do vídeo
+          // 2. Fallback: object_story_spec.video_data.thumbnail_url
+          // (NÃO usar creative.thumbnail_url diretamente — retorna foto de perfil da conta)
+          if (creative.video_id) {
+            try {
+              const videoUrl = new URL(`${GRAPH_BASE}/${creative.video_id}`);
+              videoUrl.searchParams.set("access_token", accessToken);
+              videoUrl.searchParams.set("fields", "picture");
+              const videoRes = await fetch(videoUrl.toString());
+              if (videoRes.ok) {
+                const videoJson = await videoRes.json();
+                rawUrl = videoJson.picture ?? undefined;
+              }
+            } catch {
+              // ignora, cai no fallback
+            }
+          }
+          // Fallback: thumbnail do story spec se disponível
+          if (!rawUrl) {
+            rawUrl =
+              creative.object_story_spec?.video_data?.thumbnail_url ??
+              creative.object_story_spec?.video_data?.image_url ??
+              undefined;
+          }
+        } else {
+          // Imagem: image_url é estável
+          rawUrl = creative.image_url ?? creative.thumbnail_url ?? undefined;
+        }
 
         return {
           ...ad,
