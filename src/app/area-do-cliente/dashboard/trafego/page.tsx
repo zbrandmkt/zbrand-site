@@ -16,24 +16,47 @@ export default async function TrafegoPage() {
     redirect("/area-do-cliente/dashboard");
   }
 
-  // Buscar métricas do mês atual
   const now = new Date();
-  const month = now.getMonth() + 1;
-  const year = now.getFullYear();
+  const currentMonth = now.getMonth() + 1; // 1–12
+  const currentYear = now.getFullYear();
 
-  let metrics = null;
+  // Next month unlocks on the last day of the current month
+  const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+  const isLastDayOfMonth = now.getDate() === lastDayOfMonth;
+  const maxUnlockedMonth = isLastDayOfMonth ? currentMonth + 1 : currentMonth;
+
+  // Determine platform permissions from client permissions array
+  // Backward compat: if no sub-permissions exist (old clients), assume Meta only
+  const perms = clientData?.permissions ?? [];
+  const hasAnyPlatformPerm = perms.some((p: string) => p.startsWith("trafego_"));
+  const hasMetaAds = isAdmin || (hasAnyPlatformPerm ? perms.includes("trafego_meta") : true);
+  const hasGoogleAds = isAdmin || perms.includes("trafego_google");
+
+  const metricsMap: Record<string, object | null> = {};
+
   if (clientData?.clientId) {
     const supabaseAdmin = createAdminSupabaseClient();
-    const { data } = await supabaseAdmin
+
+    // Fetch all trafego_metrics for this year
+    const { data: allMetrics } = await supabaseAdmin
       .from("trafego_metrics")
       .select("*")
       .eq("client_id", clientData.clientId)
-      .eq("platform", "meta")
-      .eq("month", month)
-      .eq("year", year)
-      .single();
-    metrics = data;
+      .eq("year", currentYear);
+
+    for (const row of allMetrics ?? []) {
+      metricsMap[row.month] = row;
+    }
   }
 
-  return <TrafegoPagoPage metrics={metrics} />;
+  return (
+    <TrafegoPagoPage
+      metricsMap={metricsMap}
+      currentMonth={currentMonth}
+      currentYear={currentYear}
+      maxUnlockedMonth={maxUnlockedMonth}
+      hasMetaAds={hasMetaAds}
+      hasGoogleAds={hasGoogleAds}
+    />
+  );
 }

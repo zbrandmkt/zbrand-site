@@ -17,8 +17,14 @@ export async function updateClientPermissions(formData: FormData) {
   const supabase = createAdminSupabaseClient();
   const clientId = formData.get("clientId") as string;
 
-  const modules = ["trafego", "social", "calendario", "aprovacoes"];
-  const permissions = modules.filter((m) => formData.get(`perm_${m}`) === "on");
+  // Top-level modules + platform sub-permissions (extensible for future platforms)
+  const allModules = [
+    "trafego", "social", "calendario", "aprovacoes",
+    // Tráfego sub-platforms
+    "trafego_meta", "trafego_google",
+    // Future: "trafego_linkedin", "trafego_tiktok",
+  ];
+  const permissions = allModules.filter((m) => formData.get(`perm_${m}`) === "on");
 
   await supabase
     .from("clients")

@@ -2,60 +2,16 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import {
-  updateClientPermissions,
   updateClientNotes,
   updateClientContract,
   suspendClientAction,
   reactivateClientAction,
 } from "./actions";
 import { SyncMetaButton } from "./sync-meta-button";
+import { PermissionsForm } from "./permissions-form";
 
-const MODULES = [
-  {
-    id: "trafego",
-    label: "Tráfego Pago",
-    description: "Relatórios de Meta Ads e Google Ads",
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    ),
-    color: "#00C2FF",
-  },
-  {
-    id: "social",
-    label: "Social Media",
-    description: "Métricas de Instagram, Facebook e TikTok",
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-      </svg>
-    ),
-    color: "#FF3D9A",
-  },
-  {
-    id: "calendario",
-    label: "Calendário",
-    description: "Calendário de conteúdo e posts agendados",
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    ),
-    color: "#AAFF00",
-  },
-  {
-    id: "aprovacoes",
-    label: "Aprovações",
-    description: "Fila de aprovação de posts e criativos",
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    color: "#FF6100",
-  },
-];
+// Top-level module IDs (excludes sub-permissions like trafego_meta, trafego_google)
+const TOP_LEVEL_MODULES = ["trafego", "social", "calendario", "aprovacoes"];
 
 interface Props {
   params: { clientId: string };
@@ -96,6 +52,8 @@ export default async function ClientDetailPage({ params }: Props) {
   const users = clientUsers ?? [];
   const recentReports = reports ?? [];
   const permissions: string[] = client.permissions ?? ["trafego", "social", "calendario", "aprovacoes"];
+  // Count only top-level modules (ignore sub-permissions like trafego_meta)
+  const topLevelCount = permissions.filter((p) => TOP_LEVEL_MODULES.includes(p)).length;
   const isActive = client.status === "active";
   const isSuspended = client.status === "suspended";
   const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
@@ -130,7 +88,7 @@ export default async function ClientDetailPage({ params }: Props) {
         />
         <StatCard
           label="Módulos"
-          value={permissions.length}
+          value={topLevelCount}
           sub="ativos"
           color="#AAFF00"
         />
@@ -258,50 +216,10 @@ export default async function ClientDetailPage({ params }: Props) {
         <div className="mb-5">
           <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Permissões de acesso</h2>
           <p className="text-xs text-[#1A1A1A]/40 font-medium mt-1">
-            Módulos visíveis no dashboard desta empresa.
+            Módulos e plataformas visíveis no dashboard desta empresa.
           </p>
         </div>
-
-        <form action={updateClientPermissions} className="flex flex-col gap-3">
-          <input type="hidden" name="clientId" value={client.id} />
-
-          {MODULES.map((mod) => {
-            const enabled = permissions.includes(mod.id);
-            return (
-              <label
-                key={mod.id}
-                className="flex items-center justify-between gap-4 p-4 border-2 border-[#1A1A1A]/10 rounded-xl cursor-pointer hover:border-[#1A1A1A]/25 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: `${mod.color}20`, color: mod.color }}
-                  >
-                    {mod.icon}
-                  </div>
-                  <div>
-                    <p className="text-sm font-black text-[#1A1A1A] tracking-tight">{mod.label}</p>
-                    <p className="text-[11px] text-[#1A1A1A]/40 font-medium">{mod.description}</p>
-                  </div>
-                </div>
-                <div className="relative shrink-0">
-                  <input type="checkbox" name={`perm_${mod.id}`} defaultChecked={enabled} className="sr-only peer" />
-                  <div className="w-11 h-6 rounded-full border-2 border-[#1A1A1A]/20 peer-checked:border-[#1A1A1A] transition-all"
-                    style={{ background: enabled ? "#1A1A1A" : undefined }} />
-                  <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${enabled ? "left-6 bg-[#AAFF00]" : "left-1 bg-[#1A1A1A]/20"}`} />
-                </div>
-              </label>
-            );
-          })}
-
-          <button
-            type="submit"
-            className="mt-2 w-full bg-[#1A1A1A] border-2 border-[#1A1A1A] text-white font-black text-sm uppercase tracking-widest py-3 rounded-xl hover:-translate-y-0.5 transition-transform"
-            style={{ boxShadow: "3px 3px 0px 0px #AAFF00" }}
-          >
-            Salvar permissões
-          </button>
-        </form>
+        <PermissionsForm clientId={client.id} initialPermissions={permissions} />
       </div>
 
       {/* Notes */}

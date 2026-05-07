@@ -12,6 +12,9 @@ export default async function DashboardPage() {
   const clientData = await getSelectedClient(user.id);
 
   const company = clientData?.company ?? (isAdmin ? "Admin" : "Cliente");
+  const permissions = isAdmin
+    ? ["trafego", "social", "calendario", "aprovacoes"]
+    : (clientData?.permissions ?? []);
 
-  return <DashboardUI company={company} />;
+  return <DashboardUI company={company} permissions={permissions} />;
 }
