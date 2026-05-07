@@ -356,7 +356,7 @@ export default function TrafegoPagoPage({
             <KpiCard emoji="🎯" label="Resultados Totais"  value={fmt(metrics?.leads)}           shadow="#00C2FF" delay={0.06} />
             <KpiCard emoji="💰" label="Custo/Resultado"    value={fmtCurrency(metrics?.cpl)}     shadow="#AAFF00" delay={0.12} />
             <KpiCard emoji="👆" label="CPC Médio Meta"     value={fmtCurrency(metrics?.cpc)}     shadow="#7B2FF7" delay={0.18} />
-            {/* Saldo em Conta — só mostra plataformas ativas */}
+            {/* Budget vs Investido */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -365,22 +365,42 @@ export default function TrafegoPagoPage({
               style={{ boxShadow: "5px 5px 0px 0px #1A1A1A", flex: "1.5" }}
             >
               <span className="text-xl leading-none">💳</span>
-              <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Saldo em Conta</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Budget do Mês</p>
               <div className="flex gap-2 flex-1 items-end">
-                {[
-                  hasMetaAds  && { label: "META",   bg: "#1877F2", badgeText: "white" },
-                  hasGoogleAds && { label: "GOOGLE", bg: "#FBBC05", badgeText: "#1A1A1A" },
-                ].filter(Boolean).map((s) => {
-                  const p = s as { label: string; bg: string; badgeText: string };
+                {hasMetaAds && (() => {
+                  const budget = goals?.budget_meta;
+                  const spent  = metrics?.spend ?? 0;
+                  const pct    = budget && budget > 0 ? Math.min((spent / budget) * 100, 100) : 0;
+                  const saldo  = budget ? budget - spent : null;
                   return (
-                    <div key={p.label} className="flex-1 rounded-xl px-3 py-2"
-                      style={{ background: `${p.bg}10`, border: `1px solid ${p.bg}30` }}>
-                      <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-                        style={{ background: p.bg, color: p.badgeText }}>{p.label}</span>
-                      <p className="text-lg font-black text-[#1A1A1A]/25 leading-none mt-1.5">—</p>
+                    <div className="flex-1 rounded-xl px-3 py-2" style={{ background: "#1877F210", border: "1px solid #1877F230" }}>
+                      <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
+                      {budget ? (
+                        <>
+                          <p className="text-sm font-black text-[#1A1A1A] leading-none mt-1.5">
+                            {saldo !== null && saldo >= 0
+                              ? `${fmtCurrency(saldo)} restante`
+                              : <span className="text-[#FF3D9A]">Estourado</span>}
+                          </p>
+                          <div className="h-1.5 bg-[#1A1A1A]/06 rounded-full mt-1.5 overflow-hidden">
+                            <div className="h-full rounded-full" style={{ width: `${pct}%`, background: pct >= 100 ? "#FF3D9A" : "#1877F2" }} />
+                          </div>
+                          <p className="text-[9px] text-[#1A1A1A]/30 mt-1">{fmtCurrency(spent)} de {fmtCurrency(budget)}</p>
+                        </>
+                      ) : (
+                        <p className="text-sm font-black text-[#1A1A1A]/25 leading-none mt-1.5">
+                          {hasData ? fmtCurrency(spent) : "—"}
+                        </p>
+                      )}
                     </div>
                   );
-                })}
+                })()}
+                {hasGoogleAds && (
+                  <div className="flex-1 rounded-xl px-3 py-2" style={{ background: "#FBBC0510", border: "1px solid #FBBC0530" }}>
+                    <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05] text-[#1A1A1A]">GOOGLE</span>
+                    <p className="text-sm font-black text-[#1A1A1A]/25 leading-none mt-1.5">—</p>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

@@ -25,12 +25,13 @@ export default async function TrafegoPage() {
   const isLastDayOfMonth = now.getDate() === lastDayOfMonth;
   const maxUnlockedMonth = isLastDayOfMonth ? currentMonth + 1 : currentMonth;
 
-  // Determine platform permissions from client permissions array
-  // Backward compat: if no sub-permissions exist (old clients), assume Meta only
+  // Platform permissions are always based on the CLIENT's permissions,
+  // never on isAdmin — the dashboard must reflect what the client contracted.
+  // Backward compat: old clients with only "trafego" (no sub-perms) get Meta by default.
   const perms = clientData?.permissions ?? [];
   const hasAnyPlatformPerm = perms.some((p: string) => p.startsWith("trafego_"));
-  const hasMetaAds = isAdmin || (hasAnyPlatformPerm ? perms.includes("trafego_meta") : true);
-  const hasGoogleAds = isAdmin || perms.includes("trafego_google");
+  const hasMetaAds  = hasAnyPlatformPerm ? perms.includes("trafego_meta") : true;
+  const hasGoogleAds = perms.includes("trafego_google");
 
   const metricsMap: Record<string, object | null> = {};
   const goalsMap: Record<string, object | null> = {};
