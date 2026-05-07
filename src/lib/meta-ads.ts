@@ -315,10 +315,11 @@ export async function fetchMetaWeeklyInsights(
   const lastDay = new Date(year, month, 0).getDate();
   const until = `${year}-${String(month).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
 
+  // ⚠️ reach NÃO é suportado com time_increment — é métrica única/deduplicada
+  // que só funciona para o período total. Incluir reach causa erro 100 da API.
   const fields = [
     "spend",
     "impressions",
-    "reach",
     "clicks",
     "cpc",
     "actions",
@@ -352,7 +353,7 @@ export async function fetchMetaWeeklyInsights(
       dateEnd: row.date_end ?? "",
       spend,
       impressions: parseNum(row.impressions),
-      reach: parseNum(row.reach),
+      reach: 0,  // reach não disponível com time_increment=7
       clicks: parseNum(row.clicks),
       cpc: parseNum(row.cpc),
       leadsWhatsapp,
