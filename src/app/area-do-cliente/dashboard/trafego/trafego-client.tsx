@@ -14,10 +14,10 @@ interface TrafegoMetrics {
   impressions: number;
   reach: number;
   clicks: number;
-  leads: number;
+  leads: number;       // Total de resultados (todos os tipos somados)
   cpc: number;
   cpm: number;
-  cpl: number;
+  cpl: number;         // Custo por resultado
   ctr: number;
   frequency: number;
   campaigns: {
@@ -27,6 +27,7 @@ interface TrafegoMetrics {
     impressions: number;
     clicks: number;
     leads: number;
+    result_type?: string;  // "Formulário" | "Conversa" | "Pixel" | etc.
     cpc: number;
     cpl: number;
   }[];
@@ -367,10 +368,10 @@ export default function TrafegoPagoPage({
           transition={{ duration: 0.2 }}
         >
           <div className="flex gap-3 mb-6">
-            <KpiCard emoji="💸" label="Total Investido"  value={fmtCurrency(metrics?.spend)}  shadow="#FF6100" delay={0} />
-            <KpiCard emoji="🎯" label="Total de Leads"   value={fmt(metrics?.leads)}           shadow="#00C2FF" delay={0.06} />
-            <KpiCard emoji="💰" label="CPL Médio"        value={fmtCurrency(metrics?.cpl)}     shadow="#AAFF00" delay={0.12} />
-            <KpiCard emoji="👆" label="CPC Médio Meta"   value={fmtCurrency(metrics?.cpc)}     shadow="#7B2FF7" delay={0.18} />
+            <KpiCard emoji="💸" label="Total Investido"    value={fmtCurrency(metrics?.spend)}  shadow="#FF6100" delay={0} />
+            <KpiCard emoji="🎯" label="Resultados Totais"  value={fmt(metrics?.leads)}           shadow="#00C2FF" delay={0.06} />
+            <KpiCard emoji="💰" label="Custo/Resultado"    value={fmtCurrency(metrics?.cpl)}     shadow="#AAFF00" delay={0.12} />
+            <KpiCard emoji="👆" label="CPC Médio Meta"     value={fmtCurrency(metrics?.cpc)}     shadow="#7B2FF7" delay={0.18} />
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -454,9 +455,9 @@ export default function TrafegoPagoPage({
               <p className="text-sm font-black text-[#1A1A1A] mb-4">{selectedMonthName} {currentYear} — Meta</p>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "Impressões", value: hasData ? fmt(metrics.impressions) : "—", pct: 100 },
+                  { label: "Impressões",  value: hasData ? fmt(metrics.impressions) : "—", pct: 100 },
                   { label: "Cliques",    value: hasData ? fmt(metrics.clicks) : "—",      pct: hasData && metrics.impressions > 0 ? (metrics.clicks / metrics.impressions) * 100 : 0 },
-                  { label: "Leads",      value: hasData ? fmt(metrics.leads) : "—",       pct: hasData && metrics.clicks > 0 ? (metrics.leads / metrics.clicks) * 100 : 0 },
+                  { label: "Resultados", value: hasData ? fmt(metrics.leads) : "—",       pct: hasData && metrics.clicks > 0 ? (metrics.leads / metrics.clicks) * 100 : 0 },
                   { label: "Vendas",     value: "—",                                      pct: 0 },
                 ].map(({ label, value, pct }) => (
                   <div key={label}>
@@ -483,12 +484,12 @@ export default function TrafegoPagoPage({
             className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
             style={{ boxShadow: "4px 4px 0px 0px #AAFF00" }}
           >
-            <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📋 Campanhas Ativas — Meta Ads</p>
+            <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📋 Campanhas — Meta Ads</p>
             {hasData && metrics.campaigns && metrics.campaigns.length > 0 ? (
               <table className="w-full">
                 <thead>
                   <tr className="bg-[#F5F5F0] rounded-xl">
-                    {["Campanha", "Investido", "Impressões", "Cliques", "Leads", "CPC", "CPL"].map((h) => (
+                    {["Campanha", "Tipo", "Investido", "Impressões", "Cliques", "Resultados", "CPC", "Custo/Result."].map((h) => (
                       <th key={h} className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
                     ))}
                   </tr>
@@ -496,7 +497,12 @@ export default function TrafegoPagoPage({
                 <tbody>
                   {metrics.campaigns.map((c, i) => (
                     <tr key={c.campaign_id} className={i % 2 === 0 ? "bg-white" : "bg-[#F5F5F0]/40"}>
-                      <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[200px] truncate">{c.campaign_name}</td>
+                      <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[180px] truncate">{c.campaign_name}</td>
+                      <td className="px-3 py-3">
+                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#00C2FF]/15 text-[#006688] whitespace-nowrap">
+                          {c.result_type ?? "Formulário"}
+                        </span>
+                      </td>
                       <td className="px-3 py-3 text-xs font-black text-[#FF6100]">{fmtCurrency(c.spend)}</td>
                       <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.impressions)}</td>
                       <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.clicks)}</td>
@@ -610,7 +616,7 @@ export default function TrafegoPagoPage({
             <table className="w-full">
               <thead>
                 <tr className="bg-[#F5F5F0]">
-                  {["Mês", "Investido", "Leads", "CPL", "CPC Meta", "Var. Leads"].map((h) => (
+                  {["Mês", "Investido", "Resultados", "Custo/Result.", "CPC Meta", "Var."].map((h) => (
                     <th key={h} className="px-4 py-3 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
                   ))}
                 </tr>
