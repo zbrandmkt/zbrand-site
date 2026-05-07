@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { createAdminSupabaseClient } from "@/lib/supabase-admin";
+import { getSelectedClient } from "@/lib/get-selected-client";
 import { CalendarReadonly } from "./calendar-readonly";
 import type { PostRow } from "@/types/posts";
 
@@ -10,24 +10,14 @@ export default async function CalendarioClientePage() {
   if (!user) redirect("/area-do-cliente");
 
   const isAdmin = user.user_metadata?.role === "admin";
+  const clientData = await getSelectedClient(user.id);
 
-  const supabaseAdmin = createAdminSupabaseClient();
-  const { data: link } = await supabaseAdmin
-    .from("client_users")
-    .select("client_id, clients(permissions)")
-    .eq("user_id", user.id)
-    .neq("status", "suspended")
-    .single();
-
-  if (!link) redirect("/area-do-cliente/aguardando");
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const permissions: string[] = (link?.clients as any)?.permissions ?? ["calendario"];
-  if (!isAdmin && !permissions.includes("calendario")) {
+  if (!clientData) redirect("/area-do-cliente/aguardando");
+  if (!isAdmin && !clientData.permissions.includes("calendario")) {
     redirect("/area-do-cliente/dashboard");
   }
 
-  const clientId = link.client_id as string;
+  const clientId = clientData.clientId;
 
   const now = new Date();
   const year = now.getFullYear();

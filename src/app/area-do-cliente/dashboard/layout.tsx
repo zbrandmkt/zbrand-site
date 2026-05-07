@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { createAdminSupabaseClient } from "@/lib/supabase-admin";
+import { getSelectedClient, getAllClientsForUser } from "@/lib/get-selected-client";
+import { switchClientAction } from "./switch-client";
 import { DashboardSidebar } from "./sidebar";
 
 export default async function DashboardLayout({
@@ -13,41 +14,13 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/area-do-cliente");
 
-  // Admins sempre têm acesso — sem verificação de status
   const isAdmin = user.user_metadata?.role === "admin";
 
-  // Busca vínculo do usuário (qualquer status exceto suspenso)
-  const supabaseAdmin = createAdminSupabaseClient();
-  const { data: link } = await supabaseAdmin
-    .from("client_users")
-    .select("id, name, status, client_id, clients(status, company, plan, permissions)")
-    .eq("user_id", user.id)
-    .neq("status", "suspended")
-    .single();
-
-  // Se o vínculo ainda está como "invited" e o usuário já está logado,
-  // significa que ele aceitou o convite — ativar automaticamente
-  if (link && link.status === "invited") {
-    await supabaseAdmin
-      .from("client_users")
-      .update({ status: "active", accepted_at: new Date().toISOString() })
-      .eq("id", link.id);
-    link.status = "active";
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const linkedCompany = (link?.clients as any) ?? null;
-
-  const clientData = link
-    ? {
-        id: link.client_id as string,
-        name: link.name as string,
-        status: linkedCompany?.status as string | undefined,
-        company: linkedCompany?.company as string | undefined,
-        plan: linkedCompany?.plan as string | undefined,
-        permissions: linkedCompany?.permissions as string[] | undefined,
-      }
-    : null;
+  // Busca cliente selecionado + todos os clientes do usuário
+  const [clientData, allClients] = await Promise.all([
+    getSelectedClient(user.id),
+    getAllClientsForUser(user.id),
+  ]);
 
   if (!isAdmin && (!clientData || clientData.status !== "active")) {
     redirect("/area-do-cliente/aguardando");
@@ -55,11 +28,11 @@ export default async function DashboardLayout({
 
   // Badge de aprovações pendentes
   let pendingCount = 0;
-  if (link?.client_id) {
+  if (clientData?.clientId) {
     const { count } = await supabase
       .from("posts")
       .select("id", { count: "exact", head: true })
-      .eq("client_id", link.client_id)
+      .eq("client_id", clientData.clientId)
       .eq("status", "pending_approval");
     pendingCount = count ?? 0;
   }
@@ -69,8 +42,11 @@ export default async function DashboardLayout({
       <DashboardSidebar
         clientName={clientData?.name ?? "Admin"}
         company={clientData?.company ?? "ZBRAND"}
+        selectedClientId={clientData?.clientId}
+        allClients={allClients}
         pendingCount={pendingCount}
-        permissions={(clientData?.permissions as string[] | undefined) ?? ["trafego", "social", "calendario", "aprovacoes"]}
+        permissions={clientData?.permissions ?? ["trafego", "social", "calendario", "aprovacoes"]}
+        switchClient={switchClientAction}
       />
       <main className="flex-1 ml-64 min-h-screen">
         {children}
