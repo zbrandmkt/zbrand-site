@@ -93,102 +93,6 @@ function EmptySection({ title, shadow, children }: {
   );
 }
 
-// ─── Upsell Block (reusable) ─────────────────────────────────
-function AdsUpsell({
-  platform,
-  label,
-  color,
-  badgeTextColor,
-  benefits,
-}: {
-  platform: string;
-  label: string;
-  color: string;
-  badgeTextColor: string;
-  benefits: string[];
-}) {
-  const waText = encodeURIComponent(
-    `Oi! Quero saber mais sobre adicionar ${label} ao meu plano na ZBRAND.`
-  );
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="flex-1 relative border-2 rounded-2xl p-5 overflow-hidden"
-      style={{ background: "#1A1A1A", borderColor: color, boxShadow: `4px 4px 0px 0px ${color}` }}
-    >
-      {/* Pattern */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: `repeating-linear-gradient(45deg, ${color} 0, ${color} 1px, transparent 0, transparent 50%)`, backgroundSize: "8px 8px" }} />
-
-      <div className="relative z-10">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-            style={{ background: color, color: badgeTextColor }}>{platform}</span>
-          <span className="text-xs font-black uppercase tracking-widest text-white">{label}</span>
-          <span className="ml-auto text-base">🔒</span>
-        </div>
-        <p className="text-sm font-black text-white mb-1">Potencialize seus resultados</p>
-        <p className="text-xs text-white/50 mb-3 leading-relaxed">
-          Adicione {label} ao seu plano e veja os dados integrados aqui no dashboard.
-        </p>
-        <div className="flex flex-col gap-1.5 mb-4">
-          {benefits.map((b) => (
-            <div key={b} className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: color }} />
-              <span className="text-[11px] text-white/60">{b}</span>
-            </div>
-          ))}
-        </div>
-        <a
-          href={`https://wa.me/5541988338133?text=${waText}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full font-black text-xs uppercase tracking-wider rounded-xl py-2.5 px-4 hover:brightness-110 transition-all"
-          style={{ background: color, color: badgeTextColor, boxShadow: "2px 2px 0px 0px rgba(255,255,255,0.15)" }}
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Adicionar {label}
-        </a>
-      </div>
-    </motion.div>
-  );
-}
-
-function GoogleAdsUpsell() {
-  return (
-    <AdsUpsell
-      platform="GOOGLE"
-      label="Google Ads"
-      color="#FBBC05"
-      badgeTextColor="#1A1A1A"
-      benefits={[
-        "Pesquisa Google (intenção de compra)",
-        "Display e YouTube Ads",
-        "Relatórios integrados no dashboard",
-      ]}
-    />
-  );
-}
-
-function MetaAdsUpsell() {
-  return (
-    <AdsUpsell
-      platform="META"
-      label="Meta Ads"
-      color="#1877F2"
-      badgeTextColor="white"
-      benefits={[
-        "Campanhas no Facebook e Instagram",
-        "Remarketing e públicos personalizados",
-        "Relatórios de leads e CPL",
-      ]}
-    />
-  );
-}
 
 // ─── Month Selector ──────────────────────────────────────────
 function MonthSelector({
@@ -452,6 +356,7 @@ export default function TrafegoPagoPage({
             <KpiCard emoji="🎯" label="Resultados Totais"  value={fmt(metrics?.leads)}           shadow="#00C2FF" delay={0.06} />
             <KpiCard emoji="💰" label="Custo/Resultado"    value={fmtCurrency(metrics?.cpl)}     shadow="#AAFF00" delay={0.12} />
             <KpiCard emoji="👆" label="CPC Médio Meta"     value={fmtCurrency(metrics?.cpc)}     shadow="#7B2FF7" delay={0.18} />
+            {/* Saldo em Conta — só mostra plataformas ativas */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -463,16 +368,19 @@ export default function TrafegoPagoPage({
               <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Saldo em Conta</p>
               <div className="flex gap-2 flex-1 items-end">
                 {[
-                  { label: "META",   bg: "#1877F2", badgeText: "white" },
-                  { label: "GOOGLE", bg: "#FBBC05", badgeText: "#1A1A1A" },
-                ].map((s) => (
-                  <div key={s.label} className="flex-1 rounded-xl px-3 py-2"
-                    style={{ background: `${s.bg}10`, border: `1px solid ${s.bg}30` }}>
-                    <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
-                      style={{ background: s.bg, color: s.badgeText }}>{s.label}</span>
-                    <p className="text-lg font-black text-[#1A1A1A]/25 leading-none mt-1.5">—</p>
-                  </div>
-                ))}
+                  hasMetaAds  && { label: "META",   bg: "#1877F2", badgeText: "white" },
+                  hasGoogleAds && { label: "GOOGLE", bg: "#FBBC05", badgeText: "#1A1A1A" },
+                ].filter(Boolean).map((s) => {
+                  const p = s as { label: string; bg: string; badgeText: string };
+                  return (
+                    <div key={p.label} className="flex-1 rounded-xl px-3 py-2"
+                      style={{ background: `${p.bg}10`, border: `1px solid ${p.bg}30` }}>
+                      <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
+                        style={{ background: p.bg, color: p.badgeText }}>{p.label}</span>
+                      <p className="text-lg font-black text-[#1A1A1A]/25 leading-none mt-1.5">—</p>
+                    </div>
+                  );
+                })}
               </div>
             </motion.div>
           </div>
@@ -674,10 +582,11 @@ export default function TrafegoPagoPage({
             )}
           </motion.div>
 
-          {/* Budget — Meta + Google (or upsell) */}
+          {/* Budget — só mostra plataformas que o cliente tem ativas */}
+          {(hasMetaAds || hasGoogleAds) && (
           <div className="flex gap-4 mb-5">
-            {/* Meta Ads — show data card or upsell */}
-            {hasMetaAds ? (
+            {/* Meta Ads */}
+            {hasMetaAds && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -698,11 +607,13 @@ export default function TrafegoPagoPage({
                       </div>
                       <div>
                         <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Budget</p>
-                        <p className="text-sm font-black text-[#1A1A1A]/25">—</p>
+                        <p className="text-sm font-black text-[#1A1A1A]/25">{goals?.budget_meta ? fmtCurrency(goals.budget_meta) : "—"}</p>
                       </div>
                       <div>
                         <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Saldo</p>
-                        <p className="text-sm font-black text-[#1A1A1A]/25">—</p>
+                        <p className="text-sm font-black text-[#1A1A1A]/25">
+                          {goals?.budget_meta && metrics.spend ? fmtCurrency(goals.budget_meta - metrics.spend) : "—"}
+                        </p>
                       </div>
                     </>
                   ) : (
@@ -714,17 +625,26 @@ export default function TrafegoPagoPage({
                     ))
                   )}
                 </div>
-                <div className="h-4 bg-[#1A1A1A]/06 rounded-full border border-[#1A1A1A]/08" />
+                {/* Budget progress bar */}
+                <div className="h-4 bg-[#1A1A1A]/06 rounded-full border border-[#1A1A1A]/08 overflow-hidden">
+                  {hasData && goals?.budget_meta && goals.budget_meta > 0 && (
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.min((metrics.spend / goals.budget_meta) * 100, 100)}%`,
+                        background: metrics.spend <= goals.budget_meta ? "#1877F2" : "#FF3D9A",
+                      }}
+                    />
+                  )}
+                </div>
                 <p className="text-[9px] text-[#1A1A1A]/25 font-medium mt-2">
                   {hasData ? "Dados via Meta Ads API" : "Aguardando dados de investimento"}
                 </p>
               </motion.div>
-            ) : (
-              <MetaAdsUpsell />
             )}
 
-            {/* Google Ads — show data card or upsell */}
-            {hasGoogleAds ? (
+            {/* Google Ads */}
+            {hasGoogleAds && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -745,12 +665,11 @@ export default function TrafegoPagoPage({
                   ))}
                 </div>
                 <div className="h-4 bg-[#1A1A1A]/06 rounded-full border border-[#1A1A1A]/08" />
-                <p className="text-[9px] text-[#1A1A1A]/25 font-medium mt-2">Aguardando dados de investimento</p>
+                <p className="text-[9px] text-[#1A1A1A]/25 font-medium mt-2">Aguardando integração Google Ads</p>
               </motion.div>
-            ) : (
-              <GoogleAdsUpsell />
             )}
           </div>
+          )}
 
           {/* Criativos */}
           <EmptySection title="🏆 Criativos Campeões" shadow="#7B2FF7">
