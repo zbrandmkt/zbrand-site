@@ -18,12 +18,23 @@ const ALL_NAV_ITEMS = [
     ),
   },
   {
-    href: "/area-do-cliente/dashboard/trafego",
-    label: "Tráfego Pago",
-    permission: "trafego",
+    href: "/area-do-cliente/dashboard/trafego/meta",
+    label: "Meta Ads",
+    // "trafego_meta_or_legacy" is a virtual token resolved via expandedPerms in the component
+    permission: "trafego_meta_or_legacy",
     icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/area-do-cliente/dashboard/trafego/google",
+    label: "Google Ads",
+    permission: "trafego_google",
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
     ),
   },
@@ -91,6 +102,14 @@ export function DashboardSidebar({
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [switching, setSwitching] = useState(false);
+
+  // Expand permissions to support backward-compat virtual tokens.
+  // Clients with only "trafego" (no sub-perms) should see Meta Ads by default.
+  const expandedPerms = [...permissions];
+  const hasSubTrafegoPerms = permissions.some((p) => p.startsWith("trafego_"));
+  if (permissions.includes("trafego_meta") || (permissions.includes("trafego") && !hasSubTrafegoPerms)) {
+    expandedPerms.push("trafego_meta_or_legacy");
+  }
 
   const hasMultipleClients = allClients.length > 1;
 
@@ -204,7 +223,7 @@ export function DashboardSidebar({
       <nav className="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto">
         <p className="text-[9px] text-white/30 uppercase tracking-widest px-2 mb-2 font-bold">Menu</p>
         {ALL_NAV_ITEMS.filter((item) =>
-          item.permission === null || permissions.includes(item.permission)
+          item.permission === null || expandedPerms.includes(item.permission)
         ).map((item) => {
           const isActive = item.href === "/area-do-cliente/dashboard"
             ? pathname === item.href
