@@ -11,6 +11,8 @@ export default async function TrafegoPage() {
   const isAdmin = user.user_metadata?.role === "admin";
 
   const supabaseAdmin = createAdminSupabaseClient();
+
+  // Buscar client_id e permissões
   const { data: link } = await supabaseAdmin
     .from("client_users")
     .select("client_id, clients(permissions)")
@@ -24,5 +26,25 @@ export default async function TrafegoPage() {
     redirect("/area-do-cliente/dashboard");
   }
 
-  return <TrafegoPagoPage />;
+  const clientId = link?.client_id;
+
+  // Buscar métricas do mês atual
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+
+  let metrics = null;
+  if (clientId) {
+    const { data } = await supabaseAdmin
+      .from("trafego_metrics")
+      .select("*")
+      .eq("client_id", clientId)
+      .eq("platform", "meta")
+      .eq("month", month)
+      .eq("year", year)
+      .single();
+    metrics = data;
+  }
+
+  return <TrafegoPagoPage metrics={metrics} />;
 }

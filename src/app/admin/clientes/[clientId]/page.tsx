@@ -8,6 +8,7 @@ import {
   suspendClientAction,
   reactivateClientAction,
 } from "./actions";
+import { SyncMetaButton } from "./sync-meta-button";
 
 const MODULES = [
   {
@@ -63,7 +64,7 @@ interface Props {
 export default async function ClientDetailPage({ params }: Props) {
   const supabaseAdmin = createAdminSupabaseClient();
 
-  const [{ data: client }, { data: clientUsers }, { data: reports }, { count: pendingCount }] =
+  const [{ data: client }, { data: clientUsers }, { data: reports }, { count: pendingCount }, { data: integration }] =
     await Promise.all([
       supabaseAdmin.from("clients").select("*").eq("id", params.clientId).single(),
       supabaseAdmin
@@ -82,6 +83,12 @@ export default async function ClientDetailPage({ params }: Props) {
         .select("id", { count: "exact", head: true })
         .eq("client_id", params.clientId)
         .eq("status", "pending_approval"),
+      supabaseAdmin
+        .from("client_integrations")
+        .select("platform, ad_account_id, status, last_sync, last_error")
+        .eq("client_id", params.clientId)
+        .eq("platform", "meta_ads")
+        .maybeSingle(),
     ]);
 
   if (!client) notFound();
@@ -353,6 +360,69 @@ export default async function ClientDetailPage({ params }: Props) {
             </button>
           </div>
         </form>
+      </div>
+
+      {/* Integrações — Meta Ads */}
+      <div
+        className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6 mb-6"
+        style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
+      >
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-9 h-9 rounded-xl bg-[#1877F2]/15 flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Integrações — Meta Ads</h2>
+            <p className="text-xs text-[#1A1A1A]/40 font-medium">Sincronizar métricas de campanhas</p>
+          </div>
+          {integration ? (
+            <span className={`ml-auto text-[10px] font-black px-2.5 py-1 rounded-full border ${
+              integration.status === "active"
+                ? "bg-[#AAFF00]/20 border-[#AAFF00]/40 text-[#3a6000]"
+                : "bg-red-50 border-red-200 text-red-600"
+            }`}>
+              {integration.status === "active" ? "● Conectado" : "○ Inativo"}
+            </span>
+          ) : (
+            <span className="ml-auto text-[10px] font-black px-2.5 py-1 rounded-full border border-[#1A1A1A]/15 text-[#1A1A1A]/30">
+              Sem integração
+            </span>
+          )}
+        </div>
+
+        {integration ? (
+          <>
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="bg-[#F5F5F0] rounded-xl px-3 py-2.5">
+                <p className="text-[9px] font-black uppercase tracking-wider text-[#1A1A1A]/30 mb-0.5">Conta de Anúncios</p>
+                <p className="text-xs font-bold text-[#1A1A1A]">act_{integration.ad_account_id}</p>
+              </div>
+              <div className="bg-[#F5F5F0] rounded-xl px-3 py-2.5">
+                <p className="text-[9px] font-black uppercase tracking-wider text-[#1A1A1A]/30 mb-0.5">Última Sync</p>
+                <p className="text-xs font-bold text-[#1A1A1A]">
+                  {integration.last_sync
+                    ? new Date(integration.last_sync).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })
+                    : "Nunca"}
+                </p>
+              </div>
+            </div>
+            {integration.last_error && (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-3 py-2 mb-4">
+                <p className="text-[10px] font-bold text-red-600">Último erro: {integration.last_error}</p>
+              </div>
+            )}
+            <SyncMetaButton clientId={params.clientId} />
+          </>
+        ) : (
+          <div className="border-2 border-dashed border-[#1A1A1A]/10 rounded-xl px-4 py-6 text-center">
+            <p className="text-xs text-[#1A1A1A]/30 font-medium">
+              Nenhuma integração Meta Ads cadastrada para este cliente.<br/>
+              Adicione o token de acesso via Supabase → client_integrations.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Danger zone */}
