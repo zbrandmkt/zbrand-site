@@ -263,7 +263,7 @@ export default function MetaAdsPage({
             <span className="text-[10px] font-bold text-[#1877F2] uppercase tracking-widest">Meta Ads</span>
           </div>
           <h1 className="text-2xl font-black text-[#1A1A1A] uppercase tracking-tight flex items-center gap-2">
-            <span className="text-[9px] font-black px-2 py-1 rounded-full bg-[#1877F2] text-white">META</span>
+            <img src="/images/icon_metaads.png" alt="Meta Ads" className="w-8 h-8 object-contain" />
             Meta Ads
           </h1>
           <p className="text-sm text-[#1A1A1A]/40 font-medium mt-0.5">

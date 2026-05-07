@@ -229,7 +229,7 @@ export default function GoogleAdsPage({
             <span className="text-[10px] font-bold text-[#FBBC05] uppercase tracking-widest">Google Ads</span>
           </div>
           <h1 className="text-2xl font-black text-[#1A1A1A] uppercase tracking-tight flex items-center gap-2">
-            <span className="text-[9px] font-black px-2 py-1 rounded-full bg-[#FBBC05] text-[#1A1A1A]">GOOGLE</span>
+            <img src="/images/icon_googleads.webp" alt="Google Ads" className="w-8 h-8 object-contain" />
             Google Ads
           </h1>
           <p className="text-sm text-[#1A1A1A]/40 font-medium mt-0.5">
