@@ -1,0 +1,40 @@
+// ─── Dashboard Shared Components ────────────────────────────
+// Barrel export for all shared components.
+// Import from "@/app/area-do-cliente/dashboard/_components"
+
+// Formatters
+export {
+  fmt,
+  fmtCompact,
+  fmtNum,
+  fmtNumSafe,
+  fmtPct,
+  fmtDate,
+  monthName,
+  monthNameFull,
+  progressPct,
+  calcDelta,
+} from "./format";
+
+// Platform config
+export {
+  PLATFORMS,
+  getPlatform,
+  KPI_SHADOWS,
+  STATUS_COLORS,
+} from "./platform-config";
+export type { PlatformKey, PlatformConfig } from "./platform-config";
+
+// UI Components
+export { KpiCard } from "./kpi-card";
+export { GoalCard, GoalBar } from "./goal-card";
+export { GoalsPanel } from "./goals-panel";
+export { MonthSelector } from "./month-selector";
+export { MonthNav } from "./month-nav";
+export { MetricLine } from "./metric-line";
+export { WeekCard } from "./week-card";
+export { DeltaBadge } from "./delta-badge";
+export { EmptySection } from "./empty-section";
+
+// Re-export WeeklyRow type from week-card
+export type { WeeklyRow } from "./week-card";

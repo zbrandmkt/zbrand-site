@@ -34,10 +34,20 @@ export default async function DashboardPage({
   const viewMonth = Math.max(1, Math.min(12, isNaN(selectedMonth) ? todayMonth : selectedMonth));
   const viewYear = isNaN(selectedYear) ? todayYear : selectedYear;
 
+  // Calculate previous month for MoM comparison
+  let prevMonth = viewMonth - 1;
+  let prevYear = viewYear;
+  if (prevMonth < 1) {
+    prevMonth = 12;
+    prevYear -= 1;
+  }
+
   let metaMetrics: MetricsRow | null = null;
   let googleMetrics: MetricsRow | null = null;
   let weeklyData: WeeklyRow[] = [];
   let goals: GoalsRow | null = null;
+  let prevMetaMetrics: MetricsRow | null = null;
+  let prevGoogleMetrics: MetricsRow | null = null;
 
   const hasTrafico = isAdmin || permissions.some(
     (p) => p === "trafego" || p.startsWith("trafego_")
@@ -46,7 +56,7 @@ export default async function DashboardPage({
   if (hasTrafico && clientData?.clientId) {
     const supabaseAdmin = createAdminSupabaseClient();
 
-    const [metricsRes, weeklyRes, goalsRes] = await Promise.all([
+    const [metricsRes, weeklyRes, goalsRes, prevMetricsRes] = await Promise.all([
       supabaseAdmin
         .from("trafego_metrics")
         .select("*")
@@ -68,6 +78,13 @@ export default async function DashboardPage({
         .eq("year", viewYear)
         .eq("month", viewMonth)
         .maybeSingle(),
+      // Fetch previous month metrics for MoM deltas
+      supabaseAdmin
+        .from("trafego_metrics")
+        .select("*")
+        .eq("client_id", clientData.clientId)
+        .eq("year", prevYear)
+        .eq("month", prevMonth),
     ]);
 
     for (const row of metricsRes.data ?? []) {
@@ -76,6 +93,12 @@ export default async function DashboardPage({
     }
     weeklyData = (weeklyRes.data ?? []) as WeeklyRow[];
     goals = goalsRes.data as GoalsRow | null;
+
+    // Previous month metrics for MoM comparison
+    for (const row of prevMetricsRes.data ?? []) {
+      if (row.platform === "meta") prevMetaMetrics = row as MetricsRow;
+      if (row.platform === "google") prevGoogleMetrics = row as MetricsRow;
+    }
   }
 
   return (
@@ -90,6 +113,8 @@ export default async function DashboardPage({
       googleMetrics={googleMetrics}
       weeklyData={weeklyData}
       goals={goals}
+      prevMetaMetrics={prevMetaMetrics}
+      prevGoogleMetrics={prevGoogleMetrics}
     />
   );
 }
