@@ -17,6 +17,19 @@ interface GoalRow {
   leads_google?: number | null;
   cpl_google?: number | null;
   budget_google?: number | null;
+  // 3-tier goals
+  leads_meta_conservative?: number | null;
+  leads_meta_ideal?: number | null;
+  leads_meta_incredible?: number | null;
+  cpl_meta_conservative?: number | null;
+  cpl_meta_ideal?: number | null;
+  cpl_meta_incredible?: number | null;
+  leads_google_conservative?: number | null;
+  leads_google_ideal?: number | null;
+  leads_google_incredible?: number | null;
+  cpl_google_conservative?: number | null;
+  cpl_google_ideal?: number | null;
+  cpl_google_incredible?: number | null;
 }
 
 interface Props {
@@ -88,33 +101,56 @@ export function GoalsTrafegoForm({
         <input type="hidden" name="year"     value={currentYear} />
         <input type="hidden" name="month"    value={selectedMonth} />
 
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="space-y-6 mb-5">
           {/* Meta Ads goals */}
           {hasMetaAds && (
-            <div className="col-span-2">
-              <div className="flex items-center gap-2 mb-3">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
                 <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
                 <p className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]/50">Meta Ads</p>
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                <GoalInput
-                  name="leads_meta"
-                  label="Leads Meta"
-                  placeholder="ex: 50"
-                  defaultValue={existing?.leads_meta ?? ""}
-                  prefix=""
-                  suffix="leads"
-                />
-                <GoalInput
-                  name="cpl_meta"
-                  label="CPL Meta (máx)"
-                  placeholder="ex: 30"
-                  defaultValue={existing?.cpl_meta ?? ""}
-                  prefix="R$"
-                />
+
+              {/* Leads tiers */}
+              <TierRow
+                label="Leads"
+                emoji={{ conservative: "👍", ideal: "🧡", incredible: "🚀" }}
+                names={{
+                  conservative: "leads_meta_conservative",
+                  ideal: "leads_meta_ideal",
+                  incredible: "leads_meta_incredible",
+                }}
+                defaults={{
+                  conservative: existing?.leads_meta_conservative,
+                  ideal: existing?.leads_meta_ideal,
+                  incredible: existing?.leads_meta_incredible,
+                }}
+                placeholders={{ conservative: "ex: 25", ideal: "ex: 35", incredible: "ex: 50" }}
+                suffix="leads"
+              />
+
+              {/* CPL tiers */}
+              <TierRow
+                label="CPL (máx)"
+                emoji={{ conservative: "👍", ideal: "🧡", incredible: "🚀" }}
+                names={{
+                  conservative: "cpl_meta_conservative",
+                  ideal: "cpl_meta_ideal",
+                  incredible: "cpl_meta_incredible",
+                }}
+                defaults={{
+                  conservative: existing?.cpl_meta_conservative,
+                  ideal: existing?.cpl_meta_ideal,
+                  incredible: existing?.cpl_meta_incredible,
+                }}
+                placeholders={{ conservative: "ex: 60", ideal: "ex: 43", incredible: "ex: 30" }}
+                prefix="R$"
+              />
+
+              {/* Budget (single value) */}
+              <div className="mt-3">
                 <GoalInput
                   name="budget_meta"
-                  label="Budget Meta"
+                  label="💰 Budget Meta"
                   placeholder="ex: 1500"
                   defaultValue={existing?.budget_meta ?? ""}
                   prefix="R$"
@@ -125,29 +161,53 @@ export function GoalsTrafegoForm({
 
           {/* Google Ads goals */}
           {hasGoogleAds && (
-            <div className="col-span-2">
-              <div className="flex items-center gap-2 mb-3 mt-1">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
                 <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05] text-[#1A1A1A]">GOOGLE</span>
                 <p className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]/50">Google Ads</p>
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                <GoalInput
-                  name="leads_google"
-                  label="Leads Google"
-                  placeholder="ex: 20"
-                  defaultValue={existing?.leads_google ?? ""}
-                  suffix="leads"
-                />
-                <GoalInput
-                  name="cpl_google"
-                  label="CPL Google (máx)"
-                  placeholder="ex: 25"
-                  defaultValue={existing?.cpl_google ?? ""}
-                  prefix="R$"
-                />
+
+              {/* Leads tiers */}
+              <TierRow
+                label="Leads"
+                emoji={{ conservative: "👍", ideal: "🧡", incredible: "🚀" }}
+                names={{
+                  conservative: "leads_google_conservative",
+                  ideal: "leads_google_ideal",
+                  incredible: "leads_google_incredible",
+                }}
+                defaults={{
+                  conservative: existing?.leads_google_conservative,
+                  ideal: existing?.leads_google_ideal,
+                  incredible: existing?.leads_google_incredible,
+                }}
+                placeholders={{ conservative: "ex: 7", ideal: "ex: 10", incredible: "ex: 15" }}
+                suffix="leads"
+              />
+
+              {/* CPL tiers */}
+              <TierRow
+                label="CPL (máx)"
+                emoji={{ conservative: "👍", ideal: "🧡", incredible: "🚀" }}
+                names={{
+                  conservative: "cpl_google_conservative",
+                  ideal: "cpl_google_ideal",
+                  incredible: "cpl_google_incredible",
+                }}
+                defaults={{
+                  conservative: existing?.cpl_google_conservative,
+                  ideal: existing?.cpl_google_ideal,
+                  incredible: existing?.cpl_google_incredible,
+                }}
+                placeholders={{ conservative: "ex: 170", ideal: "ex: 120", incredible: "ex: 80" }}
+                prefix="R$"
+              />
+
+              {/* Budget (single value) */}
+              <div className="mt-3">
                 <GoalInput
                   name="budget_google"
-                  label="Budget Google"
+                  label="💰 Budget Google"
                   placeholder="ex: 500"
                   defaultValue={existing?.budget_google ?? ""}
                   prefix="R$"
@@ -157,7 +217,7 @@ export function GoalsTrafegoForm({
           )}
 
           {!hasMetaAds && !hasGoogleAds && (
-            <div className="col-span-2 border-2 border-dashed border-[#1A1A1A]/10 rounded-xl px-4 py-6 text-center">
+            <div className="border-2 border-dashed border-[#1A1A1A]/10 rounded-xl px-4 py-6 text-center">
               <p className="text-xs text-[#1A1A1A]/30">Ative Meta Ads ou Google Ads nas permissões do cliente primeiro.</p>
             </div>
           )}
@@ -185,6 +245,51 @@ export function GoalsTrafegoForm({
   );
 }
 
+// ─── Tier Row: 3 inputs in a row with emoji labels ─────────
+function TierRow({
+  label,
+  emoji,
+  names,
+  defaults,
+  placeholders,
+  prefix,
+  suffix,
+}: {
+  label: string;
+  emoji: { conservative: string; ideal: string; incredible: string };
+  names: { conservative: string; ideal: string; incredible: string };
+  defaults: { conservative?: number | null; ideal?: number | null; incredible?: number | null };
+  placeholders: { conservative: string; ideal: string; incredible: string };
+  prefix?: string;
+  suffix?: string;
+}) {
+  const tiers = [
+    { key: "conservative" as const, tierLabel: "Conservadora", color: "text-[#1A1A1A]/60" },
+    { key: "ideal" as const, tierLabel: "Ideal", color: "text-[#FF6100]" },
+    { key: "incredible" as const, tierLabel: "Zebra", color: "text-[#22C55E]" },
+  ];
+
+  return (
+    <div className="mb-4">
+      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-2">{label}</p>
+      <div className="grid grid-cols-3 gap-3">
+        {tiers.map((tier) => (
+          <GoalInput
+            key={tier.key}
+            name={names[tier.key]}
+            label={`${emoji[tier.key]} ${tier.tierLabel}`}
+            placeholder={placeholders[tier.key]}
+            defaultValue={defaults[tier.key] ?? ""}
+            prefix={prefix}
+            suffix={suffix}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Single goal input ─────────────────────────────────────
 function GoalInput({
   name,
   label,

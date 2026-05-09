@@ -44,6 +44,8 @@ export type { PlatformMode } from "./platform-toggle";
 export { CarouselNav } from "./carousel-nav";
 export { WeekCarousel } from "./week-carousel";
 export { MonthlyTable } from "./monthly-table";
+export { TieredGoalsPanel } from "./tiered-goals-panel";
+export { ActionBlock } from "./action-block";
 
 // Types
 export type { WeeklyRow } from "./week-card";

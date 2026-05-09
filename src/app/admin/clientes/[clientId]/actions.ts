@@ -106,6 +106,19 @@ export async function upsertTrafegoGoals(formData: FormData) {
       leads_google: toNum("leads_google"),
       cpl_google:   toNum("cpl_google"),
       budget_google: toNum("budget_google"),
+      // 3-tier goals
+      leads_meta_conservative:   toNum("leads_meta_conservative"),
+      leads_meta_ideal:          toNum("leads_meta_ideal"),
+      leads_meta_incredible:     toNum("leads_meta_incredible"),
+      cpl_meta_conservative:     toNum("cpl_meta_conservative"),
+      cpl_meta_ideal:            toNum("cpl_meta_ideal"),
+      cpl_meta_incredible:       toNum("cpl_meta_incredible"),
+      leads_google_conservative: toNum("leads_google_conservative"),
+      leads_google_ideal:        toNum("leads_google_ideal"),
+      leads_google_incredible:   toNum("leads_google_incredible"),
+      cpl_google_conservative:   toNum("cpl_google_conservative"),
+      cpl_google_ideal:          toNum("cpl_google_ideal"),
+      cpl_google_incredible:     toNum("cpl_google_incredible"),
     },
     { onConflict: "client_id,year,month" }
   );

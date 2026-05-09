@@ -31,6 +31,18 @@ export default async function DashboardPage() {
     leads_google?: number | null;
     cpl_google?: number | null;
     budget_google?: number | null;
+    leads_meta_conservative?: number | null;
+    leads_meta_ideal?: number | null;
+    leads_meta_incredible?: number | null;
+    cpl_meta_conservative?: number | null;
+    cpl_meta_ideal?: number | null;
+    cpl_meta_incredible?: number | null;
+    leads_google_conservative?: number | null;
+    leads_google_ideal?: number | null;
+    leads_google_incredible?: number | null;
+    cpl_google_conservative?: number | null;
+    cpl_google_ideal?: number | null;
+    cpl_google_incredible?: number | null;
   } | null = null;
 
   const hasTrafico = isAdmin || permissions.some(

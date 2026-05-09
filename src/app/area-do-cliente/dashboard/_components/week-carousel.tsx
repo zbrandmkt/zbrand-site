@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CarouselNav } from "./carousel-nav";
 import { fmt, fmtNum, fmtDate, fmtWeekLabel, calcDelta } from "./format";
@@ -314,9 +314,14 @@ export function WeekCarousel({ weeklyData, hasGoogleModule, platformMode }: Week
   const canPrev = startIndex > 0;
   const canNext = endIndex < weeks.length - 1;
 
-  // Current week detection
-  const today = typeof window === "undefined" ? "" : new Date().toISOString().split("T")[0];
-  const currentWeekId = weeks.find((w) => w.dateStart <= today && w.dateEnd >= today)?.weekId;
+  // Current week detection (client-only to avoid hydration mismatch)
+  const [today, setToday] = useState("");
+  useEffect(() => {
+    setToday(new Date().toISOString().split("T")[0]);
+  }, []);
+  const currentWeekId = today
+    ? weeks.find((w) => w.dateStart <= today && w.dateEnd >= today)?.weekId
+    : undefined;
 
   // Nav label
   const navLabel = visibleWeeks.length > 0

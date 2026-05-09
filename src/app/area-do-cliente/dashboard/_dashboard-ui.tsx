@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   fmt,
   fmtNum,
   calcDelta,
   KpiCard,
-  GoalsPanel,
   ViewTabs,
   PlatformToggle,
   WeekCarousel,
   MonthlyTable,
+  TieredGoalsPanel,
+  ActionBlock,
 } from "./_components";
 import type { WeeklyRow, MonthlyRow, PlatformMode } from "./_components";
 
@@ -19,12 +20,26 @@ import type { WeeklyRow, MonthlyRow, PlatformMode } from "./_components";
 export type { WeeklyRow, MonthlyRow };
 
 export interface GoalsRow {
+  // Legacy single-value
   leads_meta?: number | null;
   cpl_meta?: number | null;
   budget_meta?: number | null;
   leads_google?: number | null;
   cpl_google?: number | null;
   budget_google?: number | null;
+  // 3-tier goals
+  leads_meta_conservative?: number | null;
+  leads_meta_ideal?: number | null;
+  leads_meta_incredible?: number | null;
+  cpl_meta_conservative?: number | null;
+  cpl_meta_ideal?: number | null;
+  cpl_meta_incredible?: number | null;
+  leads_google_conservative?: number | null;
+  leads_google_ideal?: number | null;
+  leads_google_incredible?: number | null;
+  cpl_google_conservative?: number | null;
+  cpl_google_ideal?: number | null;
+  cpl_google_incredible?: number | null;
 }
 
 // ─── Social Media Placeholder ─────────────────────────────────
@@ -153,12 +168,26 @@ export function DashboardUI({
     return sorted.find((r) => r.action_text)?.action_text ?? null;
   }, [weeklyData]);
 
-  const currentActionWeekId = useMemo(() => {
-    const today = new Date().toISOString().split("T")[0];
+  const [clientToday, setClientToday] = useState("");
+  useEffect(() => {
+    setClientToday(new Date().toISOString().split("T")[0]);
+  }, []);
+
+  const currentWeekInfo = useMemo(() => {
     const sorted = [...weeklyData].sort((a, b) => b.week_id.localeCompare(a.week_id));
-    const current = sorted.find((r) => r.date_start <= today && r.date_end >= today);
-    return current?.week_id ?? sorted[0]?.week_id ?? null;
-  }, [weeklyData]);
+    let current: typeof sorted[0] | undefined;
+    if (clientToday) {
+      current = sorted.find((r) => r.date_start <= clientToday && r.date_end >= clientToday);
+    }
+    if (!current) current = sorted[0];
+    return {
+      weekId: current?.week_id ?? null,
+      dateStart: current?.date_start,
+      dateEnd: current?.date_end,
+    };
+  }, [weeklyData, clientToday]);
+
+  const currentActionWeekId = currentWeekInfo.weekId;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-[1400px]">
@@ -352,73 +381,49 @@ export function DashboardUI({
               )}
             </AnimatePresence>
 
-            {/* Bottom row: Action + Goals */}
-            <div
-              className={`grid gap-3 sm:gap-4 ${
-                hasGoogleModule
-                  ? "grid-cols-1 lg:grid-cols-3"
-                  : "grid-cols-1 lg:grid-cols-2"
-              }`}
-            >
-              {/* Acao da Semana */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="bg-[#1A1A1A] border-2 border-[#1A1A1A] rounded-2xl p-4 sm:p-5 flex flex-col gap-2 sm:gap-3"
-                style={{ boxShadow: "4px 4px 0px 0px #FF6100" }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-base sm:text-lg">📋</span>
-                  <h3 className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/50">
-                    Acao da Semana
-                  </h3>
-                  {currentActionWeekId && (
-                    <span className="ml-auto text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-[#FF6100] border border-[#FF6100]/40 px-1.5 sm:px-2 py-0.5 rounded-full">
-                      {currentActionWeekId}
-                    </span>
-                  )}
-                </div>
-                {currentActionText ? (
-                  <p className="text-xs sm:text-sm text-white/70 font-medium leading-relaxed flex-1">
-                    {currentActionText}
-                  </p>
-                ) : (
-                  <p className="text-[10px] sm:text-xs text-white/25 font-medium flex-1">
-                    Nossa equipe ira publicar aqui o foco estrategico da semana.
-                  </p>
-                )}
-              </motion.div>
+            {/* ── Action Block (full width, below charts) ── */}
+            <ActionBlock
+              actionText={currentActionText}
+              weekId={currentActionWeekId}
+              dateStart={currentWeekInfo.dateStart}
+              dateEnd={currentWeekInfo.dateEnd}
+            />
 
-              {/* Meta Goals */}
-              <GoalsPanel
-                title="Meta Ads · Metas do Mes"
-                icon={<img src="/images/icon_metaads.png" alt="Meta" className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />}
-                spend={metaSpend}
-                leads={metaLeads}
-                cpl={currentMonthData.meta?.cpl ?? 0}
-                goalLeads={goals?.leads_meta}
-                goalCpl={goals?.cpl_meta}
-                goalBudget={goals?.budget_meta}
-                color="#1877F2"
-                shadow="#1877F2"
+            {/* ── Goals Panel (bottom, after action) ── */}
+            <div className="mt-4 sm:mt-6">
+              <TieredGoalsPanel
+                metaLeads={metaLeads}
+                metaSpend={metaSpend}
+                metaGoals={{
+                  leads: {
+                    conservative: goals?.leads_meta_conservative ?? (goals?.leads_meta ? Math.round((goals.leads_meta ?? 0) * 0.7) : null),
+                    ideal: goals?.leads_meta_ideal ?? goals?.leads_meta,
+                    incredible: goals?.leads_meta_incredible ?? (goals?.leads_meta ? Math.round((goals.leads_meta ?? 0) * 1.4) : null),
+                  },
+                  cpl: {
+                    conservative: goals?.cpl_meta_conservative,
+                    ideal: goals?.cpl_meta_ideal ?? goals?.cpl_meta,
+                    incredible: goals?.cpl_meta_incredible,
+                  },
+                  budget: goals?.budget_meta,
+                }}
+                hasGoogle={hasGoogleModule}
+                googleLeads={googleLeads}
+                googleSpend={googleSpend}
+                googleGoals={{
+                  leads: {
+                    conservative: goals?.leads_google_conservative ?? (goals?.leads_google ? Math.round((goals.leads_google ?? 0) * 0.7) : null),
+                    ideal: goals?.leads_google_ideal ?? goals?.leads_google,
+                    incredible: goals?.leads_google_incredible ?? (goals?.leads_google ? Math.round((goals.leads_google ?? 0) * 1.4) : null),
+                  },
+                  cpl: {
+                    conservative: goals?.cpl_google_conservative,
+                    ideal: goals?.cpl_google_ideal ?? goals?.cpl_google,
+                    incredible: goals?.cpl_google_incredible,
+                  },
+                  budget: goals?.budget_google,
+                }}
               />
-
-              {/* Google Goals */}
-              {hasGoogleModule && (
-                <GoalsPanel
-                  title="Google Ads · Metas do Mes"
-                  icon={<img src="/images/icon_googleads.webp" alt="Google" className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />}
-                  spend={googleSpend}
-                  leads={googleLeads}
-                  cpl={currentMonthData.google?.cpl ?? 0}
-                  goalLeads={goals?.leads_google}
-                  goalCpl={goals?.cpl_google}
-                  goalBudget={goals?.budget_google}
-                  color="#FBBC05"
-                  shadow="#FBBC05"
-                />
-              )}
             </div>
           </motion.div>
         )}

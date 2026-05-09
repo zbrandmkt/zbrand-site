@@ -52,7 +52,7 @@ export default async function ClientDetailPage({ params }: Props) {
         .maybeSingle(),
       supabaseAdmin
         .from("trafego_goals")
-        .select("month, year, leads_meta, cpl_meta, budget_meta, leads_google, cpl_google, budget_google")
+        .select("*")
         .eq("client_id", params.clientId)
         .eq("year", currentYear),
     ]);
