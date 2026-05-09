@@ -3,13 +3,9 @@ import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { getSelectedClient } from "@/lib/get-selected-client";
 import { DashboardUI } from "./_dashboard-ui";
-import type { MetricsRow, WeeklyRow, GoalsRow } from "./_dashboard-ui";
+import type { WeeklyRow, MonthlyRow } from "./_components";
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams?: { month?: string; year?: string };
-}) {
+export default async function DashboardPage() {
   const supabase = createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/area-do-cliente");
@@ -26,28 +22,16 @@ export default async function DashboardPage({
   const todayMonth = now.getMonth() + 1;
   const todayYear = now.getFullYear();
 
-  // Use search params if provided, otherwise default to current month
-  const selectedMonth = searchParams?.month ? parseInt(searchParams.month) : todayMonth;
-  const selectedYear = searchParams?.year ? parseInt(searchParams.year) : todayYear;
-
-  // Clamp to valid month range
-  const viewMonth = Math.max(1, Math.min(12, isNaN(selectedMonth) ? todayMonth : selectedMonth));
-  const viewYear = isNaN(selectedYear) ? todayYear : selectedYear;
-
-  // Calculate previous month for MoM comparison
-  let prevMonth = viewMonth - 1;
-  let prevYear = viewYear;
-  if (prevMonth < 1) {
-    prevMonth = 12;
-    prevYear -= 1;
-  }
-
-  let metaMetrics: MetricsRow | null = null;
-  let googleMetrics: MetricsRow | null = null;
   let weeklyData: WeeklyRow[] = [];
-  let goals: GoalsRow | null = null;
-  let prevMetaMetrics: MetricsRow | null = null;
-  let prevGoogleMetrics: MetricsRow | null = null;
+  let monthlyData: MonthlyRow[] = [];
+  let goals: {
+    leads_meta?: number | null;
+    cpl_meta?: number | null;
+    budget_meta?: number | null;
+    leads_google?: number | null;
+    cpl_google?: number | null;
+    budget_google?: number | null;
+  } | null = null;
 
   const hasTrafico = isAdmin || permissions.some(
     (p) => p === "trafego" || p.startsWith("trafego_")
@@ -56,65 +40,46 @@ export default async function DashboardPage({
   if (hasTrafico && clientData?.clientId) {
     const supabaseAdmin = createAdminSupabaseClient();
 
-    const [metricsRes, weeklyRes, goalsRes, prevMetricsRes] = await Promise.all([
-      supabaseAdmin
-        .from("trafego_metrics")
-        .select("*")
-        .eq("client_id", clientData.clientId)
-        .eq("year", viewYear)
-        .eq("month", viewMonth),
+    const [weeklyRes, monthlyRes, goalsRes] = await Promise.all([
+      // Fetch last ~20 weeks (40 rows = 20 weeks × 2 platforms)
       supabaseAdmin
         .from("trafego_weekly")
         .select("*")
         .eq("client_id", clientData.clientId)
-        .eq("year", viewYear)
-        .eq("month", viewMonth)
-        .order("platform")
-        .order("week_number"),
-      supabaseAdmin
-        .from("trafego_goals")
-        .select("*")
-        .eq("client_id", clientData.clientId)
-        .eq("year", viewYear)
-        .eq("month", viewMonth)
-        .maybeSingle(),
-      // Fetch previous month metrics for MoM deltas
+        .order("week_id", { ascending: false })
+        .limit(40),
+      // Fetch last 12 months (24 rows = 12 months × 2 platforms)
       supabaseAdmin
         .from("trafego_metrics")
         .select("*")
         .eq("client_id", clientData.clientId)
-        .eq("year", prevYear)
-        .eq("month", prevMonth),
+        .order("year", { ascending: false })
+        .order("month", { ascending: false })
+        .limit(24),
+      // Current month goals
+      supabaseAdmin
+        .from("trafego_goals")
+        .select("*")
+        .eq("client_id", clientData.clientId)
+        .eq("year", todayYear)
+        .eq("month", todayMonth)
+        .maybeSingle(),
     ]);
 
-    for (const row of metricsRes.data ?? []) {
-      if (row.platform === "meta") metaMetrics = row as MetricsRow;
-      if (row.platform === "google") googleMetrics = row as MetricsRow;
-    }
     weeklyData = (weeklyRes.data ?? []) as WeeklyRow[];
-    goals = goalsRes.data as GoalsRow | null;
-
-    // Previous month metrics for MoM comparison
-    for (const row of prevMetricsRes.data ?? []) {
-      if (row.platform === "meta") prevMetaMetrics = row as MetricsRow;
-      if (row.platform === "google") prevGoogleMetrics = row as MetricsRow;
-    }
+    monthlyData = (monthlyRes.data ?? []) as MonthlyRow[];
+    goals = goalsRes.data as typeof goals;
   }
 
   return (
     <DashboardUI
       company={company}
       permissions={permissions}
-      currentMonth={viewMonth}
-      currentYear={viewYear}
       todayMonth={todayMonth}
       todayYear={todayYear}
-      metaMetrics={metaMetrics}
-      googleMetrics={googleMetrics}
       weeklyData={weeklyData}
+      monthlyData={monthlyData}
       goals={goals}
-      prevMetaMetrics={prevMetaMetrics}
-      prevGoogleMetrics={prevGoogleMetrics}
     />
   );
 }

@@ -14,6 +14,9 @@ export {
   monthNameFull,
   progressPct,
   calcDelta,
+  fmtWeekLabel,
+  fmtWeekRange,
+  fmtMonthYear,
 } from "./format";
 
 // Platform config
@@ -32,9 +35,16 @@ export { GoalsPanel } from "./goals-panel";
 export { MonthSelector } from "./month-selector";
 export { MonthNav } from "./month-nav";
 export { MetricLine } from "./metric-line";
-export { WeekCard } from "./week-card";
+export { WeekCard, PlatformSection } from "./week-card";
 export { DeltaBadge } from "./delta-badge";
 export { EmptySection } from "./empty-section";
+export { ViewTabs } from "./view-tabs";
+export { PlatformToggle } from "./platform-toggle";
+export type { PlatformMode } from "./platform-toggle";
+export { CarouselNav } from "./carousel-nav";
+export { WeekCarousel } from "./week-carousel";
+export { MonthlyTable } from "./monthly-table";
 
-// Re-export WeeklyRow type from week-card
+// Types
 export type { WeeklyRow } from "./week-card";
+export type { MonthlyRow } from "./monthly-table";

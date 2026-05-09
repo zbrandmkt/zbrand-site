@@ -73,3 +73,25 @@ export function calcDelta(
   if (current == null || previous == null || previous === 0) return null;
   return ((current - previous) / previous) * 100;
 }
+
+/**
+ * Format ISO week ID to short label: "2026-W18" -> "S18"
+ */
+export function fmtWeekLabel(weekId: string): string {
+  const match = weekId.match(/W(\d+)/);
+  return match ? `S${match[1]}` : weekId;
+}
+
+/**
+ * Format date range: "28/04 - 04/05"
+ */
+export function fmtWeekRange(dateStart: string, dateEnd: string): string {
+  return `${fmtDate(dateStart)} - ${fmtDate(dateEnd)}`;
+}
+
+/**
+ * Format month+year: "Abr 2026"
+ */
+export function fmtMonthYear(month: number, year: number): string {
+  return `${monthName(month)} ${year}`;
+}

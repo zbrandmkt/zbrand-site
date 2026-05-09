@@ -8,7 +8,8 @@ import { fmt, fmtNum, fmtDate, calcDelta } from "./format";
 
 // ─── Types ──────────────────────────────────────────────────
 export interface WeeklyRow {
-  week_number: number;
+  week_id: string;          // "2026-W18" — global ISO week identifier
+  week_number: number;      // kept for backward compat
   date_start: string;
   date_end: string;
   platform: "meta" | "google";
@@ -40,7 +41,7 @@ interface WeekCardProps {
 }
 
 // ─── Platform Section ───────────────────────────────────────
-function PlatformSection({
+export function PlatformSection({
   platform,
   week,
   prevWeek,
