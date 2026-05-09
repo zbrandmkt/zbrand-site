@@ -3,9 +3,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CarouselNav } from "./carousel-nav";
-import { PlatformSection } from "./week-card";
-import { MetricLine } from "./metric-line";
-import { DeltaBadge } from "./delta-badge";
 import { fmt, fmtNum, fmtDate, fmtWeekLabel, calcDelta } from "./format";
 import type { WeeklyRow } from "./week-card";
 import type { PlatformMode } from "./platform-toggle";
@@ -26,7 +23,90 @@ interface WeekCarouselProps {
   platformMode: PlatformMode;
 }
 
-// ─── Consolidated Section ───────────────────────────────────
+// ─── Metric Row (dark theme) ────────────────────────────────
+function MetricRow({
+  label,
+  value,
+  delta,
+  invertDelta = false,
+}: {
+  label: string;
+  value: string;
+  delta?: number | null;
+  invertDelta?: boolean;
+}) {
+  const hasDelta = delta != null && isFinite(delta) && Math.abs(delta) >= 0.5;
+  const isPositive = (delta ?? 0) > 0;
+  const isGood = invertDelta ? !isPositive : isPositive;
+
+  return (
+    <div className="flex items-center justify-between py-[5px] sm:py-[6px] border-b border-white/[0.06] last:border-b-0">
+      <span className="text-[11px] sm:text-xs text-white/50 font-medium">
+        {label}
+      </span>
+      <div className="flex items-center gap-2">
+        <span className="text-[12px] sm:text-[13px] font-bold text-white tabular-nums">
+          {value}
+        </span>
+        {hasDelta && (
+          <span
+            className="text-[10px] sm:text-[11px] font-bold"
+            style={{ color: isGood ? "#22C55E" : "#EF4444" }}
+          >
+            {isPositive ? "↑" : "↓"}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Platform Section (dark card) ───────────────────────────
+function DarkPlatformSection({
+  week,
+  prevWeek,
+  label,
+  color,
+  bgColor,
+  icon,
+}: {
+  week: WeeklyRow;
+  prevWeek?: WeeklyRow;
+  label: string;
+  color: string;
+  bgColor: string;
+  icon: string;
+}) {
+  const spendDelta = calcDelta(week.spend, prevWeek?.spend);
+  const leadsDelta = calcDelta(week.leads_total, prevWeek?.leads_total);
+  const cplDelta = calcDelta(week.cpl_total, prevWeek?.cpl_total);
+  const cpcDelta = calcDelta(week.cpc, prevWeek?.cpc);
+
+  return (
+    <div className="px-4 sm:px-5 py-3 sm:py-3.5">
+      {/* Platform badge */}
+      <div className="mb-2.5 sm:mb-3">
+        <span
+          className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md"
+          style={{ backgroundColor: bgColor, color }}
+        >
+          <img src={icon} alt="" className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />
+          {label}
+        </span>
+      </div>
+
+      {/* Metrics — 1 per line */}
+      <div>
+        <MetricRow label="Invest" value={fmt(week.spend)} delta={spendDelta} />
+        <MetricRow label="Leads" value={String(week.leads_total ?? 0)} delta={leadsDelta} />
+        <MetricRow label="CPL" value={(week.cpl_total ?? 0) > 0 ? fmt(week.cpl_total!) : "—"} delta={cplDelta} invertDelta />
+        <MetricRow label="CPC" value={week.cpc > 0 ? fmt(week.cpc) : "—"} delta={cpcDelta} invertDelta />
+      </div>
+    </div>
+  );
+}
+
+// ─── Consolidated Section (dark card) ───────────────────────
 function ConsolidatedSection({
   week,
   prevWeek,
@@ -45,37 +125,34 @@ function ConsolidatedSection({
 
   const prevSpend = (prevWeek?.meta?.spend ?? 0) + (hasGoogle ? (prevWeek?.google?.spend ?? 0) : 0);
   const prevClicks = (prevWeek?.meta?.clicks ?? 0) + (hasGoogle ? (prevWeek?.google?.clicks ?? 0) : 0);
+  const prevImpressions = (prevWeek?.meta?.impressions ?? 0) + (hasGoogle ? (prevWeek?.google?.impressions ?? 0) : 0);
   const prevLeads = (prevWeek?.meta?.leads_total ?? 0) + (hasGoogle ? (prevWeek?.google?.leads_total ?? 0) : 0);
   const prevCpc = prevClicks > 0 ? prevSpend / prevClicks : 0;
   const prevCpl = prevLeads > 0 ? prevSpend / prevLeads : 0;
 
   return (
-    <div className="px-3 py-2.5 sm:px-4 sm:py-3">
-      <div className="flex items-center gap-1.5 mb-2 sm:mb-2.5">
-        <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#FF6100]">
-          Total
+    <div className="px-4 sm:px-5 py-3 sm:py-3.5">
+      {/* Total badge */}
+      <div className="mb-2.5 sm:mb-3">
+        <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#FF6100]/15 text-[#FF6100]">
+          Total Consolidado
         </span>
-        {prevWeek && (
-          <DeltaBadge delta={calcDelta(spend, prevSpend)} invertColor size="sm" />
-        )}
       </div>
-      <div className="grid grid-cols-2 gap-x-3 sm:gap-x-4 gap-y-1 sm:gap-y-1.5">
-        <MetricLine label="📈 Impressoes" value={fmtNum(impressions)} />
-        <MetricLine label="👆 Cliques" value={fmtNum(clicks)} delta={calcDelta(clicks, prevClicks)} />
-        <MetricLine label="💰 CPC" value={cpc > 0 ? fmt(cpc) : "—"} delta={calcDelta(cpc, prevCpc)} invertDelta />
-        <MetricLine label="💸 Custo" value={fmt(spend)} bold />
-        {leadsTotal > 0 && (
-          <>
-            <MetricLine label="✅ Leads" value={String(leadsTotal)} bold delta={calcDelta(leadsTotal, prevLeads)} />
-            <MetricLine label="⚠️ CPL" value={cpl > 0 ? fmt(cpl) : "—"} bold delta={calcDelta(cpl, prevCpl)} invertDelta />
-          </>
-        )}
+
+      {/* Metrics — 1 per line */}
+      <div>
+        <MetricRow label="Invest" value={fmt(spend)} delta={calcDelta(spend, prevSpend)} />
+        <MetricRow label="Impressões" value={fmtNum(impressions)} delta={calcDelta(impressions, prevImpressions)} />
+        <MetricRow label="Cliques" value={fmtNum(clicks)} delta={calcDelta(clicks, prevClicks)} />
+        <MetricRow label="Leads" value={String(leadsTotal)} delta={calcDelta(leadsTotal, prevLeads)} />
+        <MetricRow label="CPL" value={cpl > 0 ? fmt(cpl) : "—"} delta={calcDelta(cpl, prevCpl)} invertDelta />
+        <MetricRow label="CPC" value={cpc > 0 ? fmt(cpc) : "—"} delta={calcDelta(cpc, prevCpc)} invertDelta />
       </div>
     </div>
   );
 }
 
-// ─── Single Week Card ───────────────────────────────────────
+// ─── Single Week Card (dark theme) ─────────────────────────
 function CarouselCard({
   week,
   prevWeek,
@@ -89,38 +166,53 @@ function CarouselCard({
   hasGoogleModule: boolean;
   platformMode: PlatformMode;
 }) {
-  const [actionOpen, setActionOpen] = useState(false);
-
   return (
     <div
-      className={`bg-white border-2 rounded-2xl overflow-hidden flex flex-col h-full ${
-        isCurrent ? "border-[#FF6100]" : "border-[#1A1A1A]/20"
-      }`}
+      className="bg-[#1A1A1A] rounded-2xl overflow-hidden flex flex-col h-full border-2"
       style={{
+        borderColor: isCurrent ? "#FF6100" : "#2A2A2A",
         boxShadow: isCurrent
           ? "4px 4px 0px 0px #FF6100"
-          : "3px 3px 0px 0px #1A1A1A20",
+          : "3px 3px 0px 0px rgba(0,0,0,0.3)",
       }}
     >
       {/* Header */}
       <div
-        className={`px-3 py-2 sm:px-4 sm:py-2.5 flex items-center justify-between border-b ${
-          isCurrent
-            ? "bg-[#FF6100]/8 border-[#FF6100]/20"
-            : "bg-[#F5F5F0] border-[#1A1A1A]/8"
+        className={`px-4 sm:px-5 py-3 sm:py-3.5 flex items-center justify-between border-b ${
+          isCurrent ? "border-[#FF6100]/30" : "border-white/[0.06]"
         }`}
+        style={{
+          background: isCurrent
+            ? "linear-gradient(135deg, #FF6100 0%, #E65500 100%)"
+            : "linear-gradient(135deg, #222 0%, #1A1A1A 100%)",
+        }}
       >
         <div>
-          <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">
-            {fmtWeekLabel(week.weekId)}
-          </span>
-          <p className="text-[10px] sm:text-xs font-bold text-[#1A1A1A] leading-tight">
+          <h3
+            className={`text-sm sm:text-base font-black uppercase tracking-wide ${
+              isCurrent ? "text-white" : "text-white/90"
+            }`}
+          >
+            Semana {week.weekId.split("-W")[1]?.replace(/^0/, "") ?? week.weekId}
+          </h3>
+          <p
+            className={`text-[10px] sm:text-[11px] font-medium mt-0.5 ${
+              isCurrent ? "text-white/80" : "text-white/40"
+            }`}
+          >
             {fmtDate(week.dateStart)} a {fmtDate(week.dateEnd)}
           </p>
         </div>
-        {isCurrent && (
-          <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest bg-[#FF6100] text-white px-1.5 sm:px-2 py-0.5 rounded-full">
+        {isCurrent ? (
+          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-white/20 text-white px-2.5 py-1 rounded-full backdrop-blur-sm">
             Atual
+          </span>
+        ) : (
+          <span className="text-[9px] sm:text-[10px] font-bold text-green-400 flex items-center gap-1">
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Fechada
           </span>
         )}
       </div>
@@ -136,56 +228,28 @@ function CarouselCard({
         ) : (
           <>
             {week.meta && (
-              <PlatformSection
-                platform="meta"
+              <DarkPlatformSection
                 week={week.meta}
                 prevWeek={prevWeek?.meta}
-                icon="/images/icon_metaads.png"
                 label="Meta Ads"
-                color="#1877F2"
+                color="#4599FF"
+                bgColor="rgba(24,119,242,0.15)"
+                icon="/images/icon_metaads.png"
               />
             )}
             {week.google && hasGoogleModule && (
-              <PlatformSection
-                platform="google"
-                week={week.google}
-                prevWeek={prevWeek?.google}
-                icon="/images/icon_googleads.webp"
-                label="Google Ads"
-                color="#FBBC05"
-              />
+              <div className="border-t border-white/[0.06]">
+                <DarkPlatformSection
+                  week={week.google}
+                  prevWeek={prevWeek?.google}
+                  label="Google Ads"
+                  color="#FBBC05"
+                  bgColor="rgba(251,188,5,0.12)"
+                  icon="/images/icon_googleads.webp"
+                />
+              </div>
             )}
           </>
-        )}
-
-        {/* Action Text */}
-        {week.actionText && (
-          <div className="px-3 py-2 sm:px-4 sm:py-2.5 border-t border-[#1A1A1A]/6">
-            <button
-              onClick={() => setActionOpen((o) => !o)}
-              className="flex items-center gap-1.5 text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-[#FF6100] hover:text-[#FF6100]/70 transition-colors w-full text-left"
-            >
-              <span>📋 Acao</span>
-              <svg
-                className={`w-3 h-3 ml-auto transition-transform ${actionOpen ? "rotate-180" : ""}`}
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <AnimatePresence>
-              {actionOpen && (
-                <motion.p
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="text-[9px] sm:text-[10px] text-[#1A1A1A]/60 font-medium mt-1.5 leading-relaxed overflow-hidden"
-                >
-                  {week.actionText}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
         )}
       </div>
     </div>
@@ -195,9 +259,9 @@ function CarouselCard({
 // ─── Empty Card ─────────────────────────────────────────────
 function EmptyCard() {
   return (
-    <div className="border-2 border-dashed border-[#1A1A1A]/15 rounded-2xl flex flex-col items-center justify-center py-8 sm:py-10 gap-2 bg-[#F5F5F0]/60 h-full">
+    <div className="border-2 border-dashed border-[#333] rounded-2xl flex flex-col items-center justify-center py-8 sm:py-10 gap-2 bg-[#1A1A1A]/60 h-full">
       <span className="text-xl sm:text-2xl opacity-20">📅</span>
-      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/25">
+      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-white/20">
         Sem dados
       </p>
     </div>
@@ -240,16 +304,11 @@ export function WeekCarousel({ weeklyData, hasGoogleModule, platformMode }: Week
   }, [weeklyData]);
 
   // Position: index of the RIGHTMOST visible card (most recent)
-  // Start at the end (most recent weeks visible)
   const [endIndex, setEndIndex] = useState(Math.max(0, weeks.length - 1));
 
-  // On desktop show 4, compute start index
-  const visibleCount = 4; // CSS handles responsive via hidden overflow
+  const visibleCount = 4;
   const startIndex = Math.max(0, endIndex - visibleCount + 1);
-
   const visibleWeeks = weeks.slice(startIndex, endIndex + 1);
-
-  // Pad if less than 4 weeks
   const paddedSlots = Array.from({ length: visibleCount }, (_, i) => visibleWeeks[i] ?? null);
 
   const canPrev = startIndex > 0;
@@ -261,7 +320,7 @@ export function WeekCarousel({ weeklyData, hasGoogleModule, platformMode }: Week
 
   // Nav label
   const navLabel = visibleWeeks.length > 0
-    ? `${fmtWeekLabel(visibleWeeks[0].weekId)} - ${fmtWeekLabel(visibleWeeks[visibleWeeks.length - 1].weekId)}`
+    ? `${fmtWeekLabel(visibleWeeks[0].weekId)} – ${fmtWeekLabel(visibleWeeks[visibleWeeks.length - 1].weekId)}`
     : "";
 
   if (weeks.length === 0) {
@@ -272,7 +331,7 @@ export function WeekCarousel({ weeklyData, hasGoogleModule, platformMode }: Week
           Nenhuma semana registrada
         </p>
         <p className="text-[10px] text-[#1A1A1A]/20 font-medium">
-          Os dados semanais aparecerao aqui apos a primeira atualizacao.
+          Os dados semanais aparecerão aqui após a primeira atualização.
         </p>
       </div>
     );
