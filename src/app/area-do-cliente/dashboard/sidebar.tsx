@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase";
 
 const ALL_NAV_ITEMS = [
@@ -20,7 +20,6 @@ const ALL_NAV_ITEMS = [
   {
     href: "/area-do-cliente/dashboard/trafego/meta",
     label: "Meta Ads",
-    // "trafego_meta_or_legacy" is a virtual token resolved via expandedPerms in the component
     permission: "trafego_meta_or_legacy",
     icon: (
       <img src="/images/icon_metaads.png" alt="Meta Ads" className="w-4 h-4 object-contain" />
@@ -77,60 +76,36 @@ const ALL_NAV_ITEMS = [
   },
 ];
 
-export function DashboardSidebar({
-  clientName = "Cliente",
-  company = "ZBRAND",
+function SidebarContent({
+  clientName,
+  company,
   selectedClientId,
-  allClients = [],
-  pendingCount = 0,
-  permissions = ["trafego", "social", "calendario", "aprovacoes"],
-  switchClient,
+  allClients,
+  pendingCount,
+  expandedPerms,
+  pathname,
+  onNavigate,
+  handleSwitch,
+  handleLogout,
+  switching,
 }: {
-  clientName?: string;
-  company?: string;
+  clientName: string;
+  company: string;
   selectedClientId?: string;
-  allClients?: { id: string; company: string }[];
-  pendingCount?: number;
-  permissions?: string[];
-  switchClient?: (formData: FormData) => Promise<void>;
+  allClients: { id: string; company: string }[];
+  pendingCount: number;
+  expandedPerms: string[];
+  pathname: string;
+  onNavigate?: () => void;
+  handleSwitch: (id: string) => void;
+  handleLogout: () => void;
+  switching: boolean;
 }) {
-  const pathname = usePathname();
-  const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [switching, setSwitching] = useState(false);
-
-  // Expand permissions to support backward-compat virtual tokens.
-  // Clients with only "trafego" (no sub-perms) should see Meta Ads by default.
-  const expandedPerms = [...permissions];
-  const hasSubTrafegoPerms = permissions.some((p) => p.startsWith("trafego_"));
-  if (permissions.includes("trafego_meta") || (permissions.includes("trafego") && !hasSubTrafegoPerms)) {
-    expandedPerms.push("trafego_meta_or_legacy");
-  }
-
   const hasMultipleClients = allClients.length > 1;
 
-  async function handleSwitch(clientId: string) {
-    if (clientId === selectedClientId || switching) return;
-    setSwitching(true);
-    setDropdownOpen(false);
-    await fetch("/api/switch-client", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientId }),
-    });
-    router.refresh();
-    setSwitching(false);
-  }
-
-  async function handleLogout() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/area-do-cliente");
-    router.refresh();
-  }
-
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-[#1A1A1A] border-r-2 border-[#FF6100] flex flex-col z-40">
+    <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -151,7 +126,7 @@ export function DashboardSidebar({
       <div className="px-4 py-3 border-b border-white/10">
         <p className="text-[9px] text-white/30 uppercase tracking-widest mb-1.5 font-bold">Cliente</p>
 
-        {hasMultipleClients && switchClient ? (
+        {hasMultipleClients ? (
           <div className="relative">
             <button
               onClick={() => setDropdownOpen((o) => !o)}
@@ -186,7 +161,7 @@ export function DashboardSidebar({
                     <button
                       key={c.id}
                       type="button"
-                      onClick={() => handleSwitch(c.id)}
+                      onClick={() => { handleSwitch(c.id); setDropdownOpen(false); }}
                       disabled={switching}
                       className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-colors text-xs font-bold tracking-wide disabled:opacity-50 ${
                         isSelected
@@ -232,7 +207,7 @@ export function DashboardSidebar({
               href={isDisabled ? "#" : item.href}
               onClick={(e) => {
                 if (isDisabled) e.preventDefault();
-                if (dropdownOpen) setDropdownOpen(false);
+                else onNavigate?.();
               }}
               className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                 isActive
@@ -285,6 +260,153 @@ export function DashboardSidebar({
           Sair
         </button>
       </div>
-    </aside>
+    </div>
+  );
+}
+
+export function DashboardSidebar({
+  clientName = "Cliente",
+  company = "ZBRAND",
+  selectedClientId,
+  allClients = [],
+  pendingCount = 0,
+  permissions = ["trafego", "social", "calendario", "aprovacoes"],
+  switchClient,
+}: {
+  clientName?: string;
+  company?: string;
+  selectedClientId?: string;
+  allClients?: { id: string; company: string }[];
+  pendingCount?: number;
+  permissions?: string[];
+  switchClient?: (formData: FormData) => Promise<void>;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [switching, setSwitching] = useState(false);
+
+  // Fecha o menu mobile ao navegar
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Trava o scroll do body quando menu mobile está aberto
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const expandedPerms = [...permissions];
+  const hasSubTrafegoPerms = permissions.some((p) => p.startsWith("trafego_"));
+  if (permissions.includes("trafego_meta") || (permissions.includes("trafego") && !hasSubTrafegoPerms)) {
+    expandedPerms.push("trafego_meta_or_legacy");
+  }
+
+  async function handleSwitch(clientId: string) {
+    if (clientId === selectedClientId || switching) return;
+    setSwitching(true);
+    await fetch("/api/switch-client", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clientId }),
+    });
+    router.refresh();
+    setSwitching(false);
+  }
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/area-do-cliente");
+    router.refresh();
+  }
+
+  const sharedProps = {
+    clientName,
+    company,
+    selectedClientId,
+    allClients,
+    pendingCount,
+    expandedPerms,
+    pathname,
+    handleSwitch,
+    handleLogout,
+    switching,
+  };
+
+  return (
+    <>
+      {/* ── DESKTOP: sidebar fixa ── */}
+      <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-[#1A1A1A] border-r-2 border-[#FF6100] flex-col z-40">
+        <SidebarContent {...sharedProps} />
+      </aside>
+
+      {/* ── MOBILE: top bar ── */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-[#1A1A1A] border-b-2 border-[#FF6100] flex items-center justify-between px-4">
+        {/* Hamburger */}
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+          aria-label="Abrir menu"
+        >
+          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        {/* Logo centralizada */}
+        <Image
+          src="/images/logo-preto-zbrand.png"
+          alt="ZBRAND"
+          width={90}
+          height={27}
+          className="h-6 w-auto brightness-0 invert"
+        />
+
+        {/* Avatar da empresa */}
+        <div className="w-9 h-9 rounded-xl bg-[#FF6100] flex items-center justify-center">
+          <span className="text-white text-xs font-black">
+            {company.charAt(0).toUpperCase()}
+          </span>
+        </div>
+      </header>
+
+      {/* ── MOBILE: overlay ── */}
+      {mobileOpen && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* ── MOBILE: drawer slide-in ── */}
+      <aside
+        className={`lg:hidden fixed left-0 top-0 h-full w-72 bg-[#1A1A1A] border-r-2 border-[#FF6100] z-50 flex flex-col
+          transition-transform duration-300 ease-out
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        {/* Botão fechar */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+          aria-label="Fechar menu"
+        >
+          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <SidebarContent
+          {...sharedProps}
+          onNavigate={() => setMobileOpen(false)}
+        />
+      </aside>
+    </>
   );
 }
