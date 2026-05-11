@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClientAction } from "./actions";
+import { PasswordField } from "../[clientId]/usuarios/password-field";
 
 const MODULES = [
   {
@@ -226,6 +227,64 @@ export default function NovoClientePage({
                 />
               </label>
             ))}
+          </div>
+        </div>
+
+        {/* Acesso do cliente */}
+        <div
+          className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
+          style={{ boxShadow: "5px 5px 0px 0px #7B2FF7" }}
+        >
+          <div className="mb-5">
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="font-black text-[#1A1A1A] text-base tracking-tight">Acesso do cliente</h2>
+              <span className="text-[10px] font-black uppercase tracking-widest bg-[#7B2FF7]/10 text-[#7B2FF7] px-2 py-0.5 rounded-full">
+                Opcional
+              </span>
+            </div>
+            <p className="text-xs text-[#1A1A1A]/40 font-medium">
+              Crie o login agora ou adicione depois em Usuários. Se preencher, você define a senha e envia as credenciais via WhatsApp.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+                Nome completo
+              </label>
+              <input
+                name="user_name"
+                placeholder="Ex: João Silva"
+                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#7B2FF7] outline-none transition-colors"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+                E-mail
+              </label>
+              <input
+                name="user_email"
+                type="email"
+                placeholder="joao@empresa.com.br"
+                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#7B2FF7] outline-none transition-colors"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/50">
+                Papel
+              </label>
+              <select
+                name="user_role"
+                className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] focus:border-[#7B2FF7] outline-none bg-white transition-colors"
+              >
+                <option value="owner">Owner — acesso completo</option>
+                <option value="viewer">Viewer — somente leitura</option>
+              </select>
+            </div>
+
+            <PasswordField />
           </div>
         </div>
 

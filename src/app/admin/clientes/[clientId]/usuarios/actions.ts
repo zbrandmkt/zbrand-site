@@ -102,6 +102,32 @@ export async function inviteUserAction(formData: FormData) {
     );
   }
 
+  // Buscar nome da empresa para o email de boas-vindas
+  const { data: clientData } = await supabaseAdmin
+    .from("clients")
+    .select("company")
+    .eq("id", clientId)
+    .single();
+
+  // Disparar webhook Make → envia email de boas-vindas com credenciais
+  const webhookUrl = process.env.MAKE_WEBHOOK_USER_CREATED;
+  if (webhookUrl) {
+    try {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name,
+          password,
+          company: clientData?.company ?? "",
+        }),
+      });
+    } catch {
+      // Não bloqueia o fluxo se o webhook falhar
+    }
+  }
+
   revalidatePath(`/admin/clientes/${clientId}/usuarios`);
   revalidatePath(`/admin/clientes/${clientId}`);
   redirect(`/admin/clientes/${clientId}/usuarios?success=created&name=${encodeURIComponent(name)}`);
