@@ -271,6 +271,7 @@ export function DashboardSidebar({
   allClients = [],
   pendingCount = 0,
   permissions = ["trafego", "social", "calendario", "aprovacoes"],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   switchClient,
 }: {
   clientName?: string;
