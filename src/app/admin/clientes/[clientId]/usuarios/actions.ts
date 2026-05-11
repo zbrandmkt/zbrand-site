@@ -121,7 +121,6 @@ export async function inviteUserAction(formData: FormData) {
           name,
           password,
           company: clientData?.company ?? "",
-          loginUrl: "https://zbrand.com.br/area-do-cliente",
         }),
       });
     } catch {
