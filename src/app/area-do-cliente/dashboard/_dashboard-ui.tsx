@@ -212,39 +212,35 @@ export function DashboardUI({
         )}
       </motion.div>
 
-      {/* Main Tabs: Trafego / Social */}
-      {(hasTrafico || hasSocial) && (
+      {/* Main Tabs: Trafego / Social — só mostra se ambas as abas existem */}
+      {hasTrafico && hasSocial && (
         <div className="flex gap-2 mb-4 sm:mb-6 overflow-x-auto">
-          {hasTrafico && (
-            <button
-              onClick={() => setTab("traffic")}
-              className={`px-4 sm:px-5 py-2 border-2 border-[#1A1A1A] rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
-                tab === "traffic"
-                  ? "bg-[#FF6100] text-white"
-                  : "bg-white text-[#1A1A1A]/50 hover:text-[#1A1A1A]"
-              }`}
-              style={{
-                boxShadow: tab === "traffic" ? "3px 3px 0px 0px #1A1A1A" : "2px 2px 0px 0px #1A1A1A",
-              }}
-            >
-              📊 Trafego Pago
-            </button>
-          )}
-          {hasSocial && (
-            <button
-              onClick={() => setTab("social")}
-              className={`px-4 sm:px-5 py-2 border-2 border-[#1A1A1A] rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
-                tab === "social"
-                  ? "bg-[#FF6100] text-white"
-                  : "bg-white text-[#1A1A1A]/50 hover:text-[#1A1A1A]"
-              }`}
-              style={{
-                boxShadow: tab === "social" ? "3px 3px 0px 0px #1A1A1A" : "2px 2px 0px 0px #1A1A1A",
-              }}
-            >
-              📱 Social Media
-            </button>
-          )}
+          <button
+            onClick={() => setTab("traffic")}
+            className={`px-4 sm:px-5 py-2 border-2 border-[#1A1A1A] rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+              tab === "traffic"
+                ? "bg-[#FF6100] text-white"
+                : "bg-white text-[#1A1A1A]/50 hover:text-[#1A1A1A]"
+            }`}
+            style={{
+              boxShadow: tab === "traffic" ? "3px 3px 0px 0px #1A1A1A" : "2px 2px 0px 0px #1A1A1A",
+            }}
+          >
+            📊 Trafego Pago
+          </button>
+          <button
+            onClick={() => setTab("social")}
+            className={`px-4 sm:px-5 py-2 border-2 border-[#1A1A1A] rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+              tab === "social"
+                ? "bg-[#FF6100] text-white"
+                : "bg-white text-[#1A1A1A]/50 hover:text-[#1A1A1A]"
+            }`}
+            style={{
+              boxShadow: tab === "social" ? "3px 3px 0px 0px #1A1A1A" : "2px 2px 0px 0px #1A1A1A",
+            }}
+          >
+            📱 Social Media
+          </button>
         </div>
       )}
 
@@ -429,7 +425,7 @@ export function DashboardUI({
         )}
 
         {/* ── SOCIAL MEDIA ── */}
-        {tab === "social" && <SocialMediaTab />}
+        {tab === "social" && hasSocial && <SocialMediaTab />}
       </AnimatePresence>
     </div>
   );
