@@ -72,12 +72,12 @@ function KpiCard({ emoji, label, value, shadow, delay = 0 }: {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 flex-1"
+      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1 sm:gap-1.5 flex-1 min-w-0"
       style={{ boxShadow: `5px 5px 0px 0px ${shadow}` }}
     >
-      <span className="text-xl leading-none">{emoji}</span>
-      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
-      <p className={`text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
+      <span className="text-lg sm:text-xl leading-none">{emoji}</span>
+      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
+      <p className={`text-lg sm:text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
     </motion.div>
   );
 }
@@ -245,7 +245,7 @@ export default function MetaAdsPage({
   const selectedMonthName = MONTH_NAMES[selectedMonth - 1];
 
   return (
-    <div className="p-8 max-w-[1400px]">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-[1400px]">
 
       {/* Header */}
       <motion.div
@@ -350,7 +350,7 @@ export default function MetaAdsPage({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="flex gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex gap-2 sm:gap-3 mb-6">
             <KpiCard emoji="💸" label="Total Investido"    value={fmtCurrency(metrics?.spend)}  shadow="#1877F2" delay={0} />
             <KpiCard emoji="🎯" label="Resultados Totais"  value={fmt(metrics?.leads)}           shadow="#00C2FF" delay={0.06} />
             <KpiCard emoji="💰" label="Custo/Resultado"    value={fmtCurrency(metrics?.cpl)}     shadow="#AAFF00" delay={0.12} />
@@ -360,7 +360,7 @@ export default function MetaAdsPage({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.24, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 min-w-0"
+              className="col-span-2 sm:col-span-3 lg:col-span-1 bg-white border-2 border-[#1A1A1A] rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1.5 min-w-0"
               style={{ boxShadow: "5px 5px 0px 0px #1877F2", flex: "1.5" }}
             >
               <span className="text-xl leading-none">💳</span>
@@ -421,7 +421,7 @@ export default function MetaAdsPage({
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <GoalCard
                 label="Leads Meta"
                 target={goals?.leads_meta}
@@ -445,18 +445,18 @@ export default function MetaAdsPage({
           </motion.div>
 
           {/* Métricas Gerais + Funil */}
-          <div className="grid grid-cols-5 gap-4 mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-5">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.4 }}
-              className="col-span-3 bg-white border-2 border-[#1A1A1A] rounded-2xl p-5"
+              className="lg:col-span-3 bg-white border-2 border-[#1A1A1A] rounded-2xl p-4 sm:p-5"
               style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
             >
               <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">📈 Métricas Gerais</p>
               <p className="text-sm font-black text-[#1A1A1A] mb-4">{selectedMonthName} {currentYear} — Meta Ads</p>
               {hasData ? (
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                   {[
                     { label: "Impressões",  value: fmt(metrics.impressions), color: "#1877F2" },
                     { label: "Alcance",     value: fmt(metrics.reach),       color: "#00C2FF" },
@@ -481,7 +481,7 @@ export default function MetaAdsPage({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
-              className="col-span-2 bg-white border-2 border-[#1A1A1A] rounded-2xl p-5"
+              className="lg:col-span-2 bg-white border-2 border-[#1A1A1A] rounded-2xl p-4 sm:p-5"
               style={{ boxShadow: "4px 4px 0px 0px #00C2FF" }}
             >
               <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">🔻 Funil de Conversão</p>
@@ -519,33 +519,35 @@ export default function MetaAdsPage({
           >
             <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📋 Campanhas — Meta Ads</p>
             {hasData && metrics.campaigns && metrics.campaigns.length > 0 ? (
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-[#F5F5F0] rounded-xl">
-                    {["Campanha", "Tipo", "Investido", "Impressões", "Cliques", "Resultados", "CPC", "Custo/Result."].map((h) => (
-                      <th key={h} className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {metrics.campaigns.map((c, i) => (
-                    <tr key={c.campaign_id} className={i % 2 === 0 ? "bg-white" : "bg-[#F5F5F0]/40"}>
-                      <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[180px] truncate">{c.campaign_name}</td>
-                      <td className="px-3 py-3">
-                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2]/15 text-[#1877F2] whitespace-nowrap">
-                          {c.result_type ?? "Formulário"}
-                        </span>
-                      </td>
-                      <td className="px-3 py-3 text-xs font-black text-[#1877F2]">{fmtCurrency(c.spend)}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.impressions)}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.clicks)}</td>
-                      <td className="px-3 py-3 text-xs font-black text-[#00C2FF]">{c.leads > 0 ? fmt(c.leads) : "—"}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(c.cpc)}</td>
-                      <td className="px-3 py-3 text-xs font-black text-[#7B2FF7]">{c.cpl > 0 ? fmtCurrency(c.cpl) : "—"}</td>
+              <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+                <table className="w-full min-w-[640px]">
+                  <thead>
+                    <tr className="bg-[#F5F5F0] rounded-xl">
+                      {["Campanha", "Tipo", "Investido", "Impressões", "Cliques", "Resultados", "CPC", "Custo/Result."].map((h) => (
+                        <th key={h} className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {metrics.campaigns.map((c, i) => (
+                      <tr key={c.campaign_id} className={i % 2 === 0 ? "bg-white" : "bg-[#F5F5F0]/40"}>
+                        <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[180px] truncate">{c.campaign_name}</td>
+                        <td className="px-3 py-3">
+                          <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2]/15 text-[#1877F2] whitespace-nowrap">
+                            {c.result_type ?? "Formulário"}
+                          </span>
+                        </td>
+                        <td className="px-3 py-3 text-xs font-black text-[#1877F2]">{fmtCurrency(c.spend)}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.impressions)}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.clicks)}</td>
+                        <td className="px-3 py-3 text-xs font-black text-[#00C2FF]">{c.leads > 0 ? fmt(c.leads) : "—"}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(c.cpc)}</td>
+                        <td className="px-3 py-3 text-xs font-black text-[#7B2FF7]">{c.cpl > 0 ? fmtCurrency(c.cpl) : "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div className="h-24 flex items-center justify-center border-2 border-dashed border-[#1A1A1A]/10 rounded-xl">
                 <p className="text-xs text-[#1A1A1A]/25 font-medium">Aguardando dados de campanhas</p>
@@ -565,20 +567,20 @@ export default function MetaAdsPage({
               <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
               <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]">Controle de Budget</span>
             </div>
-            <div className="flex gap-6 mb-4">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-4">
               {hasData ? (
                 <>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Investido</p>
-                    <p className="text-sm font-black text-[#1A1A1A]">{fmtCurrency(metrics.spend)}</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]">{fmtCurrency(metrics.spend)}</p>
                   </div>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Budget</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">{goals?.budget_meta ? fmtCurrency(goals.budget_meta) : "—"}</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">{goals?.budget_meta ? fmtCurrency(goals.budget_meta) : "—"}</p>
                   </div>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Saldo</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">
                       {goals?.budget_meta && metrics.spend ? fmtCurrency(goals.budget_meta - metrics.spend) : "—"}
                     </p>
                   </div>
@@ -587,7 +589,7 @@ export default function MetaAdsPage({
                 ["Budget", "Utilizado", "Saldo"].map((l) => (
                   <div key={l}>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">{l}</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">—</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">—</p>
                   </div>
                 ))
               )}
@@ -626,11 +628,11 @@ export default function MetaAdsPage({
             </div>
 
             {metrics?.top_ads && metrics.top_ads.length > 0 ? (
-              <div className="flex gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {metrics.top_ads.map((ad, idx) => (
                   <div
                     key={ad.ad_id}
-                    className="flex-1 min-w-0 rounded-2xl border-2 border-[#1A1A1A]/08 bg-[#F5F5F0]/60 overflow-hidden flex flex-col"
+                    className="min-w-0 rounded-2xl border-2 border-[#1A1A1A]/08 bg-[#F5F5F0]/60 overflow-hidden flex flex-col"
                   >
                     <div className="relative aspect-[4/5] bg-[#1A1A1A]/06 overflow-hidden">
                       {ad.thumbnail_url ? (
@@ -683,17 +685,17 @@ export default function MetaAdsPage({
                 {Array.from({ length: Math.max(0, 5 - metrics.top_ads.length) }).map((_, i) => (
                   <div
                     key={`ph-${i}`}
-                    className="flex-1 border-2 border-dashed border-[#1A1A1A]/08 rounded-2xl aspect-[4/5] flex items-center justify-center"
+                    className="hidden lg:flex border-2 border-dashed border-[#1A1A1A]/08 rounded-2xl aspect-[4/5] items-center justify-center"
                   >
                     <span className="text-lg opacity-10">🖼️</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="flex gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {[1, 2, 3, 4, 5].map((n) => (
                   <div key={n}
-                    className="flex-1 border-2 border-dashed border-[#1A1A1A]/10 rounded-2xl aspect-[4/5] flex flex-col items-center justify-center gap-2">
+                    className={`border-2 border-dashed border-[#1A1A1A]/10 rounded-2xl aspect-[4/5] flex flex-col items-center justify-center gap-2 ${n > 2 ? "hidden sm:flex" : ""} ${n > 3 ? "hidden lg:flex" : ""}`}>
                     <span className="text-xl opacity-20">🖼️</span>
                     <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/20">{n}º lugar</p>
                   </div>
@@ -712,11 +714,12 @@ export default function MetaAdsPage({
 
           {/* Histórico Mensal */}
           <EmptySection title="📅 Histórico Mensal — Meta Ads" shadow="#FBBC05">
-            <table className="w-full">
+            <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+            <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="bg-[#F5F5F0]">
                   {["Mês", "Investido", "Resultados", "Custo/Result.", "CPC", "Var."].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
+                    <th key={h} className="px-3 sm:px-4 py-3 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -732,17 +735,17 @@ export default function MetaAdsPage({
                         onClick={() => setSelectedMonth(Number(month))}
                         className={`cursor-pointer transition-colors ${Number(month) === selectedMonth ? "bg-[#1877F2]/08" : "hover:bg-[#F5F5F0]/60"}`}
                       >
-                        <td className="px-4 py-3 text-xs font-bold text-[#1A1A1A]">
+                        <td className="px-3 sm:px-4 py-3 text-xs font-bold text-[#1A1A1A] whitespace-nowrap">
                           {MONTH_NAMES[Number(month) - 1]} {currentYear}
                           {Number(month) === selectedMonth && (
                             <span className="ml-2 text-[9px] font-black text-[#1877F2]">← selecionado</span>
                           )}
                         </td>
-                        <td className="px-4 py-3 text-xs font-black text-[#1877F2]">{fmtCurrency(m.spend)}</td>
-                        <td className="px-4 py-3 text-xs font-black text-[#00C2FF]">{fmt(m.leads)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpl)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpc)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/25">—</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs font-black text-[#1877F2]">{fmtCurrency(m.spend)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs font-black text-[#00C2FF]">{fmt(m.leads)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpl)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpc)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/25">—</td>
                       </tr>
                     );
                   })}
@@ -755,6 +758,7 @@ export default function MetaAdsPage({
                 )}
               </tbody>
             </table>
+            </div>
           </EmptySection>
 
         </motion.div>

@@ -59,12 +59,12 @@ function KpiCard({ emoji, label, value, shadow, delay = 0 }: {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-5 py-4 flex flex-col gap-1.5 flex-1"
+      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1 sm:gap-1.5 flex-1 min-w-0"
       style={{ boxShadow: `5px 5px 0px 0px ${shadow}` }}
     >
-      <span className="text-xl leading-none">{emoji}</span>
-      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
-      <p className={`text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
+      <span className="text-lg sm:text-xl leading-none">{emoji}</span>
+      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
+      <p className={`text-lg sm:text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
     </motion.div>
   );
 }
@@ -211,7 +211,7 @@ export default function GoogleAdsPage({
   const hasAnySyncedData = Object.values(metricsMap).some((v) => v !== null);
 
   return (
-    <div className="p-8 max-w-[1400px]">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-[1400px]">
 
       {/* Header */}
       <motion.div
@@ -338,7 +338,7 @@ export default function GoogleAdsPage({
           transition={{ duration: 0.2 }}
         >
           {/* KPIs */}
-          <div className="flex gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex gap-2 sm:gap-3 mb-6">
             <KpiCard emoji="💸" label="Total Investido"   value={fmtCurrency(metrics?.spend)}  shadow="#FBBC05" delay={0} />
             <KpiCard emoji="🎯" label="Conversões"        value={fmt(metrics?.leads)}          shadow="#34A853" delay={0.06} />
             <KpiCard emoji="💰" label="Custo/Conversão"   value={fmtCurrency(metrics?.cpl)}    shadow="#EA4335" delay={0.12} />
@@ -369,7 +369,7 @@ export default function GoogleAdsPage({
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <GoalCard
                 label="Leads Google"
                 target={goals?.leads_google}
@@ -402,33 +402,35 @@ export default function GoogleAdsPage({
           >
             <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📋 Campanhas — Google Ads</p>
             {hasData && metrics.campaigns && metrics.campaigns.length > 0 ? (
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-[#F5F5F0] rounded-xl">
-                    {["Campanha", "Tipo", "Investido", "Impressões", "Cliques", "Conversões", "CPC", "Custo/Conv."].map((h) => (
-                      <th key={h} className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {metrics.campaigns.map((c, i) => (
-                    <tr key={c.campaign_id} className={i % 2 === 0 ? "bg-white" : "bg-[#F5F5F0]/40"}>
-                      <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[180px] truncate">{c.campaign_name}</td>
-                      <td className="px-3 py-3">
-                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05]/20 text-[#a07800] whitespace-nowrap">
-                          {c.result_type ?? "Search"}
-                        </span>
-                      </td>
-                      <td className="px-3 py-3 text-xs font-black text-[#FBBC05]">{fmtCurrency(c.spend)}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.impressions)}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.clicks)}</td>
-                      <td className="px-3 py-3 text-xs font-black text-[#34A853]">{c.leads > 0 ? fmt(c.leads) : "—"}</td>
-                      <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(c.cpc)}</td>
-                      <td className="px-3 py-3 text-xs font-black text-[#4285F4]">{c.cpl > 0 ? fmtCurrency(c.cpl) : "—"}</td>
+              <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+                <table className="w-full min-w-[640px]">
+                  <thead>
+                    <tr className="bg-[#F5F5F0] rounded-xl">
+                      {["Campanha", "Tipo", "Investido", "Impressões", "Cliques", "Conversões", "CPC", "Custo/Conv."].map((h) => (
+                        <th key={h} className="px-3 py-2 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {metrics.campaigns.map((c, i) => (
+                      <tr key={c.campaign_id} className={i % 2 === 0 ? "bg-white" : "bg-[#F5F5F0]/40"}>
+                        <td className="px-3 py-3 text-xs font-bold text-[#1A1A1A] max-w-[180px] truncate">{c.campaign_name}</td>
+                        <td className="px-3 py-3">
+                          <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05]/20 text-[#a07800] whitespace-nowrap">
+                            {c.result_type ?? "Search"}
+                          </span>
+                        </td>
+                        <td className="px-3 py-3 text-xs font-black text-[#FBBC05]">{fmtCurrency(c.spend)}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.impressions)}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmt(c.clicks)}</td>
+                        <td className="px-3 py-3 text-xs font-black text-[#34A853]">{c.leads > 0 ? fmt(c.leads) : "—"}</td>
+                        <td className="px-3 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(c.cpc)}</td>
+                        <td className="px-3 py-3 text-xs font-black text-[#4285F4]">{c.cpl > 0 ? fmtCurrency(c.cpl) : "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ) : (
               <div className="h-24 flex items-center justify-center border-2 border-dashed border-[#1A1A1A]/10 rounded-xl">
                 <p className="text-xs text-[#1A1A1A]/25 font-medium">
@@ -450,20 +452,20 @@ export default function GoogleAdsPage({
               <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#FBBC05] text-[#1A1A1A]">GOOGLE</span>
               <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]">Controle de Budget</span>
             </div>
-            <div className="flex gap-6 mb-4">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-4">
               {hasData ? (
                 <>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Investido</p>
-                    <p className="text-sm font-black text-[#1A1A1A]">{fmtCurrency(metrics.spend)}</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]">{fmtCurrency(metrics.spend)}</p>
                   </div>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Budget</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">{goals?.budget_google ? fmtCurrency(goals.budget_google) : "—"}</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">{goals?.budget_google ? fmtCurrency(goals.budget_google) : "—"}</p>
                   </div>
                   <div>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">Saldo</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">
                       {goals?.budget_google && metrics.spend ? fmtCurrency(goals.budget_google - metrics.spend) : "—"}
                     </p>
                   </div>
@@ -472,7 +474,7 @@ export default function GoogleAdsPage({
                 ["Budget", "Utilizado", "Saldo"].map((l) => (
                   <div key={l}>
                     <p className="text-[9px] text-[#1A1A1A]/30 font-bold uppercase tracking-wider">{l}</p>
-                    <p className="text-sm font-black text-[#1A1A1A]/25">—</p>
+                    <p className="text-xs sm:text-sm font-black text-[#1A1A1A]/25">—</p>
                   </div>
                 ))
               )}
@@ -502,11 +504,12 @@ export default function GoogleAdsPage({
             style={{ boxShadow: "4px 4px 0px 0px #FBBC05" }}
           >
             <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📅 Histórico Mensal — Google Ads</p>
-            <table className="w-full">
+            <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+            <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="bg-[#F5F5F0]">
                   {["Mês", "Investido", "Conversões", "Custo/Conv.", "CPC", "Var."].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
+                    <th key={h} className="px-3 sm:px-4 py-3 text-left text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -522,17 +525,17 @@ export default function GoogleAdsPage({
                         onClick={() => setSelectedMonth(Number(month))}
                         className={`cursor-pointer transition-colors ${Number(month) === selectedMonth ? "bg-[#FBBC05]/08" : "hover:bg-[#F5F5F0]/60"}`}
                       >
-                        <td className="px-4 py-3 text-xs font-bold text-[#1A1A1A]">
+                        <td className="px-3 sm:px-4 py-3 text-xs font-bold text-[#1A1A1A] whitespace-nowrap">
                           {MONTH_NAMES[Number(month) - 1]} {currentYear}
                           {Number(month) === selectedMonth && (
                             <span className="ml-2 text-[9px] font-black text-[#a07800]">← selecionado</span>
                           )}
                         </td>
-                        <td className="px-4 py-3 text-xs font-black text-[#FBBC05]">{fmtCurrency(m.spend)}</td>
-                        <td className="px-4 py-3 text-xs font-black text-[#34A853]">{fmt(m.leads)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpl)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpc)}</td>
-                        <td className="px-4 py-3 text-xs text-[#1A1A1A]/25">—</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs font-black text-[#FBBC05]">{fmtCurrency(m.spend)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs font-black text-[#34A853]">{fmt(m.leads)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpl)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/60">{fmtCurrency(m.cpc)}</td>
+                        <td className="px-3 sm:px-4 py-3 text-xs text-[#1A1A1A]/25">—</td>
                       </tr>
                     );
                   })}
@@ -545,6 +548,7 @@ export default function GoogleAdsPage({
                 )}
               </tbody>
             </table>
+            </div>
           </motion.div>
 
         </motion.div>
