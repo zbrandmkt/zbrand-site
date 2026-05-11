@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
 import { inviteUserAction, removeUserAction, resendInviteAction } from "./actions";
+import { PasswordField } from "./password-field";
 
 interface Props {
   params: { clientId: string };
-  searchParams: { error?: string; success?: string };
+  searchParams: { error?: string; success?: string; name?: string };
 }
 
 export default async function UsuariosPage({ params, searchParams }: Props) {
@@ -73,16 +74,29 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {searchParams.success === "invited" && (
+      {searchParams.success === "created" && (
         <div
-          className="mb-6 bg-[#AAFF00]/10 border-2 border-[#AAFF00] rounded-2xl px-5 py-4 flex items-start gap-3"
+          className="mb-6 bg-[#AAFF00]/10 border-2 border-[#AAFF00] rounded-2xl px-5 py-4"
           style={{ boxShadow: "3px 3px 0px 0px #AAFF00" }}
         >
-          <span className="text-[#5a8a00] text-lg shrink-0">✉</span>
-          <div>
-            <p className="font-black text-[#5a8a00] text-sm">Convite enviado!</p>
-            <p className="text-xs text-[#5a8a00]/80 mt-0.5">
-              O usuário receberá um email com o link de acesso.
+          <div className="flex items-start gap-3">
+            <span className="text-[#5a8a00] text-lg shrink-0">✅</span>
+            <div>
+              <p className="font-black text-[#5a8a00] text-sm">
+                {searchParams.name ? `${searchParams.name} criado com sucesso!` : "Usuário criado com sucesso!"}
+              </p>
+              <p className="text-xs text-[#5a8a00]/80 mt-0.5">
+                Acesso imediato — envie o e-mail e a senha que você definiu via WhatsApp para o cliente.
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 bg-white/60 rounded-xl px-4 py-3 border border-[#AAFF00]/40">
+            <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">Mensagem sugerida para WhatsApp</p>
+            <p className="text-xs text-[#1A1A1A]/70 font-medium leading-relaxed">
+              Olá! Seu acesso ao painel ZBRAND está pronto 🎉<br />
+              🌐 zbrand.com.br/area-do-cliente<br />
+              📧 E-mail: <em>[o email que você cadastrou]</em><br />
+              🔑 Senha: <em>[a senha que você definiu]</em>
             </p>
           </div>
         </div>
@@ -95,9 +109,9 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
         >
           <span className="text-[#00C2FF] text-lg shrink-0">🔄</span>
           <div>
-            <p className="font-black text-[#1A1A1A] text-sm">Convite reenviado!</p>
+            <p className="font-black text-[#1A1A1A] text-sm">Senha atualizada!</p>
             <p className="text-xs text-[#1A1A1A]/60 mt-0.5">
-              Um novo email de convite foi enviado para o usuário.
+              A senha do usuário foi redefinida com sucesso.
             </p>
           </div>
         </div>
@@ -194,9 +208,9 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
         className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-6"
         style={{ boxShadow: "5px 5px 0px 0px #FF6100" }}
       >
-        <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-1">Convidar usuário</h2>
+        <h2 className="font-black text-[#1A1A1A] text-base tracking-tight mb-1">Adicionar usuário</h2>
         <p className="text-xs text-[#1A1A1A]/40 font-medium mb-5">
-          O usuário receberá um email com o link para criar a senha e acessar o dashboard.
+          O acesso é criado imediatamente. Envie o e-mail e a senha para o cliente via WhatsApp.
         </p>
 
         <form action={inviteUserAction} className="flex flex-col gap-4">
@@ -240,6 +254,8 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
                 <option value="viewer">Viewer — somente leitura</option>
               </select>
             </div>
+
+            <PasswordField />
           </div>
 
           <button
@@ -247,7 +263,7 @@ export default async function UsuariosPage({ params, searchParams }: Props) {
             className="self-start bg-[#FF6100] border-2 border-[#1A1A1A] text-white font-black text-sm uppercase tracking-widest px-8 py-3 rounded-xl hover:-translate-y-0.5 transition-transform"
             style={{ boxShadow: "3px 3px 0px 0px #1A1A1A" }}
           >
-            ✉ Enviar convite
+            ✅ Criar acesso
           </button>
         </form>
       </div>

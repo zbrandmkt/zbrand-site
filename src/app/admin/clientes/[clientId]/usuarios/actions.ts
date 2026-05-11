@@ -19,7 +19,16 @@ export async function inviteUserAction(formData: FormData) {
   const clientId = formData.get("clientId") as string;
   const name     = (formData.get("name") as string).trim();
   const email    = (formData.get("email") as string).trim().toLowerCase();
+  const password = (formData.get("password") as string).trim();
   const role     = (formData.get("role") as string) || "owner";
+
+  if (!password || password.length < 8) {
+    redirect(
+      `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
+        "A senha deve ter pelo menos 8 caracteres."
+      )}`
+    );
+  }
 
   const supabaseAdmin = createAdminSupabaseClient();
 
@@ -48,50 +57,41 @@ export async function inviteUserAction(formData: FormData) {
       );
     }
 
-    // Só reenviar invite se ainda não confirmou o email
-    // Usuários confirmados não podem receber inviteUserByEmail (Supabase rejeita)
-    const isConfirmed = !!existingAuthUser.email_confirmed_at;
-    if (!isConfirmed) {
-      const { error: resendError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-        redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
-        data: { role: "client", name },
-      });
-      if (resendError && !resendError.message.includes("already registered")) {
-        redirect(
-          `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-            `Erro ao enviar convite: ${resendError.message}`
-          )}`
-        );
-      }
-    }
+    // Atualiza a senha e metadados do usuário existente
+    await supabaseAdmin.auth.admin.updateUserById(userId, {
+      password,
+      user_metadata: { role: "client", name },
+      email_confirm: true,
+    });
   } else {
-    // Novo usuário — enviar convite
-    const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-      redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
-      data: { role: "client", name },
+    // Criar usuário diretamente com senha — sem email de convite
+    const { data: createData, error: createError } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: { role: "client", name },
     });
 
-    if (inviteError) {
+    if (createError) {
       redirect(
         `/admin/clientes/${clientId}/usuarios?error=${encodeURIComponent(
-          `Erro ao enviar convite: ${inviteError.message}`
+          `Erro ao criar usuário: ${createError.message}`
         )}`
       );
     }
 
-    userId = inviteData.user.id;
+    userId = createData.user.id;
   }
 
-  // Vincular à empresa
-  const alreadyConfirmed = existingAuthUser?.email_confirmed_at != null;
+  // Vincular à empresa — já ativo, sem precisar de convite
   const { error: linkError } = await supabaseAdmin.from("client_users").insert({
     client_id: clientId,
     user_id: userId,
     name,
     email,
     role,
-    status: alreadyConfirmed ? "active" : "invited",
-    ...(alreadyConfirmed ? { accepted_at: new Date().toISOString() } : {}),
+    status: "active",
+    accepted_at: new Date().toISOString(),
   });
 
   if (linkError) {
@@ -104,7 +104,7 @@ export async function inviteUserAction(formData: FormData) {
 
   revalidatePath(`/admin/clientes/${clientId}/usuarios`);
   revalidatePath(`/admin/clientes/${clientId}`);
-  redirect(`/admin/clientes/${clientId}/usuarios?success=invited`);
+  redirect(`/admin/clientes/${clientId}/usuarios?success=created&name=${encodeURIComponent(name)}`);
 }
 
 export async function resendInviteAction(formData: FormData) {
