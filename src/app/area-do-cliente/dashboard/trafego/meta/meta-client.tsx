@@ -279,7 +279,7 @@ export default function MetaAdsPage({
           {hasData ? (
             <span className="flex items-center gap-1.5 bg-[#AAFF00]/20 border border-[#AAFF00] text-[#1A1A1A] text-[11px] font-black uppercase tracking-wider px-3 py-2 rounded-xl">
               <span className="w-1.5 h-1.5 rounded-full bg-[#1A1A1A] inline-block" />
-              Sincronizado
+              Sincronizado{metrics.synced_at && ` · ${new Date(metrics.synced_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}`}
             </span>
           ) : (
             <span className="flex items-center gap-1.5 bg-[#1A1A1A]/06 border border-[#1A1A1A]/10 text-[#1A1A1A]/30 text-[11px] font-black uppercase tracking-wider px-3 py-2 rounded-xl">
@@ -297,23 +297,6 @@ export default function MetaAdsPage({
         onSelect={setSelectedMonth}
         metricsMap={metricsMap}
       />
-
-      {/* Sync banner */}
-      {hasData && metrics.synced_at && (
-        <motion.div
-          key={`sync-${selectedMonth}`}
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="mb-5 bg-[#AAFF00]/10 border-2 border-[#AAFF00]/40 rounded-xl sm:rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3"
-        >
-          <span className="text-lg shrink-0">🔄</span>
-          <p className="text-xs font-black text-[#1A1A1A]/60">
-            Dados de {selectedMonthName} sincronizados em{" "}
-            {new Date(metrics.synced_at).toLocaleString("pt-BR")} via Meta Ads API
-          </p>
-        </motion.div>
-      )}
 
       {/* No data banner */}
       {!hasData && (
