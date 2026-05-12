@@ -72,12 +72,12 @@ function KpiCard({ emoji, label, value, shadow, delay = 0 }: {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1 sm:gap-1.5 flex-1 min-w-0"
-      style={{ boxShadow: `5px 5px 0px 0px ${shadow}` }}
+      className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl px-2.5 sm:px-5 py-2.5 sm:py-4 flex flex-col gap-0.5 sm:gap-1.5 flex-1 min-w-0"
+      style={{ boxShadow: `3px 3px 0px 0px ${shadow}` }}
     >
-      <span className="text-lg sm:text-xl leading-none">{emoji}</span>
-      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
-      <p className={`text-lg sm:text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
+      <span className="text-base sm:text-xl leading-none">{emoji}</span>
+      <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-wider sm:tracking-widest text-[#1A1A1A]/40 leading-none">{label}</p>
+      <p className={`text-sm sm:text-2xl font-black leading-none ${hasData ? "text-[#1A1A1A]" : "text-[#1A1A1A]/25"}`}>{value}</p>
     </motion.div>
   );
 }
@@ -90,10 +90,10 @@ function EmptySection({ title, shadow, children }: {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
-      style={{ boxShadow: `4px 4px 0px 0px ${shadow}` }}
+      className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-4 sm:mb-5"
+      style={{ boxShadow: `3px 3px 0px 0px ${shadow}` }}
     >
-      <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">{title}</p>
+      <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-3 sm:mb-4">{title}</p>
       {children ?? (
         <div className="h-24 flex items-center justify-center border-2 border-dashed border-[#1A1A1A]/10 rounded-xl">
           <p className="text-xs text-[#1A1A1A]/25 font-medium">Dados serão preenchidos em breve</p>
@@ -196,9 +196,9 @@ function GoalCard({
   const barColor = status === "good" ? "#AAFF00" : status === "warn" ? "#FBBC05" : status === "bad" ? "#FF3D9A" : "#1A1A1A";
 
   return (
-    <div className="rounded-2xl border-2 border-[#1A1A1A]/08 bg-white p-4 flex flex-col gap-2.5">
-      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{label}</p>
-      <p className={`text-2xl font-black leading-none ${hasActual ? "text-[#1A1A1A]" : "text-[#1A1A1A]/20"}`}>
+    <div className="rounded-xl sm:rounded-2xl border-2 border-[#1A1A1A]/08 bg-white p-3 sm:p-4 flex flex-col gap-2">
+      <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/30">{label}</p>
+      <p className={`text-xl sm:text-2xl font-black leading-none ${hasActual ? "text-[#1A1A1A]" : "text-[#1A1A1A]/20"}`}>
         {hasActual ? format(actual!) : "—"}
       </p>
       <div className="h-2 bg-[#1A1A1A]/06 rounded-full overflow-hidden">
@@ -245,7 +245,7 @@ export default function MetaAdsPage({
   const selectedMonthName = MONTH_NAMES[selectedMonth - 1];
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-[1400px]">
+    <div className="p-3 sm:p-6 lg:p-8 max-w-[1400px] overflow-x-hidden w-full">
 
       {/* Header */}
       <motion.div
@@ -305,7 +305,7 @@ export default function MetaAdsPage({
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="mb-5 bg-[#AAFF00]/10 border-2 border-[#AAFF00]/40 rounded-2xl px-5 py-3 flex items-center gap-3"
+          className="mb-5 bg-[#AAFF00]/10 border-2 border-[#AAFF00]/40 rounded-xl sm:rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3"
         >
           <span className="text-lg shrink-0">🔄</span>
           <p className="text-xs font-black text-[#1A1A1A]/60">
@@ -322,7 +322,7 @@ export default function MetaAdsPage({
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="mb-5 bg-white border-2 border-[#1A1A1A]/10 rounded-2xl px-5 py-4 flex items-center gap-4"
+          className="mb-5 bg-white border-2 border-[#1A1A1A]/10 rounded-xl sm:rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex items-center gap-3 sm:gap-4"
           style={{ boxShadow: "3px 3px 0px 0px #1877F2" }}
         >
           <span className="text-2xl shrink-0">📊</span>
@@ -360,8 +360,8 @@ export default function MetaAdsPage({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.24, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="col-span-2 sm:col-span-3 lg:col-span-1 bg-white border-2 border-[#1A1A1A] rounded-2xl px-3 sm:px-5 py-3 sm:py-4 flex flex-col gap-1.5 min-w-0"
-              style={{ boxShadow: "5px 5px 0px 0px #1877F2", flex: "1.5" }}
+              className="col-span-2 sm:col-span-3 lg:col-span-1 bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl px-2.5 sm:px-5 py-2.5 sm:py-4 flex flex-col gap-1.5 min-w-0"
+              style={{ boxShadow: "3px 3px 0px 0px #1877F2", flex: "1.5" }}
             >
               <span className="text-xl leading-none">💳</span>
               <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1A1A]/40 leading-none">Budget do Mês</p>
@@ -403,10 +403,10 @@ export default function MetaAdsPage({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
-            style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-4 sm:mb-5"
+            style={{ boxShadow: "3px 3px 0px 0px #1877F2" }}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
               <div className="flex items-center gap-2">
                 <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">🎯 Metas do Mês</p>
                 <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
@@ -445,13 +445,13 @@ export default function MetaAdsPage({
           </motion.div>
 
           {/* Métricas Gerais + Funil */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 sm:gap-4 mb-4 sm:mb-5">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.4 }}
-              className="lg:col-span-3 bg-white border-2 border-[#1A1A1A] rounded-2xl p-4 sm:p-5"
-              style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
+              className="lg:col-span-3 bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5"
+              style={{ boxShadow: "3px 3px 0px 0px #1877F2" }}
             >
               <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">📈 Métricas Gerais</p>
               <p className="text-sm font-black text-[#1A1A1A] mb-4">{selectedMonthName} {currentYear} — Meta Ads</p>
@@ -481,8 +481,8 @@ export default function MetaAdsPage({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
-              className="lg:col-span-2 bg-white border-2 border-[#1A1A1A] rounded-2xl p-4 sm:p-5"
-              style={{ boxShadow: "4px 4px 0px 0px #00C2FF" }}
+              className="lg:col-span-2 bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5"
+              style={{ boxShadow: "3px 3px 0px 0px #00C2FF" }}
             >
               <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-1">🔻 Funil de Conversão</p>
               <p className="text-sm font-black text-[#1A1A1A] mb-4">{selectedMonthName} {currentYear}</p>
@@ -514,12 +514,12 @@ export default function MetaAdsPage({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
-            style={{ boxShadow: "4px 4px 0px 0px #AAFF00" }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-4 sm:mb-5"
+            style={{ boxShadow: "3px 3px 0px 0px #AAFF00" }}
           >
-            <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-4">📋 Campanhas — Meta Ads</p>
+            <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40 mb-3 sm:mb-4">📋 Campanhas — Meta Ads</p>
             {hasData && metrics.campaigns && metrics.campaigns.length > 0 ? (
-              <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+              <div className="overflow-x-auto -mx-3 sm:-mx-5 px-3 sm:px-5">
                 <table className="w-full min-w-[640px]">
                   <thead>
                     <tr className="bg-[#F5F5F0] rounded-xl">
@@ -560,10 +560,10 @@ export default function MetaAdsPage({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
-            style={{ boxShadow: "4px 4px 0px 0px #1877F2" }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-4 sm:mb-5"
+            style={{ boxShadow: "3px 3px 0px 0px #1877F2" }}
           >
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#1877F2] text-white">META</span>
               <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]">Controle de Budget</span>
             </div>
@@ -615,8 +615,8 @@ export default function MetaAdsPage({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white border-2 border-[#1A1A1A] rounded-2xl p-5 mb-5"
-            style={{ boxShadow: "4px 4px 0px 0px #7B2FF7" }}
+            className="bg-white border-2 border-[#1A1A1A] rounded-xl sm:rounded-2xl p-3 sm:p-5 mb-4 sm:mb-5"
+            style={{ boxShadow: "3px 3px 0px 0px #7B2FF7" }}
           >
             <div className="flex items-center justify-between mb-4">
               <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1A1A]/40">🏆 Criativos Campeões</p>
@@ -714,7 +714,7 @@ export default function MetaAdsPage({
 
           {/* Histórico Mensal */}
           <EmptySection title="📅 Histórico Mensal — Meta Ads" shadow="#FBBC05">
-            <div className="overflow-x-auto -mx-4 sm:-mx-5 px-4 sm:px-5">
+            <div className="overflow-x-auto -mx-3 sm:-mx-5 px-3 sm:px-5">
             <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="bg-[#F5F5F0]">
