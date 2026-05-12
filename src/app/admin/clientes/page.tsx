@@ -80,7 +80,7 @@ export default async function ClientesPage() {
                       <input
                         name="company"
                         defaultValue={client.company !== "A definir" ? client.company : ""}
-                        placeholder="Ex: Churruts Hamburguer"
+                        placeholder="Ex: Studio Fitness"
                         required
                         className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2 text-sm font-medium text-[#1A1A1A] focus:border-[#FF6100] outline-none"
                       />

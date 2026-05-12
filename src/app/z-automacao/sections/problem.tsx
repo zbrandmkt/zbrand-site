@@ -7,7 +7,7 @@ const AMBER = "#FBBC05";
 
 const problems = [
   {
-    text: "WhatsApp silencioso às 23h — cliente queria pedir, você dormia, pedido foi pro concorrente",
+    text: "WhatsApp silencioso às 23h — cliente queria agendar, você dormia, foi pro concorrente",
   },
   {
     text: "Uma pessoa respondendo 80 mensagens ao mesmo tempo: erro garantido, cliente irritado e sumido",
@@ -16,7 +16,7 @@ const problems = [
     text: "Atendeu 300 pessoas esse mês. Quantas consegue chamar de volta amanhã com uma promoção? Zero.",
   },
   {
-    text: "Fez um combo especial de sexta, postou no story. Chegou em 12 pessoas. Poderia ter chegado em 300.",
+    text: "Fez uma promoção especial de sexta, postou no story. Chegou em 12 pessoas. Poderia ter chegado em 300.",
   },
   {
     text: "Cliente comprou, ficou satisfeito — e nunca mais voltou. Ninguém lembrou que ele existia.",
@@ -153,7 +153,7 @@ export function ZAutomaçaoProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Porque trabalhamos todo dia com restaurantes que passaram pelo mesmo.&rdquo;
+              Porque trabalhamos todo dia com negócios locais que passaram pelo mesmo.&rdquo;
             </p>
           </motion.div>
         </div>

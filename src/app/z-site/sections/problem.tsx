@@ -9,7 +9,7 @@ const problems = [
   {
     emoji: "🔍",
     title: "Invisível no Google",
-    text: "Quando o cliente pesquisa 'restaurante perto de mim', você não aparece. Seu concorrente aparece. O cliente vai pra lá.",
+    text: "Quando o cliente pesquisa 'negócio perto de mim', você não aparece. Seu concorrente aparece. O cliente vai pra lá.",
   },
   {
     emoji: "📱",
@@ -18,17 +18,17 @@ const problems = [
   },
   {
     emoji: "💸",
-    title: "Comissão do App Todo Mês",
-    text: "iFood, Rappi e Uber Eats cobram de 12% a 30% por pedido. Com site próprio, o lucro é inteiro seu.",
+    title: "Dependente de Marketplace",
+    text: "Plataformas de terceiros cobram comissões altas e controlam a experiência. Com site próprio, o lucro e o cliente são seus.",
   },
   {
     emoji: "📋",
-    title: "Cardápio Desatualizado em Todo Lugar",
-    text: "Preço mudou? Você atualiza no WhatsApp, no Instagram, no iFood… são 4 lugares. Com site, é um só.",
+    title: "Informações Desatualizadas em Todo Lugar",
+    text: "Preço mudou? Serviço novo? Você atualiza no WhatsApp, no Instagram, no Google… são 4 lugares. Com site, é um só.",
   },
   {
     emoji: "📅",
-    title: "Eventos e Buffets Sem Vitrine",
+    title: "Seus Serviços Sem Vitrine",
     text: "Você faz um trabalho incrível, mas sem uma página com fotos, depoimentos e formulário, o cliente não te encontra — e fecha com quem tem.",
   },
   {

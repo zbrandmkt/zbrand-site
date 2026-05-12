@@ -52,7 +52,7 @@ export function Footer() {
             <p className="font-display text-xs text-white/40 leading-relaxed">
               Marketing digital sem mimimi.
               <br />
-              Feito por quem já tocou restaurante.
+              Feito por quem já empreendeu de verdade.
             </p>
           </div>
 

@@ -282,7 +282,7 @@ export function ZCaptacaoPricing() {
                   Cobertura Real Time
                 </h3>
                 <p className="text-[11px] text-white/40 font-medium mt-1">
-                  Inaugurações · Festas · Eventos gastronômicos
+                  Inaugurações · Festas · Eventos corporativos
                 </p>
               </div>
 

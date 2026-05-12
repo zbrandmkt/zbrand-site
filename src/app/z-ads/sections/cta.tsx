@@ -15,14 +15,12 @@ interface FormData {
 }
 
 const BUSINESS_TYPES = [
-  "Restaurante",
-  "Padaria",
-  "Confeitaria",
-  "Cafeteria",
-  "Gelateria",
-  "Delivery / Ghost Kitchen",
-  "Catering / Buffet",
-  "Varejo Gourmet",
+  "Clínica / Saúde",
+  "Academia / Estúdio",
+  "Salão / Barbearia",
+  "Loja / E-commerce",
+  "Restaurante / Alimentação",
+  "Escritório / Consultoria",
   "Outro",
 ];
 
@@ -133,7 +131,7 @@ export function ZAdsCta() {
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
               Sem compromisso, sem papo técnico. Uma conversa direta sobre como transformar
-              verba de anúncio em clientes reais no seu restaurante.
+              verba de anúncio em clientes reais para o seu negócio.
             </p>
 
             {/* WhatsApp direct */}

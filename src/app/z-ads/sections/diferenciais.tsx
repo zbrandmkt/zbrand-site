@@ -8,7 +8,7 @@ const diffs = [
     icon: "🦓",
     color: "#FBBC05",
     title: "Experiência no Setor",
-    desc: "Escalamos clientes reais em restaurante, delivery e cafeteria. Sabemos o que converte mesa cheia — não é achismo, é método.",
+    desc: "Escalamos clientes reais em diversos segmentos. Sabemos o que converte — não é achismo, é método.",
   },
   {
     icon: "🎥",

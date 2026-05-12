@@ -43,7 +43,7 @@ const milestones = [
     color: "#FF3D9A",
     emoji: "🦓",
     title: "Foco total na ZBRAND",
-    text: "Churruts fecha em março de 2026. ZBRAND 100%. A agência que entende de gastronomia porque viveu na pele cada desafio.",
+    text: "Churruts fecha em março de 2026. ZBRAND 100%. A agência que entende de negócio porque viveu na pele cada desafio.",
   },
 ];
 
@@ -64,7 +64,7 @@ export function SobreOrigin() {
             A nossa história
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
-            De churros na rua{" "}
+            De empreendedores{" "}
             <span style={{ color: "#FF6100" }}>para agência</span>{" "}
             de marketing.
           </h2>

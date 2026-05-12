@@ -36,8 +36,8 @@ const categories = [
     icon: "🎬",
     color: "#7B2FF7",
     items: [
-      { label: "Bastidores do restaurante", portrait: true, real: false },
-      { label: "Prato em destaque", portrait: true, real: false },
+      { label: "Bastidores do negócio", portrait: true, real: false },
+      { label: "Produto em destaque", portrait: true, real: false },
       { label: "Equipe em ação", portrait: true, real: false },
       { label: "Conteúdo humanizado", portrait: true, real: false },
     ],

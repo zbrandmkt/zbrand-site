@@ -6,7 +6,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "Qual o investimento total por mês?",
-    a: "R$ 1.200 de mensalidade + R$ 1.000 de verba de anúncios (paga direto ao Meta ou Google — esse valor não passa pela ZBRAND). No total, são aproximadamente R$ 2.200/mês para ter tráfego pago profissional rodando no seu restaurante.",
+    a: "R$ 1.500 de mensalidade + R$ 1.000 de verba de anúncios (paga direto ao Meta ou Google — esse valor não passa pela ZBRAND). No total, são aproximadamente R$ 2.500/mês para ter tráfego pago profissional rodando no seu negócio.",
   },
   {
     q: "Por que o contrato é de 4 meses?",
@@ -21,12 +21,12 @@ const faqs = [
     a: "R$ 1.000/mês de verba mínima. Com menos que isso, a plataforma não tem volume de dados suficiente para otimizar e os resultados demoram muito mais para aparecer. Quanto mais verba, mais rápido a campanha escala.",
   },
   {
-    q: "Posso usar os anúncios para vender no iFood ou Rappi?",
-    a: "Sim — e essa é uma estratégia poderosa. Em vez de anunciar dentro dos apps de delivery (que só mostram cardápio para quem já está com fome e comparando preço), a gente cria anúncios no Meta ou Google que apresentam seu produto com vídeo ou imagem atrativa. Quem vê se interessa, segue sua página, interage — e quando quiser pedir, já vai direto pro seu iFood ou Rappi. A margem é menor por conta da comissão da plataforma, mas você conquista um cliente que te conhece, confia e volta. É muito mais eficiente do que aparecer só no cardápio.",
+    q: "Posso usar os anúncios para vender em marketplaces?",
+    a: "Sim — e essa é uma estratégia poderosa. Em vez de depender só da vitrine da plataforma (onde você é mais um entre dezenas), a gente cria anúncios no Meta ou Google que apresentam seu produto com vídeo ou imagem atrativa. Quem vê se interessa, segue sua página, interage — e quando quiser comprar, já vai direto pra você. É muito mais eficiente do que competir só por preço dentro do marketplace.",
   },
   {
     q: "E se eu não ver resultado?",
-    a: "A gente ajusta estratégia, criativo e público até encontrar o que funciona para o seu restaurante. Acompanhamos toda semana — não entregamos relatório e sumimos. Se algo não está convertendo, mudamos antes de virar problema.",
+    a: "A gente ajusta estratégia, criativo e público até encontrar o que funciona para o seu negócio. Acompanhamos toda semana — não entregamos relatório e sumimos. Se algo não está convertendo, mudamos antes de virar problema.",
   },
 ];
 

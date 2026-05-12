@@ -16,7 +16,7 @@ const stats = [
   {
     value: "3.000",
     label: "inscritos no YouTube em 3 meses",
-    note: "conteúdo sobre churros",
+    note: "conteúdo sobre a marca própria",
   },
   {
     value: "R$ 7k",

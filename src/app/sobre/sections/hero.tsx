@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const stats = [
-  { value: "10 anos", label: "no ramo de gastronomia" },
+  { value: "10 anos", label: "de empreendedorismo" },
   { value: "0 → 10k", label: "seguidores orgânicos" },
   { value: "R$ 7k", label: "primeiro produto digital" },
   { value: "1 bebê", label: "o Zeca que mudou tudo" },
@@ -70,7 +70,7 @@ export function SobreHero() {
           transition={{ delay: 0.22, duration: 0.55 }}
           className="font-display text-base text-white/55 text-center max-w-2xl mx-auto leading-relaxed mb-14"
         >
-          Dois donos de restaurante que aprenderam marketing do jeito difícil —
+          Dois empreendedores que aprenderam marketing do jeito difícil —
           na prática, no erro, no dia a dia de um negócio real. Isso é o que nos
           faz diferentes.
         </motion.p>

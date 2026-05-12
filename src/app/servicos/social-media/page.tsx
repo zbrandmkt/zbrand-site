@@ -12,9 +12,9 @@ import { ZSocialFaq } from "@/app/z-social/sections/faq";
 import { ZSocialCta } from "@/app/z-social/sections/cta";
 
 export const metadata = {
-  title: "Social Media para Restaurantes — Z-SOCIAL | ZBRAND",
+  title: "Social Media para Negócios Locais — Z-SOCIAL | ZBRAND",
   description:
-    "A gente filma, edita e publica conteúdo que traz clientes reais. Gestão de Instagram, TikTok e LinkedIn para o setor de gastronomia. Conheça o Z-SOCIAL.",
+    "A gente filma, edita e publica conteúdo que traz clientes reais. Gestão de Instagram, TikTok e LinkedIn para o seu negócio. Conheça o Z-SOCIAL.",
 };
 
 export default function SocialMediaPage() {

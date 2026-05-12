@@ -10,19 +10,19 @@ const diffs = [
     icon: "💻",
     color: PINK,
     title: "Feito para Vender",
-    desc: "Não é vitrine, é funil. Cada seção foi pensada para levar o visitante do 'tô vendo' pro 'quero pedir' em menos de 30 segundos.",
+    desc: "Não é vitrine, é funil. Cada seção foi pensada para levar o visitante do 'tô vendo' pro 'quero contratar' em menos de 30 segundos.",
   },
   {
     icon: "📱",
     color: "#00C2FF",
     title: "Mobile-First",
-    desc: "80% dos pedidos vêm do celular. Seu site carrega em 2 segundos, funciona no 4G e tem botão de WhatsApp sempre visível.",
+    desc: "80% dos acessos vêm do celular. Seu site carrega em 2 segundos, funciona no 4G e tem botão de WhatsApp sempre visível.",
   },
   {
     icon: "🔍",
     color: "#FF6100",
     title: "SEO Local Incluído",
-    desc: "Seu site aparece no Google quando alguém pesquisa 'restaurante em [seu bairro]'. Tráfego orgânico e gratuito, todo mês.",
+    desc: "Seu site aparece no Google quando alguém pesquisa seu serviço + bairro. Tráfego orgânico e gratuito, todo mês.",
   },
   {
     icon: "🚀",
@@ -91,7 +91,7 @@ export function ZSiteDiferenciais() {
             <span style={{ color: PINK }}>trabalham por você</span>
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
-            Cada detalhe pensado para o ramo alimentício. Seu site atrai, converte e fideliza — enquanto você cuida do que faz de melhor.
+            Cada detalhe pensado para negócios locais. Seu site atrai, converte e fideliza — enquanto você cuida do que faz de melhor.
           </p>
         </motion.div>
 

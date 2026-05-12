@@ -17,14 +17,13 @@ interface FormData {
 }
 
 const BUSINESS_TYPES = [
-  "Restaurante",
-  "Padaria",
-  "Confeitaria",
-  "Cafeteria",
-  "Gelateria",
-  "Delivery / Ghost Kitchen",
-  "Catering / Buffet",
-  "Varejo Gourmet",
+  "Loja Física",
+  "Loja Online / E-commerce",
+  "Prestador de Serviço",
+  "Clínica / Consultório",
+  "Estúdio / Espaço",
+  "Franquia",
+  "Escritório / Consultoria",
   "Outro",
 ];
 

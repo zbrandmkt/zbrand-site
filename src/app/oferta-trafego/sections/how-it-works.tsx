@@ -15,7 +15,7 @@ const steps = [
     number: "02",
     icon: "🧠",
     title: "A gente estrutura as campanhas",
-    desc: "Criamos a segmentação, definimos públicos, criativos e orçamento ideal para o Meta Ads do seu restaurante.",
+    desc: "Criamos a segmentação, definimos públicos, criativos e orçamento ideal para o Meta Ads do seu negócio.",
     color: "#00C2FF",
   },
   {
@@ -117,7 +117,7 @@ export function HowItWorks() {
             Como funciona
           </h2>
           <p className="text-white/35 text-sm mt-3 max-w-xs mx-auto">
-            Simples, direto e sem enrolação. Em 5 passos seu restaurante começa a aparecer pra quem importa.
+            Simples, direto e sem enrolação. Em 5 passos seu negócio começa a aparecer pra quem importa.
           </p>
         </motion.div>
 

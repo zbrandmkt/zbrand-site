@@ -52,7 +52,7 @@ export function ZCaptacaoHero() {
               className="font-display text-[11px] font-black uppercase tracking-widest"
               style={{ color: LIME }}
             >
-              Z-CAPTAÇÃO — Conteúdo Presencial para Restaurantes
+              Z-CAPTAÇÃO — Conteúdo Presencial para Seu Negócio
             </span>
           </motion.div>
 
@@ -79,7 +79,7 @@ export function ZCaptacaoHero() {
           >
             A gente vai até o seu negócio com{" "}
             <span className="text-preto font-semibold">equipamento profissional e roteiro pronto.</span>{" "}
-            Você foca no restaurante — a gente captura a história.
+            Você foca no negócio — a gente captura a história.
           </motion.p>
 
           {/* CTAs */}

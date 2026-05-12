@@ -25,7 +25,7 @@ const services = [
   {
     icon: "🎥",
     title: "Captação de Conteúdo",
-    desc: "A gente vai até o seu restaurante gravar. Nada de banco de imagem. Conteúdo de verdade.",
+    desc: "A gente vai até seu negócio gravar. Nada de banco de imagem. Conteúdo de verdade.",
     color: "#AAFF00",
     href: "/servicos/captacao",
   },
@@ -39,7 +39,7 @@ const services = [
   {
     icon: "🤖",
     title: "Automação WhatsApp",
-    desc: "Atendimento automático, confirmação de reservas e cardápio digital. Sem perder cliente por falta de resposta.",
+    desc: "Atendimento automático, agendamentos e catálogo digital. Sem perder cliente por falta de resposta.",
     color: "#25D366",
     href: "/servicos/automacao",
   },
@@ -68,7 +68,7 @@ const exploreCards = [
     emoji: "🦓",
     badge: "Nossa história",
     title: "Quem é a ZBRAND",
-    desc: "Ex-donos de restaurante que cresceram de 1.500 para 10.000 seguidores. Depois viramos agência.",
+    desc: "Ex-empreendedores que cresceram a própria marca de 1.500 para 10.000 seguidores. Depois viramos agência.",
     cta: "Conhecer a gente",
     color: "#7B2FF7",
     href: "/sobre",
@@ -336,7 +336,7 @@ export default function CamisetaPage() {
 
               <FadeUp delay={0.26}>
                 <p className="text-white/50 text-sm lg:text-base leading-relaxed mb-8 max-w-[300px] lg:max-w-none mx-auto lg:mx-0">
-                  A agência de marketing feita para quem vive de alimentar pessoas.
+                  A agência de marketing digital para quem quer crescer de verdade.
                   Sem mimimi, sem enrolação, com resultado.
                 </p>
               </FadeUp>
@@ -510,14 +510,14 @@ export default function CamisetaPage() {
               </h2>
 
               <p className="text-[#1A1A1A]/65 text-sm lg:text-base leading-relaxed mb-5">
-                São Bruna e Gui — ex-donos de restaurante que cresceram a própria marca de{" "}
+                São Bruna e Gui — ex-empreendedores que cresceram a própria marca de{" "}
                 <strong className="text-[#1A1A1A]">1.500 para 10.000 seguidores orgânicos</strong>{" "}
                 antes de virarem agência. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
               </p>
 
               <div className="grid grid-cols-2 gap-3 mb-7">
                 {[
-                  { n: "10 anos", label: "no ramo de gastronomia" },
+                  { n: "10 anos", label: "em empreendedorismo" },
                   { n: "0 → 10k", label: "seguidores orgânicos" },
                   { n: "R$ 7k", label: "primeiro produto digital" },
                   { n: "1 bebê", label: "o Zeca que mudou tudo" },
@@ -554,7 +554,7 @@ export default function CamisetaPage() {
                 O que a gente faz (e faz bem)
               </p>
               <h2 className="font-black text-2xl lg:text-3xl text-white uppercase leading-tight">
-                Tudo que seu restaurante precisa pra crescer online
+                Tudo que seu negócio precisa pra crescer online
               </h2>
             </div>
           </FadeUp>
@@ -600,7 +600,7 @@ export default function CamisetaPage() {
         <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
             <p className="font-black text-5xl lg:text-6xl text-white mb-2">+50</p>
-            <p className="text-white/70 text-sm lg:text-base font-medium mb-8">restaurantes já cresceram com a ZBRAND</p>
+            <p className="text-white/70 text-sm lg:text-base font-medium mb-8">negócios já cresceram com a ZBRAND</p>
             <div className="grid grid-cols-3 gap-4 lg:gap-6">
               {[
                 { n: "+320%", label: "mais seguidores" },
@@ -702,7 +702,7 @@ export default function CamisetaPage() {
             </h2>
             <p className="text-white/40 text-sm leading-relaxed mb-8">
               Sem compromisso. Sem papo de vendedor. Só uma conversa honesta sobre
-              como a gente pode transformar o digital do seu restaurante.
+              como a gente pode transformar o digital do seu negócio.
             </p>
 
             <a

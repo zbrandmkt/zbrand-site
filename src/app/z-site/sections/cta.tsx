@@ -17,22 +17,22 @@ interface FormData {
 }
 
 const BUSINESS_TYPES = [
-  "Restaurante",
-  "Delivery / Ghost Kitchen",
-  "Buffet para Eventos",
-  "Carrinho Gourmet / Food Truck",
-  "Cafeteria",
-  "Confeitaria / Padaria",
-  "Bar / Pub",
-  "Outro negócio alimentício",
+  "Clínica / Saúde",
+  "Academia / Estúdio",
+  "Salão de Beleza",
+  "Loja / E-commerce",
+  "Restaurante / Alimentação",
+  "Escritório / Consultoria",
+  "Serviços em Geral",
+  "Outro",
 ];
 
 const CHALLENGES = [
   "Não apareço no Google",
   "Perco clientes para o concorrente que tem site",
-  "Pago muita comissão de app",
-  "Meu cardápio fica desatualizado",
-  "Quero divulgar eventos / buffets",
+  "Quero receber agendamentos online",
+  "Minhas informações ficam desatualizadas",
+  "Quero divulgar meus serviços / produtos",
   "Quero um site para começar do zero",
   "Outro",
 ];
@@ -128,7 +128,7 @@ export function ZSiteCta() {
               Pronto para ter{" "}
               <span style={{ color: PINK }}>
                 <TextRotate
-                  texts={["Seu Site no Ar", "Aparecer no Google", "Vender Sem Comissão", "Uma Landing Page", "Seu Cardápio Online"]}
+                  texts={["Seu Site no Ar", "Aparecer no Google", "Vender Todo Dia", "Uma Landing Page", "Seu Catálogo Online"]}
                   interval={2800}
                   className="block"
                 />

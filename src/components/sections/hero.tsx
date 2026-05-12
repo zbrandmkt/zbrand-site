@@ -38,7 +38,7 @@ export function Hero() {
           >
             <span className="w-1.5 h-1.5 bg-laranja rounded-full animate-pulse-glow" />
             <span className="font-display text-[11px] font-semibold text-laranja uppercase tracking-wider">
-              Marketing digital para restaurantes
+              Marketing digital para negócios locais
             </span>
           </motion.div>
 
@@ -56,7 +56,7 @@ export function Hero() {
           </h1>
 
           <p className="font-display text-base text-cinza-dark max-w-xl mx-auto mb-10 leading-relaxed">
-            Marketing digital humanizado para restaurantes que querem{" "}
+            Marketing digital humanizado para negócios que querem{" "}
             <span className="text-preto font-semibold">clientes de verdade</span>, não só seguidores.
           </p>
 

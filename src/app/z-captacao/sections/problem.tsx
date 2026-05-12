@@ -13,10 +13,10 @@ const problems = [
     text: "Stock photo e vídeo sem rosto: o cliente não vê o seu negócio e não compra",
   },
   {
-    text: "Você gere o restaurante, atende cliente, gerencia equipe — não sobra tempo para gravar e editar",
+    text: "Você gere o negócio, atende cliente, gerencia equipe — não sobra tempo para gravar e editar",
   },
   {
-    text: "Vídeo tremido, luz ruim, áudio da cozinha — às vezes é pior postar do que não postar",
+    text: "Vídeo tremido, luz ruim, áudio do ambiente — às vezes é pior postar do que não postar",
   },
   {
     text: "Você grava num fim de semana e o material acaba em 2 semanas — sem constância, o algoritmo te pune",
@@ -152,7 +152,7 @@ export function ZCaptacaoProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Somos especialistas em conteúdo para gastronomia — porque fomos donos de restaurante.&rdquo;
+              Somos especialistas em conteúdo para negócios — porque entendemos a rotina de quem empreende.&rdquo;
             </p>
           </motion.div>
         </div>

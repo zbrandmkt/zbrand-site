@@ -2,9 +2,9 @@ const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "551194050292
 
 const messages: Record<string, string> = {
   geral: "Oi! Vi o site da ZBRAND e quero tirar a zebra do meu marketing. Pode me ajudar?",
-  social: "Oi! Vim pelo site e quero saber mais sobre o Z-SOCIAL pra gestão do meu restaurante.",
+  social: "Oi! Vim pelo site e quero saber mais sobre o Z-SOCIAL pra gestão do meu negócio.",
   ads: "Oi! Vim pelo site e quero saber mais sobre o Z-ADS pra tráfego pago do meu negócio.",
-  automacao: "Oi! Vim pelo site e quero saber mais sobre Z-AUTOMAÇÃO pra WhatsApp do meu restaurante.",
+  automacao: "Oi! Vim pelo site e quero saber mais sobre Z-AUTOMAÇÃO pra WhatsApp do meu negócio.",
   combo1: "Oi! Vim pelo site e tenho interesse no Z-COMBO 1 (Social + Ads). Pode me contar mais?",
   combo2: "Oi! Vim pelo site e tenho interesse no Z-COMBO 2 (Social + Ads + Automação). Pode me contar mais?",
   trafego: "Oi! Vi o anúncio da ZBRAND e quero saber mais sobre a gestão de tráfego pago por R$ 800/mês. Pode me ajudar?",

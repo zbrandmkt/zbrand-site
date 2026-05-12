@@ -17,22 +17,22 @@ export const metadata: Metadata = {
     apple: "/images/favicon.png",
   },
   title: {
-    default: "ZBRAND — Marketing Digital para Restaurantes",
+    default: "ZBRAND — Marketing Digital para Negócios Locais",
     template: "%s | ZBRAND",
   },
   description:
-    "Marketing digital humanizado para restaurantes que querem clientes de verdade, não só seguidores. Social media, tráfego pago e automação.",
+    "Marketing digital humanizado para negócios que querem clientes de verdade, não só seguidores. Social media, tráfego pago e automação.",
   keywords: [
-    "marketing digital restaurante",
-    "social media restaurante",
-    "tráfego pago restaurante",
-    "agência marketing restaurante",
+    "marketing digital negócios locais",
+    "social media para empresas",
+    "tráfego pago negócios",
+    "agência marketing digital",
     "ZBRAND",
   ],
   openGraph: {
-    title: "ZBRAND — Marketing Digital para Restaurantes",
+    title: "ZBRAND — Marketing Digital para Negócios Locais",
     description:
-      "Marketing digital humanizado para restaurantes que querem clientes de verdade.",
+      "Marketing digital humanizado para negócios que querem clientes de verdade.",
     url: "https://zbrand.com.br",
     siteName: "ZBRAND",
     locale: "pt_BR",

@@ -108,7 +108,7 @@ export default function NovoClientePage({
               <input
                 name="company"
                 required
-                placeholder="Ex: Churruts Hamburguer"
+                placeholder="Ex: Studio Fitness"
                 className="border-2 border-[#1A1A1A]/20 rounded-xl px-3 py-2.5 text-sm font-medium text-[#1A1A1A] placeholder:text-[#1A1A1A]/25 focus:border-[#FF6100] outline-none transition-colors"
               />
             </div>

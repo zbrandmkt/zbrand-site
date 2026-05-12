@@ -11,7 +11,7 @@ import { SobreCta } from "@/app/sobre/sections/cta";
 export const metadata = {
   title: "Sobre Nós — ZBRAND | A Agência que Viveu na Pele",
   description:
-    "Bruna e Gui fundaram a ZBRAND depois de crescer a própria marca de gastronomia de 1.500 para 10.000 seguidores orgânico. Agora fazem isso para o seu restaurante.",
+    "Bruna e Gui fundaram a ZBRAND depois de crescer a própria marca de 1.500 para 10.000 seguidores orgânico. Agora fazem o mesmo pelo seu negócio.",
 };
 
 export default function SobrePage() {

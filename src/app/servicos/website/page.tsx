@@ -11,9 +11,9 @@ import { ZSiteFaq } from "@/app/z-site/sections/faq";
 import { ZSiteCta } from "@/app/z-site/sections/cta";
 
 export const metadata = {
-  title: "Websites e Landing Pages para Restaurantes — Z-SITE | ZBRAND",
+  title: "Websites e Landing Pages para Negócios Locais — Z-SITE | ZBRAND",
   description:
-    "Criamos o site do seu restaurante, delivery ou buffet. Landing page em 10 dias por R$ 1.500. Site completo a partir de R$ 3.900. SEO local incluído.",
+    "Criamos o site do seu negócio com foco em conversão. Landing page em 10 dias por R$ 1.500. Site completo a partir de R$ 3.900. SEO local incluído.",
 };
 
 export default function WebsitePage() {

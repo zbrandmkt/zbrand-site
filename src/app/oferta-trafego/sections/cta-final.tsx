@@ -54,7 +54,7 @@ export function CtaFinal() {
           className="text-[#1A1A1A]/60 text-base leading-relaxed mb-10 max-w-sm mx-auto"
         >
           Sem papo de vendedor. Sem promessa vazia. Só uma conversa honesta
-          sobre como a gente pode transformar o digital do seu restaurante.
+          sobre como a gente pode transformar o digital do seu negócio.
         </motion.p>
 
         {/* CTA */}

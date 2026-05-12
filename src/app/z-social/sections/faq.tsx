@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Qual é a melhor rede para começar?",
-    a: "Depende do seu público e negócio. Restaurante? Instagram. Confeitaria ou delivery? Instagram + TikTok. B2B ou consultoria? LinkedIn. A gente recomenda na conversa de descoberta — sem compromisso.",
+    a: "Depende do seu público e negócio. Negócio local com apelo visual? Instagram. Marca jovem ou criativa? Instagram + TikTok. B2B ou consultoria? LinkedIn. A gente recomenda na conversa de descoberta — sem compromisso.",
   },
 ];
 

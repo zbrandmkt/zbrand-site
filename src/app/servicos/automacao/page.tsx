@@ -11,9 +11,9 @@ import { ZAutomaçaoFaq } from "@/app/z-automacao/sections/faq";
 import { ZAutomaçaoCta } from "@/app/z-automacao/sections/cta";
 
 export const metadata = {
-  title: "Automação de WhatsApp para Restaurantes — Z-AUTOMAÇÃO | ZBRAND",
+  title: "Automação de WhatsApp para Negócios — Z-AUTOMAÇÃO | ZBRAND",
   description:
-    "Bot + IA generativa no WhatsApp do seu restaurante. Atendimento 24h, pedidos automáticos, disparos de promoção. Implementação em 20 dias por R$ 2.000.",
+    "Bot + IA generativa no WhatsApp do seu negócio. Atendimento 24h, respostas automáticas, disparos de promoção. Implementação em 20 dias por R$ 2.000.",
 };
 
 export default function AutomacaoPage() {

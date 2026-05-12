@@ -8,14 +8,14 @@ const addons = [
   {
     icon: "🎥",
     type: "Gravação Presencial",
-    detail: "2h no seu estabelecimento",
+    detail: "2h no seu negócio",
     price: "R$ 300",
     deliverable: "3 vídeos prontos pra usar",
     color: "#AAFF00",
   },
   {
     icon: "📦",
-    type: "Delivery de Produto",
+    type: "Envio de Produto",
     detail: "Você envia, a gente grava",
     price: "R$ 100",
     deliverable: "3 vídeos prontos pra usar",

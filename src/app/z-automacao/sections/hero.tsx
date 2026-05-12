@@ -46,7 +46,7 @@ export function ZAutomaçaoHero() {
               className="font-display text-[11px] font-black uppercase tracking-widest"
               style={{ color: AMBER }}
             >
-              ⚡ Z-AUTOMAÇÃO — WhatsApp 24h para Restaurantes
+              ⚡ Z-AUTOMAÇÃO — WhatsApp 24h para Negócios Locais
             </span>
           </motion.div>
 
@@ -73,7 +73,7 @@ export function ZAutomaçaoHero() {
           >
             A gente configura{" "}
             <span className="text-preto font-semibold">fluxos automáticos</span> de atendimento,
-            pedido e promoção no seu WhatsApp Business.{" "}
+            agendamento e promoção no seu WhatsApp Business.{" "}
             <span className="text-preto font-semibold">Bot + IA</span> + acompanhamento semanal.
             Enquanto você cuida do negócio.
           </motion.p>

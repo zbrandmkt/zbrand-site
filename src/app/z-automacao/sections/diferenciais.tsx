@@ -9,8 +9,8 @@ const diffs = [
   {
     icon: "🦓",
     color: AMBER,
-    title: "Feito para Alimentação",
-    desc: "Não é chatbot genérico. Configuramos fluxos que entendem pedido, reserva, feedback e promoção do seu negócio específico — restaurante, delivery ou cafeteria.",
+    title: "Feito para o Seu Negócio",
+    desc: "Não é chatbot genérico. Configuramos fluxos que entendem agendamento, orçamento, feedback e promoção do seu negócio específico — clínica, salão, escritório ou loja.",
   },
   {
     icon: "🤖",
@@ -22,7 +22,7 @@ const diffs = [
     icon: "📊",
     color: "#00C2FF",
     title: "Relatório Real",
-    desc: "Mensagens enviadas, leads qualificados, taxa de conversão (quantos viraram pedido), receita gerada pelo bot. Você vê exatamente o retorno do investimento.",
+    desc: "Mensagens enviadas, leads qualificados, taxa de conversão (quantos viraram clientes), receita gerada pelo bot. Você vê exatamente o retorno do investimento.",
   },
   {
     icon: "📋",

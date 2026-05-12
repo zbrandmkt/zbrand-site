@@ -24,7 +24,7 @@ export default function TermosDeUsoPage() {
         {
           title: "Sobre a ZBRAND",
           content: [
-            "A ZBRAND é uma agência de marketing digital especializada no setor de gastronomia e alimentação, prestando serviços de gestão de redes sociais, tráfego pago, produção de conteúdo, automação de WhatsApp, desenvolvimento de websites e estratégias digitais integradas.",
+            "A ZBRAND é uma agência de marketing digital que oferece serviços de gestão de redes sociais, tráfego pago, produção de conteúdo, automação de WhatsApp, desenvolvimento de websites e estratégias digitais integradas para empresas e negócios.",
             "Os serviços são prestados mediante contrato formal assinado entre a ZBRAND e o cliente, cujas condições específicas prevalecem sobre estes Termos de Uso em caso de conflito.",
           ],
         },

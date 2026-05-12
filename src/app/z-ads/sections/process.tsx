@@ -9,7 +9,7 @@ const steps = [
     icon: "🔍",
     color: "#00C2FF",
     title: "Diagnóstico & Onboarding",
-    desc: "Reunião de briefing, acessos ao gerenciador de anúncios, análise do histórico de campanhas e definição de objetivos e público-alvo do seu restaurante.",
+    desc: "Reunião de briefing, acessos ao gerenciador de anúncios, análise do histórico de campanhas e definição de objetivos e público-alvo do seu negócio.",
   },
   {
     number: "02",
@@ -23,7 +23,7 @@ const steps = [
     icon: "🎬",
     color: "#7B2FF7",
     title: "Captação Presencial",
-    desc: "1 dia no seu estabelecimento (4–6h). Filmamos seu ambiente, seus pratos, seus clientes felizes. Editamos tudo profissionalmente — conteúdo real para os anúncios.",
+    desc: "1 dia no seu estabelecimento (4–6h). Filmamos seu ambiente, seus produtos, sua equipe. Editamos tudo profissionalmente — conteúdo real para os anúncios.",
   },
   {
     number: "04",

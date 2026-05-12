@@ -17,14 +17,12 @@ interface FormData {
 const NETWORKS = ["Instagram", "TikTok", "LinkedIn"];
 
 const BUSINESS_TYPES = [
-  "Restaurante",
-  "Padaria",
-  "Confeitaria",
-  "Cafeteria",
-  "Gelateria",
-  "Delivery / Ghost Kitchen",
-  "Catering / Buffet",
-  "Varejo Gourmet",
+  "Clínica / Saúde",
+  "Academia / Estúdio",
+  "Salão / Barbearia",
+  "Loja / E-commerce",
+  "Restaurante / Alimentação",
+  "Escritório / Consultoria",
   "Outro",
 ];
 

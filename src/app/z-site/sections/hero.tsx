@@ -67,9 +67,9 @@ export function ZSiteHero() {
             transition={{ delay: 0.35, duration: 0.6 }}
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            A gente cria o site do seu restaurante, delivery ou buffet —{" "}
+            A gente cria o site do seu negócio —{" "}
             <span className="text-preto font-semibold">bonito, rápido e que converte</span> visita em
-            pedido. Sem comissão de app, sem dependência do algoritmo.
+            cliente. Sem dependência de algoritmo, sem complicação.
           </motion.p>
 
           {/* CTAs */}

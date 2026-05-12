@@ -9,9 +9,9 @@ import { CreativeWarning } from "./sections/creative-warning";
 import { CtaFinal } from "./sections/cta-final";
 
 export const metadata = {
-  title: "Tráfego Pago para Restaurantes — R$ 800/mês | ZBRAND",
+  title: "Tráfego Pago — R$ 800/mês | ZBRAND",
   description:
-    "Gestão completa de Meta Ads para restaurantes. Campanhas estruturadas, otimização semanal e relatório com ROAS, CAC e conversão. Contrato de 3 meses por R$ 800/mês.",
+    "Gestão completa de Meta Ads para o seu negócio. Campanhas estruturadas, otimização semanal e relatório com ROAS, CAC e conversão. Contrato de 3 meses por R$ 800/mês.",
   robots: { index: false, follow: false },
 };
 

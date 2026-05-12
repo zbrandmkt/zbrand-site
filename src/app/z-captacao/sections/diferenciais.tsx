@@ -22,7 +22,7 @@ const diffs = [
     icon: "🗓️",
     color: "#00C2FF",
     title: "10 Vídeos em 1 Dia",
-    desc: "Uma sessão de 4h vira 10 vídeos editados. Mais conteúdo do que a maioria dos restaurantes produz em 2 meses — de uma vez só.",
+    desc: "Uma sessão de 4h vira 10 vídeos editados. Mais conteúdo do que a maioria dos negócios produz em 2 meses — de uma vez só.",
   },
   {
     icon: "☁️",
@@ -95,7 +95,7 @@ export function ZCaptacaoDiferenciais() {
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
             Não somos cinegrafistas de plantão. Somos estrategistas de conteúdo que filmam, editam
-            e entendem do negócio de gastronomia.
+            e entendem do seu tipo de negócio.
           </p>
         </motion.div>
 

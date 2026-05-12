@@ -141,7 +141,7 @@ export function Pricing() {
 
             {/* Entregáveis */}
             <ul className="flex flex-col gap-3 flex-1 mb-8">
-              {[...entregaveis, "Ida ao seu estabelecimento para gravar os criativos", "Estratégia de crescimento mensal"].map((item) => (
+              {[...entregaveis, "Ida ao seu negócio para gravar os criativos", "Estratégia de crescimento mensal"].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-white/05 border border-white/15 flex items-center justify-center shrink-0 mt-0.5">
                     <svg className="w-2.5 h-2.5 text-white/30" fill="none" viewBox="0 0 12 10" stroke="currentColor" strokeWidth={2.5}>

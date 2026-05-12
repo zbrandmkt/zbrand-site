@@ -5,10 +5,10 @@ import { motion, useInView } from "framer-motion";
 
 const problems = [
   {
-    text: "Verba de anúncio saindo todo mês e o restaurante continua vazio",
+    text: "Verba de anúncio saindo todo mês e o negócio continua sem resultado",
   },
   {
-    text: "Agência que não entende de gastronomia — criativo genérico, público errado",
+    text: "Agência que não entende do seu mercado — criativo genérico, público errado",
   },
   {
     text: "Sem conteúdo humanizado: foto de stock não conecta, e não converte",
@@ -142,7 +142,7 @@ export function ZAdsProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Porque trabalhamos todo dia com restaurantes que passaram pelo mesmo.&rdquo;
+              Porque trabalhamos todo dia com negócios que passaram pelo mesmo.&rdquo;
             </p>
           </motion.div>
         </div>

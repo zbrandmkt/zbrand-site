@@ -12,7 +12,7 @@ const steps = [
     color: AMBER,
     title: "Descoberta & Mapeamento",
     subtitle: "Dias 1–3",
-    desc: "Reunião de briefing para entender seu modelo de negócio. Mapeamos todos os fluxos necessários (boas-vindas, pedido, reserva, feedback, upsell). Nenhum fluxo vai ao ar sem sua aprovação.",
+    desc: "Reunião de briefing para entender seu modelo de negócio. Mapeamos todos os fluxos necessários (boas-vindas, agendamento, orçamento, feedback, upsell). Nenhum fluxo vai ao ar sem sua aprovação.",
   },
   {
     number: "02",
@@ -20,7 +20,7 @@ const steps = [
     color: "#FF6100",
     title: "Setup Técnico",
     subtitle: "Dias 4–12",
-    desc: "Configuração do WhatsApp Business, Bot Conversa, integração com cardápio web, Mailchimp e Manychat. Toda a infraestrutura do seu bot conectada e testada internamente.",
+    desc: "Configuração do WhatsApp Business, Bot Conversa, integração com catálogo/portfólio online, Mailchimp e Manychat. Toda a infraestrutura do seu bot conectada e testada internamente.",
   },
   {
     number: "03",

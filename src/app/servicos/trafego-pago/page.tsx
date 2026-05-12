@@ -11,9 +11,9 @@ import { ZAdsFaq } from "@/app/z-ads/sections/faq";
 import { ZAdsCta } from "@/app/z-ads/sections/cta";
 
 export const metadata = {
-  title: "Tráfego Pago para Restaurantes — Z-ADS | ZBRAND",
+  title: "Tráfego Pago para Negócios Locais — Z-ADS | ZBRAND",
   description:
-    "Meta Ads e Google Ads para restaurantes. A gente estrutura, filma, edita e otimiza suas campanhas. Contrato 4 meses por R$ 1.800/mês + verba de anúncios.",
+    "Meta Ads e Google Ads para o seu negócio. A gente estrutura, filma, edita e otimiza suas campanhas. Contrato 4 meses por R$ 1.500/mês + verba de anúncios.",
 };
 
 export default function TrafegoPage() {

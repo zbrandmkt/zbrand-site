@@ -40,7 +40,7 @@ export function OfertaTrafegoHero() {
         >
           <span className="text-sm">🎯</span>
           <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#00C2FF]">
-            Meta Ads para Restaurantes
+            Meta Ads para Negócios Locais
           </span>
         </motion.div>
 

@@ -9,7 +9,7 @@ const diffs = [
     icon: "🔥",
     color: "#FF6100",
     title: "Experiência Vivida",
-    desc: "Passamos 10 anos escalando um negócio de churros. Sabemos o que funciona porque vivemos cada desafio que você enfrenta.",
+    desc: "Passamos 10 anos escalando um negócio próprio do zero. Sabemos o que funciona porque vivemos cada desafio que você enfrenta.",
   },
   {
     icon: "🎥",
@@ -49,13 +49,13 @@ export function Differentials() {
 
             {/* Título */}
             <h2 className="font-display font-black text-4xl lg:text-5xl text-[#1A1A1A] uppercase tracking-tight leading-[1.05] mb-6">
-              De restaurante{" "}
-              <span className="text-[#FF6100]">para restaurante</span>
+              De empreendedor{" "}
+              <span className="text-[#FF6100]">para empreendedor</span>
             </h2>
 
             {/* Texto */}
             <p className="text-sm text-[#1A1A1A]/60 font-medium leading-relaxed mb-4">
-              A ZBRAND nasceu da Churruts — uma marca de churros que começou do zero e escalou para lojas, deliverys, carrinhos para eventos e uma comunidade forte e engajada. Por isso sabemos exatamente o que funciona.
+              A ZBRAND nasceu da Churruts — uma marca própria que começou do zero e escalou para lojas, eventos e uma comunidade forte e engajada. Por isso sabemos exatamente o que funciona.
             </p>
             <p className="text-sm text-[#1A1A1A]/60 font-medium leading-relaxed mb-8">
               Não falamos de teoria, falamos da experiência real que vivemos e agora ajudamos outras empresas a crescer sem perder tempo.
@@ -64,7 +64,7 @@ export function Differentials() {
             {/* Foto limpa, sem moldura */}
             <Image
               src="/images/foto-guiebru-loja.png"
-              alt="Gui e Bruna — fundadores da ZBRAND e donos da Churruts"
+              alt="Gui e Bruna — fundadores da ZBRAND"
               width={640}
               height={480}
               className="w-full h-auto object-contain"

@@ -11,9 +11,9 @@ import { ZCaptacaoFaq } from "@/app/z-captacao/sections/faq";
 import { ZCaptacaoCta } from "@/app/z-captacao/sections/cta";
 
 export const metadata = {
-  title: "Captação de Conteúdo para Restaurantes — Z-CAPTAÇÃO | ZBRAND",
+  title: "Captação de Conteúdo Presencial — Z-CAPTAÇÃO | ZBRAND",
   description:
-    "10 vídeos editados em 1 sessão de 4h. Captação presencial com celular profissional ou câmera. Entrega em 10 dias a partir de R$ 800. Para restaurantes, deliverys e cafeterias.",
+    "10 vídeos editados em 1 sessão de 4h. Captação presencial com celular profissional ou câmera. Entrega em 10 dias a partir de R$ 800. Para qualquer tipo de negócio.",
 };
 
 export default function CaptacaoPage() {

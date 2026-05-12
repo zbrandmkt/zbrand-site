@@ -66,12 +66,12 @@ const problems = [
   {
     image: "/images/grava_tudo_sozinho_icon.png",
     title: "Você grava tudo sozinho (ou não grava nada)",
-    desc: "A agência manda a pauta, mas quem tem que gravar é você. Com a correria do restaurante, o conteúdo nunca sai — e o perfil fica parado.",
+    desc: "A agência manda a pauta, mas quem tem que gravar é você. Com a correria do dia a dia, o conteúdo nunca sai — e o perfil fica parado.",
   },
   {
     image: "/images/comida_e_boa_mas_icon.png",
-    title: "A comida é boa, mas quem prepara essa comida tão incrível?",
-    desc: "Comida bonita no feed é essencial, mas as pessoas se conectam com quem está por trás. Mostrar a cozinha, a equipe e o dia a dia humaniza e vende mais.",
+    title: "Seu produto é bom, mas quem está por trás dele?",
+    desc: "Produto bonito no feed é essencial, mas as pessoas se conectam com quem está por trás. Mostrar os bastidores, a equipe e o dia a dia humaniza e vende mais.",
   },
   {
     image: "/images/não_sabe_de_onde_o_cliente_vem_icon.png",

@@ -18,7 +18,7 @@ const steps = [
     icon: "🎬",
     color: "#FF6100",
     title: "Dia de Captação (4h)",
-    desc: "Nossa equipe vai até o seu negócio com equipamento completo e roteiro na mão. Bastidores, pratos, equipe, talking head. Você foca no negócio — a gente cuida do conteúdo.",
+    desc: "Nossa equipe vai até o seu negócio com equipamento completo e roteiro na mão. Bastidores, produtos, equipe, talking head. Você foca no negócio — a gente cuida do conteúdo.",
   },
   {
     number: "03",

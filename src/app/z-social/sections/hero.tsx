@@ -48,10 +48,10 @@ export function ZSocialHero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="font-display font-black text-hero-mobile lg:text-hero-desktop text-preto uppercase tracking-tight leading-[1.05] mb-6"
           >
-            Seu Restaurante{" "}
+            Seu Negócio{" "}
             <span className="text-laranja">Merecia</span>
             <br />
-            Estar Cheio Todo Dia
+            Lotar Todo Dia
           </motion.h1>
 
           {/* Subheadline */}

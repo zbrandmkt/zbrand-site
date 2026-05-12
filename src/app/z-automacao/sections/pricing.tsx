@@ -21,7 +21,7 @@ const featuresComplexa = [
   "Integrações customizadas (site, CRM)",
   "Fluxos avançados com múltiplos produtos",
   "Campanhas segmentadas por perfil de cliente",
-  "Integração com cardápio web próprio",
+  "Integração com catálogo web próprio",
 ];
 
 const exclusoes = [

@@ -8,11 +8,11 @@ const PINK = "#FF3D9A";
 const faqs = [
   {
     q: "Qual a diferença entre landing page e site completo?",
-    a: "A landing page é uma página única de alta conversão — ideal para divulgar um serviço, capturar leads ou vender um produto específico. O site completo tem home + páginas internas (cardápio, sobre, contato, blog), painel de edição (CMS) e estrutura para escalar com o tempo. Para começar, a landing page já resolve muito. O site completo é para quem quer uma presença digital robusta.",
+    a: "A landing page é uma página única de alta conversão — ideal para divulgar um serviço, capturar leads ou vender um produto específico. O site completo tem home + páginas internas (catálogo, sobre, contato, blog), painel de edição (CMS) e estrutura para escalar com o tempo. Para começar, a landing page já resolve muito. O site completo é para quem quer uma presença digital robusta.",
   },
   {
     q: "O site vai aparecer no Google?",
-    a: "Sim. Todos os nossos projetos incluem SEO básico (title, meta description, Open Graph, sitemap, schema markup de negócio local). O site completo inclui SEO técnico completo + Google Analytics. Com o tempo, seu site vai aparecer para buscas locais como 'restaurante em [seu bairro]' — tráfego orgânico e gratuito todo mês.",
+    a: "Sim. Todos os nossos projetos incluem SEO básico (title, meta description, Open Graph, sitemap, schema markup de negócio local). O site completo inclui SEO técnico completo + Google Analytics. Com o tempo, seu site vai aparecer para buscas locais como '[seu serviço] em [seu bairro]' — tráfego orgânico e gratuito todo mês.",
   },
   {
     q: "Preciso comprar domínio e hospedagem?",
@@ -20,15 +20,15 @@ const faqs = [
   },
   {
     q: "Posso editar o conteúdo depois de lançar?",
-    a: "O site completo vem com CMS (painel de edição) — você atualiza textos, fotos e cardápio direto, sem precisar de programador. A landing page não tem CMS, mas qualquer alteração pode ser feita pelo Banco de Horas: você compra um pacote de horas e usa quando precisar, com desconto progressivo.",
+    a: "O site completo vem com CMS (painel de edição) — você atualiza textos, fotos e conteúdo direto, sem precisar de programador. A landing page não tem CMS, mas qualquer alteração pode ser feita pelo Banco de Horas: você compra um pacote de horas e usa quando precisar, com desconto progressivo.",
   },
   {
     q: "O que acontece se eu precisar de mais páginas depois?",
     a: "No site completo, páginas adicionais podem ser adicionadas via Banco de Horas. Se você começou com landing page e quer escalar para um site completo, fazemos isso — o valor pago na landing é descontado do projeto maior.",
   },
   {
-    q: "Vocês fazem site para qualquer tipo de negócio alimentício?",
-    a: "Sim! Atendemos restaurantes, deliveries, buffets para eventos, carrinhos gourmet, cafeterias, confeitarias, padarias, lanchonetes, food trucks e qualquer negócio do ramo de alimentação. Quanto mais específico for seu negócio, mais a gente consegue criar algo que realmente converte para o seu público.",
+    q: "Vocês fazem site para qualquer tipo de negócio?",
+    a: "Sim! Atendemos clínicas, academias, salões de beleza, lojas, restaurantes, escritórios, consultórios, estúdios e qualquer tipo de negócio local. Quanto mais específico for seu negócio, mais a gente consegue criar algo que realmente converte para o seu público.",
   },
 ];
 

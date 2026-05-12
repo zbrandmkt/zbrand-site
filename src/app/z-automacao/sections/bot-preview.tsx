@@ -20,32 +20,32 @@ const flows: {
   messages: Message[];
 }[] = [
   {
-    id: "pedido",
-    label: "Pedido",
-    icon: "🍔",
+    id: "agendamento",
+    label: "Agendamento",
+    icon: "📅",
     messages: [
-      { from: "bot", text: "Oi Ana! Bem-vindo ao Burgers da Vila 🍔", delay: 300 },
-      { from: "bot", text: "O que você procura hoje?", delay: 900, isButtons: true, buttons: ["Fazer pedido", "Reservar mesa", "Promoção"] },
-      { from: "user", text: "Fazer pedido", delay: 1800 },
-      { from: "bot", text: "Ótimo! Qual seu endereço de entrega?", delay: 2500 },
-      { from: "user", text: "Rua das Flores, 123", delay: 3300 },
-      { from: "bot", text: "Aqui está nosso cardápio 👇 [link]", delay: 4000 },
-      { from: "bot", text: "Pedido confirmado! Código #247 ✅", delay: 4800 },
-      { from: "bot", text: "Chegará em ~35 min 🛵", delay: 5400 },
+      { from: "bot", text: "Oi Ana! Bem-vinda ao Studio Beleza ✨", delay: 300 },
+      { from: "bot", text: "Como posso te ajudar?", delay: 900, isButtons: true, buttons: ["Agendar horário", "Tirar dúvida", "Promoção"] },
+      { from: "user", text: "Agendar horário", delay: 1800 },
+      { from: "bot", text: "Ótimo! Qual serviço você procura?", delay: 2500 },
+      { from: "user", text: "Corte + escova", delay: 3300 },
+      { from: "bot", text: "Temos horários disponíveis 👇", delay: 4000, isButtons: true, buttons: ["Ter 14h", "Qua 10h", "Sex 16h"] },
+      { from: "user", text: "Qua 10h", delay: 4800 },
+      { from: "bot", text: "Agendado! Quarta às 10h ✅ Até lá! 💇‍♀️", delay: 5400 },
     ],
   },
   {
-    id: "reserva",
-    label: "Reserva",
-    icon: "🍽️",
+    id: "orcamento",
+    label: "Orçamento",
+    icon: "💰",
     messages: [
-      { from: "bot", text: "Oi! Vamos agendar sua mesa 🍽️", delay: 300 },
-      { from: "bot", text: "Para quantas pessoas?", delay: 900 },
-      { from: "user", text: "4 pessoas", delay: 1700 },
-      { from: "bot", text: "Qual data e horário você prefere?", delay: 2400 },
-      { from: "user", text: "Sábado às 20h", delay: 3200 },
-      { from: "bot", text: "Perfeito! Mesa para 4 reservada ✅", delay: 4000 },
-      { from: "bot", text: "Você receberá um lembrete no dia 📅", delay: 4700 },
+      { from: "bot", text: "Oi! Vamos montar seu orçamento 💰", delay: 300 },
+      { from: "bot", text: "Qual serviço você procura?", delay: 900 },
+      { from: "user", text: "Pacote noiva completo", delay: 1700 },
+      { from: "bot", text: "Qual a data do evento?", delay: 2400 },
+      { from: "user", text: "15 de março", delay: 3200 },
+      { from: "bot", text: "Perfeito! Orçamento enviado por aqui ✅", delay: 4000 },
+      { from: "bot", text: "Nossa equipe entra em contato em até 2h 📋", delay: 4700 },
     ],
   },
   {
@@ -53,12 +53,12 @@ const flows: {
     label: "Disparo",
     icon: "📣",
     messages: [
-      { from: "bot", text: "🔥 SEXTA ESPECIAL no Burgers da Vila!", delay: 300 },
-      { from: "bot", text: "30% OFF em todos os combos hoje até às 23h 🍔", delay: 1000 },
-      { from: "bot", text: "Clique abaixo e faça seu pedido:", delay: 1700, isButtons: true, buttons: ["PEDIR AGORA 🛵"] },
-      { from: "user", text: "Quero pedir!", delay: 2600 },
-      { from: "bot", text: "Ótimo! Abrindo seu pedido... 🎉", delay: 3400 },
-      { from: "bot", text: "Qual seu endereço de entrega?", delay: 4100 },
+      { from: "bot", text: "🔥 SEXTA ESPECIAL no Studio Beleza!", delay: 300 },
+      { from: "bot", text: "30% OFF em todos os serviços hoje até às 20h ✨", delay: 1000 },
+      { from: "bot", text: "Clique abaixo e agende agora:", delay: 1700, isButtons: true, buttons: ["AGENDAR AGORA 📅"] },
+      { from: "user", text: "Quero agendar!", delay: 2600 },
+      { from: "bot", text: "Ótimo! Abrindo seu agendamento... 🎉", delay: 3400 },
+      { from: "bot", text: "Qual serviço você procura?", delay: 4100 },
     ],
   },
 ];
@@ -137,7 +137,7 @@ function PhoneMockup({ flowId }: { flowId: string }) {
             🦓
           </div>
           <div>
-            <p className="text-white text-[10px] font-bold leading-none">Burgers da Vila</p>
+            <p className="text-white text-[10px] font-bold leading-none">Studio Beleza</p>
             <p className="text-white/60 text-[8px] mt-0.5">online agora</p>
           </div>
           <div className="ml-auto flex gap-1.5">
@@ -206,7 +206,7 @@ function PhoneMockup({ flowId }: { flowId: string }) {
 export function ZAutomaçaoBotPreview() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [activeFlow, setActiveFlow] = useState("pedido");
+  const [activeFlow, setActiveFlow] = useState("agendamento");
 
   return (
     <section className="bg-[#1A1A1A] py-20 lg:py-28 overflow-hidden relative">
@@ -266,8 +266,8 @@ export function ZAutomaçaoBotPreview() {
                         {flow.label === "Disparo" ? "Disparo em Massa" : `Fluxo de ${flow.label}`}
                       </p>
                       <p className="text-[10px] text-white/30 mt-0.5">
-                        {flow.id === "pedido" && "Atendimento e confirmação de pedido"}
-                        {flow.id === "reserva" && "Agendamento automático de mesa"}
+                        {flow.id === "agendamento" && "Atendimento e confirmação de horário"}
+                        {flow.id === "orcamento" && "Solicitação automática de orçamento"}
                         {flow.id === "promocao" && "Promoção enviada para todos os contatos"}
                       </p>
                     </div>

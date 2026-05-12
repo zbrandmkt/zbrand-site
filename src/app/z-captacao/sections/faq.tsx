@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "O que preciso preparar para o dia de captação?",
-    a: "Deixar o ambiente organizado, ter um prato ou produto disponível para filmagem e avisar a equipe que haverá filmagem. A gente chega com roteiro pronto — você só precisa estar presente e à vontade. Nada de improvisar.",
+    a: "Deixar o ambiente organizado, ter um produto ou serviço disponível para filmagem e avisar a equipe que haverá filmagem. A gente chega com roteiro pronto — você só precisa estar presente e à vontade. Nada de improvisar.",
   },
   {
     q: "Posso contratar captação sem ter Social Media ou Ads com a ZBRAND?",
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: "Posso contratar mais de uma sessão por mês?",
-    a: "Sim, sem problema. Cada sessão adicional segue o mesmo valor. Clientes com maior volume de conteúdo costumam fazer 2 sessões por mês — uma focada em produtos, outra em conteúdo de bastidores e talking head.",
+    a: "Sim, sem problema. Cada sessão adicional segue o mesmo valor. Clientes com maior volume de conteúdo costumam fazer 2 sessões por mês — uma focada em produtos e serviços, outra em conteúdo de bastidores e talking head.",
   },
   {
     q: "O conteúdo já vem pronto para publicar?",

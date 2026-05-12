@@ -17,19 +17,17 @@ interface FormData {
 }
 
 const BUSINESS_TYPES = [
-  "Restaurante",
-  "Padaria",
-  "Confeitaria",
-  "Cafeteria",
-  "Gelateria",
-  "Delivery / Ghost Kitchen",
-  "Catering / Buffet",
-  "Varejo Gourmet",
+  "Clínica / Saúde",
+  "Academia / Estúdio",
+  "Salão / Barbearia",
+  "Loja / E-commerce",
+  "Restaurante / Alimentação",
+  "Escritório / Consultoria",
   "Outro",
 ];
 
 const CHALLENGES = [
-  "Perco pedidos fora do horário comercial",
+  "Perco clientes fora do horário comercial",
   "Não consigo responder a tempo",
   "Não tenho base de clientes para ativar",
   "Minha promoção não chega em ninguém",

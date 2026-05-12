@@ -14,7 +14,7 @@ import { ZStarterCta } from "@/app/z-starter/sections/cta";
 export const metadata = {
   title: "Pacote Starter — Social Media + Tráfego Pago | ZBRAND",
   description:
-    "Social Media + Meta Ads integrados. Uma equipe, uma estratégia, um dashboard. R$ 3.000/mês para restaurantes que querem crescer.",
+    "Social Media + Meta Ads integrados. Uma equipe, uma estratégia, um dashboard. R$ 3.000/mês para negócios que querem crescer.",
 };
 
 export default function StarterPage() {

@@ -51,7 +51,7 @@ export function ZAdsHero() {
             Seus Anúncios{" "}
             <span className="text-[#00C2FF]">Rodando.</span>
             <br />
-            Seu Restaurante <span className="text-laranja">Cheio.</span>
+            Mais Clientes <span className="text-laranja">Chegando.</span>
           </motion.h1>
 
           {/* Subheadline */}
