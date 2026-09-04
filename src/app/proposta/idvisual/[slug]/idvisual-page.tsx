@@ -89,6 +89,63 @@ function Hero({ data }: { data: IdVisualData["hero"] }) {
   );
 }
 
+function SecaoZebras() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
+  return (
+    <section className="relative bg-[#0A0A0A] overflow-hidden">
+      <div ref={ref} className="relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-end min-h-[50vh] md:min-h-[60vh]">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, ease }}
+            className="relative flex items-end justify-center md:justify-end"
+          >
+            <div className="relative w-full max-w-[340px] md:max-w-[420px] aspect-square">
+              <Image
+                src="/images/propostas/portfolio-idvisual/zebra_sem_identidade.png"
+                alt="Zebra sem identidade visual"
+                fill
+                className="object-contain object-bottom grayscale opacity-40"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.4, duration: 0.6, ease }}
+            className="flex items-center justify-center px-6 py-10 md:py-0 order-first md:order-none"
+          >
+            <h2 className="font-display font-black text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-tight text-center leading-[1.15] max-w-[280px]">
+              De qual zebra você vai{" "}
+              <span className="text-[#FF6100]">lembrar</span> daqui a pouco?
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.8, ease }}
+            className="relative flex items-end justify-center md:justify-start"
+          >
+            <div className="relative w-full max-w-[340px] md:max-w-[420px] aspect-square">
+              <Image
+                src="/images/propostas/portfolio-idvisual/Zebra_com_identidade.png"
+                alt="Zebra estilosa com identidade visual"
+                fill
+                className="object-contain object-bottom drop-shadow-[0_0_40px_rgba(255,97,0,0.3)]"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SecaoPacote({ pacote, index }: { pacote: IdVisualPacote; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -482,6 +539,7 @@ export function IdVisualPage({ data }: { data: IdVisualData }) {
   return (
     <main className="min-h-screen">
       <Hero data={data.hero} />
+      <SecaoZebras />
       <SecaoPacotes data={data} />
       <SecaoPortfolio data={data.portfolio} />
       <SecaoInvestimento data={data.investimento} />
