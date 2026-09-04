@@ -1,8 +1,8 @@
 import { IdVisualData } from "@/types/proposta-idvisual";
-import { jahaina } from "./jahaina";
+import { janainaHirata } from "./janaina-hirata";
 
 const propostas: Record<string, IdVisualData> = {
-  jahaina,
+  "janaina-hirata": janainaHirata,
 };
 
 export function getIdVisualBySlug(slug: string): IdVisualData | undefined {

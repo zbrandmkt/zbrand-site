@@ -1,20 +1,20 @@
 import { IdVisualData } from "@/types/proposta-idvisual";
 
-export const jahaina: IdVisualData = {
-  slug: "jahaina",
+export const janainaHirata: IdVisualData = {
+  slug: "janaina-hirata",
   cliente: {
-    nome: "Jahaina",
+    nome: "Janaina Hirata",
     segmento: "Psicologia e atuação internacional",
   },
   hero: {
-    etiqueta: "Proposta de identidade visual · Jahaina",
-    saudacao: "Olá, Jahaina! Tudo bem?",
+    etiqueta: "Proposta de identidade visual · Janaina Hirata",
+    saudacao: "Olá, Janaina! Tudo bem?",
     headline: "Uma identidade que traduz ",
     headlineDestaque: "autoridade, humanidade e atuação global.",
     subtexto:
       "Montei uma proposta especial para o seu projeto, considerando sua trajetória internacional e a necessidade de uma identidade visual que traduza autoridade, humanidade e atuação global.",
     chips: [
-      { texto: "Preparado para Jahaina" },
+      { texto: "Preparado para Janaina Hirata" },
       { texto: "Identidade Visual Completa" },
       { texto: "Proposta exclusiva", destaque: true },
     ],
@@ -84,18 +84,62 @@ export const jahaina: IdVisualData = {
     headline: "Identidades que já criamos",
     subtexto:
       "Cada marca que construímos reflete quem a pessoa é e como ela quer ser vista. Veja alguns dos projetos que já entregamos.",
-    itens: [],
+    itens: [
+      {
+        src: "/images/propostas/portfolio-idvisual/zbrand.png",
+        legenda: "ZBRAND — Marketing Digital",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/tea-acompanhe.png",
+        legenda: "TEA Acompanhe — Acompanhamento Terapêutico",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/dulu-confeitaria.png",
+        legenda: "Dulu Confeitaria — Confeitaria Artesanal",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/maria-maria.png",
+        legenda: "Maria Maria — Balas de Coco",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/adular.png",
+        legenda: "Adular — Doceria Artesanal",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/anima-kids.png",
+        legenda: "Anima Kids — Entretenimento Infantil",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/brigadeiro-da-dede.png",
+        legenda: "Brigadeiro da Dede — Doceria",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/persie-barber.png",
+        legenda: "Persie Barber Na Régua — Barbearia",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/w-transporte-escolar.png",
+        legenda: "W Transporte Escolar",
+      },
+    ],
   },
   investimento: {
     etiqueta: "Investimento",
     headline: "Quanto custa",
     nomePacote: "Projeto de Identidade Visual e Comunicação",
     valorTotal: "R$ 3.600",
-    pagamentos: [
-      { parcela: "50% no início", valor: "R$ 1.800" },
-      { parcela: "50% na entrega final", valor: "R$ 1.800" },
+    opcoesPagamento: [
+      {
+        titulo: "À vista",
+        destaque: true,
+        linhas: ["Pagamento único de R$ 3.600"],
+      },
+      {
+        titulo: "Parcelado",
+        linhas: ["Até 5x sem juros de R$ 720"],
+      },
     ],
-    prazo: "20 a 30 dias úteis",
+    prazo: "35 a 45 dias úteis",
     inclui:
       "Até 2 rodadas de ajustes por etapa e todos os arquivos finais + editáveis.",
   },

@@ -237,25 +237,27 @@ function SecaoPortfolio({ data }: { data: IdVisualPortfolio }) {
           {data.subtexto}
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {data.itens.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
+              transition={{ delay: 0.2 + i * 0.08, duration: 0.5 }}
               className="border-2 border-white/10 rounded-[14px] overflow-hidden group"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-square overflow-hidden bg-white/5">
                 <Image
                   src={item.src}
                   alt={item.legenda}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="px-4 py-3 bg-white/5">
-                <p className="text-white/50 text-xs">{item.legenda}</p>
+              <div className="px-3 py-2.5 bg-white/5 border-t border-white/5">
+                <p className="text-white/50 text-[11px] leading-snug">
+                  {item.legenda}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -306,33 +308,45 @@ function SecaoInvestimento({ data }: { data: IdVisualData["investimento"] }) {
           </p>
         </motion.div>
 
-        {/* Forma de pagamento */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="border-2 border-[#0A0A0A] rounded-[14px] overflow-hidden mb-6"
-          style={{ boxShadow: "4px 4px 0px #0A0A0A" }}
-        >
-          <div className="bg-[#F6F6F6] px-6 py-3 border-b-2 border-[#0A0A0A]">
-            <h3 className="font-display font-black text-[#0A0A0A] text-sm uppercase tracking-tight">
-              Forma de pagamento
-            </h3>
-          </div>
-          <div className="bg-white divide-y divide-[#E5E5E5]">
-            {data.pagamentos.map((p, i) => (
+        {/* Opções de pagamento */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {data.opcoesPagamento.map((opcao, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+              className={`border-2 border-[#0A0A0A] rounded-[14px] overflow-hidden ${
+                opcao.destaque ? "ring-2 ring-[#FF6100] ring-offset-2" : ""
+              }`}
+              style={{ boxShadow: "4px 4px 0px #0A0A0A" }}
+            >
               <div
-                key={i}
-                className="px-6 py-4 flex items-center justify-between"
+                className={`px-6 py-3 border-b-2 border-[#0A0A0A] ${
+                  opcao.destaque ? "bg-[#FF6100]" : "bg-[#F6F6F6]"
+                }`}
               >
-                <span className="text-[#4B5563] text-sm">{p.parcela}</span>
-                <span className="font-display font-black text-[#0A0A0A] text-lg">
-                  {p.valor}
-                </span>
+                <h3
+                  className={`font-display font-black text-sm uppercase tracking-tight ${
+                    opcao.destaque ? "text-white" : "text-[#0A0A0A]"
+                  }`}
+                >
+                  {opcao.titulo}
+                </h3>
               </div>
-            ))}
-          </div>
-        </motion.div>
+              <div className="bg-white px-6 py-5">
+                {opcao.linhas.map((linha, li) => (
+                  <p
+                    key={li}
+                    className="text-[#4B5563] text-sm leading-relaxed"
+                  >
+                    {linha}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Prazo e inclui */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

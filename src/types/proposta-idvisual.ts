@@ -35,9 +35,10 @@ export interface IdVisualPortfolio {
   itens: IdVisualPortfolioItem[];
 }
 
-export interface IdVisualPagamento {
-  parcela: string;
-  valor: string;
+export interface OpcaoPagamento {
+  titulo: string;
+  destaque?: boolean;
+  linhas: string[];
 }
 
 export interface IdVisualInvestimento {
@@ -45,7 +46,7 @@ export interface IdVisualInvestimento {
   headline: string;
   nomePacote: string;
   valorTotal: string;
-  pagamentos: IdVisualPagamento[];
+  opcoesPagamento: OpcaoPagamento[];
   prazo: string;
   inclui: string;
 }
