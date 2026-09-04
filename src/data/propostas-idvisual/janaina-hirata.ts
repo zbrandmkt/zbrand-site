@@ -83,30 +83,30 @@ export const janainaHirata: IdVisualData = {
     etiqueta: "Nosso trabalho",
     headline: "Identidades que já criamos",
     subtexto:
-      "Cada marca que construímos reflete quem a pessoa é e como ela quer ser vista. Veja alguns dos projetos que já entregamos.",
+      "Cada marca que construímos reflete quem a pessoa é e como ela quer ser vista. A ZBRAND também nasceu assim — criamos nossa própria identidade e todo o site zbrand.com.br do zero. Veja alguns dos projetos que já entregamos.",
     itens: [
       {
-        src: "/images/propostas/portfolio-idvisual/zbrand.png",
-        legenda: "ZBRAND — Marketing Digital",
+        src: "/images/propostas/portfolio-idvisual/zbrand-laranja.png",
+        legenda: "ZBRAND — Nossa própria marca (versão principal)",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/zbrand-branco.png",
+        legenda: "ZBRAND — Versão sobre fundo claro",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/zbrand-preto.png",
+        legenda: "ZBRAND — Versão monocromática",
       },
       {
         src: "/images/propostas/portfolio-idvisual/tea-acompanhe.png",
         legenda: "TEA Acompanhe — Acompanhamento Terapêutico",
       },
       {
-        src: "/images/propostas/portfolio-idvisual/dulu-confeitaria.png",
-        legenda: "Dulu Confeitaria — Confeitaria Artesanal",
-      },
-      {
-        src: "/images/propostas/portfolio-idvisual/maria-maria.png",
-        legenda: "Maria Maria — Balas de Coco",
-      },
-      {
-        src: "/images/propostas/portfolio-idvisual/adular.png",
+        src: "/images/propostas/portfolio-idvisual/adular.jpg",
         legenda: "Adular — Doceria Artesanal",
       },
       {
-        src: "/images/propostas/portfolio-idvisual/anima-kids.png",
+        src: "/images/propostas/portfolio-idvisual/anima-kids.jpg",
         legenda: "Anima Kids — Entretenimento Infantil",
       },
       {
@@ -116,6 +116,18 @@ export const janainaHirata: IdVisualData = {
       {
         src: "/images/propostas/portfolio-idvisual/persie-barber.png",
         legenda: "Persie Barber Na Régua — Barbearia",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/dandara-hair.png",
+        legenda: "Trancista Dandara Hair — Beleza",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/moria-pasteis.png",
+        legenda: "Moriá Pastéis — Alimentação",
+      },
+      {
+        src: "/images/propostas/portfolio-idvisual/jr-auto-mecanica.png",
+        legenda: "Jr. Auto Mecânica — Automotivo",
       },
       {
         src: "/images/propostas/portfolio-idvisual/w-transporte-escolar.png",
@@ -144,14 +156,14 @@ export const janainaHirata: IdVisualData = {
       "Até 2 rodadas de ajustes por etapa e todos os arquivos finais + editáveis.",
   },
   cta: {
-    headline: "Vamos construir a sua marca?",
+    headline: "Sua marca é a primeira impressão que você deixa no mundo.",
     texto:
-      "Fico à disposição para conversarmos melhor e alinhar os detalhes. O que acha?",
-    reforco: "Sem compromisso. É só uma conversa.",
-    textoBotao: "Falar com a ZBRAND no WhatsApp",
+      "Cada dia sem uma identidade visual profissional é um dia em que potenciais clientes passam por você sem te reconhecer. Uma marca forte não é um custo — é o ativo que trabalha por você 24h por dia, transmitindo credibilidade antes mesmo da primeira palavra.",
+    reforco: "Esta proposta tem validade de 7 dias. Condições exclusivas para este projeto.",
+    textoBotao: "Quero começar meu projeto",
     linkWhatsapp:
-      "https://api.whatsapp.com/send?phone=5511940502929&text=Oi!%20Recebi%20a%20proposta%20de%20identidade%20visual%20e%20quero%20conversar.",
-    rodape: "Abraço, ZBRAND",
+      "https://api.whatsapp.com/send?phone=5511940502929&text=Oi!%20Recebi%20a%20proposta%20de%20identidade%20visual%20e%20quero%20come%C3%A7ar%20o%20projeto.",
+    rodape: "ZBRAND — Sua marca merece ser lembrada.",
   },
   rodape: {
     marca: "Z.brand",

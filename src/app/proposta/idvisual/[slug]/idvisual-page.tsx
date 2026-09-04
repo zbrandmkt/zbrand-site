@@ -390,46 +390,56 @@ function CTA({ data }: { data: IdVisualData["cta"] }) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section className="bg-[#FF6100] py-16 md:py-24">
-      <div ref={ref} className="max-w-2xl mx-auto px-5 text-center">
+    <section className="relative bg-[#0A0A0A] py-20 md:py-28 overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: "url('/images/zebra-texture-white.png')",
+          backgroundRepeat: "repeat",
+          backgroundSize: "280px",
+        }}
+      />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#FF6100]/15 blur-[140px]" />
+
+      <div ref={ref} className="relative z-10 max-w-2xl mx-auto px-5 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, ease }}
+          className="inline-block bg-[#FF6100] text-white text-[10px] font-black uppercase tracking-[0.25em] px-4 py-2 rounded-full mb-8"
+        >
+          Proposta exclusiva
+        </motion.div>
+
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="font-display font-black text-white text-3xl md:text-4xl uppercase tracking-tight leading-tight mb-6"
+          transition={{ delay: 0.1, duration: 0.6, ease }}
+          className="font-display font-black text-white text-3xl md:text-[42px] uppercase tracking-tight leading-[1.1] mb-8"
         >
           {data.headline}
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="text-white/90 text-base leading-relaxed mb-4"
+          transition={{ delay: 0.2, duration: 0.5, ease }}
+          className="text-white/70 text-base md:text-lg leading-relaxed mb-10"
         >
           {data.texto}
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-white/70 text-sm italic mb-10"
-        >
-          {data.reforco}
         </motion.p>
 
         <motion.a
           href={data.linkWhatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3, duration: 0.5, ease }}
-          whileHover={{ scale: 1.04 }}
+          whileHover={{ scale: 1.04, y: -2 }}
           whileTap={{ scale: 0.97 }}
-          className="inline-block bg-[#0A0A0A] text-white font-display font-black text-base uppercase tracking-tight px-10 py-4 rounded-[14px] border-2 border-[#0A0A0A]"
-          style={{ boxShadow: "4px 4px 0px rgba(0,0,0,0.3)" }}
+          className="inline-block bg-[#FF6100] text-white font-display font-black text-base md:text-lg uppercase tracking-tight px-12 py-5 rounded-[14px] border-2 border-[#FF6100]"
+          style={{ boxShadow: "6px 6px 0px #FF6100" }}
         >
           {data.textoBotao}
         </motion.a>
@@ -438,7 +448,16 @@ function CTA({ data }: { data: IdVisualData["cta"] }) {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-white/50 text-xs mt-10"
+          className="text-[#FF6100]/80 text-xs font-bold uppercase tracking-widest mt-8"
+        >
+          {data.reforco}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="text-white/30 text-xs mt-6"
         >
           {data.rodape}
         </motion.p>
