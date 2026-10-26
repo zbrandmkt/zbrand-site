@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
+import { Logo } from "@/components/brand/logo";
 
 const navItems = [
   {
@@ -77,13 +77,7 @@ export function AdminSidebar() {
     <aside className="fixed left-0 top-0 h-screen w-56 bg-[#111111] border-r border-white/08 flex flex-col z-40">
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/08">
-        <Image
-          src="/images/logo-preto-zbrand.png"
-          alt="ZBRAND"
-          width={100}
-          height={30}
-          className="h-7 w-auto brightness-0 invert"
-        />
+        <Logo variant="claro" height={30} className="h-7" />
         <p className="text-[9px] text-[#FF6100] uppercase tracking-widest mt-1.5 font-black">
           Painel Admin
         </p>

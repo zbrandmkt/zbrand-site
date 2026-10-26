@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { getWhatsAppLink } from "@/lib/whatsapp";
+import { Logo } from "@/components/brand/logo";
+import { site } from "@/lib/site";
 
 const footerLinks = {
   servicos: [
@@ -41,13 +42,7 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-4 max-w-xs">
             <Link href="/" className="inline-block">
-              <Image
-                src="/images/logo-zbrand.png"
-                alt="ZBRAND"
-                width={180}
-                height={54}
-                className="h-14 w-auto"
-              />
+              <Logo variant="claro" height={54} className="h-14" />
             </Link>
             <p className="font-display text-xs text-white/40 leading-relaxed">
               Marketing digital sem mimimi.
@@ -64,7 +59,7 @@ export function Footer() {
             <div className="flex gap-2.5">
               {/* Instagram */}
               <a
-                href="https://instagram.com/zbrand.mkt"
+                href={site.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border-2 border-white/10 rounded-xl flex items-center justify-center text-white/50 hover:border-[#FF6100] hover:text-[#FF6100] hover:bg-[#FF6100]/10 transition-all"
@@ -76,7 +71,7 @@ export function Footer() {
               </a>
               {/* TikTok */}
               <a
-                href="https://tiktok.com/@zbrand.mkt"
+                href={site.social.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border-2 border-white/10 rounded-xl flex items-center justify-center text-white/50 hover:border-[#FF6100] hover:text-[#FF6100] hover:bg-[#FF6100]/10 transition-all"
@@ -88,7 +83,7 @@ export function Footer() {
               </a>
               {/* YouTube */}
               <a
-                href="https://youtube.com/@zbrand.mkt"
+                href={site.social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 border-2 border-white/10 rounded-xl flex items-center justify-center text-white/50 hover:border-[#FF6100] hover:text-[#FF6100] hover:bg-[#FF6100]/10 transition-all"
@@ -112,9 +107,9 @@ export function Footer() {
               </a>
             </div>
             <p className="text-xs text-white/30 font-medium">
-              (11) 94050-2929 &middot;{" "}
-              <a href="mailto:contato@zbrand.com.br" className="hover:text-white/60 transition-colors">
-                contato@zbrand.com.br
+              {site.phoneDisplay} &middot;{" "}
+              <a href={`mailto:${site.email}`} className="hover:text-white/60 transition-colors">
+                {site.email}
               </a>
             </p>
           </div>
@@ -192,25 +187,25 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="font-display text-xs text-white/40 hover:text-[#25D366] transition-colors"
                 >
-                  (11) 94050-2929
+                  {site.phoneDisplay}
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:contato@zbrand.com.br"
+                  href={`mailto:${site.email}`}
                   className="font-display text-xs text-white/40 hover:text-white transition-colors"
                 >
-                  contato@zbrand.com.br
+                  {site.email}
                 </a>
               </li>
               <li>
                 <a
-                  href="https://instagram.com/zbrand.mkt"
+                  href={site.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-display text-xs text-white/40 hover:text-white transition-colors"
                 >
-                  @zbrand.mkt
+                  {site.social.instagramHandle}
                 </a>
               </li>
             </ul>
@@ -220,7 +215,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-white/05 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="font-display text-[10px] text-white/20">
-            &copy; {new Date().getFullYear()} ZBRAND. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} {site.name}. Todos os direitos reservados.
           </p>
           <div className="flex gap-4">
             {footerLinks.legal.map((link) => (

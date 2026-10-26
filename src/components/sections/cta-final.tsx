@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { supabase } from "@/lib/supabase";
+import { BUSINESS_TYPE_LABELS } from "@/lib/business-types";
 
 interface FormData {
   name: string;
@@ -259,13 +260,9 @@ export function CTAFinal() {
                     className="w-full px-3.5 py-2.5 bg-white border-2 border-[#1A1A1A]/15 rounded-xl text-[#1A1A1A] text-sm focus:border-[#FF6100] focus:outline-none transition-colors font-medium appearance-none cursor-pointer"
                   >
                     <option value="">Selecione...</option>
-                    <option value="clinica">Clínica / Saúde</option>
-                    <option value="academia">Academia / Estúdio</option>
-                    <option value="salao">Salão / Barbearia</option>
-                    <option value="loja">Loja / E-commerce</option>
-                    <option value="restaurante">Restaurante / Alimentação</option>
-                    <option value="escritorio">Escritório / Consultoria</option>
-                    <option value="outro">Outro</option>
+                    {BUSINESS_TYPE_LABELS.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
                   </select>
                 </div>
 

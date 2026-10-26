@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { TextRotate } from "@/components/ui/text-rotate";
 import { getWhatsAppLink } from "@/lib/whatsapp";
+import { Logo } from "@/components/brand/logo";
 
 const services = [
   {
@@ -325,13 +326,7 @@ export default function CamisetaPage() {
                 <p className="text-white/35 text-xs font-black uppercase tracking-[0.3em] mb-3">
                   Bem-vindo à
                 </p>
-                <Image
-                  src="/images/logo-zbrand.png"
-                  alt="ZBRAND"
-                  width={160}
-                  height={48}
-                  className="h-11 w-auto mb-6 mx-auto lg:mx-0"
-                />
+                <Logo variant="claro" height={48} className="h-11 mb-6 mx-auto lg:mx-0" />
               </FadeUp>
 
               <FadeUp delay={0.26}>

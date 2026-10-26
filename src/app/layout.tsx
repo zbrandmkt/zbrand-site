@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -11,11 +12,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  icons: {
-    icon: "/images/favicon.png",
-    shortcut: "/images/favicon.png",
-    apple: "/images/favicon.png",
-  },
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "ZBRAND — Marketing Digital para Negócios Locais",
     template: "%s | ZBRAND",

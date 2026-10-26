@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase";
+import { Logo } from "@/components/brand/logo";
 
 type Step = "loading" | "form" | "success" | "error";
 
@@ -126,13 +126,7 @@ export default function NovaSenhaPage() {
           <div className="px-8 pt-8 pb-10">
             {/* Logo */}
             <div className="flex justify-center mb-6">
-              <Image
-                src="/images/logo-preto-zbrand.png"
-                alt="ZBRAND"
-                width={180} height={54}
-                className="h-12 w-auto"
-                priority
-              />
+              <Logo variant="escuro" height={54} className="h-12" priority />
             </div>
 
             <AnimatePresence mode="wait">

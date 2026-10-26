@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase";
+import { Logo } from "@/components/brand/logo";
 
 const ALL_NAV_ITEMS = [
   {
@@ -109,13 +109,7 @@ function SidebarContent({
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/logo-preto-zbrand.png"
-            alt="ZBRAND"
-            width={110}
-            height={33}
-            className="h-8 w-auto brightness-0 invert"
-          />
+          <Logo variant="claro" height={33} className="h-8" />
         </div>
         <p className="text-[10px] text-white/30 uppercase tracking-widest mt-1 font-medium">
           Área do Cliente
@@ -378,13 +372,7 @@ export function DashboardSidebar({
         </button>
 
         {/* Logo centralizada */}
-        <Image
-          src="/images/logo-preto-zbrand.png"
-          alt="ZBRAND"
-          width={90}
-          height={27}
-          className="h-6 w-auto brightness-0 invert"
-        />
+        <Logo variant="claro" height={27} className="h-6" />
 
         {/* Avatar da empresa */}
         <div className="w-9 h-9 rounded-xl bg-[#FF6100] flex items-center justify-center">

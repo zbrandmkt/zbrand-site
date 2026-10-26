@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { supabase } from "@/lib/supabase";
 import { TextRotate } from "@/components/ui/text-rotate";
+import { BUSINESS_TYPE_LABELS as BUSINESS_TYPES } from "@/lib/business-types";
 
 const LIME = "#AAFF00";
 
@@ -15,17 +16,6 @@ interface FormData {
   business_type: string;
   challenge: string;
 }
-
-const BUSINESS_TYPES = [
-  "Loja Física",
-  "Loja Online / E-commerce",
-  "Prestador de Serviço",
-  "Clínica / Consultório",
-  "Estúdio / Espaço",
-  "Franquia",
-  "Escritório / Consultoria",
-  "Outro",
-];
 
 const CHALLENGES = [
   "Não tenho conteúdo de qualidade",

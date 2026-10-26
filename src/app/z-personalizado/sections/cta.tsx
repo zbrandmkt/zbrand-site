@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { supabase } from "@/lib/supabase";
 import { TextRotate } from "@/components/ui/text-rotate";
+import { BUSINESS_TYPE_LABELS as BUSINESS_TYPES } from "@/lib/business-types";
 
 const PURPLE = "#7B2FF7";
 
@@ -15,16 +16,6 @@ interface FormData {
   business_type: string;
   challenge: string;
 }
-
-const BUSINESS_TYPES = [
-  "Clínica",
-  "Academia",
-  "Salão",
-  "Loja",
-  "Restaurante",
-  "Escritório",
-  "Outro",
-];
 
 const CHALLENGES = [
   "Quero uma estratégia integrada",

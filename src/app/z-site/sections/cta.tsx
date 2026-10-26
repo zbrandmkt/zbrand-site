@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 import { supabase } from "@/lib/supabase";
 import { TextRotate } from "@/components/ui/text-rotate";
+import { BUSINESS_TYPE_LABELS as BUSINESS_TYPES } from "@/lib/business-types";
 
 const PINK = "#FF3D9A";
 
@@ -15,17 +16,6 @@ interface FormData {
   business_type: string;
   challenge: string;
 }
-
-const BUSINESS_TYPES = [
-  "Clínica / Saúde",
-  "Academia / Estúdio",
-  "Salão de Beleza",
-  "Loja / E-commerce",
-  "Restaurante / Alimentação",
-  "Escritório / Consultoria",
-  "Serviços em Geral",
-  "Outro",
-];
 
 const CHALLENGES = [
   "Não apareço no Google",

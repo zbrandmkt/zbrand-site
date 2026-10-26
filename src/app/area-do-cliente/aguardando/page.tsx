@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { createClient } from "@/lib/supabase";
 import { getWhatsAppLink } from "@/lib/whatsapp";
+import { Logo } from "@/components/brand/logo";
 
 export default function AguardandoPage() {
   const router = useRouter();
@@ -66,12 +66,7 @@ export default function AguardandoPage() {
         >
           <div className="px-8 py-10 flex flex-col items-center text-center gap-5">
             {/* Logo */}
-            <Image
-              src="/images/logo-preto-zbrand.png"
-              alt="ZBRAND"
-              width={140} height={42}
-              className="h-10 w-auto"
-            />
+            <Logo variant="escuro" height={42} className="h-10" />
 
             {/* Animated zebra emoji */}
             <motion.div

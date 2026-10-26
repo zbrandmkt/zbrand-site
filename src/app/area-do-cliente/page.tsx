@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase";
+import { Logo } from "@/components/brand/logo";
 
 const rotatingPhrases = [
   "Bem vindo de volta 🦓",
@@ -170,13 +170,7 @@ export default function AreaDoClientePage() {
               transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="flex justify-center mb-6"
             >
-              <Image
-                src="/images/logo-preto-zbrand.png"
-                alt="ZBRAND"
-                width={180} height={54}
-                className="h-12 w-auto"
-                priority
-              />
+              <Logo variant="escuro" height={54} className="h-12" priority />
             </motion.div>
 
             <AnimatePresence mode="wait">
