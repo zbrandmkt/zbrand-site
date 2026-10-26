@@ -9,27 +9,27 @@ const problems = [
   {
     emoji: "🔍",
     title: "Invisível no Google",
-    text: "Quando o cliente pesquisa 'negócio perto de mim', você não aparece. Seu concorrente aparece. O cliente vai pra lá.",
+    text: "A noiva pesquisa 'carrinho de churros para casamento' na sua cidade e você não aparece. Seu concorrente aparece. Ela fecha com ele.",
   },
   {
     emoji: "📱",
     title: "Link na Bio Que Distrai",
-    text: "Você manda o cliente pro Instagram. Ele vê story, rola o feed, abre outro perfil — e esquece de fazer o pedido.",
+    text: "Você manda o cliente pro Instagram. Ele vê story, rola o feed, abre outro perfil — e esquece de pedir o orçamento.",
   },
   {
     emoji: "💸",
-    title: "Dependente de Marketplace",
-    text: "Plataformas de terceiros cobram comissões altas e controlam a experiência. Com site próprio, o lucro e o cliente são seus.",
+    title: "Dependente de Indicação",
+    text: "Sem canal próprio, você espera a cerimonialista lembrar de você. Com site, o pedido de orçamento chega direto, todo mês.",
   },
   {
     emoji: "📋",
-    title: "Informações Desatualizadas em Todo Lugar",
-    text: "Preço mudou? Serviço novo? Você atualiza no WhatsApp, no Instagram, no Google… são 4 lugares. Com site, é um só.",
+    title: "A Mesma Pergunta 30 Vezes",
+    text: "\"Quais sabores?\" \"Atende minha cidade?\" \"Quanto tempo fica no evento?\" Com site, a resposta está lá antes da pergunta.",
   },
   {
     emoji: "📅",
     title: "Seus Serviços Sem Vitrine",
-    text: "Você faz um trabalho incrível, mas sem uma página com fotos, depoimentos e formulário, o cliente não te encontra — e fecha com quem tem.",
+    text: "Você faz eventos incríveis, mas sem uma página com fotos, depoimentos e formulário, o cliente não confia — e fecha com quem tem.",
   },
   {
     emoji: "🔄",
@@ -115,7 +115,7 @@ export function ZSiteProblem() {
               Você enfrenta isso?
             </p>
             <h2 className="font-display font-black text-4xl lg:text-5xl text-white uppercase tracking-tight leading-tight">
-              Por que seu negócio{" "}
+              Por que seu orçamento{" "}
               <span style={{ color: PINK }}>precisa de um site</span>
             </h2>
           </motion.div>
@@ -160,7 +160,7 @@ export function ZSiteProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente como resolver.
-              A gente constrói sites que trabalham por você — 24h por dia, sem algoritmo.&rdquo;
+              A gente vive eventos há 10 anos e constrói sites que pedem orçamento por você — 24h por dia.&rdquo;
             </p>
           </motion.div>
         </div>

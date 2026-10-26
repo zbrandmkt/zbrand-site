@@ -19,7 +19,7 @@ interface FormData {
 const CHALLENGES = [
   "Verba queimada sem resultado",
   "Não sei se meus anúncios funcionam",
-  "Não tenho conteúdo para anunciar",
+  "Não tenho fotos e vídeos dos eventos",
   "Não sei por onde começar",
   "Outro",
 ];
@@ -68,7 +68,7 @@ export function ZAdsCta() {
           whatsapp: data.whatsapp,
           business_type: data.business_type,
           message: `Desafio: ${data.challenge}`,
-          services: "Tráfego Pago (Z-ADS)",
+          services: "Tráfego pago",
           source: "z_ads_cta",
           utm_source: utm.get("utm_source"),
           utm_medium: utm.get("utm_medium"),
@@ -114,7 +114,7 @@ export function ZAdsCta() {
             <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.1] mb-4">
               Pronto para ter{" "}
               <TextRotate
-                texts={["Meta Ads", "Google Ads", "Criativos", "Resultado Real", "Tráfego Pago"]}
+                texts={["Meta Ads", "Google Ads", "Agenda Cheia", "Mais Orçamentos", "Tráfego Pago"]}
                 interval={2800}
                 className="block text-[#00C2FF]"
               />{" "}
@@ -123,7 +123,7 @@ export function ZAdsCta() {
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
               Sem compromisso, sem papo técnico. Uma conversa direta sobre como transformar
-              verba de anúncio em clientes reais para o seu negócio.
+              verba de anúncio em orçamentos fechados para o seu negócio de eventos.
             </p>
 
             {/* WhatsApp direct */}
@@ -176,7 +176,7 @@ export function ZAdsCta() {
                 <p className="font-display text-sm text-cinza-dark font-medium leading-relaxed">
                   Você vai receber uma mensagem no WhatsApp em até 1 hora com os próximos passos.{" "}
                   <span className="font-bold" style={{ color: "#00C2FF" }}>
-                    Bora transformar seus anúncios em clientes!
+                    Bora transformar seus anúncios em orçamentos!
                   </span>
                 </p>
               </div>

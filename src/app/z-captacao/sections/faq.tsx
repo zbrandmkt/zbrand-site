@@ -16,15 +16,15 @@ const faqs = [
   },
   {
     q: "O que preciso preparar para o dia de captação?",
-    a: "Deixar o ambiente organizado, ter um produto ou serviço disponível para filmagem e avisar a equipe que haverá filmagem. A gente chega com roteiro pronto — você só precisa estar presente e à vontade. Nada de improvisar.",
+    a: "Escolher um evento em que o contratante autorize a filmagem e avisar a equipe. A gente chega com roteiro pronto e filma sem atrapalhar o serviço — você só precisa trabalhar como sempre. Nada de improvisar.",
   },
   {
-    q: "Posso contratar captação sem ter Social Media ou Ads com a ZBRAND?",
-    a: "Sim, 100%. Captação é um serviço standalone. Muitos clientes contratam para usar com sua própria agência ou equipe interna de marketing. O conteúdo é entregue no Drive e você usa como quiser.",
+    q: "Posso contratar captação sem ter os outros serviços da Zibrand?",
+    a: "Sim. A captação é um complemento avulso: o conteúdo é entregue no Drive e você usa como quiser. Mas ela rende mais junto com o site de orçamento, os anúncios e o social media, que transformam esse material em pedidos de orçamento. Consulte a disponibilidade para a sua cidade.",
   },
   {
     q: "Posso contratar mais de uma sessão por mês?",
-    a: "Sim, sem problema. Cada sessão adicional segue o mesmo valor. Clientes com maior volume de conteúdo costumam fazer 2 sessões por mês — uma focada em produtos e serviços, outra em conteúdo de bastidores e talking head.",
+    a: "Sim, sem problema. Cada sessão adicional segue as mesmas condições. Clientes com maior volume de conteúdo costumam fazer 2 sessões por mês — por exemplo, uma em casamento e outra em evento corporativo.",
   },
   {
     q: "O conteúdo já vem pronto para publicar?",

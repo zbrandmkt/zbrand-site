@@ -21,31 +21,31 @@ const flows: {
 }[] = [
   {
     id: "agendamento",
-    label: "Agendamento",
+    label: "Orçamento",
     icon: "📅",
     messages: [
-      { from: "bot", text: "Oi Ana! Bem-vinda ao Studio Beleza ✨", delay: 300 },
-      { from: "bot", text: "Como posso te ajudar?", delay: 900, isButtons: true, buttons: ["Agendar horário", "Tirar dúvida", "Promoção"] },
-      { from: "user", text: "Agendar horário", delay: 1800 },
-      { from: "bot", text: "Ótimo! Qual serviço você procura?", delay: 2500 },
-      { from: "user", text: "Corte + escova", delay: 3300 },
-      { from: "bot", text: "Temos horários disponíveis 👇", delay: 4000, isButtons: true, buttons: ["Ter 14h", "Qua 10h", "Sex 16h"] },
-      { from: "user", text: "Qua 10h", delay: 4800 },
-      { from: "bot", text: "Agendado! Quarta às 10h ✅ Até lá! 💇‍♀️", delay: 5400 },
+      { from: "bot", text: "Oi Ana! Aqui é a Zee, do Churros da Praça 🍩", delay: 300 },
+      { from: "bot", text: "Pra qual evento é?", delay: 900, isButtons: true, buttons: ["Casamento", "15 anos", "Corporativo"] },
+      { from: "user", text: "Casamento", delay: 1800 },
+      { from: "bot", text: "Que lindo! Qual a data e quantos convidados?", delay: 2500 },
+      { from: "user", text: "12/09, umas 150 pessoas", delay: 3300 },
+      { from: "bot", text: "Anotado! Em qual cidade? 👇", delay: 4000, isButtons: true, buttons: ["São Paulo", "Campinas", "Outra"] },
+      { from: "user", text: "Campinas", delay: 4800 },
+      { from: "bot", text: "Prontinho ✅ Seu orçamento chega em instantes!", delay: 5400 },
     ],
   },
   {
     id: "orcamento",
-    label: "Orçamento",
-    icon: "💰",
+    label: "Dúvidas",
+    icon: "💬",
     messages: [
-      { from: "bot", text: "Oi! Vamos montar seu orçamento 💰", delay: 300 },
-      { from: "bot", text: "Qual serviço você procura?", delay: 900 },
-      { from: "user", text: "Pacote noiva completo", delay: 1700 },
-      { from: "bot", text: "Qual a data do evento?", delay: 2400 },
-      { from: "user", text: "15 de março", delay: 3200 },
-      { from: "bot", text: "Perfeito! Orçamento enviado por aqui ✅", delay: 4000 },
-      { from: "bot", text: "Nossa equipe entra em contato em até 2h 📋", delay: 4700 },
+      { from: "bot", text: "Oi! Sou a Zee 👋 Como posso ajudar?", delay: 300 },
+      { from: "user", text: "Vocês atendem em Santos?", delay: 1100 },
+      { from: "bot", text: "Atendemos sim! O litoral tem taxa de deslocamento 🚗", delay: 1900 },
+      { from: "user", text: "E quais sabores vocês têm?", delay: 2700 },
+      { from: "bot", text: "Doce de leite, chocolate, Nutella e mais 4 opções 😋", delay: 3500 },
+      { from: "bot", text: "Quer que eu já monte o seu orçamento?", delay: 4200, isButtons: true, buttons: ["Quero!"] },
+      { from: "user", text: "Quero!", delay: 4900 },
     ],
   },
   {
@@ -53,12 +53,11 @@ const flows: {
     label: "Disparo",
     icon: "📣",
     messages: [
-      { from: "bot", text: "🔥 SEXTA ESPECIAL no Studio Beleza!", delay: 300 },
-      { from: "bot", text: "30% OFF em todos os serviços hoje até às 20h ✨", delay: 1000 },
-      { from: "bot", text: "Clique abaixo e agende agora:", delay: 1700, isButtons: true, buttons: ["AGENDAR AGORA 📅"] },
-      { from: "user", text: "Quero agendar!", delay: 2600 },
-      { from: "bot", text: "Ótimo! Abrindo seu agendamento... 🎉", delay: 3400 },
-      { from: "bot", text: "Qual serviço você procura?", delay: 4100 },
+      { from: "bot", text: "🎄 Agenda de fim de ano aberta!", delay: 300 },
+      { from: "bot", text: "Restam poucas datas em dezembro para confraternizações ✨", delay: 1000 },
+      { from: "bot", text: "Quer garantir a sua?", delay: 1700, isButtons: true, buttons: ["RESERVAR DATA 📅"] },
+      { from: "user", text: "Quero reservar!", delay: 2600 },
+      { from: "bot", text: "Oba! 🎉 Me conta a data e o número de convidados", delay: 3400 },
     ],
   },
 ];
@@ -137,7 +136,7 @@ function PhoneMockup({ flowId }: { flowId: string }) {
             🦓
           </div>
           <div>
-            <p className="text-white text-[10px] font-bold leading-none">Studio Beleza</p>
+            <p className="text-white text-[10px] font-bold leading-none">Churros da Praça</p>
             <p className="text-white/60 text-[8px] mt-0.5">online agora</p>
           </div>
           <div className="ml-auto flex gap-1.5">
@@ -209,7 +208,7 @@ export function ZAutomaçaoBotPreview() {
   const [activeFlow, setActiveFlow] = useState("agendamento");
 
   return (
-    <section className="bg-[#1A1A1A] py-20 lg:py-28 overflow-hidden relative">
+    <section id="bot-em-acao" className="bg-[#1A1A1A] py-20 lg:py-28 overflow-hidden relative scroll-mt-24">
       {/* Background glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none opacity-10"
@@ -229,16 +228,16 @@ export function ZAutomaçaoBotPreview() {
               className="text-[11px] font-black uppercase tracking-[0.25em] mb-4"
               style={{ color: AMBER }}
             >
-              Bot em Ação
+              Zee em Ação
             </p>
             <h2 className="font-display font-black text-4xl lg:text-5xl text-white uppercase tracking-tight leading-tight mb-4">
               Veja como o{" "}
-              <span style={{ color: AMBER }}>bot funciona</span>{" "}
+              <span style={{ color: AMBER }}>a Zee funciona</span>{" "}
               na prática
             </h2>
             <p className="font-display text-sm text-white/50 mb-10 leading-relaxed">
               Escolha um fluxo e veja a conversa automática acontecendo em tempo real.
-              É exatamente assim que seus clientes serão atendidos — 24h por dia, sem você precisar responder.
+              É assim que seus clientes serão atendidos — 24h por dia, mesmo quando você está no meio de um evento.
             </p>
 
             {/* Flow selector buttons */}
@@ -266,9 +265,9 @@ export function ZAutomaçaoBotPreview() {
                         {flow.label === "Disparo" ? "Disparo em Massa" : `Fluxo de ${flow.label}`}
                       </p>
                       <p className="text-[10px] text-white/30 mt-0.5">
-                        {flow.id === "agendamento" && "Atendimento e confirmação de horário"}
-                        {flow.id === "orcamento" && "Solicitação automática de orçamento"}
-                        {flow.id === "promocao" && "Promoção enviada para todos os contatos"}
+                        {flow.id === "agendamento" && "Coleta evento, data, convidados e cidade"}
+                        {flow.id === "orcamento" && "Responde as perguntas de sempre com IA"}
+                        {flow.id === "promocao" && "Campanha para quem já pediu orçamento"}
                       </p>
                     </div>
                     {isActive && (
@@ -284,7 +283,7 @@ export function ZAutomaçaoBotPreview() {
 
             {/* Note */}
             <p className="text-[11px] text-white/20 mt-6 leading-relaxed">
-              * Conteúdo das mensagens personalizado para o seu negócio. O bot entende perguntas fora do script com IA generativa.
+              * Exemplo com nome fictício. As mensagens são personalizadas para o seu serviço, e a Zee entende perguntas fora do script com IA generativa.
             </p>
           </motion.div>
 

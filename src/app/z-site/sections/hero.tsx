@@ -7,10 +7,10 @@ import { getWhatsAppLink } from "@/lib/whatsapp";
 const PINK = "#FF3D9A";
 
 const stats = [
-  { value: "10 dias", label: "landing page" },
-  { value: "0%", label: "comissão de app" },
+  { value: "10 dias", label: "landing page no ar" },
+  { value: "24h", label: "recebendo orçamentos" },
   { value: "Mobile", label: "first" },
-  { value: "Seu domínio", label: "SEO local" },
+  { value: "Google", label: "SEO local" },
 ];
 
 export function ZSiteHero() {
@@ -43,7 +43,7 @@ export function ZSiteHero() {
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse-glow" style={{ background: PINK }} />
             <span className="font-display text-[11px] font-black uppercase tracking-widest">
-              💻 Z-SITE — Websites &amp; Landing Pages
+              💻 Site de orçamento para eventos
             </span>
           </motion.div>
 
@@ -54,7 +54,7 @@ export function ZSiteHero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="font-display font-black text-hero-mobile lg:text-hero-desktop text-preto uppercase tracking-tight leading-[1.05] mb-6"
           >
-            Seu Negócio Merece{" "}
+            Seu Evento Merece{" "}
             <br className="hidden sm:block" />
             Mais do que um{" "}
             <span style={{ color: PINK }}>Link na Bio.</span>
@@ -67,9 +67,9 @@ export function ZSiteHero() {
             transition={{ delay: 0.35, duration: 0.6 }}
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            A gente cria o site do seu negócio —{" "}
-            <span className="text-preto font-semibold">bonito, rápido e que converte</span> visita em
-            cliente. Sem dependência de algoritmo, sem complicação.
+            A gente cria o site do seu carrinho, truck ou serviço de evento —{" "}
+            <span className="text-preto font-semibold">bonito, rápido e com pedido de orçamento</span> que já
+            chega com data, local e número de convidados.
           </motion.p>
 
           {/* CTAs */}
@@ -91,12 +91,12 @@ export function ZSiteHero() {
               QUERO MEU SITE →
             </motion.a>
             <motion.a
-              href="#planos"
+              href="#exemplos"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER PLANOS
+              VER EXEMPLOS
             </motion.a>
           </motion.div>
 

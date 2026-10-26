@@ -8,23 +8,23 @@ const AMBER = "#FBBC05";
 const faqs = [
   {
     q: "Qual a diferença entre o plano Simples e o Complexo?",
-    a: "O Simples inclui chatbot + IA generativa para atendimento básico (boas-vindas, agendamento, dúvidas frequentes) sem integração com sistemas externos — ideal para a maioria dos negócios locais. O Complexo adiciona integrações customizadas com site próprio, CRM ou plataformas parceiras, além de fluxos avançados para negócios com múltiplos produtos ou pontos de venda. O diagnóstico inicial define qual se encaixa melhor para você.",
+    a: "O Simples inclui chatbot + IA generativa para atendimento básico (boas-vindas, agendamento, dúvidas frequentes) sem integração com sistemas externos — ideal para a maioria dos fornecedores de eventos. O Complexo adiciona integrações customizadas com site próprio, CRM ou plataformas parceiras, além de fluxos avançados para operações com vários carrinhos, unidades ou cardápios. O diagnóstico inicial define qual se encaixa melhor para você.",
   },
   {
     q: "O bot substitui minha equipe de atendimento?",
-    a: "Não — e nem deveria. O bot cuida do repetitivo: responder horário de funcionamento, confirmar agendamentos, enviar catálogo de serviços, coletar dados do cliente. Quando o cliente precisa de atenção especial ou solicita, o bot escala para atendimento humano com um clique. Você mantém controle total e a equipe foca no que realmente exige atenção.",
+    a: "Não — e nem deveria. A Zee cuida do repetitivo: responder se atende a cidade, enviar cardápio e fotos, coletar data, local e convidados. Quando o cliente precisa de atenção especial ou solicita, a Zee passa a conversa para você com um clique. Você mantém controle total e a equipe foca no que realmente exige atenção.",
   },
   {
     q: "O que são os 'disparos em massa' inclusos no plano?",
-    a: "Disparos são mensagens promocionais enviadas de uma vez para toda a sua base de contatos via WhatsApp — por exemplo: 'SEXTA ESPECIAL: 30% OFF em todos os serviços hoje!' com um botão de agendamento. Cada plano inclui até 3 disparos por mês. Disparos adicionais são R$50 cada. É muito mais eficiente que um story: a mensagem chega diretamente no celular de quem já é seu cliente.",
+    a: "Disparos são mensagens enviadas de uma vez para toda a sua base de contatos via WhatsApp — por exemplo: 'Agenda de dezembro aberta: restam poucas datas!' com um botão para reservar. A quantidade de disparos por mês é combinada no plano. É muito mais eficiente que um story: a mensagem chega direto no celular de quem já pediu orçamento.",
   },
   {
     q: "Em quanto tempo começo a ver resultado?",
-    a: "Os primeiros fluxos já atendem automaticamente no dia do lançamento (dia 18–20). Mas os dados de conversão (quantos leads viraram clientes) e receita gerada pelo bot ficam claros no relatório do 1º mês completo. Ao contrário de anúncios que precisam de curva de aprendizado, o bot converte desde o primeiro atendimento.",
+    a: "Os primeiros fluxos já atendem automaticamente no dia do lançamento (dia 18–20). Mas os dados de conversão (quantos pedidos viraram evento fechado) ficam claros no relatório do 1º mês completo. Ao contrário de anúncios que precisam de curva de aprendizado, a Zee atende desde a primeira mensagem.",
   },
   {
-    q: "O bot funciona com marketplaces e plataformas de terceiros?",
-    a: "O bot opera no seu WhatsApp Business. Mas pode direcionar clientes para seu site, loja online ou qualquer plataforma que você use — o cliente vê a promoção no WhatsApp, clica e vai direto para onde você precisa. Também é possível capturar solicitações diretas pelo WhatsApp, sem comissão de plataformas de terceiros. Você define qual fluxo faz mais sentido para o seu negócio.",
+    q: "A Zee funciona junto com o site de orçamento?",
+    a: "Sim, e é aí que ela rende mais. O cliente pede orçamento no site ou clica no anúncio, cai no seu WhatsApp e a Zee continua a conversa de onde parou: confirma data, local e convidados e entrega tudo organizado pra você. A Zee opera no seu WhatsApp Business.",
   },
   {
     q: "E se eu quiser cancelar antes dos 4 meses?",

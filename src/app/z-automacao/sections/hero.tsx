@@ -10,7 +10,7 @@ const stats = [
   { value: "24h", label: "respondendo automaticamente" },
   { value: "20 dias", label: "de implementação" },
   { value: "Bot + IA", label: "generativa" },
-  { value: "3 disparos", label: "por mês inclusos" },
+  { value: "Data + local", label: "+ convidados, já coletados" },
 ];
 
 export function ZAutomaçaoHero() {
@@ -46,7 +46,7 @@ export function ZAutomaçaoHero() {
               className="font-display text-[11px] font-black uppercase tracking-widest"
               style={{ color: AMBER }}
             >
-              ⚡ Z-AUTOMAÇÃO — WhatsApp 24h para Negócios Locais
+              ⚡ Zee — WhatsApp automático para eventos
             </span>
           </motion.div>
 
@@ -60,8 +60,8 @@ export function ZAutomaçaoHero() {
             Seu WhatsApp{" "}
             <span style={{ color: AMBER }}>Atende,</span>
             <br />
-            Vende e{" "}
-            <span className="text-laranja">Fideliza.</span>
+            Orça e{" "}
+            <span className="text-laranja">Fecha.</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -71,11 +71,10 @@ export function ZAutomaçaoHero() {
             transition={{ delay: 0.35, duration: 0.6 }}
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            A gente configura{" "}
-            <span className="text-preto font-semibold">fluxos automáticos</span> de atendimento,
-            agendamento e promoção no seu WhatsApp Business.{" "}
-            <span className="text-preto font-semibold">Bot + IA</span> + acompanhamento semanal.
-            Enquanto você cuida do negócio.
+            A{" "}
+            <span className="text-preto font-semibold">Zee, nossa assistente de IA</span>, responde na hora,
+            pergunta data, local e número de convidados e entrega o orçamento pronto pra você fechar.{" "}
+            <span className="text-preto font-semibold">Mesmo quando você está no evento.</span>
           </motion.p>
 
           {/* CTAs */}
@@ -94,15 +93,15 @@ export function ZAutomaçaoHero() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 font-display font-black text-sm uppercase tracking-widest border-2 border-preto rounded-brutal text-[#1A1A1A] transition-all"
               style={{ background: AMBER, boxShadow: "4px 4px 0px 0px #1A1A1A" }}
             >
-              QUERO MEU BOT
+              QUERO A ZEE NO MEU WHATSAPP
             </motion.a>
             <motion.a
-              href="#planos"
+              href="#bot-em-acao"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER PLANOS
+              VER A ZEE EM AÇÃO
             </motion.a>
           </motion.div>
 

@@ -6,14 +6,13 @@ import { ZAutomaçaoProblem } from "@/app/z-automacao/sections/problem";
 import { ZAutomaçaoBotPreview } from "@/app/z-automacao/sections/bot-preview";
 import { ZAutomaçaoDiferenciais } from "@/app/z-automacao/sections/diferenciais";
 import { ZAutomaçaoProcess } from "@/app/z-automacao/sections/process";
-import { ZAutomaçaoPricing } from "@/app/z-automacao/sections/pricing";
 import { ZAutomaçaoFaq } from "@/app/z-automacao/sections/faq";
 import { ZAutomaçaoCta } from "@/app/z-automacao/sections/cta";
 
 export const metadata = {
-  title: "Automação de WhatsApp para Negócios — Z-AUTOMAÇÃO | ZBRAND",
+  title: "Automação de WhatsApp para Orçamentos de Eventos (Zee)",
   description:
-    "Bot + IA generativa no WhatsApp do seu negócio. Atendimento 24h, respostas automáticas, disparos de promoção. Implementação em 20 dias por R$ 2.000.",
+    "A Zee, assistente de IA da Zibrand, responde seu WhatsApp na hora, coleta data, local e número de convidados e entrega o orçamento pronto para você fechar. Para carrinhos gourmet, food trucks e serviços de evento.",
 };
 
 export default function AutomacaoPage() {
@@ -26,7 +25,6 @@ export default function AutomacaoPage() {
         <ZAutomaçaoBotPreview />
         <ZAutomaçaoDiferenciais />
         <ZAutomaçaoProcess />
-        <ZAutomaçaoPricing />
         <ZAutomaçaoFaq />
         <ZAutomaçaoCta />
       </main>

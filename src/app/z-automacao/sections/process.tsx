@@ -12,7 +12,7 @@ const steps = [
     color: AMBER,
     title: "Descoberta & Mapeamento",
     subtitle: "Dias 1–3",
-    desc: "Reunião de briefing para entender seu modelo de negócio. Mapeamos todos os fluxos necessários (boas-vindas, agendamento, orçamento, feedback, upsell). Nenhum fluxo vai ao ar sem sua aprovação.",
+    desc: "Reunião online para entender seus serviços e eventos. Mapeamos os fluxos necessários (boas-vindas, orçamento, dúvidas, follow-up, pós-evento). Nenhum fluxo vai ao ar sem sua aprovação.",
   },
   {
     number: "02",
@@ -36,7 +36,7 @@ const steps = [
     color: "#7B2FF7",
     title: "Treinamento & Lançamento",
     subtitle: "Dias 16–20",
-    desc: "Reunião ao vivo onde você aprende: como usar o painel, como disparar promoções (mensagens em massa) para toda a base, como ver os relatórios e como escalar para atendimento humano.",
+    desc: "Reunião ao vivo onde você aprende: como usar o painel, como disparar campanhas de datas para toda a base, como ver os relatórios e como assumir a conversa quando quiser.",
   },
   {
     number: "05",
@@ -44,7 +44,7 @@ const steps = [
     color: "#AAFF00",
     title: "Otimização Contínua",
     subtitle: "Mês 2+",
-    desc: "Reunião semanal de 30 min para análise de performance: mensagens enviadas, leads qualificados, taxa de conversão e receita gerada pelo bot. Ajustes de fluxo e novos disparos conforme necessário.",
+    desc: "Reunião semanal de 30 min: pedidos recebidos, orçamentos qualificados e eventos fechados. Ajustes de fluxo e novas campanhas conforme a época do ano.",
   },
 ];
 

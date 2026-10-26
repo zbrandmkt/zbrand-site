@@ -7,26 +7,26 @@ const diffs = [
   {
     icon: "🦓",
     color: "#FBBC05",
-    title: "Experiência no Setor",
-    desc: "Escalamos clientes reais em diversos segmentos. Sabemos o que converte — não é achismo, é método.",
+    title: "A Gente Vive Eventos",
+    desc: "10 anos com carrinhos de churros em eventos. Sabemos quando o cliente começa a procurar fornecedor e o que ele precisa ver pra pedir orçamento.",
   },
   {
     icon: "🎥",
     color: "#FF6100",
-    title: "Filmamos e Editamos",
-    desc: "1 dia/mês de captação presencial (4–6h) no seu estabelecimento. Criativos com seu rosto, seu produto, seu ambiente — nada de banco de imagem.",
+    title: "Criativos com Seu Evento",
+    desc: "A gente manda o roteiro, você grava no próprio evento e nós editamos. Anúncio com o seu carrinho, o seu truck, o seu trabalho — nada de banco de imagem.",
   },
   {
     icon: "📊",
     color: "#00C2FF",
     title: "Resultado Transparente",
-    desc: "Relatório semanal com retorno real: quanto você gastou em anúncios, quanto voltou em clientes, custo por cliente novo. Sem enrolação.",
+    desc: "Relatório semanal com retorno real: quanto você gastou, quantos pedidos de orçamento chegaram e quanto custou cada um. Sem enrolação.",
   },
   {
     icon: "🎯",
     color: "#AAFF00",
     title: "Estratégia Real",
-    desc: "Campanhas estruturadas por objetivo: atração de novos clientes, reconhecimento de marca, remarketing (impactar quem já viu) e Google Ads. Funil completo, não anúncio avulso.",
+    desc: "Campanhas planejadas pelo calendário de eventos: temporada de casamentos, 15 anos, festas juninas, confraternizações de fim de ano. Remarketing e Google Ads incluídos. Funil completo, não anúncio avulso.",
   },
   {
     icon: "🤝",
@@ -82,7 +82,7 @@ export function ZAdsDiferenciais() {
           className="text-center mb-14"
         >
           <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#00C2FF] mb-4">
-            Por que ZBRAND
+            Por que a Zibrand
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
             O que nos faz{" "}
@@ -90,7 +90,7 @@ export function ZAdsDiferenciais() {
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
             Não somos mais uma agência de tráfego com relatório bonito e resultado de mentira.
-            Somos parceiros que filmam, editam e otimizam.
+            Somos a assessoria que vive eventos e mede o que importa: orçamento fechado.
           </p>
         </motion.div>
 

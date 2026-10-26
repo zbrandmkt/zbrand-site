@@ -7,14 +7,13 @@ import { ZSocialDiferenciais } from "@/app/z-social/sections/diferenciais";
 import { ZSocialProcess } from "@/app/z-social/sections/process";
 import { ZSocialPainel } from "@/app/z-social/sections/painel";
 import { ZSocialCases } from "@/app/z-social/sections/cases";
-import { ZSocialPricing } from "@/app/z-social/sections/pricing";
 import { ZSocialFaq } from "@/app/z-social/sections/faq";
 import { ZSocialCta } from "@/app/z-social/sections/cta";
 
 export const metadata = {
-  title: "Social Media para Negócios Locais — Z-SOCIAL | ZBRAND",
+  title: "Social Media Automatizado para Fornecedores de Eventos",
   description:
-    "A gente filma, edita e publica conteúdo que traz clientes reais. Gestão de Instagram, TikTok e LinkedIn para o seu negócio. Conheça o Z-SOCIAL.",
+    "Instagram ativo o ano inteiro para carrinhos gourmet, food trucks e serviços de evento, com IA, templates e vídeos produzidos em lote. Presença constante sem tirar você da operação.",
 };
 
 export default function SocialMediaPage() {
@@ -28,7 +27,6 @@ export default function SocialMediaPage() {
         <ZSocialProcess />
         <ZSocialPainel />
         <ZSocialCases />
-        <ZSocialPricing />
         <ZSocialFaq />
         <ZSocialCta />
       </main>

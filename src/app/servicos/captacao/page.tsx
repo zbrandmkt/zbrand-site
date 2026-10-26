@@ -6,14 +6,13 @@ import { ZCaptacaoProblem } from "@/app/z-captacao/sections/problem";
 import { ZCaptacaoDia } from "@/app/z-captacao/sections/dia-captacao";
 import { ZCaptacaoDiferenciais } from "@/app/z-captacao/sections/diferenciais";
 import { ZCaptacaoProcess } from "@/app/z-captacao/sections/process";
-import { ZCaptacaoPricing } from "@/app/z-captacao/sections/pricing";
 import { ZCaptacaoFaq } from "@/app/z-captacao/sections/faq";
 import { ZCaptacaoCta } from "@/app/z-captacao/sections/cta";
 
 export const metadata = {
-  title: "Captação de Conteúdo Presencial — Z-CAPTAÇÃO | ZBRAND",
+  title: "Captação de Vídeos para Fornecedores de Eventos",
   description:
-    "10 vídeos editados em 1 sessão de 4h. Captação presencial com celular profissional ou câmera. Entrega em 10 dias a partir de R$ 800. Para qualquer tipo de negócio.",
+    "10 vídeos editados em uma sessão de 4h no seu evento ou na sua operação. Conteúdo real do seu carrinho, truck ou serviço para Instagram e anúncios. Entrega em 10 dias.",
 };
 
 export default function CaptacaoPage() {
@@ -26,7 +25,6 @@ export default function CaptacaoPage() {
         <ZCaptacaoDia />
         <ZCaptacaoDiferenciais />
         <ZCaptacaoProcess />
-        <ZCaptacaoPricing />
         <ZCaptacaoFaq />
         <ZCaptacaoCta />
       </main>

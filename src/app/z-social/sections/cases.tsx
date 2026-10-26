@@ -7,7 +7,7 @@ import { motion, useInView } from "framer-motion";
 const results = [
   {
     src: "/images/resultados-social-media/IMG_7795.jpg",
-    alt: "Resultado de Social Media — cliente ZBRAND",
+    alt: "Resultado de social media de cliente da Zibrand",
     borderColor: "#FF6100",
     shadowColor: "#FF6100",
     label: "Social Media",
@@ -15,7 +15,7 @@ const results = [
   },
   {
     src: "/images/resultados-social-media/IMG_7796.jpg",
-    alt: "Resultado de Social Media — cliente ZBRAND",
+    alt: "Resultado de social media de cliente da Zibrand",
     borderColor: "#00C2FF",
     shadowColor: "#00C2FF",
     label: "Conteúdo Real",
@@ -23,7 +23,7 @@ const results = [
   },
   {
     src: "/images/resultados-social-media/IMG_7797.jpg",
-    alt: "Resultado de Social Media — cliente ZBRAND",
+    alt: "Resultado de social media de cliente da Zibrand",
     borderColor: "#AAFF00",
     shadowColor: "#AAFF00",
     label: "Resultado",
@@ -31,7 +31,7 @@ const results = [
   },
   {
     src: "/images/resultados-social-media/IMG_7798.jpg",
-    alt: "Resultado de Social Media — cliente ZBRAND",
+    alt: "Resultado de social media de cliente da Zibrand",
     borderColor: "#FF6100",
     shadowColor: "#FF6100",
     label: "Crescimento",
@@ -132,7 +132,7 @@ export function ZSocialCases() {
           transition={{ delay: 0.7 }}
           className="text-center text-white/20 text-xs mt-10 font-medium"
         >
-          Resultados de clientes reais da ZBRAND
+          Resultados de clientes reais da Zibrand
         </motion.p>
       </div>
     </section>

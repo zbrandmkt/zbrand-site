@@ -9,8 +9,8 @@ const diffs = [
   {
     icon: "🦓",
     color: AMBER,
-    title: "Feito para o Seu Negócio",
-    desc: "Não é chatbot genérico. Configuramos fluxos que entendem agendamento, orçamento, feedback e promoção do seu negócio específico — clínica, salão, escritório ou loja.",
+    title: "Feita para Eventos",
+    desc: "Não é chatbot genérico. A Zee pergunta o que importa para fechar evento: tipo de festa, data, local, número de convidados e cardápio — do carrinho gourmet ao fotógrafo.",
   },
   {
     icon: "🤖",
@@ -22,7 +22,7 @@ const diffs = [
     icon: "📊",
     color: "#00C2FF",
     title: "Relatório Real",
-    desc: "Mensagens enviadas, leads qualificados, taxa de conversão (quantos viraram clientes), receita gerada pelo bot. Você vê exatamente o retorno do investimento.",
+    desc: "Pedidos de orçamento recebidos, quantos foram qualificados, quantos viraram evento fechado. Você vê exatamente o retorno do investimento.",
   },
   {
     icon: "📋",
@@ -34,7 +34,7 @@ const diffs = [
     icon: "🤝",
     color: "#7B2FF7",
     title: "Treinamento + Suporte Semanal",
-    desc: "Você aprende a usar o painel, a disparar promoções (mensagens em massa) e a escalar atendimentos para humano. Reunião semanal incluída — não é entrega e tchau.",
+    desc: "Você aprende a usar o painel, a disparar campanhas de datas (mensagens em massa) e a assumir a conversa quando quiser. Reunião semanal incluída — não é entrega e tchau.",
   },
 ];
 
@@ -85,7 +85,7 @@ export function ZAutomaçaoDiferenciais() {
             className="text-[11px] font-black uppercase tracking-[0.25em] mb-4"
             style={{ color: AMBER }}
           >
-            Por que ZBRAND
+            Por que a Zibrand
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
             O que nos faz{" "}
@@ -93,7 +93,7 @@ export function ZAutomaçaoDiferenciais() {
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
             Não é só instalar um bot. É configurar, testar, treinar e acompanhar semanal
-            para garantir que seu WhatsApp esteja convertendo de verdade.
+            para garantir que cada pedido de orçamento vire conversa — e evento fechado.
           </p>
         </motion.div>
 

@@ -10,7 +10,7 @@ const diffs = [
     icon: "📋",
     color: "#AAFF00",
     title: "Roteiro Pré-Montado",
-    desc: "Chegamos com roteiro pronto baseado no seu negócio. Você não precisa inventar nada no dia — só executar. Nenhum tempo perdido.",
+    desc: "Chegamos com roteiro pronto baseado no seu serviço. Você não precisa inventar nada no evento — só trabalhar como sempre. Nenhum tempo perdido.",
   },
   {
     icon: "🎥",
@@ -22,7 +22,7 @@ const diffs = [
     icon: "🗓️",
     color: "#00C2FF",
     title: "10 Vídeos em 1 Dia",
-    desc: "Uma sessão de 4h vira 10 vídeos editados. Mais conteúdo do que a maioria dos negócios produz em 2 meses — de uma vez só.",
+    desc: "Uma sessão de 4h vira 10 vídeos editados. Mais conteúdo do que a maioria dos fornecedores produz numa temporada inteira — de uma vez só.",
   },
   {
     icon: "☁️",
@@ -87,15 +87,15 @@ export function ZCaptacaoDiferenciais() {
             className="text-[11px] font-black uppercase tracking-[0.25em] mb-4"
             style={{ color: LIME }}
           >
-            Por que ZBRAND
+            Por que a Zibrand
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
             O que nos faz{" "}
             <span style={{ color: LIME }}>diferentes</span>
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
-            Não somos cinegrafistas de plantão. Somos estrategistas de conteúdo que filmam, editam
-            e entendem do seu tipo de negócio.
+            Não somos cinegrafistas de plantão. Somos a assessoria que vive eventos e filma pensando
+            em virar post, anúncio e pedido de orçamento.
           </p>
         </motion.div>
 

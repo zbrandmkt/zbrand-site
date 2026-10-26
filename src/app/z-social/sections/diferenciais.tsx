@@ -13,20 +13,20 @@ const diffs = [
   {
     icon: "🎥",
     color: "#FF6100",
-    title: "Captação Presencial",
-    desc: "A gente vai até você, filma seu dia a dia, seus clientes felizes, edita profissionalmente e entrega pronto. Nada de banco de imagem.",
+    title: "Produção em Lote",
+    desc: "Você manda o material bruto dos eventos e a gente produz o mês inteiro de uma vez, com IA e templates da sua marca. Nada de banco de imagem.",
   },
   {
     icon: "🤝",
     color: "#00C2FF",
     title: "Conteúdo Humanizado",
-    desc: "Pessoas compram de pessoas. A gente cria conteúdo real, com seu rosto, sua história, sua vibe. Que conecta de verdade.",
+    desc: "Pessoas contratam pessoas. A IA acelera a produção, mas o conteúdo é o seu: seus eventos, sua equipe, seus clientes felizes.",
   },
   {
     icon: "📊",
     color: "#AAFF00",
     title: "Resultados Transparentes",
-    desc: "Você acompanha tudo em tempo real: seguidores, alcance, engajamento. Relatório mensal com recomendações claras.",
+    desc: "Você acompanha tudo em tempo real: alcance, engajamento e pedidos de orçamento vindos do Instagram. Relatório mensal com recomendações claras.",
   },
   {
     icon: "🔗",
@@ -82,14 +82,14 @@ export function ZSocialDiferenciais() {
           className="text-center mb-14"
         >
           <p className="text-[11px] font-black uppercase tracking-[0.25em] text-laranja mb-4">
-            Por que ZBRAND
+            Por que a Zibrand
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
             O que nos faz{" "}
             <span className="text-laranja">diferentes</span>
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
-            Não somos mais uma agência com templates prontos. Somos parceiros que conhecem sua realidade.
+            Não somos mais uma agência que posta por postar. Somos a assessoria que vive eventos e conhece a sua rotina.
           </p>
         </motion.div>
 

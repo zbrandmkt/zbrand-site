@@ -23,7 +23,7 @@ const CHALLENGES = [
   "Meu conteúdo não tem qualidade",
   "Não tenho tempo para gravar",
   "Preciso de fotos profissionais",
-  "Quero aparecer mais nas redes",
+  "Quero vídeos para anúncios",
   "Outro",
 ];
 
@@ -71,7 +71,7 @@ export function ZCaptacaoCta() {
           whatsapp: data.whatsapp,
           business_type: data.business_type,
           message: `Desafio: ${data.challenge}`,
-          services: "Captação de Conteúdo",
+          services: "Captação de conteúdo",
           source: "z_captacao_cta",
           utm_source: utm.get("utm_source"),
           utm_medium: utm.get("utm_medium"),
@@ -136,8 +136,8 @@ export function ZCaptacaoCta() {
             </h2>
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
-              Sem enrolação, sem orçamento surpresa. Uma conversa rápida sobre o seu negócio
-              e a gente já sai com a sessão agendada.
+              Sem enrolação, sem orçamento surpresa. Uma conversa rápida sobre o seu serviço
+              e a gente já escolhe o evento ideal para a captação.
             </p>
 
             {/* WhatsApp direct */}

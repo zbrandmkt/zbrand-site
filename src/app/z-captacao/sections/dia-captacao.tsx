@@ -18,7 +18,7 @@ const steps = [
     icon: "🏠",
     color: "#FF6100",
     title: "Bastidores & Ambiente",
-    desc: "Captamos o ambiente do negócio: bastidores em ação, espaço, equipe trabalhando. O conteúdo que humaniza a marca e cria conexão com o cliente.",
+    desc: "Captamos a montagem, o carrinho ou a estação funcionando, a equipe servindo e os convidados curtindo. O conteúdo que humaniza a marca e gera confiança.",
   },
   {
     number: "03",
@@ -26,7 +26,7 @@ const steps = [
     icon: "📦",
     color: "#00C2FF",
     title: "Produtos & Serviços",
-    desc: "Filmagem dos produtos com apresentação, detalhe e textura. O conteúdo que chama atenção, desperta desejo e converte visualização em venda.",
+    desc: "Filmagem do produto ou serviço com detalhe e textura: o churros recheado na hora, o prato montado, o bolo na mesa. O conteúdo que desperta desejo e vira pedido de orçamento.",
   },
   {
     number: "04",
@@ -51,7 +51,7 @@ export function ZCaptacaoDia() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden">
+    <section id="na-pratica" className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden scroll-mt-24">
       <div ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

@@ -10,10 +10,10 @@ const problems = [
     text: "Sem conteúdo, sem presença — o Instagram fica parado e o concorrente não",
   },
   {
-    text: "Stock photo e vídeo sem rosto: o cliente não vê o seu negócio e não compra",
+    text: "Foto de banco e vídeo sem rosto: a noiva não vê o seu trabalho e não pede orçamento",
   },
   {
-    text: "Você gere o negócio, atende cliente, gerencia equipe — não sobra tempo para gravar e editar",
+    text: "Você monta, opera e desmonta o evento — não sobra mão para gravar e editar",
   },
   {
     text: "Vídeo tremido, luz ruim, áudio do ambiente — às vezes é pior postar do que não postar",
@@ -22,7 +22,7 @@ const problems = [
     text: "Você grava num fim de semana e o material acaba em 2 semanas — sem constância, o algoritmo te pune",
   },
   {
-    text: "Produtora cobrou R$ 3k por 4 vídeos — com a ZBRAND são 10 vídeos editados a partir de R$ 800",
+    text: "Você tem mil vídeos no celular, mas nenhum com luz, áudio e corte para virar anúncio",
   },
 ];
 
@@ -152,7 +152,7 @@ export function ZCaptacaoProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Somos especialistas em conteúdo para negócios — porque entendemos a rotina de quem empreende.&rdquo;
+              A gente vive eventos há 10 anos — sabe o que filmar sem atrapalhar o seu serviço.&rdquo;
             </p>
           </motion.div>
         </div>

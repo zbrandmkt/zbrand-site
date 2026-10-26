@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "Preciso comprar domínio e hospedagem?",
-    a: "Sim, mas é simples e barato — em torno de R$ 80/ano para domínio (.com.br). A gente orienta onde comprar e configura tudo para você. A hospedagem pode ser incluída dependendo do projeto — combinamos antes de começar.",
+    a: "Sim, mas é simples e barato — o domínio .com.br é registrado por ano no registro.br. A gente orienta onde comprar e configura tudo para você. A hospedagem pode ser incluída dependendo do projeto — combinamos antes de começar.",
   },
   {
     q: "Posso editar o conteúdo depois de lançar?",
@@ -27,8 +27,8 @@ const faqs = [
     a: "No site completo, páginas adicionais podem ser adicionadas via Banco de Horas. Se você começou com landing page e quer escalar para um site completo, fazemos isso — o valor pago na landing é descontado do projeto maior.",
   },
   {
-    q: "Vocês fazem site para qualquer tipo de negócio?",
-    a: "Sim! Atendemos clínicas, academias, salões de beleza, lojas, restaurantes, escritórios, consultórios, estúdios e qualquer tipo de negócio local. Quanto mais específico for seu negócio, mais a gente consegue criar algo que realmente converte para o seu público.",
+    q: "Para quem vocês fazem site?",
+    a: "Só para fornecedores de eventos: carrinhos gourmet, food trucks e food bikes, estações e buffets, fotógrafos e filmmakers, doces e bolos, decoração, DJs e casas de eventos. Como a gente vive esse mercado há 10 anos, o site já nasce com o que o seu cliente pergunta antes de fechar. Atendemos remotamente o Brasil inteiro.",
   },
 ];
 

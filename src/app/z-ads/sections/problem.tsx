@@ -5,19 +5,19 @@ import { motion, useInView } from "framer-motion";
 
 const problems = [
   {
-    text: "Verba de anúncio saindo todo mês e o negócio continua sem resultado",
+    text: "Verba de anúncio saindo todo mês e o WhatsApp continua sem pedido de orçamento",
   },
   {
-    text: "Agência que não entende do seu mercado — criativo genérico, público errado",
+    text: "Quem anuncia por você não entende de eventos — criativo genérico, público errado",
   },
   {
-    text: "Sem conteúdo humanizado: foto de stock não conecta, e não converte",
+    text: "Sem foto e vídeo de evento real: imagem de banco não convence noiva nem empresa",
   },
   {
-    text: "Relatório só de 'curtidas' sem mostrar quantos clientes reais vieram",
+    text: "Relatório só de 'curtidas' sem mostrar quantos orçamentos reais vieram",
   },
   {
-    text: "Campanha sobe uma vez e fica esquecida — ninguém ajusta público nem criativo",
+    text: "Anúncio ligado na época errada: verba gasta em março, agenda vazia em setembro",
   },
   {
     text: "Anúncios soltos, sem funil: sem remarketing (impactar quem já viu), sem conversão",
@@ -142,7 +142,7 @@ export function ZAdsProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Porque trabalhamos todo dia com negócios que passaram pelo mesmo.&rdquo;
+              Porque a gente vive eventos há 10 anos e já passou pelo mesmo.&rdquo;
             </p>
           </motion.div>
         </div>

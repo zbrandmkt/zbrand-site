@@ -6,14 +6,13 @@ import { ZAdsProblem } from "@/app/z-ads/sections/problem";
 import { ZAdsDiferenciais } from "@/app/z-ads/sections/diferenciais";
 import { ZAdsProcess } from "@/app/z-ads/sections/process";
 import { ZAdsPainel } from "@/app/z-ads/sections/painel";
-import { ZAdsPricing } from "@/app/z-ads/sections/pricing";
 import { ZAdsFaq } from "@/app/z-ads/sections/faq";
 import { ZAdsCta } from "@/app/z-ads/sections/cta";
 
 export const metadata = {
-  title: "Tráfego Pago para Negócios Locais — Z-ADS | ZBRAND",
+  title: "Tráfego Pago para Food Truck, Carrinho Gourmet e Eventos",
   description:
-    "Meta Ads e Google Ads para o seu negócio. A gente estrutura, filma, edita e otimiza suas campanhas. Contrato 4 meses por R$ 1.500/mês + verba de anúncios.",
+    "Anúncios no Meta e no Google para fornecedores de eventos receberem pedidos de orçamento na época certa: casamentos, 15 anos, corporativos e festas. Relatório semanal e atendimento remoto."
 };
 
 export default function TrafegoPage() {
@@ -26,7 +25,6 @@ export default function TrafegoPage() {
         <ZAdsDiferenciais />
         <ZAdsProcess />
         <ZAdsPainel />
-        <ZAdsPricing />
         <ZAdsFaq />
         <ZAdsCta />
       </main>

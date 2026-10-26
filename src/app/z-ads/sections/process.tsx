@@ -9,7 +9,7 @@ const steps = [
     icon: "🔍",
     color: "#00C2FF",
     title: "Diagnóstico & Onboarding",
-    desc: "Reunião de briefing, acessos ao gerenciador de anúncios, análise do histórico de campanhas e definição de objetivos e público-alvo do seu negócio.",
+    desc: "Reunião online, acessos ao gerenciador de anúncios, análise do histórico e mapa das suas épocas fortes e fracas do ano.",
   },
   {
     number: "02",
@@ -22,15 +22,15 @@ const steps = [
     number: "03",
     icon: "🎬",
     color: "#7B2FF7",
-    title: "Captação Presencial",
-    desc: "1 dia no seu estabelecimento (4–6h). Filmamos seu ambiente, seus produtos, sua equipe. Editamos tudo profissionalmente — conteúdo real para os anúncios.",
+    title: "Criativos do Seu Evento",
+    desc: "Enviamos o roteiro do que gravar no próximo evento. Você grava com o celular e a gente edita tudo profissionalmente — conteúdo real para os anúncios.",
   },
   {
     number: "04",
     icon: "🚀",
     color: "#AAFF00",
     title: "Campanhas no Ar",
-    desc: "Publicação das campanhas com acompanhamento diário. Ajustes finos de público, criativo e horário para maximizar o retorno de cada real investido.",
+    desc: "Campanhas no ar com acompanhamento diário. Os pedidos de orçamento chegam no seu WhatsApp com data, local e número de convidados.",
   },
   {
     number: "05",
@@ -46,7 +46,7 @@ export function ZAdsProcess() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden">
+    <section id="como-funciona" className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden scroll-mt-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

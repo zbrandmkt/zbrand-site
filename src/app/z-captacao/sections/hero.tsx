@@ -8,9 +8,9 @@ const LIME = "#AAFF00";
 
 const stats = [
   { value: "10", label: "vídeos editados" },
-  { value: "4h", label: "de sessão presencial" },
+  { value: "4h", label: "de sessão no seu evento" },
   { value: "10 dias", label: "prazo de entrega" },
-  { value: "3 planos", label: "Mobile, Pro e Eventos" },
+  { value: "Mobile", label: "ou câmera profissional" },
 ];
 
 export function ZCaptacaoHero() {
@@ -52,7 +52,7 @@ export function ZCaptacaoHero() {
               className="font-display text-[11px] font-black uppercase tracking-widest"
               style={{ color: LIME }}
             >
-              Z-CAPTAÇÃO — Conteúdo Presencial para Seu Negócio
+              Captação de conteúdo — complemento da esteira
             </span>
           </motion.div>
 
@@ -77,9 +77,9 @@ export function ZCaptacaoHero() {
             transition={{ delay: 0.35, duration: 0.6 }}
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            A gente vai até o seu negócio com{" "}
+            A gente vai até o seu evento com{" "}
             <span className="text-preto font-semibold">equipamento profissional e roteiro pronto.</span>{" "}
-            Você foca no negócio — a gente captura a história.
+            Você foca em servir bem — a gente captura o seu trabalho em ação.
           </motion.p>
 
           {/* CTAs */}
@@ -104,12 +104,12 @@ export function ZCaptacaoHero() {
               QUERO AGENDAR UMA SESSÃO
             </motion.a>
             <motion.a
-              href="#planos"
+              href="#na-pratica"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER PLANOS E PREÇOS
+              VER COMO É O DIA
             </motion.a>
           </motion.div>
 

@@ -12,7 +12,7 @@ import { ZSocialFaq } from "./sections/faq";
 import { ZSocialCta } from "./sections/cta";
 
 export const metadata = {
-  title: "Z-SOCIAL — Gestão de Redes Sociais para Negócios | ZBRAND",
+  title: "Social Media Automatizado para Fornecedores de Eventos",
   description:
     "A gente filma, edita e publica conteúdo que traz clientes reais. Enquanto você dorme, sua marca está trabalhando. Gestão de Instagram, TikTok e mais.",
 };

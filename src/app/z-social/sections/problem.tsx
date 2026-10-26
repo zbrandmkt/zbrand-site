@@ -5,27 +5,27 @@ import { motion, useInView } from "framer-motion";
 
 const problems = [
   {
-    text: "Tenho Instagram mas não consigo manter frequência",
+    text: "Instagram parado porque fim de semana é dia de evento",
     color: "#FF6100",
   },
   {
-    text: "Não vejo crescimento de seguidores",
+    text: "Último post foi da temporada passada",
     color: "#FF6100",
   },
   {
-    text: "Conteúdo genérico não conecta com meu público",
+    text: "Tenho mil fotos de evento no celular e nenhuma postada",
     color: "#FF6100",
   },
   {
-    text: "Não tenho tempo para cuidar de social media",
+    text: "Não tenho tempo pra editar vídeo depois de montar e desmontar",
     color: "#FF6100",
   },
   {
-    text: "Agências que contratei não entregaram resultado",
+    text: "Já paguei social media que não entendia de eventos",
     color: "#FF6100",
   },
   {
-    text: "Não sei se social media está gerando clientes",
+    text: "Não sei se o Instagram traz pedido de orçamento",
     color: "#FF6100",
   },
 ];
@@ -147,8 +147,8 @@ export function ZSocialProblem() {
             className="text-center"
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
-              &ldquo;Se você marcou mais de um, a gente sabe exatamente como resolver. Porque vivemos
-              na pele os mesmos desafios que você enfrenta.&rdquo;
+              &ldquo;Se você marcou mais de um, a gente sabe exatamente como resolver. Porque a Churruts
+              viveu os mesmos desafios por 10 anos.&rdquo;
             </p>
           </motion.div>
         </div>

@@ -16,13 +16,13 @@ interface FormData {
   challenge: string;
 }
 
-const NETWORKS = ["Instagram", "TikTok", "LinkedIn"];
+const NETWORKS = ["Instagram", "TikTok", "Facebook"];
 
 const CHALLENGES = [
   "Falta de tempo",
-  "Não vejo crescimento",
-  "Conteúdo genérico",
-  "Não sei se gera clientes",
+  "Perfil parado",
+  "Não sei editar vídeo",
+  "Não sei se gera orçamentos",
   "Outro",
 ];
 
@@ -77,7 +77,7 @@ export function ZSocialCta() {
           whatsapp: data.whatsapp,
           business_type: data.business_type,
           message: `Desafio: ${data.challenge} | Redes: ${selectedNetworks.join(", ")}`,
-          services: "Social Media (Z-SOCIAL)",
+          services: "Social media",
           source: "z_social_cta",
           utm_source: utm.get("utm_source"),
           utm_medium: utm.get("utm_medium"),
@@ -124,7 +124,7 @@ export function ZSocialCta() {
             <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.1] mb-4">
               Pronto para{" "}
               <TextRotate
-                texts={["humanizar", "ter frequência nas", "vender mais nas"]}
+                texts={["dar vida às", "ter frequência nas", "fechar eventos pelas"]}
                 interval={2800}
                 className="block"
               />{" "}
@@ -133,7 +133,7 @@ export function ZSocialCta() {
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
               Sem compromisso, sem papo de vendedor. Só uma conversa descontraída sobre como a gente pode
-              ajudar seu negócio a gerar mais clientes pelas redes sociais.
+              ajudar o seu negócio de eventos a receber mais pedidos de orçamento pelas redes.
             </p>
 
             {/* WhatsApp direct */}

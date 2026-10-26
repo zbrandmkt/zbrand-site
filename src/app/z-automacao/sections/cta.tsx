@@ -19,10 +19,10 @@ interface FormData {
 }
 
 const CHALLENGES = [
-  "Perco clientes fora do horário comercial",
+  "Perco orçamentos quando estou no evento",
   "Não consigo responder a tempo",
-  "Não tenho base de clientes para ativar",
-  "Minha promoção não chega em ninguém",
+  "Cliente some depois do orçamento",
+  "Respondo as mesmas perguntas toda hora",
   "Quero parar de responder tudo manualmente",
   "Outro",
 ];
@@ -71,7 +71,7 @@ export function ZAutomaçaoCta() {
           whatsapp: data.whatsapp,
           business_type: data.business_type,
           message: `Desafio: ${data.challenge}`,
-          services: "Automação (Z-AUTOMAÇÃO)",
+          services: "WhatsApp automático (Zee)",
           source: "z_automacao_cta",
           utm_source: utm.get("utm_source"),
           utm_medium: utm.get("utm_medium"),
@@ -120,7 +120,7 @@ export function ZAutomaçaoCta() {
             <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.1] mb-4">
               Pronto para{" "}
               <TextRotate
-                texts={["Automatizar", "Vender 24h", "Fidelizar Clientes", "Disparar Promoções", "Crescer no WhatsApp"]}
+                texts={["Automatizar", "Orçar 24h", "Fechar Mais Eventos", "Encher a Agenda", "Crescer no WhatsApp"]}
                 interval={2800}
                 className="block text-[#FBBC05]"
               />{" "}
@@ -129,7 +129,7 @@ export function ZAutomaçaoCta() {
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
               Sem compromisso, sem papo técnico. Uma conversa direta para entender
-              o seu negócio e mostrar como a automação pode funcionar para você.
+              os seus eventos e mostrar como a Zee pode responder por você.
             </p>
 
             {/* WhatsApp direct */}
@@ -183,7 +183,7 @@ export function ZAutomaçaoCta() {
                 <p className="font-display text-sm text-cinza-dark font-medium leading-relaxed">
                   Você vai receber uma mensagem no WhatsApp em até 1 hora.{" "}
                   <span className="font-bold" style={{ color: AMBER }}>
-                    Bora automatizar seu negócio!
+                    Bora colocar a Zee pra trabalhar!
                   </span>
                 </p>
               </div>

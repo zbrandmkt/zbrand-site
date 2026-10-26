@@ -9,28 +9,28 @@ const steps = [
     icon: "🔍",
     color: "#FF6100",
     title: "Descoberta",
-    desc: "A gente entende seu negócio, público, diferenciais e objetivos. Tudo em uma conversa descontraída — sem papo de vendedor.",
+    desc: "A gente entende seus serviços, os eventos que você faz e quem contrata você. Tudo numa conversa online, sem papo de vendedor.",
   },
   {
     number: "02",
     icon: "📋",
     color: "#00C2FF",
     title: "Estratégia",
-    desc: "Criamos calendário de conteúdo, definimos tom, cores, estilo. Tudo aprovado por você antes de começar.",
+    desc: "Criamos o calendário de conteúdo pelas datas que importam e os templates da sua marca. Tudo aprovado por você antes de começar.",
   },
   {
     number: "03",
     icon: "🎬",
     color: "#7B2FF7",
-    title: "Captação",
-    desc: "Vamos até você (1 dia, 4–6 horas). Filmamos bastidores, você em ação, clientes felizes. Conteúdo real, não encenado.",
+    title: "Material dos Eventos",
+    desc: "Você manda fotos e vídeos dos eventos pelo celular, seguindo um roteiro simples que a gente prepara. Conteúdo real, não encenado.",
   },
   {
     number: "04",
     icon: "📱",
     color: "#AAFF00",
     title: "Publicação",
-    desc: "15 posts/mês + stories diários. Tudo editado, roteirizado, publicado no horário certo. Você só aprova.",
+    desc: "Produzimos o mês em lote com IA e templates. Tudo editado, legendado e agendado no horário certo. Você só aprova.",
   },
   {
     number: "05",
@@ -46,7 +46,7 @@ export function ZSocialProcess() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden">
+    <section id="como-funciona" className="bg-[#F5F5F0] py-20 lg:py-28 overflow-hidden scroll-mt-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

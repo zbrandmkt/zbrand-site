@@ -9,8 +9,8 @@ const diffs = [
   {
     icon: "💻",
     color: PINK,
-    title: "Feito para Vender",
-    desc: "Não é vitrine, é funil. Cada seção foi pensada para levar o visitante do 'tô vendo' pro 'quero contratar' em menos de 30 segundos.",
+    title: "Feito para Pedir Orçamento",
+    desc: "Não é vitrine, é funil. Cada seção leva o visitante do 'tô vendo' pro 'quero orçamento' — e o pedido já chega com data, local e convidados.",
   },
   {
     icon: "📱",
@@ -22,7 +22,7 @@ const diffs = [
     icon: "🔍",
     color: "#FF6100",
     title: "SEO Local Incluído",
-    desc: "Seu site aparece no Google quando alguém pesquisa seu serviço + bairro. Tráfego orgânico e gratuito, todo mês.",
+    desc: "Seu site aparece no Google quando alguém pesquisa seu serviço + cidade, como 'food truck para festa em Campinas'. Tráfego gratuito, todo mês.",
   },
   {
     icon: "🚀",
@@ -84,14 +84,14 @@ export function ZSiteDiferenciais() {
           className="text-center mb-14"
         >
           <p className="text-[11px] font-black uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>
-            Por que ZBRAND
+            Por que a Zibrand
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
             Sites que{" "}
             <span style={{ color: PINK }}>trabalham por você</span>
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-xl mx-auto leading-relaxed">
-            Cada detalhe pensado para negócios locais. Seu site atrai, converte e fideliza — enquanto você cuida do que faz de melhor.
+            Cada detalhe pensado para fornecedores de eventos. Seu site atrai, tira dúvidas e pede orçamento — enquanto você está no evento.
           </p>
         </motion.div>
 

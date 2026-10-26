@@ -5,28 +5,28 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
-    q: "Qual o investimento total por mês?",
-    a: "R$ 1.500 de mensalidade + R$ 1.000 de verba de anúncios (paga direto ao Meta ou Google — esse valor não passa pela ZBRAND). No total, são aproximadamente R$ 2.500/mês para ter tráfego pago profissional rodando no seu negócio.",
+    q: "Quanto custa?",
+    a: "O investimento tem duas partes: a gestão da Zibrand e a verba de anúncios, que você paga direto ao Meta ou ao Google. Os valores são definidos no diagnóstico gratuito, de acordo com a sua região e as épocas que você quer encher a agenda.",
   },
   {
     q: "Por que o contrato é de 4 meses?",
     a: "Anúncios têm uma curva de aprendizado. Nos primeiros 30 dias a plataforma ainda está 'aprendendo' quem converter — testamos públicos, criativos e horários. Os resultados sólidos chegam a partir do 2º mês. Por isso, 4 meses é o mínimo para a estratégia funcionar de verdade.",
   },
   {
-    q: "Vocês filmam o conteúdo para os anúncios?",
-    a: "Sim. 1 dia/mês de captação presencial (4–6h) com edição profissional incluída. O criativo (vídeo ou arte) é responsável por 80% do resultado do anúncio — por isso não usamos banco de imagem: filmamos você, seu produto e seu ambiente.",
+    q: "Quem grava o conteúdo dos anúncios?",
+    a: "Você, no próprio evento, seguindo o roteiro que a gente manda — e a edição profissional fica com a Zibrand. O criativo é o que mais pesa no resultado do anúncio, por isso não usamos banco de imagem: mostramos o seu carrinho, o seu truck, o seu trabalho de verdade.",
   },
   {
     q: "Quanto preciso investir em verba de anúncios?",
-    a: "R$ 1.000/mês de verba mínima. Com menos que isso, a plataforma não tem volume de dados suficiente para otimizar e os resultados demoram muito mais para aparecer. Quanto mais verba, mais rápido a campanha escala.",
+    a: "Depende da sua cidade e do tipo de evento. No diagnóstico a gente indica uma verba mínima que dê volume para a plataforma otimizar. Com pouco investimento, os resultados demoram muito mais para aparecer.",
   },
   {
-    q: "Posso usar os anúncios para vender em marketplaces?",
-    a: "Sim — e essa é uma estratégia poderosa. Em vez de depender só da vitrine da plataforma (onde você é mais um entre dezenas), a gente cria anúncios no Meta ou Google que apresentam seu produto com vídeo ou imagem atrativa. Quem vê se interessa, segue sua página, interage — e quando quiser comprar, já vai direto pra você. É muito mais eficiente do que competir só por preço dentro do marketplace.",
+    q: "Dá pra anunciar só na época forte?",
+    a: "Dá, mas o ideal é o contrário: começar antes da temporada. Noivas fecham fornecedores com meses de antecedência e empresas planejam confraternizações em setembro e outubro. A gente monta o calendário de campanhas para chegar antes do concorrente e também para preencher os meses mais fracos.",
   },
   {
     q: "E se eu não ver resultado?",
-    a: "A gente ajusta estratégia, criativo e público até encontrar o que funciona para o seu negócio. Acompanhamos toda semana — não entregamos relatório e sumimos. Se algo não está convertendo, mudamos antes de virar problema.",
+    a: "A gente ajusta estratégia, criativo e público até encontrar o que funciona para o seu serviço. Acompanhamos toda semana — não entregamos relatório e sumimos. Se algo não está trazendo orçamento, mudamos antes de virar problema.",
   },
 ];
 

@@ -11,14 +11,14 @@ const steps = [
     icon: "🔍",
     color: "#AAFF00",
     title: "Briefing & Agendamento",
-    desc: "Reunião rápida de 30 minutos para entender o seu negócio, definir a pauta do dia — os takes prioritários, os produtos em destaque e quem aparece — e agendar a sessão presencial.",
+    desc: "Reunião online de 30 minutos para entender o seu serviço, escolher o evento ideal para a captação e definir os takes prioritários e quem aparece.",
   },
   {
     number: "02",
     icon: "🎬",
     color: "#FF6100",
     title: "Dia de Captação (4h)",
-    desc: "Nossa equipe vai até o seu negócio com equipamento completo e roteiro na mão. Bastidores, produtos, equipe, talking head. Você foca no negócio — a gente cuida do conteúdo.",
+    desc: "Nossa equipe vai até o seu evento com equipamento completo e roteiro na mão. Montagem, produto, equipe, convidados e depoimentos. Você trabalha — a gente cuida do conteúdo.",
   },
   {
     number: "03",
@@ -32,7 +32,7 @@ const steps = [
     icon: "📁",
     color: "#7B2FF7",
     title: "Entrega no Drive",
-    desc: "Em 10 dias, os vídeos editados chegam organizados no Google Drive. Prontos para postar no Instagram, TikTok e YouTube — com ou sem agência.",
+    desc: "Em 10 dias, os vídeos editados chegam organizados no Google Drive. Prontos para postar no Instagram, TikTok e nos seus anúncios.",
   },
 ];
 

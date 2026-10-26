@@ -20,10 +20,10 @@ interface FormData {
 
 const CHALLENGES = [
   "Não apareço no Google",
-  "Perco clientes para o concorrente que tem site",
-  "Quero receber agendamentos online",
-  "Minhas informações ficam desatualizadas",
-  "Quero divulgar meus serviços / produtos",
+  "Perco orçamentos para o concorrente que tem site",
+  "Quero receber pedidos de orçamento organizados",
+  "Respondo as mesmas perguntas toda hora",
+  "Quero mostrar meus eventos e meu cardápio",
   "Quero um site para começar do zero",
   "Outro",
 ];
@@ -72,7 +72,7 @@ export function ZSiteCta() {
           whatsapp: data.whatsapp,
           business_type: data.business_type,
           message: `Desafio: ${data.challenge}`,
-          services: "Website & Landing Page",
+          services: "Site de orçamento",
           source: "z_site_cta",
           utm_source: utm.get("utm_source"),
           utm_medium: utm.get("utm_medium"),
@@ -119,7 +119,7 @@ export function ZSiteCta() {
               Pronto para ter{" "}
               <span style={{ color: PINK }}>
                 <TextRotate
-                  texts={["Seu Site no Ar", "Aparecer no Google", "Vender Todo Dia", "Uma Landing Page", "Seu Catálogo Online"]}
+                  texts={["Seu Site no Ar", "Aparecer no Google", "Orçamentos Todo Dia", "Uma Landing Page", "Agenda Cheia"]}
                   interval={2800}
                   className="block"
                 />
@@ -129,7 +129,7 @@ export function ZSiteCta() {
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
               Sem compromisso, sem papo técnico. Uma conversa direta sobre como transformar
-              seu negócio em presença digital que converte.
+              o seu serviço de eventos num site que pede orçamento por você.
             </p>
 
             {/* WhatsApp direct */}
@@ -183,7 +183,7 @@ export function ZSiteCta() {
                 <p className="font-display text-sm text-cinza-dark font-medium leading-relaxed">
                   Você vai receber uma mensagem no WhatsApp em até 1 hora com os próximos passos.{" "}
                   <span className="font-bold" style={{ color: PINK }}>
-                    Bora colocar seu negócio no mapa!
+                    Bora encher sua agenda!
                   </span>
                 </p>
               </div>

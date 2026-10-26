@@ -5,10 +5,10 @@ import { InfiniteGrid } from "@/components/ui/infinite-grid";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const stats = [
-  { value: "15+", label: "posts/mês" },
-  { value: "Stories", label: "diários" },
+  { value: "IA", label: "+ templates" },
+  { value: "Vídeos", label: "em lote" },
   { value: "4 meses", label: "de parceria" },
-  { value: "Captação", label: "mobile" },
+  { value: "Zero", label: "tempo seu na edição" },
 ];
 
 export function ZSocialHero() {
@@ -37,7 +37,7 @@ export function ZSocialHero() {
           >
             <span className="w-1.5 h-1.5 bg-laranja rounded-full animate-pulse-glow" />
             <span className="font-display text-[11px] font-black text-laranja uppercase tracking-widest">
-              Z-SOCIAL — Gestão de Redes Sociais
+              Social media automatizado para eventos
             </span>
           </motion.div>
 
@@ -48,10 +48,10 @@ export function ZSocialHero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="font-display font-black text-hero-mobile lg:text-hero-desktop text-preto uppercase tracking-tight leading-[1.05] mb-6"
           >
-            Seu Negócio{" "}
-            <span className="text-laranja">Merecia</span>
+            Seu Instagram{" "}
+            <span className="text-laranja">Vivo</span>
             <br />
-            Lotar Todo Dia
+            Mesmo em Dia de Evento
           </motion.h1>
 
           {/* Subheadline */}
@@ -62,7 +62,7 @@ export function ZSocialHero() {
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             A gente <span className="text-preto font-semibold">filma, edita e publica</span> conteúdo que traz clientes reais.{" "}
-            Enquanto você cuida do seu negócio, nós cuidamos da construção da sua marca nas mídias sociais.
+            Você manda as fotos e vídeos dos eventos. A gente transforma em posts e reels com IA, templates e edição em lote — e seu perfil fica ativo o ano inteiro.
           </motion.p>
 
           {/* CTAs */}
@@ -80,15 +80,15 @@ export function ZSocialHero() {
               whileTap={{ scale: 0.98 }}
               className="btn-primary text-sm"
             >
-              QUERO MAIS CLIENTES
+              QUERO MEU PERFIL ATIVO
             </motion.a>
             <motion.a
-              href="#planos"
+              href="#como-funciona"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER PLANOS E PREÇOS
+              VER COMO FUNCIONA
             </motion.a>
           </motion.div>
 

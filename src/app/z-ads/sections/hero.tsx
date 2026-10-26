@@ -8,7 +8,7 @@ const stats = [
   { value: "Meta", label: "+ Google Ads" },
   { value: "Retorno", label: "mensurado" },
   { value: "4 meses", label: "de parceria" },
-  { value: "Captação", label: "presencial" },
+  { value: "Sazonal", label: "calendário de eventos" },
 ];
 
 export function ZAdsHero() {
@@ -37,7 +37,7 @@ export function ZAdsHero() {
           >
             <span className="w-1.5 h-1.5 bg-[#00C2FF] rounded-full animate-pulse-glow" />
             <span className="font-display text-[11px] font-black text-[#00C2FF] uppercase tracking-widest">
-              Z-ADS — Gestão de Tráfego Pago
+              Tráfego pago para fornecedores de eventos
             </span>
           </motion.div>
 
@@ -51,7 +51,7 @@ export function ZAdsHero() {
             Seus Anúncios{" "}
             <span className="text-[#00C2FF]">Rodando.</span>
             <br />
-            Mais Clientes <span className="text-laranja">Chegando.</span>
+            Mais Orçamentos <span className="text-laranja">Chegando.</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -62,7 +62,7 @@ export function ZAdsHero() {
             className="font-display text-base lg:text-lg text-cinza-dark max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             A gente <span className="text-preto font-semibold">estrutura, filma, edita e otimiza</span> suas campanhas no
-            Meta e Google Ads. Enquanto você cuida do negócio, a gente cuida dos seus anúncios.
+            Meta e Google Ads para quem está organizando casamento, 15 anos ou evento corporativo. Enquanto você está no evento, a gente cuida dos anúncios.
           </motion.p>
 
           {/* CTAs */}
@@ -80,15 +80,15 @@ export function ZAdsHero() {
               whileTap={{ scale: 0.98 }}
               className="btn-primary text-sm"
             >
-              QUERO MAIS CLIENTES
+              QUERO MAIS ORÇAMENTOS
             </motion.a>
             <motion.a
-              href="#planos"
+              href="#como-funciona"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER PLANOS E PREÇOS
+              VER COMO FUNCIONA
             </motion.a>
           </motion.div>
 

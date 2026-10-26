@@ -11,7 +11,7 @@ const steps = [
     icon: "🗣️",
     color: PINK,
     title: "Briefing & Estratégia",
-    desc: "Reunião de 1h onde mapeamos o negócio, público, objetivo da página e o que precisa estar no site. Você aprova o escopo antes de começar — sem surpresas.",
+    desc: "Reunião online de 1h para mapear seus serviços, eventos que você atende, região e o que o cliente sempre pergunta. Você aprova o escopo antes de começar.",
   },
   {
     number: "02",
@@ -32,7 +32,7 @@ const steps = [
     icon: "🚀",
     color: "#AAFF00",
     title: "Lançamento & Entrega",
-    desc: "Site no ar com domínio configurado, SEO local ativado e tutorial de como usar. Você recebe as credenciais, suporte inicial e começa a aparecer no Google.",
+    desc: "Site no ar com domínio configurado, SEO local ativado e pedidos de orçamento chegando no seu WhatsApp. Você recebe o acesso e o suporte inicial.",
   },
 ];
 

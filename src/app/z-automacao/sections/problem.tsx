@@ -7,22 +7,22 @@ const AMBER = "#FBBC05";
 
 const problems = [
   {
-    text: "WhatsApp silencioso às 23h — cliente queria agendar, você dormia, foi pro concorrente",
+    text: "Pedido de orçamento às 23h de sábado — você estava desmontando o evento e o cliente fechou com outro",
   },
   {
-    text: "Uma pessoa respondendo 80 mensagens ao mesmo tempo: erro garantido, cliente irritado e sumido",
+    text: "Temporada de casamentos: 40 pedidos na mesma semana e metade fica sem resposta",
   },
   {
-    text: "Atendeu 300 pessoas esse mês. Quantas consegue chamar de volta amanhã com uma promoção? Zero.",
+    text: "Mandou o orçamento e o cliente sumiu. Ninguém lembrou de chamar de novo — e ele fechou com quem lembrou.",
   },
   {
-    text: "Fez uma promoção especial de sexta, postou no story. Chegou em 12 pessoas. Poderia ter chegado em 300.",
+    text: "Abriu a agenda de dezembro e postou no story. Chegou em 12 pessoas. Poderia ter chegado em todo mundo que já pediu orçamento.",
   },
   {
-    text: "Cliente comprou, ficou satisfeito — e nunca mais voltou. Ninguém lembrou que ele existia.",
+    text: "Cliente adorou o evento — e no aniversário seguinte nem lembrou de você. Ninguém pediu indicação nem avaliação.",
   },
   {
-    text: "R$ 1.500/mês de salário para responder as mesmas 5 perguntas, 40 vezes por dia",
+    text: "\"Atende minha cidade?\" \"Quais sabores?\" \"Quanto fica pra 100 pessoas?\" — as mesmas perguntas, 40 vezes por dia",
   },
 ];
 
@@ -153,7 +153,7 @@ export function ZAutomaçaoProblem() {
           >
             <p className="font-display text-sm text-white/40 italic max-w-xl mx-auto leading-relaxed">
               &ldquo;Se você se identificou com mais de um, a gente sabe exatamente o que fazer.
-              Porque trabalhamos todo dia com negócios locais que passaram pelo mesmo.&rdquo;
+              Porque a gente vive eventos há 10 anos e já perdeu orçamento do mesmo jeito.&rdquo;
             </p>
           </motion.div>
         </div>
