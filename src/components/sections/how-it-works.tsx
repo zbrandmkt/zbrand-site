@@ -7,28 +7,28 @@ const steps = [
   {
     number: "01",
     title: "Descoberta",
-    desc: "Ouvimos tudo sobre a sua empresa, público, diferenciais, objetivos e desafios. Vamos extrair o que já funciona e lapidar o que pode ficar melhor.",
+    desc: "Entendemos o seu serviço, os eventos que você atende, a sua região, o ticket médio e as épocas fortes e fracas do seu ano.",
     icon: "🔍",
     color: "#FF6100",
   },
   {
     number: "02",
     title: "Planejamento",
-    desc: "Criamos a estratégia completa, calendário de conteúdo, campanhas de tráfego, metas e KPIs para medir resultado.",
+    desc: "Definimos por qual passo começar, a meta de orçamentos por mês e o calendário de campanhas para chegar antes das datas que importam.",
     icon: "📋",
     color: "#00C2FF",
   },
   {
     number: "03",
-    title: "Captação",
-    desc: "Nosso time vai até o seu negócio gravar. Conteúdo real, roteirizado pra converter, com o tom de voz e identidade visual do seu negócio.",
+    title: "Implantação",
+    desc: "Montamos seu site de orçamento, campanhas e a Zee no WhatsApp. Tudo remoto: você manda fotos e informações, a gente faz o resto.",
     icon: "🎬",
     color: "#7B2FF7",
   },
   {
     number: "04",
     title: "Execução",
-    desc: "Publicamos, gerenciamos anúncios e monitoramos tudo. Você foca em receber bem o cliente e vender.",
+    desc: "Os pedidos de orçamento começam a chegar organizados. Você foca em fechar e em fazer um evento incrível.",
     icon: "🚀",
     color: "#AAFF00",
   },
@@ -64,7 +64,7 @@ export function HowItWorks() {
             Como a gente <span className="text-[#FF6100]">trabalha</span>
           </h2>
           <p className="mt-4 text-base text-[#1A1A1A]/50 font-medium max-w-xl mx-auto leading-relaxed">
-            Do briefing ao resultado, nossa equipe cuida de cada etapa — você só precisa focar estrategicamente no seu negócio.
+            Do primeiro papo ao orçamento fechado, a gente cuida de cada etapa — e você continua focado nos seus eventos.
           </p>
         </motion.div>
 

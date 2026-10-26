@@ -3,6 +3,9 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
+import { SITE_URL } from "@/lib/site";
+
+const SITE_HOST = new URL(SITE_URL).host.replace(/^www\./, "");
 
 // ─── Container Scroll Animation (estilo Aceternity UI) ───────────
 function ContainerScroll({ children, header }: {
@@ -136,7 +139,7 @@ export function DashboardPreview({ showCta = true }: { showCta?: boolean }) {
                 <div className="w-3 h-3 rounded-full bg-[#28C840]" />
               </div>
               <div className="flex-1 bg-white/06 rounded-lg px-4 py-1 text-[11px] text-white/30 font-medium text-center">
-                zbrand.com.br/area-do-cliente/dashboard
+                {SITE_HOST}/area-do-cliente/dashboard
               </div>
             </div>
 
@@ -144,7 +147,7 @@ export function DashboardPreview({ showCta = true }: { showCta?: boolean }) {
             <div className="relative bg-[#0F0F0F] aspect-[16/9]">
               <Image
                 src="/images/dashboard.png"
-                alt="Dashboard ZBRAND — Área do Cliente"
+                alt="Painel da Zibrand na área do cliente"
                 fill
                 className="object-cover object-top"
                 priority
@@ -173,7 +176,7 @@ export function DashboardPreview({ showCta = true }: { showCta?: boolean }) {
             </a>
           )}
           <p className="text-white/30 text-xs font-medium">
-            Exclusivo para clientes ZBRAND
+            Exclusivo para clientes Zibrand
           </p>
         </motion.div>
       </div>

@@ -9,17 +9,11 @@ import { site } from "@/lib/site";
 const TOP_BAR_H = 36;
 
 const serviceItems = [
-  { icon: "🎯", name: "Tráfego Pago",               href: "/servicos/trafego-pago" },
-  { icon: "📱", name: "Social Media",                 href: "/servicos/social-media" },
-  { icon: "🎬", name: "Captação de Conteúdo Mobile", href: "/servicos/captacao" },
-  { icon: "💻", name: "Website & Landing Page",      href: "/servicos/website" },
-  { icon: "⚡", name: "Automação",                    href: "/servicos/automacao" },
-];
-
-const packageItems = [
-  { emoji: "🌱", name: "Starter",       desc: "Para quem está começando",  href: "/pacotes/starter",       color: "#FF6100", popular: false },
-  { emoji: "🚀", name: "Full",          desc: "Para quem quer o máximo",   href: "/pacotes/full",          color: "#AAFF00", popular: false },
-  { emoji: "🎛️", name: "Personalizado", desc: "Do jeito que você precisa", href: "/pacotes/personalizado", color: "#7B2FF7", popular: false },
+  { icon: "💻", name: "Site de orçamento",         href: "/servicos/website" },
+  { icon: "🎯", name: "Tráfego pago",              href: "/servicos/trafego-pago" },
+  { icon: "⚡", name: "WhatsApp automático (Zee)", href: "/servicos/automacao" },
+  { icon: "📱", name: "Social media",              href: "/servicos/social-media" },
+  { icon: "🎬", name: "Captação de conteúdo",      href: "/servicos/captacao" },
 ];
 
 // ─── Social Icons ─────────────────────────────────────────────────
@@ -138,9 +132,7 @@ function DropdownMenu({ children, open }: { children: React.ReactNode; open: boo
 export function Header() {
   const [mobileOpen, setMobileOpen]     = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [packagesOpen, setPackagesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobilePackagesOpen, setMobilePackagesOpen] = useState(false);
   const [scrolled, setScrolled]         = useState(false);
   const [topBarVisible, setTopBarVisible] = useState(true);
 
@@ -240,57 +232,8 @@ export function Header() {
                 </DropdownMenu>
               </div>
 
-              {/* Pacotes dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setPackagesOpen(true)}
-                onMouseLeave={() => setPackagesOpen(false)}
-              >
-                <button className="font-display text-[11px] font-bold text-[#1A1A1A]/60 hover:text-[#1A1A1A] transition-colors flex items-center gap-1 uppercase tracking-widest">
-                  Pacotes
-                  <motion.svg
-                    animate={{ rotate: packagesOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="w-3 h-3"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                  </motion.svg>
-                </button>
-
-                <DropdownMenu open={packagesOpen}>
-                  <div className="p-1.5">
-                    {packageItems.map((p) => (
-                      <Link
-                        key={p.href}
-                        href={p.href}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#1A1A1A]/5 transition-colors group relative"
-                      >
-                        <span className="text-base w-6 text-center">{p.emoji}</span>
-                        <div className="flex-1">
-                          <span
-                            className="font-display font-black text-[11px] uppercase tracking-wide block"
-                            style={{ color: p.color }}
-                          >
-                            {p.name}
-                          </span>
-                          <span className="font-display text-[10px] text-[#1A1A1A]/40">
-                            {p.desc}
-                          </span>
-                        </div>
-                        {p.popular && (
-                          <span className="text-[9px] font-black uppercase tracking-wide bg-[#00C2FF]/15 text-[#00C2FF] px-1.5 py-0.5 rounded-full border border-[#00C2FF]/30">
-                            Popular
-                          </span>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                </DropdownMenu>
-              </div>
-
               {/* Contato */}
-              <Link href="/contato" className="font-display text-[11px] font-bold text-[#1A1A1A]/60 hover:text-[#1A1A1A] transition-colors uppercase tracking-widest">
+              <Link href="/#contato" className="font-display text-[11px] font-bold text-[#1A1A1A]/60 hover:text-[#1A1A1A] transition-colors uppercase tracking-widest">
                 Contato
               </Link>
 
@@ -367,39 +310,7 @@ export function Header() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Mobile Pacotes Accordion */}
-                  <div className="border-b border-[#1A1A1A]/8">
-                    <button
-                      onClick={() => setMobilePackagesOpen(!mobilePackagesOpen)}
-                      className="w-full flex items-center justify-between font-display font-bold text-sm text-[#1A1A1A] py-2.5 uppercase tracking-wide"
-                    >
-                      Pacotes
-                      <motion.svg animate={{ rotate: mobilePackagesOpen ? 180 : 0 }} className="w-4 h-4 text-[#1A1A1A]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </motion.svg>
-                    </button>
-                    <AnimatePresence>
-                      {mobilePackagesOpen && (
-                        <motion.div
-                          initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pb-3 pl-3 flex flex-col gap-1">
-                            {packageItems.map((p) => (
-                              <Link key={p.href} href={p.href} onClick={() => setMobileOpen(false)}
-                                className="flex items-center gap-2.5 py-2 transition-colors">
-                                <span className="text-sm">{p.emoji}</span>
-                                <span className="font-display font-black text-xs uppercase tracking-wide" style={{ color: p.color }}>{p.name}</span>
-                                {p.popular && <span className="text-[9px] font-black bg-[#00C2FF]/15 text-[#00C2FF] px-1.5 py-0.5 rounded-full">Popular</span>}
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <Link href="/contato" onClick={() => setMobileOpen(false)} className="font-display font-bold text-sm text-[#1A1A1A] py-2.5 uppercase tracking-wide border-b border-[#1A1A1A]/8">
+                  <Link href="/#contato" onClick={() => setMobileOpen(false)} className="font-display font-bold text-sm text-[#1A1A1A] py-2.5 uppercase tracking-wide border-b border-[#1A1A1A]/8">
                     Contato
                   </Link>
 

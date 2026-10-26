@@ -38,7 +38,7 @@ export function Hero() {
           >
             <span className="w-1.5 h-1.5 bg-laranja rounded-full animate-pulse-glow" />
             <span className="font-display text-[11px] font-semibold text-laranja uppercase tracking-wider">
-              Marketing digital para negócios locais
+              Assessoria de marketing para fornecedores de eventos
             </span>
           </motion.div>
 
@@ -46,7 +46,7 @@ export function Hero() {
             <span className="block">Chega de</span>
             <span className="block">
               <TextRotate
-                texts={["zebra", "amadorismo", "promessa vazia", "conteúdo genérico"]}
+                texts={["zebra", "orçamento perdido", "agenda vazia", "Instagram parado"]}
                 colorClasses={rotateColors}
                 className="font-extrabold"
                 interval={2500}
@@ -56,8 +56,9 @@ export function Hero() {
           </h1>
 
           <p className="font-display text-base text-cinza-dark max-w-xl mx-auto mb-10 leading-relaxed">
-            Marketing digital humanizado para negócios que querem{" "}
-            <span className="text-preto font-semibold">clientes de verdade</span>, não só seguidores.
+            Site de orçamento, tráfego pago e WhatsApp que responde na hora para{" "}
+            <span className="text-preto font-semibold">carrinhos gourmet, food trucks e serviços de evento</span>{" "}
+            fecharem mais orçamentos. Atendimento remoto, Brasil inteiro.
           </p>
 
           {/* CTAs */}
@@ -70,7 +71,7 @@ export function Hero() {
               whileTap={{ scale: 0.98 }}
               className="btn-primary text-sm"
             >
-              QUERO FALAR COM A ZBRAND
+              QUERO FECHAR MAIS ORÇAMENTOS
             </motion.a>
             <motion.a
               href="#servicos"
@@ -78,7 +79,7 @@ export function Hero() {
               whileTap={{ scale: 0.98 }}
               className="btn-secondary text-sm"
             >
-              VER SERVIÇOS
+              VER COMO FUNCIONA
             </motion.a>
           </div>
         </motion.div>

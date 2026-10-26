@@ -16,8 +16,8 @@ export const site = {
   phone: "+5511940502929",
   phoneDisplay: "(11) 94050-2929",
   social: {
-    instagram: "https://instagram.com/zbrand.mkt",
-    instagramHandle: "@zbrand.mkt",
+    instagram: "https://instagram.com/zibrand.assessoria",
+    instagramHandle: "@zibrand.assessoria",
     tiktok: "https://tiktok.com/@zbrand.mkt",
     youtube: "https://youtube.com/@zbrand.mkt",
   },

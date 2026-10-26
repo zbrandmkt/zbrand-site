@@ -288,7 +288,7 @@ export function Testimonials() {
           transition={{ delay: 0.6 }}
           className="text-center font-display text-xs text-cinza-text mt-10"
         >
-          Resultados reais de clientes da ZBRAND •{" "}
+          Resultados reais de clientes da Zibrand •{" "}
           <span className="font-bold text-preto">
             Sem promessa de milagre, só trabalho consistente.
           </span>

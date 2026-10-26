@@ -7,21 +7,22 @@ import { site } from "@/lib/site";
 
 const footerLinks = {
   servicos: [
-    { name: "Social Media", href: "/servicos/social-media" },
-    { name: "Tráfego Pago", href: "/servicos/trafego-pago" },
-    { name: "Tráfego Orgânico", href: "/servicos/trafego-organico" },
-    { name: "Captação de Conteúdo", href: "/servicos/captacao" },
-    { name: "Website & Landing Page", href: "/servicos/website" },
-    { name: "Automação WhatsApp", href: "/servicos/automacao" },
+    { name: "Site de orçamento", href: "/servicos/website" },
+    { name: "Tráfego pago", href: "/servicos/trafego-pago" },
+    { name: "WhatsApp automático (Zee)", href: "/servicos/automacao" },
+    { name: "Social media", href: "/servicos/social-media" },
+    { name: "Captação de conteúdo", href: "/servicos/captacao" },
   ],
-  pacotes: [
-    { name: "Starter", href: "/#servicos" },
-    { name: "Full", href: "/#servicos" },
-    { name: "Personalizado", href: "/#servicos" },
+  paraQuem: [
+    "Carrinhos gourmet",
+    "Food trucks e food bikes",
+    "Estações e buffets",
+    "Fotógrafos e filmmakers",
+    "Doces, bolos e decoração",
   ],
   empresa: [
     { name: "Sobre", href: "/sobre" },
-    { name: "Contato", href: "/contato" },
+    { name: "Contato", href: "/#contato" },
     { name: "Área do Cliente", href: "/area-do-cliente" },
   ],
   legal: [
@@ -45,9 +46,9 @@ export function Footer() {
               <Logo variant="claro" height={54} className="h-14" />
             </Link>
             <p className="font-display text-xs text-white/40 leading-relaxed">
-              Marketing digital sem mimimi.
+              Assessoria de marketing para fornecedores de eventos.
               <br />
-              Feito por quem já empreendeu de verdade.
+              Feita por quem vive eventos há 10 anos.
             </p>
           </div>
 
@@ -136,20 +137,15 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Pacotes */}
+          {/* Para quem */}
           <div>
             <h3 className="font-display font-black text-[10px] uppercase tracking-widest text-[#FF6100] mb-4">
-              Pacotes
+              Para quem
             </h3>
             <ul className="flex flex-col gap-2.5">
-              {footerLinks.pacotes.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="font-display text-xs text-white/40 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
+              {footerLinks.paraQuem.map((name) => (
+                <li key={name} className="font-display text-xs text-white/40">
+                  {name}
                 </li>
               ))}
             </ul>

@@ -8,20 +8,20 @@ const diffs = [
   {
     icon: "🔥",
     color: "#FF6100",
-    title: "Experiência Vivida",
-    desc: "Passamos 10 anos escalando um negócio próprio do zero. Sabemos o que funciona porque vivemos cada desafio que você enfrenta.",
+    title: "A gente vive eventos",
+    desc: "10 anos vivendo de gastronomia e eventos com a Churruts. Sabemos o que é montar carrinho no sábado e responder orçamento às 23h.",
   },
   {
     icon: "🎥",
     color: "#00C2FF",
-    title: "Conteúdo Humanizado",
-    desc: "Nada de banco de imagem ou IA. A gente grava conteúdo real e humanizado, com o rosto e a história do seu negócio.",
+    title: "Um nicho só",
+    desc: "Só assessoramos fornecedores de eventos. Falamos a sua língua: data, convidados, sazonalidade, cerimonialista, orçamento.",
   },
   {
     icon: "📸",
     color: "#AAFF00",
-    title: "Captação Incluída",
-    desc: "Gravação e edição de conteúdos fazem parte do serviço. A gente vai até você.",
+    title: "Remoto, Brasil inteiro",
+    desc: "Tudo acontece online. Você manda fotos e informações, a gente monta, roda e acompanha — sem tirar você da operação.",
   },
 ];
 
@@ -49,22 +49,22 @@ export function Differentials() {
 
             {/* Título */}
             <h2 className="font-display font-black text-4xl lg:text-5xl text-[#1A1A1A] uppercase tracking-tight leading-[1.05] mb-6">
-              De empreendedor{" "}
-              <span className="text-[#FF6100]">para empreendedor</span>
+              Nascemos de um{" "}
+              <span className="text-[#FF6100]">carrinho de churros</span>
             </h2>
 
             {/* Texto */}
             <p className="text-sm text-[#1A1A1A]/60 font-medium leading-relaxed mb-4">
-              A ZBRAND nasceu da Churruts — uma marca própria que começou do zero e escalou para lojas, eventos e uma comunidade forte e engajada. Por isso sabemos exatamente o que funciona.
+              A Zibrand nasceu da Churruts, nossa marca de carrinhos de churros para eventos. Foram 10 anos de casamentos, 15 anos, eventos corporativos e festas juninas — e de todas as dores que vêm junto: o orçamento que se perde, o mês parado, a dependência de indicação.
             </p>
             <p className="text-sm text-[#1A1A1A]/60 font-medium leading-relaxed mb-8">
-              Não falamos de teoria, falamos da experiência real que vivemos e agora ajudamos outras empresas a crescer sem perder tempo.
+              Hoje a gente assessora outros fornecedores de eventos com o que funcionou pra nós. Entre os nossos clientes está a Promo Indoor, rede que leva food trucks, food bikes e carrinhos gourmet a cerca de 70 prédios em São Paulo e reúne mais de 130 parceiros.
             </p>
 
             {/* Foto limpa, sem moldura */}
             <Image
               src="/images/foto-guiebru-loja.png"
-              alt="Gui e Bruna — fundadores da ZBRAND"
+              alt="Gui e Bruna, fundadores da Zibrand e da Churruts"
               width={640}
               height={480}
               className="w-full h-auto object-contain"

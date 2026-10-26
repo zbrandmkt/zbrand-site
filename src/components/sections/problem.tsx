@@ -64,19 +64,29 @@ function SpotlightCard({
 
 const problems = [
   {
-    image: "/images/grava_tudo_sozinho_icon.png",
-    title: "Você grava tudo sozinho (ou não grava nada)",
-    desc: "A agência manda a pauta, mas quem tem que gravar é você. Com a correria do dia a dia, o conteúdo nunca sai — e o perfil fica parado.",
+    icon: "💬",
+    title: "O orçamento chega no WhatsApp e se perde",
+    desc: "\"Quanto fica pra dia 12, 100 pessoas?\" Você está no meio de um evento, responde horas depois e o cliente já fechou com outro.",
   },
   {
-    image: "/images/comida_e_boa_mas_icon.png",
-    title: "Seu produto é bom, mas quem está por trás dele?",
-    desc: "Produto bonito no feed é essencial, mas as pessoas se conectam com quem está por trás. Mostrar os bastidores, a equipe e o dia a dia humaniza e vende mais.",
+    icon: "📅",
+    title: "Agenda cheia em alta, vazia no resto do ano",
+    desc: "Casamento, 15 anos, festa junina, fim de ano… e depois os meses parados. Sem gerar demanda na data certa, o caixa vira montanha-russa.",
   },
   {
     image: "/images/não_sabe_de_onde_o_cliente_vem_icon.png",
-    title: "Você não sabe de onde o cliente vem",
-    desc: "Relatório bonito no PDF mas zero clareza sobre o que realmente trouxe cliente. Sem saber qual canal converte, você joga dinheiro no escuro.",
+    title: "Você depende de indicação",
+    desc: "Cerimonialista e buffet indicam quando lembram. Sem canal próprio de pedidos, você não controla quantos orçamentos chegam no mês.",
+  },
+  {
+    image: "/images/comida_e_boa_mas_icon.png",
+    title: "Não tem site, ou o site não vende",
+    desc: "O cliente pesquisa no Google antes de fechar. Sem uma página profissional com fotos, cardápio e botão de orçamento, ele vai pro concorrente.",
+  },
+  {
+    image: "/images/grava_tudo_sozinho_icon.png",
+    title: "Instagram parado porque você está no evento",
+    desc: "Quem monta, opera e atende é você. No fim de semana não sobra tempo pra postar — e o perfil fica com cara de abandonado.",
   },
 ];
 
@@ -160,22 +170,27 @@ export function Problem() {
             className="text-center mb-12"
           >
             <h2 className="font-display text-section-title text-white uppercase tracking-tight">
-              Cansado de agência que{" "}
-              <span className="text-laranja">promete e some?</span>
+              Você é ótimo no evento.{" "}
+              <span className="text-laranja">O problema é fechar o orçamento.</span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-5">
             {problems.map((p, i) => (
               <motion.div
                 key={p.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.15 + i * 0.1, duration: 0.5 }}
+                className={`md:col-span-2 ${i === 3 ? "md:col-start-2" : ""}`}
               >
                 <SpotlightCard className="bg-preto-soft p-6 h-full">
                   <div className="mb-4">
-                    <Image src={p.image} alt={p.title} width={48} height={48} />
+                    {p.image ? (
+                      <Image src={p.image} alt="" width={48} height={48} />
+                    ) : (
+                      <span className="text-4xl leading-none" aria-hidden>{p.icon}</span>
+                    )}
                   </div>
                   <h3 className="font-display font-bold text-sm text-white mb-1.5 uppercase">
                     {p.title}
@@ -194,7 +209,7 @@ export function Problem() {
             transition={{ delay: 0.6 }}
             className="text-center font-display text-sm text-white/40 mt-8"
           >
-            Se você se identifica com alguma dessas, a gente pode ajudar.
+            Se você se reconheceu em alguma dessas, a gente já viveu isso — e resolve.
           </motion.p>
         </div>
       </div>

@@ -14,24 +14,26 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ZBRAND — Marketing Digital para Negócios Locais",
-    template: "%s | ZBRAND",
+    default: "Zibrand — Assessoria de Marketing para Fornecedores de Eventos",
+    template: "%s | Zibrand",
   },
   description:
-    "Marketing digital humanizado para negócios que querem clientes de verdade, não só seguidores. Social media, tráfego pago e automação.",
+    "Assessoria de marketing para carrinhos gourmet, food trucks, estações, fotógrafos e serviços de evento. Site de orçamento, tráfego pago, WhatsApp automático e social media para fechar mais orçamentos. Atendimento remoto em todo o Brasil.",
   keywords: [
-    "marketing digital negócios locais",
-    "social media para empresas",
-    "tráfego pago negócios",
-    "agência marketing digital",
-    "ZBRAND",
+    "marketing para eventos",
+    "marketing para fornecedores de eventos",
+    "marketing para carrinho gourmet",
+    "site para carrinho gourmet",
+    "tráfego pago para food truck",
+    "assessoria de marketing",
+    "Zibrand",
   ],
   openGraph: {
-    title: "ZBRAND — Marketing Digital para Negócios Locais",
+    title: "Zibrand — Assessoria de Marketing para Fornecedores de Eventos",
     description:
-      "Marketing digital humanizado para negócios que querem clientes de verdade.",
-    url: "https://zbrand.com.br",
-    siteName: "ZBRAND",
+      "Site de orçamento, tráfego pago e WhatsApp automático para fornecedores de eventos fecharem mais orçamentos.",
+    url: SITE_URL,
+    siteName: "Zibrand",
     locale: "pt_BR",
     type: "website",
   },

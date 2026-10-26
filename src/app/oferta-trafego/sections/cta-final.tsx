@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { getWhatsAppLink } from "@/lib/whatsapp";
+import { site } from "@/lib/site";
 
 export function CtaFinal() {
   const ref = useRef(null);
@@ -86,12 +87,12 @@ export function CtaFinal() {
           className="mt-12 pt-8 border-t border-[#1A1A1A]/15 flex flex-col items-center gap-3"
         >
           <a
-            href="https://instagram.com/zbrand.mkt"
+            href={site.social.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#1A1A1A]/50 hover:text-[#1A1A1A]/80 transition-colors text-sm font-black"
           >
-            @zbrand.mkt
+            {site.social.instagramHandle}
           </a>
           <p className="text-[#1A1A1A]/30 text-[10px] font-medium">
             ZBRAND CONSULTORIA EM PUBLICIDADE LTDA · CNPJ 63.534.147/0001-81
