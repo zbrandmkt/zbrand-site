@@ -1,8 +1,8 @@
 import { LegalPage } from "@/components/layout/legal-page";
 
 export const metadata = {
-  title: "Política de Privacidade | ZBRAND",
-  description: "Saiba como a ZBRAND coleta, utiliza e protege seus dados pessoais em conformidade com a LGPD.",
+  title: "Política de Privacidade",
+  description: "Saiba como a Zibrand coleta, utiliza e protege seus dados pessoais em conformidade com a LGPD.",
   robots: { index: false, follow: false },
 };
 
@@ -10,7 +10,7 @@ export default function PoliticaPrivacidadePage() {
   return (
     <LegalPage
       title="Política de Privacidade"
-      subtitle="Esta política descreve como a ZBRAND coleta, utiliza, armazena e protege seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018)."
+      subtitle="Esta política descreve como a Zibrand coleta, utiliza, armazena e protege seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018)."
       updatedAt="24 de abril de 2026"
       sections={[
         {
@@ -24,7 +24,7 @@ export default function PoliticaPrivacidadePage() {
                 "<strong class='text-white/70'>CNPJ:</strong> 63.534.147/0001-81",
                 "<strong class='text-white/70'>Endereço:</strong> São Paulo – SP, Brasil",
                 "<strong class='text-white/70'>E-mail:</strong> contato@zbrand.com.br",
-                "<strong class='text-white/70'>Site:</strong> zbrand.com.br",
+                "<strong class='text-white/70'>Site:</strong> zibrand.com.br",
               ],
             },
             "Caso tenha dúvidas sobre o tratamento dos seus dados, entre em contato pelo e-mail acima. Respondemos em até 15 dias úteis.",
@@ -72,7 +72,7 @@ export default function PoliticaPrivacidadePage() {
         {
           title: "Base Legal para o Tratamento (LGPD Art. 7)",
           content: [
-            "Todo tratamento de dados realizado pela ZBRAND possui fundamento legal:",
+            "Todo tratamento de dados realizado pela Zibrand possui fundamento legal:",
             {
               type: "table",
               headers: ["Tratamento", "Base Legal"],
@@ -90,11 +90,12 @@ export default function PoliticaPrivacidadePage() {
         {
           title: "Compartilhamento de Dados",
           content: [
-            "A ZBRAND não vende, aluga ou cede seus dados pessoais a terceiros. Compartilhamos dados apenas nas situações necessárias à prestação do serviço:",
+            "A Zibrand não vende, aluga ou cede seus dados pessoais a terceiros. Compartilhamos dados apenas nas situações necessárias à prestação do serviço:",
             {
               type: "list",
               items: [
                 "<strong class='text-white/70'>Supabase (EUA):</strong> Plataforma de banco de dados e autenticação onde os dados são armazenados com criptografia em repouso e em trânsito.",
+                "<strong class='text-white/70'>Google Workspace (Planilhas e Gmail):</strong> Os dados enviados pelos formulários do site são registrados em planilha privada da empresa e notificados por e-mail à equipe.",
                 "<strong class='text-white/70'>Vercel (EUA):</strong> Infraestrutura de hospedagem do site com conexões HTTPS.",
                 "<strong class='text-white/70'>Google Analytics:</strong> Análise de tráfego do site de forma anonimizada.",
                 "<strong class='text-white/70'>Meta (Facebook/Instagram):</strong> Pixel para mensuração de campanhas (quando ativo). Os dados são anonimizados antes do envio.",
@@ -107,7 +108,7 @@ export default function PoliticaPrivacidadePage() {
         {
           title: "Transferência Internacional de Dados",
           content: [
-            "Alguns de nossos fornecedores (Supabase, Vercel, Google, Meta) estão localizados nos Estados Unidos. A transferência internacional dos seus dados ocorre com as seguintes garantias:",
+            "Alguns de nossos fornecedores (Google, Vercel, Supabase, Meta) estão localizados nos Estados Unidos. A transferência internacional dos seus dados ocorre com as seguintes garantias:",
             {
               type: "list",
               items: [
@@ -183,7 +184,7 @@ export default function PoliticaPrivacidadePage() {
         {
           title: "Links para Sites de Terceiros",
           content: [
-            "Nosso site pode conter links para sites externos (redes sociais, parceiros). A ZBRAND não é responsável pelas práticas de privacidade desses sites. Recomendamos que você leia a política de privacidade de cada site que visitar.",
+            "Nosso site pode conter links para sites externos (redes sociais, parceiros). A Zibrand não é responsável pelas práticas de privacidade desses sites. Recomendamos que você leia a política de privacidade de cada site que visitar.",
           ],
         },
         {

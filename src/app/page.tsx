@@ -10,6 +10,8 @@ import { Differentials } from "@/components/sections/differentials";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CTAFinal } from "@/components/sections/cta-final";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return (
     <>

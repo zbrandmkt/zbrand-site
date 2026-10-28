@@ -47,7 +47,7 @@ export function SobreCta() {
           transition={{ delay: 0.2, duration: 0.55 }}
           className="font-display text-base text-cinza-dark leading-relaxed mb-10 max-w-md mx-auto"
         >
-          Sem pitch de vendas. Uma conversa real sobre o seu negócio —
+          Sem pitch de vendas. Uma conversa real sobre o seu negócio de eventos —
           e se faz sentido trabalhar juntos.
         </motion.p>
 

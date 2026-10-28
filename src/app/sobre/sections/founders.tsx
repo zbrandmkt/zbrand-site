@@ -82,7 +82,7 @@ export function SobreFounders() {
           >
             <Image
               src="/images/foto-guiebru-loja.png"
-              alt="Gui e Bruna — fundadores da ZBRAND"
+              alt="Gui e Bruna, fundadores da Zibrand e da Churruts"
               width={600}
               height={400}
               className="w-full h-auto object-cover"
@@ -91,7 +91,7 @@ export function SobreFounders() {
               <p className="font-display font-black text-sm text-white uppercase tracking-tight">
                 Gui e Bruna
               </p>
-              <p className="text-[10px] text-white/60 font-medium">Fundadores da ZBRAND · Ex-donos da Churruts</p>
+              <p className="text-[10px] text-white/60 font-medium">Fundadores da Zibrand e da Churruts</p>
             </div>
           </div>
         </motion.div>

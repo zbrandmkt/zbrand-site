@@ -58,9 +58,9 @@ export function SobreHero() {
           transition={{ delay: 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="font-display font-black text-4xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-[1.05] text-center mb-6"
         >
-          Antes de ser agência,{" "}
-          <span style={{ color: "#FF6100" }}>a gente era</span>{" "}
-          <span className="text-white">o cliente.</span>
+          Antes de assessorar,{" "}
+          <span style={{ color: "#FF6100" }}>a gente vivia</span>{" "}
+          <span className="text-white">de eventos.</span>
         </motion.h1>
 
         {/* Sub */}
@@ -71,7 +71,7 @@ export function SobreHero() {
           className="font-display text-base text-white/55 text-center max-w-2xl mx-auto leading-relaxed mb-14"
         >
           Dois empreendedores que aprenderam marketing do jeito difícil —
-          na prática, no erro, no dia a dia de um negócio real. Isso é o que nos
+          com um carrinho de churros, em casamentos, festas e feiras. Isso é o que nos
           faz diferentes.
         </motion.p>
 

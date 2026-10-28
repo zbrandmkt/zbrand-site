@@ -1,8 +1,8 @@
 import { LegalPage } from "@/components/layout/legal-page";
 
 export const metadata = {
-  title: "Política de Cookies | ZBRAND",
-  description: "Entenda como a ZBRAND utiliza cookies e tecnologias similares no site zbrand.com.br.",
+  title: "Política de Cookies",
+  description: "Entenda como a Zibrand utiliza cookies e tecnologias similares no site zibrand.com.br.",
   robots: { index: false, follow: false },
 };
 
@@ -10,7 +10,7 @@ export default function PoliticaCookiesPage() {
   return (
     <LegalPage
       title="Política de Cookies"
-      subtitle="Esta política explica o que são cookies, quais utilizamos em zbrand.com.br, para que servem e como você pode controlá-los."
+      subtitle="Esta política explica o que são cookies, quais utilizamos em zibrand.com.br, para que servem e como você pode controlá-los."
       updatedAt="24 de abril de 2026"
       sections={[
         {
@@ -38,7 +38,7 @@ export default function PoliticaCookiesPage() {
         {
           title: "Cookies Utilizados no Site",
           content: [
-            "A tabela abaixo detalha os cookies ativos em zbrand.com.br:",
+            "A tabela abaixo detalha os cookies ativos em zibrand.com.br:",
             {
               type: "table",
               headers: ["Cookie / Tecnologia", "Provedor", "Categoria", "Finalidade", "Duração"],
@@ -67,7 +67,7 @@ export default function PoliticaCookiesPage() {
                 "<strong class='text-white/70'>Supabase:</strong> Gerencia autenticação e armazenamento seguro de dados. Política: <a href='https://supabase.com/privacy' target='_blank' class='text-[#FF6100]/70 hover:text-[#FF6100]'>supabase.com/privacy</a>",
               ],
             },
-            "A ZBRAND não controla os cookies de terceiros. Recomendamos consultar as políticas de privacidade de cada provedor.",
+            "A Zibrand não controla os cookies de terceiros. Recomendamos consultar as políticas de privacidade de cada provedor.",
           ],
         },
         {

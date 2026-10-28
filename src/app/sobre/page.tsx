@@ -9,9 +9,10 @@ import { SobreValues } from "@/app/sobre/sections/values";
 import { SobreCta } from "@/app/sobre/sections/cta";
 
 export const metadata = {
-  title: "Sobre Nós — ZBRAND | A Agência que Viveu na Pele",
+  alternates: { canonical: "/sobre" },
+  title: "Sobre a Zibrand — Nascemos de um Carrinho de Churros",
   description:
-    "Bruna e Gui fundaram a ZBRAND depois de crescer a própria marca de 1.500 para 10.000 seguidores orgânico. Agora fazem o mesmo pelo seu negócio.",
+    "Bruna e Gui viveram 10 anos de eventos com a Churruts, seus carrinhos de churros. Hoje a Zibrand assessora fornecedores de eventos do Brasil inteiro a fechar mais orçamentos.",
 };
 
 export default function SobrePage() {

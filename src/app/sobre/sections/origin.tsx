@@ -36,14 +36,14 @@ const milestones = [
     color: "#7B2FF7",
     emoji: "👶",
     title: "O Zeca chega",
-    text: "Com o bebê, perceberam que queriam flexibilidade de tempo e lugar. A ZBRAND nasce — ainda com avental de churros.",
+    text: "Com o bebê, perceberam que queriam flexibilidade de tempo e lugar. Nasce a assessoria de marketing — ainda com avental de churros.",
   },
   {
     year: "2026",
     color: "#FF3D9A",
     emoji: "🦓",
-    title: "Foco total na ZBRAND",
-    text: "Churruts fecha em março de 2026. ZBRAND 100%. A agência que entende de negócio porque viveu na pele cada desafio.",
+    title: "Nasce a Zibrand",
+    text: "Foco total em quem a gente conhece por dentro: fornecedores de eventos. A Zibrand vira a assessoria de marketing de carrinhos gourmet, food trucks e serviços de evento do Brasil inteiro.",
   },
 ];
 
@@ -64,8 +64,8 @@ export function SobreOrigin() {
             A nossa história
           </p>
           <h2 className="font-display font-black text-4xl lg:text-5xl text-preto uppercase tracking-tight leading-tight">
-            De empreendedores{" "}
-            <span style={{ color: "#FF6100" }}>para agência</span>{" "}
+            Do carrinho de churros{" "}
+            <span style={{ color: "#FF6100" }}>à assessoria</span>{" "}
             de marketing.
           </h2>
           <p className="mt-4 font-display text-base text-cinza-dark max-w-lg mx-auto leading-relaxed">

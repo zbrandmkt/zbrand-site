@@ -3,6 +3,9 @@ import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { SITE_URL } from "@/lib/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationSchema } from "@/lib/schema";
+import { WhatsAppTracking } from "@/components/seo/whatsapp-tracking";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -51,6 +54,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={poppins.variable}>
       <body className="font-body antialiased bg-branco text-preto">
+        <JsonLd data={organizationSchema()} />
+        <WhatsAppTracking />
         {children}
 
         {/* Google Analytics */}

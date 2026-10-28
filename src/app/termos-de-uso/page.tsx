@@ -1,8 +1,8 @@
 import { LegalPage } from "@/components/layout/legal-page";
 
 export const metadata = {
-  title: "Termos de Uso | ZBRAND",
-  description: "Leia os termos e condições de uso do site zbrand.com.br e da Área do Cliente ZBRAND.",
+  title: "Termos de Uso",
+  description: "Leia os termos e condições de uso do site zibrand.com.br e da Área do Cliente Zibrand.",
   robots: { index: false, follow: false },
 };
 
@@ -10,57 +10,57 @@ export default function TermosDeUsoPage() {
   return (
     <LegalPage
       title="Termos de Uso"
-      subtitle="Ao acessar e utilizar o site zbrand.com.br ou a Área do Cliente, você concorda com estes Termos de Uso. Leia com atenção antes de prosseguir."
+      subtitle="Ao acessar e utilizar o site zibrand.com.br ou a Área do Cliente, você concorda com estes Termos de Uso. Leia com atenção antes de prosseguir."
       updatedAt="24 de abril de 2026"
       sections={[
         {
           title: "Aceitação dos Termos",
           content: [
-            "O acesso e uso do site zbrand.com.br e da Área do Cliente ZBRAND estão condicionados à aceitação integral destes Termos de Uso.",
+            "O acesso e uso do site zibrand.com.br e da Área do Cliente Zibrand estão condicionados à aceitação integral destes Termos de Uso.",
             "Ao navegar no site, preencher formulários, criar conta ou acessar a Área do Cliente, você declara ter lido, compreendido e concordado com estes termos. Se não concordar, interrompa o uso imediatamente.",
             "Estes termos se aplicam a todos os usuários: visitantes, leads e clientes com acesso à Área do Cliente.",
           ],
         },
         {
-          title: "Sobre a ZBRAND",
+          title: "Sobre a Zibrand",
           content: [
-            "A ZBRAND é uma agência de marketing digital que oferece serviços de gestão de redes sociais, tráfego pago, produção de conteúdo, automação de WhatsApp, desenvolvimento de websites e estratégias digitais integradas para empresas e negócios.",
-            "Os serviços são prestados mediante contrato formal assinado entre a ZBRAND e o cliente, cujas condições específicas prevalecem sobre estes Termos de Uso em caso de conflito.",
+            "A Zibrand é uma assessoria de marketing para fornecedores de eventos, que oferece serviços de site e landing page de orçamento, tráfego pago, automação de WhatsApp, social media, produção de conteúdo e estratégias digitais integradas.",
+            "Os serviços são prestados mediante contrato formal assinado entre a Zibrand e o cliente, cujas condições específicas prevalecem sobre estes Termos de Uso em caso de conflito.",
           ],
         },
         {
           title: "Área do Cliente — Cadastro e Acesso",
           content: [
-            "O acesso à Área do Cliente é restrito a clientes com contrato ativo com a ZBRAND. O cadastro é realizado pela equipe ZBRAND mediante solicitação formal.",
+            "O acesso à Área do Cliente é restrito a clientes com contrato ativo com a Zibrand. O cadastro é realizado pela equipe Zibrand mediante solicitação formal.",
             "Ao acessar a Área do Cliente, você se compromete a:",
             {
               type: "list",
               items: [
                 "Manter suas credenciais de acesso (e-mail e senha) em sigilo, sendo responsável por todo o uso feito com sua conta.",
-                "Notificar imediatamente a ZBRAND em caso de uso não autorizado da sua conta pelo e-mail contato@zbrand.com.br.",
+                "Notificar imediatamente a Zibrand em caso de uso não autorizado da sua conta pelo e-mail contato@zbrand.com.br.",
                 "Não compartilhar seu acesso com terceiros não autorizados.",
                 "Fornecer informações verdadeiras e atualizadas no momento do cadastro.",
                 "Usar a Área do Cliente exclusivamente para acompanhar os serviços contratados.",
               ],
             },
-            "A ZBRAND se reserva o direito de suspender ou encerrar o acesso de qualquer usuário que viole estes termos ou o contrato de serviços.",
+            "A Zibrand se reserva o direito de suspender ou encerrar o acesso de qualquer usuário que viole estes termos ou o contrato de serviços.",
           ],
         },
         {
           title: "Propriedade Intelectual",
           content: [
-            "Todo o conteúdo disponível em zbrand.com.br — incluindo, mas não se limitando a: textos, imagens, logotipos, ícones, vídeos, layouts, código-fonte, marcas e outros materiais — é de propriedade exclusiva da ZBRAND CONSULTORIA EM PUBLICIDADE LTDA ou foi devidamente licenciado por terceiros.",
-            "É expressamente proibido, sem autorização prévia e escrita da ZBRAND:",
+            "Todo o conteúdo disponível em zibrand.com.br — incluindo, mas não se limitando a: textos, imagens, logotipos, ícones, vídeos, layouts, código-fonte, marcas e outros materiais — é de propriedade exclusiva da ZBRAND CONSULTORIA EM PUBLICIDADE LTDA ou foi devidamente licenciado por terceiros.",
+            "É expressamente proibido, sem autorização prévia e escrita da Zibrand:",
             {
               type: "list",
               items: [
                 "Copiar, reproduzir, modificar, distribuir ou comercializar qualquer conteúdo do site.",
-                "Utilizar a marca ZBRAND, logotipos ou elementos visuais em qualquer material sem autorização.",
+                "Utilizar a marca Zibrand, logotipos ou elementos visuais em qualquer material sem autorização.",
                 "Fazer engenharia reversa, descompilar ou extrair o código-fonte do site ou da Área do Cliente.",
                 "Criar obras derivadas baseadas no conteúdo do site.",
               ],
             },
-            "Os conteúdos produzidos pela ZBRAND para seus clientes no âmbito de contrato específico seguem as regras de propriedade intelectual estabelecidas no respectivo contrato de serviços.",
+            "Os conteúdos produzidos pela Zibrand para seus clientes no âmbito de contrato específico seguem as regras de propriedade intelectual estabelecidas no respectivo contrato de serviços.",
           ],
         },
         {
@@ -75,7 +75,7 @@ export default function TermosDeUsoPage() {
                 "Interferir no funcionamento do site ou de seus servidores (ataques DDoS, injeção de código, etc.).",
                 "Utilizar o site para fins fraudulentos, ilegais ou que violem direitos de terceiros.",
                 "Transmitir vírus, malware ou qualquer código malicioso.",
-                "Acessar dados de outros clientes da ZBRAND, mesmo que haja falha técnica que permita tal acesso.",
+                "Acessar dados de outros clientes da Zibrand, mesmo que haja falha técnica que permita tal acesso.",
                 "Usar a Área do Cliente para finalidade diversa do acompanhamento dos serviços contratados.",
               ],
             },
@@ -85,7 +85,7 @@ export default function TermosDeUsoPage() {
         {
           title: "Disponibilidade e Manutenção",
           content: [
-            "A ZBRAND emprega esforços razoáveis para manter o site e a Área do Cliente disponíveis 24 horas por dia, 7 dias por semana. No entanto, não garantimos disponibilidade ininterrupta.",
+            "A Zibrand emprega esforços razoáveis para manter o site e a Área do Cliente disponíveis 24 horas por dia, 7 dias por semana. No entanto, não garantimos disponibilidade ininterrupta.",
             "Podem ocorrer interrupções para:",
             {
               type: "list",
@@ -96,13 +96,13 @@ export default function TermosDeUsoPage() {
                 "Situações de força maior ou caso fortuito.",
               ],
             },
-            "A ZBRAND não será responsabilizada por danos decorrentes de indisponibilidade temporária do site.",
+            "A Zibrand não será responsabilizada por danos decorrentes de indisponibilidade temporária do site.",
           ],
         },
         {
           title: "Limitação de Responsabilidade",
           content: [
-            "O site zbrand.com.br e as informações nele contidas são fornecidos 'no estado em que se encontram'. A ZBRAND não garante que:",
+            "O site zibrand.com.br e as informações nele contidas são fornecidos 'no estado em que se encontram'. A Zibrand não garante que:",
             {
               type: "list",
               items: [
@@ -111,8 +111,8 @@ export default function TermosDeUsoPage() {
                 "O conteúdo do site é sempre atual, completo ou preciso (pode estar sujeito a alterações sem aviso prévio).",
               ],
             },
-            "A ZBRAND não se responsabiliza por danos diretos, indiretos, incidentais ou consequenciais decorrentes do uso ou incapacidade de uso do site, exceto nos casos previstos expressamente no contrato de serviços.",
-            "Resultados de marketing (seguidores, leads, conversões, ROI) dependem de múltiplos fatores externos ao controle da ZBRAND. Estimativas e cases de sucesso exibidos no site são referenciais, não garantias de resultados.",
+            "A Zibrand não se responsabiliza por danos diretos, indiretos, incidentais ou consequenciais decorrentes do uso ou incapacidade de uso do site, exceto nos casos previstos expressamente no contrato de serviços.",
+            "Resultados de marketing (seguidores, leads, conversões, ROI) dependem de múltiplos fatores externos ao controle da Zibrand. Estimativas e cases de sucesso exibidos no site são referenciais, não garantias de resultados.",
           ],
         },
         {
@@ -125,7 +125,7 @@ export default function TermosDeUsoPage() {
         {
           title: "Modificações nos Termos",
           content: [
-            "A ZBRAND reserva-se o direito de modificar estes Termos de Uso a qualquer momento, a seu exclusivo critério.",
+            "A Zibrand reserva-se o direito de modificar estes Termos de Uso a qualquer momento, a seu exclusivo critério.",
             "Alterações relevantes serão comunicadas com antecedência mínima de 7 dias por aviso no site ou por e-mail (quando disponível). O uso continuado do site após a data de vigência das novas condições implica aceitação tácita das alterações.",
             "Para clientes com contrato ativo, alterações que impactem direitos contratuais serão negociadas individualmente.",
           ],
@@ -134,8 +134,8 @@ export default function TermosDeUsoPage() {
           title: "Disposições Gerais",
           content: [
             "Se qualquer disposição destes Termos for considerada inválida ou inexequível, as demais disposições permanecerão em pleno vigor e efeito.",
-            "A omissão da ZBRAND em exercer qualquer direito previsto nestes Termos não constitui renúncia a tal direito.",
-            "Estes Termos constituem o acordo integral entre você e a ZBRAND em relação ao uso do site, substituindo quaisquer acordos anteriores sobre o mesmo objeto.",
+            "A omissão da Zibrand em exercer qualquer direito previsto nestes Termos não constitui renúncia a tal direito.",
+            "Estes Termos constituem o acordo integral entre você e a Zibrand em relação ao uso do site, substituindo quaisquer acordos anteriores sobre o mesmo objeto.",
           ],
         },
         {

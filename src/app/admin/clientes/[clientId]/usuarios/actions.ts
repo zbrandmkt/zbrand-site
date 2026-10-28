@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { createAdminSupabaseClient } from "@/lib/supabase-admin";
+import { absoluteUrl } from "@/lib/site";
 
 async function requireAdmin() {
   const supabase = createServerSupabaseClient();
@@ -143,7 +144,7 @@ export async function resendInviteAction(formData: FormData) {
   const supabaseAdmin = createAdminSupabaseClient();
 
   const { error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
-    redirectTo: "https://www.zbrand.com.br/area-do-cliente/nova-senha",
+    redirectTo: absoluteUrl("/area-do-cliente/nova-senha"),
     data: { role: "client", name },
   });
 

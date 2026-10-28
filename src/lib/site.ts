@@ -1,8 +1,8 @@
 // Dados da marca num lugar só. Para trocar o domínio, basta mudar
-// NEXT_PUBLIC_SITE_URL (ex.: https://www.zibrand.com.br) na Vercel.
+// NEXT_PUBLIC_SITE_URL na Vercel.
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.zbrand.com.br"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.zibrand.com.br"
 ).replace(/\/$/, "");
 
 export const site = {

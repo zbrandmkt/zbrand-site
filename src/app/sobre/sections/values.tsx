@@ -14,13 +14,13 @@ const values = [
     emoji: "😮‍💨",
     title: "Alívio",
     color: "#00C2FF",
-    desc: "Tiramos o peso do marketing das suas costas. Para você focar no que faz de melhor: o seu negócio.",
+    desc: "Tiramos o peso do marketing das suas costas. Para você focar no que faz de melhor: eventos incríveis.",
   },
   {
     emoji: "❤️",
     title: "Humanidade",
     color: "#AAFF00",
-    desc: "Pessoas compram de pessoas. Conteúdo real, com rosto, bastidores e história. Nada de banco de imagem ou conteúdo genérico.",
+    desc: "Pessoas contratam pessoas. Conteúdo real dos seus eventos, com rosto, bastidores e história. Nada de banco de imagem ou conteúdo genérico.",
   },
   {
     emoji: "⚡",

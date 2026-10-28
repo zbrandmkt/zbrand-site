@@ -1,8 +1,8 @@
 import { LegalPage } from "@/components/layout/legal-page";
 
 export const metadata = {
-  title: "Política Antispam | ZBRAND",
-  description: "Conheça o compromisso da ZBRAND contra o envio de comunicações não solicitadas.",
+  title: "Política Antispam",
+  description: "Conheça o compromisso da Zibrand contra o envio de comunicações não solicitadas.",
   robots: { index: false, follow: false },
 };
 
@@ -10,7 +10,7 @@ export default function PoliticaAntispamPage() {
   return (
     <LegalPage
       title="Política Antispam"
-      subtitle="A ZBRAND tem tolerância zero com spam. Esta política descreve como tratamos comunicações, como coletamos contatos e como você pode optar por não receber mensagens a qualquer momento."
+      subtitle="A Zibrand tem tolerância zero com spam. Esta política descreve como tratamos comunicações, como coletamos contatos e como você pode optar por não receber mensagens a qualquer momento."
       updatedAt="24 de abril de 2026"
       sections={[
         {
@@ -24,7 +24,7 @@ export default function PoliticaAntispamPage() {
         {
           title: "Como Coletamos Contatos",
           content: [
-            "A ZBRAND coleta dados de contato exclusivamente por meios legítimos e com o consentimento do titular:",
+            "A Zibrand coleta dados de contato exclusivamente por meios legítimos e com o consentimento do titular:",
             {
               type: "list",
               items: [
@@ -34,17 +34,17 @@ export default function PoliticaAntispamPage() {
                 "<strong class='text-white/70'>Networking presencial ou digital:</strong> Troca voluntária de contato em eventos, feiras ou plataformas profissionais.",
               ],
             },
-            "A ZBRAND <strong class='text-white/70'>não compra, aluga, permuta ou adquire listas de contatos</strong> de terceiros. Não utilizamos bases de dados obtidas por meios não transparentes.",
+            "A Zibrand <strong class='text-white/70'>não compra, aluga, permuta ou adquire listas de contatos</strong> de terceiros. Não utilizamos bases de dados obtidas por meios não transparentes.",
           ],
         },
         {
           title: "Conteúdo das Comunicações",
           content: [
-            "Toda comunicação enviada pela ZBRAND segue os seguintes princípios:",
+            "Toda comunicação enviada pela Zibrand segue os seguintes princípios:",
             {
               type: "list",
               items: [
-                "<strong class='text-white/70'>Identificação clara:</strong> Todas as mensagens identificam a ZBRAND como remetente, com dados de contato para retorno.",
+                "<strong class='text-white/70'>Identificação clara:</strong> Todas as mensagens identificam a Zibrand como remetente, com dados de contato para retorno.",
                 "<strong class='text-white/70'>Relevância:</strong> Enviamos apenas comunicações pertinentes à relação estabelecida (retorno de orçamento, atualizações de serviço, conteúdo solicitado).",
                 "<strong class='text-white/70'>Frequência razoável:</strong> Não bombardeamos contatos. Leads recebem no máximo 2 tentativas de contato inicial; após isso, aguardamos manifestação.",
                 "<strong class='text-white/70'>Ausência de conteúdo malicioso:</strong> Nunca enviamos links suspeitos, anexos não solicitados ou qualquer conteúdo prejudicial.",
@@ -56,7 +56,7 @@ export default function PoliticaAntispamPage() {
         {
           title: "Canais de Comunicação Utilizados",
           content: [
-            "A ZBRAND pode utilizar os seguintes canais para comunicação com leads e clientes, sempre dentro das políticas de uso de cada plataforma:",
+            "A Zibrand pode utilizar os seguintes canais para comunicação com leads e clientes, sempre dentro das políticas de uso de cada plataforma:",
             {
               type: "table",
               headers: ["Canal", "Uso", "Política da Plataforma"],
@@ -73,7 +73,7 @@ export default function PoliticaAntispamPage() {
         {
           title: "Como Cancelar o Recebimento (Opt-Out)",
           content: [
-            "Você pode parar de receber comunicações da ZBRAND a qualquer momento, sem custo ou burocracia:",
+            "Você pode parar de receber comunicações da Zibrand a qualquer momento, sem custo ou burocracia:",
             {
               type: "list",
               items: [
@@ -88,7 +88,7 @@ export default function PoliticaAntispamPage() {
         {
           title: "Tratamento de Spam Recebido",
           content: [
-            "A ZBRAND também é alvo de spam. Adotamos as seguintes medidas para combatê-lo internamente:",
+            "A Zibrand também é alvo de spam. Adotamos as seguintes medidas para combatê-lo internamente:",
             {
               type: "list",
               items: [
@@ -103,7 +103,7 @@ export default function PoliticaAntispamPage() {
         {
           title: "Denúncias e Canal de Contato",
           content: [
-            "Se você recebeu uma comunicação não solicitada identificada como sendo da ZBRAND, ou suspeita que alguém está se passando pela ZBRAND (spoofing), entre em contato imediatamente:",
+            "Se você recebeu uma comunicação não solicitada identificada como sendo da Zibrand, ou suspeita que alguém está se passando pela Zibrand (spoofing), entre em contato imediatamente:",
             {
               type: "list",
               items: [

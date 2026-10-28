@@ -31,7 +31,7 @@ export function LegalPage({ title, subtitle, updatedAt, sections }: LegalPagePro
           {/* Header */}
           <div className="mb-12 pb-10 border-b border-white/08">
             <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#FF6100] mb-4">
-              ZBRAND — Legal
+              Zibrand — Legal
             </p>
             <h1 className="font-display font-black text-3xl lg:text-4xl text-white uppercase tracking-tight leading-tight mb-4">
               {title}

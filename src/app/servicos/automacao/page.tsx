@@ -8,8 +8,12 @@ import { ZAutomaçaoDiferenciais } from "@/app/z-automacao/sections/diferenciais
 import { ZAutomaçaoProcess } from "@/app/z-automacao/sections/process";
 import { ZAutomaçaoFaq } from "@/app/z-automacao/sections/faq";
 import { ZAutomaçaoCta } from "@/app/z-automacao/sections/cta";
+import { JsonLd } from "@/components/seo/json-ld";
+import { faqSchema, serviceSchema } from "@/lib/schema";
+import { faqs } from "@/app/z-automacao/sections/faq-data";
 
 export const metadata = {
+  alternates: { canonical: "/servicos/automacao" },
   title: "Automação de WhatsApp para Orçamentos de Eventos (Zee)",
   description:
     "A Zee, assistente de IA da Zibrand, responde seu WhatsApp na hora, coleta data, local e número de convidados e entrega o orçamento pronto para você fechar. Para carrinhos gourmet, food trucks e serviços de evento.",
@@ -20,6 +24,12 @@ export default function AutomacaoPage() {
     <>
       <Header />
       <main>
+        <JsonLd
+          data={[
+            serviceSchema({ name: "Automação de WhatsApp com IA (Zee) para orçamentos de eventos", description: metadata.description, path: "/servicos/automacao" }),
+            faqSchema(faqs),
+          ]}
+        />
         <ZAutomaçaoHero />
         <ZAutomaçaoProblem />
         <ZAutomaçaoBotPreview />

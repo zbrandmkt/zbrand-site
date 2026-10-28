@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { getWhatsAppLink } from "@/lib/whatsapp";
-import { supabase } from "@/lib/supabase";
+import { submitLead } from "@/lib/leads";
 import { TextRotate } from "@/components/ui/text-rotate";
 import { BUSINESS_TYPE_LABELS as BUSINESS_TYPES } from "@/lib/business-types";
 import { site } from "@/lib/site";
@@ -70,21 +70,14 @@ export function ZSocialCta() {
   async function onSubmit(data: FormData) {
     setLoading(true);
     try {
-      const utm = new URLSearchParams(window.location.search);
-      if (supabase) {
-        await supabase.from("leads").insert({
-          name: data.name,
-          whatsapp: data.whatsapp,
-          business_type: data.business_type,
-          message: `Desafio: ${data.challenge} | Redes: ${selectedNetworks.join(", ")}`,
-          services: "Social media",
-          source: "z_social_cta",
-          utm_source: utm.get("utm_source"),
-          utm_medium: utm.get("utm_medium"),
-          utm_campaign: utm.get("utm_campaign"),
-          utm_content: utm.get("utm_content"),
-        });
-      }
+      await submitLead({
+        name: data.name,
+        whatsapp: data.whatsapp,
+        business_type: data.business_type,
+        message: `Desafio: ${data.challenge} | Redes: ${selectedNetworks.join(", ")}`,
+        services: "Social media",
+        source: "z_social_cta",
+      });
       setSubmitted(true);
       reset();
       setSelectedNetworks(["Instagram"]);
