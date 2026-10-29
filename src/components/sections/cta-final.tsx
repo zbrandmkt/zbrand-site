@@ -124,9 +124,9 @@ export function CTAFinal() {
             </h2>
 
             <p className="font-display text-sm text-white/55 mb-8 leading-relaxed">
-              Conta pra gente sobre o seu negócio de eventos. Assim que você enviar, a{" "}
-              <span className="text-[#FF6100] font-bold">Zee</span>, nossa assistente de IA,
-              te chama no WhatsApp para entender o seu momento e indicar por onde começar.
+              Conta pra gente sobre o seu negócio de eventos. Assim que você enviar, a gente
+              te chama no WhatsApp para entender o seu momento e{" "}
+              <span className="text-[#FF6100] font-bold">indicar por onde começar</span>.
             </p>
 
             {/* Social icons */}
@@ -176,7 +176,7 @@ export function CTAFinal() {
                   Recebemos sua mensagem!
                 </h3>
                 <p className="text-sm text-[#1A1A1A]/55 font-medium">
-                  A Zee vai te chamar assim que processar o formulário ⚡
+                  A gente vai te chamar no WhatsApp em breve para entender o seu momento ⚡
                 </p>
               </div>
             ) : (
@@ -283,7 +283,7 @@ export function CTAFinal() {
                 </button>
 
                 <p className="text-[10px] text-[#1A1A1A]/35 text-center font-medium">
-                  A Zee vai te chamar assim que enviar o formulário ⚡
+                  A gente te chama no WhatsApp em breve ⚡
                 </p>
               </form>
             )}

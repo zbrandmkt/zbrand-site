@@ -190,7 +190,7 @@ export function ZPersonalizadoCta() {
                   Formulário recebido!
                 </h3>
                 <p className="font-display text-sm text-cinza-dark font-medium leading-relaxed">
-                  Você vai receber uma mensagem no WhatsApp em até 1 hora com os próximos passos.{" "}
+                  A gente vai te chamar no WhatsApp em breve com os próximos passos.{" "}
                   <span className="font-bold" style={{ color: PURPLE }}>
                     Bora montar o pacote ideal!
                   </span>
@@ -286,7 +286,7 @@ export function ZPersonalizadoCta() {
                 </button>
 
                 <p className="text-[10px] text-preto/35 text-center font-medium">
-                  Você receberá uma mensagem no WhatsApp em até 1 hora ⚡
+                  A gente te chama no WhatsApp em breve ⚡
                 </p>
               </form>
             )}
