@@ -8,7 +8,8 @@ import { ZPersonalizadoFaq } from "@/app/z-personalizado/sections/faq";
 import { ZPersonalizadoCta } from "@/app/z-personalizado/sections/cta";
 
 export const metadata = {
-  title: "Pacote Personalizado — Monte o Seu | ZBRAND",
+  robots: { index: false, follow: true },
+  title: "Pacote Personalizado — Monte o Seu",
   description:
     "Escolha os serviços que você precisa: Social Media, Tráfego Pago ou WhatsApp Bot. Veja o preço em tempo real e monte o pacote ideal para o seu negócio.",
 };

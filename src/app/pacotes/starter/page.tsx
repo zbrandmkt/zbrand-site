@@ -12,7 +12,8 @@ import { ZStarterFaq } from "@/app/z-starter/sections/faq";
 import { ZStarterCta } from "@/app/z-starter/sections/cta";
 
 export const metadata = {
-  title: "Pacote Starter — Social Media + Tráfego Pago | ZBRAND",
+  robots: { index: false, follow: true },
+  title: "Pacote Starter — Social Media + Tráfego Pago",
   description:
     "Social Media + Meta Ads integrados. Uma equipe, uma estratégia, um dashboard. R$ 3.000/mês para negócios que querem crescer.",
 };

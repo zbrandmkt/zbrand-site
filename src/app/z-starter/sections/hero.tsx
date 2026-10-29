@@ -75,7 +75,7 @@ export function ZStarterHero() {
           >
             Conteúdo profissional + anúncios que convertem.{" "}
             <span className="text-preto font-semibold">Uma equipe, uma estratégia, um dashboard.</span>{" "}
-            Tudo gerenciado pela ZBRAND.
+            Tudo gerenciado pela Zibrand.
           </motion.p>
 
           {/* CTAs */}

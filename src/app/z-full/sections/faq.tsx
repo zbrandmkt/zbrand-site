@@ -8,7 +8,7 @@ const LIME = "#AAFF00";
 const faqs = [
   {
     q: "O que está incluso no Pacote Full?",
-    a: "Gestão de 3 redes sociais (Instagram, Facebook, TikTok) com 30 posts/mês + stories diários, captação presencial 1 dia/mês, edição profissional, Meta Ads + Google Ads (até 4 campanhas ativas), Automação WhatsApp com Bot + IA generativa + 3 disparos de promoção por mês, relatório integrado semanal cobrindo todos os canais, dashboard ZBRAND e reunião mensal de alinhamento.",
+    a: "Gestão de 3 redes sociais (Instagram, Facebook, TikTok) com 30 posts/mês + stories diários, captação presencial 1 dia/mês, edição profissional, Meta Ads + Google Ads (até 4 campanhas ativas), Automação WhatsApp com Bot + IA generativa + 3 disparos de promoção por mês, relatório integrado semanal cobrindo todos os canais, dashboard Zibrand e reunião mensal de alinhamento.",
   },
   {
     q: "A implementação da automação de WhatsApp está inclusa?",
@@ -23,7 +23,7 @@ const faqs = [
     a: "Social e ads entram no ar entre a semana 3 e 4. O bot de WhatsApp fica pronto entre os dias 15–20. No 1º mês completo você já tem o sistema operando, dados de conversão e o primeiro relatório integrado. Os melhores resultados aparecem no 2º e 3º mês.",
   },
   {
-    q: "Posso contratar o Full se já tenho um serviço com a ZBRAND?",
+    q: "Posso contratar o Full se já tenho um serviço com a Zibrand?",
     a: "Sim. Se você já tem Z-SOCIAL ou Z-ADS com a gente, podemos migrar o contrato para o Pacote Full. A equipe já conhece o seu negócio — a transição é mais rápida e o sistema fica sincronizado desde o início.",
   },
   {

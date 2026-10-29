@@ -52,7 +52,7 @@ const exploreCards = [
     emoji: "🌱",
     badge: "Pacote Starter",
     title: "Social + Tráfego Pago",
-    desc: "Uma equipe, uma estratégia, um resultado. O combo mais contratado da ZBRAND.",
+    desc: "Uma equipe, uma estratégia, um resultado. O combo mais contratado da Zibrand.",
     cta: "Conhecer o Starter",
     color: "#FF6100",
     href: "/pacotes/starter",
@@ -69,8 +69,8 @@ const exploreCards = [
   {
     emoji: "🦓",
     badge: "Nossa história",
-    title: "Quem é a ZBRAND",
-    desc: "Ex-empreendedores que cresceram a própria marca de 1.500 para 10.000 seguidores. Depois viramos agência.",
+    title: "Quem é a Zibrand",
+    desc: "Ex-empreendedores que cresceram a própria marca de 1.500 para 10.000 seguidores. Depois viramos assessoria.",
     cta: "Conhecer a gente",
     color: "#7B2FF7",
     href: "/sobre",
@@ -332,7 +332,7 @@ export default function CamisetaPage() {
 
               <FadeUp delay={0.26}>
                 <p className="text-white/50 text-sm lg:text-base leading-relaxed mb-8 max-w-[300px] lg:max-w-none mx-auto lg:mx-0">
-                  A agência de marketing digital para quem quer crescer de verdade.
+                  A assessoria de marketing para quem quer crescer de verdade.
                   Sem mimimi, sem enrolação, com resultado.
                 </p>
               </FadeUp>
@@ -382,7 +382,7 @@ export default function CamisetaPage() {
                 Você acabou de ser impactado por um anúncio offline.
               </h2>
               <p className="text-white/80 text-sm lg:text-base leading-relaxed mb-6">
-                A ZBRAND faz as pessoas pararem, sorrirem e lembrarem da sua marca —
+                A Zibrand faz as pessoas pararem, sorrirem e lembrarem da sua marca —
                 seja com um QR Code numa camiseta, um post, um reel ou um anúncio no feed.
                 Isso é marketing que funciona no mundo real, do jeito que acreditamos.
               </p>
@@ -403,7 +403,7 @@ export default function CamisetaPage() {
                 </p>
                 <div className="flex flex-col gap-5">
                   {[
-                    { icon: "👕", label: "Camiseta ZBRAND", desc: "QR Code estampado, zebra proposital" },
+                    { icon: "👕", label: "Camiseta Zibrand", desc: "QR Code estampado, zebra proposital" },
                     { icon: "📱", label: "Você escaneia", desc: "A curiosidade fala mais alto" },
                     { icon: "🎯", label: "Você está aqui", desc: "Anúncio offline bem-sucedido" },
                   ].map((step, i) => (
@@ -455,7 +455,7 @@ export default function CamisetaPage() {
                 <strong className="text-white">resultado previsível.</strong>{" "}
                 A zebra é nosso símbolo contra o improvável.{" "}
                 <strong className="text-white">Contra o &ldquo;azar&rdquo;.</strong>{" "}
-                Com a ZBRAND, sua marca para de depender da sorte e começa a{" "}
+                Com a Zibrand, sua marca para de depender da sorte e começa a{" "}
                 <strong className="text-[#FF6100]">gerar clientes de verdade.</strong>
               </p>
               <div className="flex justify-center lg:justify-start">
@@ -484,14 +484,14 @@ export default function CamisetaPage() {
               >
                 <Image
                   src="/images/foto-guiebru-loja.png"
-                  alt="Gui e Bruna — fundadores da ZBRAND"
+                  alt="Gui e Bruna, fundadores da Zibrand e da Churruts"
                   width={700}
                   height={500}
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1A1A]/85 to-transparent px-5 py-4">
                   <p className="font-black text-sm text-white uppercase tracking-tight">Gui e Bruna</p>
-                  <p className="text-[10px] text-white/60 font-medium">Fundadores da ZBRAND · Ex-donos da Churruts</p>
+                  <p className="text-[10px] text-white/60 font-medium">Fundadores da Zibrand e da Churruts</p>
                 </div>
               </div>
             </FadeUp>
@@ -502,13 +502,13 @@ export default function CamisetaPage() {
                 Quem está por trás
               </p>
               <h2 className="font-black text-3xl lg:text-4xl text-[#1A1A1A] uppercase leading-tight mb-5">
-                A ZBRAND não é agência de fachada.
+                A Zibrand não é agência de fachada.
               </h2>
 
               <p className="text-[#1A1A1A]/65 text-sm lg:text-base leading-relaxed mb-5">
                 São Bruna e Gui — ex-empreendedores que cresceram a própria marca de{" "}
                 <strong className="text-[#1A1A1A]">1.500 para 10.000 seguidores orgânicos</strong>{" "}
-                antes de virarem agência. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
+                antes de virarem assessoria. Eles sabem o que é estar no seu lugar — e sabem o que funciona.
               </p>
 
               <div className="grid grid-cols-2 gap-3 mb-7">
@@ -596,7 +596,7 @@ export default function CamisetaPage() {
         <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
             <p className="font-black text-5xl lg:text-6xl text-white mb-2">+50</p>
-            <p className="text-white/70 text-sm lg:text-base font-medium mb-8">negócios já cresceram com a ZBRAND</p>
+            <p className="text-white/70 text-sm lg:text-base font-medium mb-8">negócios já cresceram com a Zibrand</p>
             <div className="grid grid-cols-3 gap-4 lg:gap-6">
               {[
                 { n: "+320%", label: "mais seguidores" },

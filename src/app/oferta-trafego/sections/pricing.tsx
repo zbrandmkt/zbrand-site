@@ -171,7 +171,7 @@ export function Pricing() {
           transition={{ delay: 0.5 }}
           className="text-center text-white/25 text-xs mt-8 max-w-sm mx-auto leading-relaxed"
         >
-          O preço de R$ 800 é porque a ZBRAND acredita que microempreendedores merecem
+          O preço de R$ 800 é porque a Zibrand acredita que microempreendedores merecem
           a chance de escalar com investimento acessível. Simples assim.
         </motion.p>
       </div>

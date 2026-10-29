@@ -13,7 +13,7 @@ const features = [
   "Edição profissional dos criativos",
   "Meta Ads: até 4 campanhas ativas",
   "Relatório integrado semanal (social + ads)",
-  "Dashboard ZBRAND",
+  "Dashboard Zibrand",
   "Acompanhamento e otimização semanal",
   "Reunião mensal de alinhamento",
 ];
@@ -111,7 +111,7 @@ export function ZStarterPricing() {
                 {/* Verba note */}
                 <div className="mt-3 bg-black/10 rounded-xl px-3 py-2">
                   <p className="text-[11px] font-bold text-[#1A1A1A]/70 leading-snug">
-                    + Verba de anúncios: R$ 1.000/mês (pago direto ao Meta — não passa pela ZBRAND)
+                    + Verba de anúncios: R$ 1.000/mês (pago direto ao Meta — não passa pela Zibrand)
                   </p>
                 </div>
                 {/* Savings callout */}

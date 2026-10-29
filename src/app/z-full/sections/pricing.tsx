@@ -14,7 +14,7 @@ const features = [
   "Meta Ads + Google Ads: até 4 campanhas ativas",
   "Automação WhatsApp (Bot + IA generativa + 3 disparos/mês)",
   "Relatório integrado semanal (social + ads + bot)",
-  "Dashboard ZBRAND unificado",
+  "Dashboard Zibrand unificado",
   "Acompanhamento e otimização semanal",
   "Reunião mensal de alinhamento",
 ];
@@ -121,7 +121,7 @@ export function ZFullPricing() {
                     + Verba: R$ 1.000/mês Meta + R$ 500/mês Google
                   </p>
                   <p className="text-[10px] text-white/30 mt-0.5">
-                    Pago direto às plataformas — não passa pela ZBRAND
+                    Pago direto às plataformas — não passa pela Zibrand
                   </p>
                 </div>
                 {/* Automation note */}

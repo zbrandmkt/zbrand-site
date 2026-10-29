@@ -8,7 +8,7 @@ const ORANGE = "#FF6100";
 const faqs = [
   {
     q: "O que está incluso no Pacote Starter?",
-    a: "Gestão de 1 rede social (Instagram ou Facebook) com 15 posts/mês + stories diários, captação presencial 1 dia/mês (4–6h), edição profissional, Meta Ads com até 4 campanhas ativas, relatório integrado semanal cobrindo social e ads, dashboard ZBRAND e reunião mensal de alinhamento.",
+    a: "Gestão de 1 rede social (Instagram ou Facebook) com 15 posts/mês + stories diários, captação presencial 1 dia/mês (4–6h), edição profissional, Meta Ads com até 4 campanhas ativas, relatório integrado semanal cobrindo social e ads, dashboard Zibrand e reunião mensal de alinhamento.",
   },
   {
     q: "Por que não contratar social media e tráfego pago separado?",

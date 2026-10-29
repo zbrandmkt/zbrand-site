@@ -12,7 +12,8 @@ import { ZFullFaq } from "@/app/z-full/sections/faq";
 import { ZFullCta } from "@/app/z-full/sections/cta";
 
 export const metadata = {
-  title: "Pacote Full — Social + Ads + Automação WhatsApp | ZBRAND",
+  robots: { index: false, follow: true },
+  title: "Pacote Full — Social + Ads + Automação WhatsApp",
   description:
     "3 redes sociais + Meta & Google Ads + Bot de WhatsApp. O sistema completo para atrair, converter e fidelizar clientes. R$ 7.000/mês.",
 };

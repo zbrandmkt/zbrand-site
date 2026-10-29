@@ -119,7 +119,7 @@ export function ZPersonalizadoCta() {
             <h2 className="font-display text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-[1.1] mb-4">
               Pronto para{" "}
               <TextRotate
-                texts={["Seu Pacote Perfeito", "Só o Que Você Precisa", "Do Seu Jeito", "Começar Agora", "Crescer com a ZBRAND"]}
+                texts={["Seu Pacote Perfeito", "Só o Que Você Precisa", "Do Seu Jeito", "Começar Agora", "Crescer com a Zibrand"]}
                 interval={2800}
                 className="block text-[#7B2FF7]"
               />{" "}
